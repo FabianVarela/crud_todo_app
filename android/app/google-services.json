@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "72673886041",
+    "firebase_url": "https://to-do-app-a3896.firebaseio.com",
+    "project_id": "to-do-app-a3896",
+    "storage_bucket": "to-do-app-a3896.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:72673886041:android:b7c2dec39dabf533",
+        "android_client_info": {
+          "package_name": "com.developer.fabian.crud_todo_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "72673886041-u1it8ugd0md75nb891r72u8db2cocr9l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.developer.fabian.crud_todo_app",
+            "certificate_hash": "8fea183981cecf32f59f438879da3ac3b773d30b"
+          }
+        },
+        {
+          "client_id": "72673886041-uptef8sdiev1lmp2fue8l2cia6u9oh5o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7bnhM7oDt2znBcv6xUOUG-kkZdUQs7h8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "72673886041-uptef8sdiev1lmp2fue8l2cia6u9oh5o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "72673886041-6nv33uahcheebbaq9bv4e919a67u6h1q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.developer.fabian.crudTodoApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
