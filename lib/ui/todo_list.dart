@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:crud_todo_app/model/todo.dart';
+import 'package:crud_todo_app/utils/utils.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,8 @@ class TodoList extends StatefulWidget {
 
 class _TodoListState extends State<TodoList> {
   final FirebaseDatabase _database = FirebaseDatabase.instance;
+
+  TextEditingController _textEditingController = TextEditingController();
   List<Todo> _todoList = new List();
 
   Query _query;
@@ -56,7 +59,7 @@ class _TodoListState extends State<TodoList> {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
-          //TODO: Adding
+          _showDialog(context);
         },
         tooltip: 'Adding to-do',
       ),
@@ -64,7 +67,7 @@ class _TodoListState extends State<TodoList> {
   }
 
   Widget _showTodoList() {
-    if (_todoList.length >= 0) {
+    if (_todoList.length > 0) {
       return ListView.builder(
         itemBuilder: (context, index) {
           String todoKey = _todoList[index].key;
@@ -123,10 +126,56 @@ class _TodoListState extends State<TodoList> {
     }
   }
 
+  _showDialog(BuildContext context) async {
+    _textEditingController.clear();
+
+    await showDialog<String>(
+      builder: (context) {
+        return AlertDialog(
+          content: Row(
+            children: <Widget>[
+              Expanded(
+                child: TextField(
+                  controller: _textEditingController,
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    labelText: "Add new To-Do",
+                  ),
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text("Cancel"),
+              onPressed: () => Navigator.pop(context),
+            ),
+            FlatButton(
+              child: Text("Save"),
+              onPressed: () {
+                _addToDo(_textEditingController.text.toString());
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+      context: context,
+    );
+  }
+
+  void _addToDo(String todoSubject) {
+    if (todoSubject.length > 0) {
+      Todo newTodo = Todo(todoSubject, false, dateFormatted());
+      _database.reference().child("todo").push().set(newTodo.toJson());
+    }
+  }
+
   @override
   void dispose() {
     _onAddedTodo.cancel();
     _onChangedTodo.cancel();
+
     super.dispose();
   }
 }

@@ -6,7 +6,7 @@ class Todo {
   bool completed;
   String updateData;
 
-  Todo(this.subject, this.completed);
+  Todo(this.subject, this.completed, this.updateData);
 
   Todo.fromSnapshot(DataSnapshot snapshot)
       : key = snapshot.key,
