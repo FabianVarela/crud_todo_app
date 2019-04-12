@@ -101,12 +101,13 @@ class _TodoListState extends State<TodoList> {
                           size: 20,
                         ),
                   onPressed: () {
-                    //TODO: update
+                    _updateTodo(_todoList[index]);
                   }),
             ),
+            direction: DismissDirection.startToEnd,
             key: Key(todoKey),
             onDismissed: (direction) async {
-              //TODO: delete
+              _deleteTodo(todoKey, index);
             },
           );
         },
@@ -169,6 +170,25 @@ class _TodoListState extends State<TodoList> {
       Todo newTodo = Todo(todoSubject, false, dateFormatted());
       _database.reference().child("todo").push().set(newTodo.toJson());
     }
+  }
+
+  void _updateTodo(Todo todo) {
+    todo.completed = !todo.completed;
+    todo.updateData = dateFormatted();
+
+    if (todo != null) {
+      _database.reference().child("todo").child(todo.key).set(todo.toJson());
+    }
+  }
+
+  void _deleteTodo(String todoId, int index) {
+    _database.reference().child("todo").child(todoId).remove().then((_) {
+      print("Delete To-Do with id $todoId successful");
+
+      setState(() {
+        _todoList.removeAt(index);
+      });
+    });
   }
 
   @override
