@@ -1,12 +1,17 @@
+import 'package:crud_todo_app/dependency/injector.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-void main() => runApp(MyApp());
+Future<void> main() async {
+  await setupInject();
+  runApp(ProviderScope(child: TodoListApp()));
+}
 
-class MyApp extends StatelessWidget {
+class TodoListApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "To-Do List App",
+      title: 'To-Do List App',
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
