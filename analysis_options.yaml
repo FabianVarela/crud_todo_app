@@ -1,0 +1,7 @@
+include: package:pedantic/analysis_options.yaml
+
+analyzer:
+  exclude:
+    - lib/**.g.dart
+  errors:
+    missing_required_param: error
