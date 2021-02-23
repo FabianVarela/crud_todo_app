@@ -1,9 +1,10 @@
 import 'package:intl/intl.dart';
 
-String dateFormatted() {
-  var now = DateTime.now();
-  var formatter = DateFormat("EEE, MMM d, ''yy - HH:mm");
+extension DateTimeUtils on DateTime {
+  String get dateTimeToFormattedString =>
+      DateFormat("EEE, MMM d, ''yy - HH:mm").format(this);
+}
 
-  String formatted = formatter.format(now);
-  return formatted;
+extension IntUtils on int {
+  DateTime get millisecondsToDate => DateTime.fromMillisecondsSinceEpoch(this);
 }
