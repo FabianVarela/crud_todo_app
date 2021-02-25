@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 
 GetIt getIt = GetIt.instance;
 
-Future<void> setupInject() async {
+void setupInject() {
   _loadPackages();
   _loadDatabase();
 }
