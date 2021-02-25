@@ -3,27 +3,40 @@ import 'package:crud_todo_app/model/category.model.dart';
 import 'package:crud_todo_app/model/todo.model.dart';
 
 abstract class ITodoDatabase {
-  Stream<List<Category>> getTodoCategories();
+  Stream<List<Category>> getCategories();
+  Stream<List<Todo>> getTodosByCategory(String categoryId);
   Future<void> saveCategory(Category category);
   Future<void> saveTodo(Todo todo, String categoryId);
   Future<void> deleteCategory(String categoryId);
-  Future<void> deleteTodo(Todo todo, String categoryId);
+  Future<void> deleteTodo(String todoId);
 }
 
 class TodoDatabase implements ITodoDatabase {
   static const String _categoryCollection = 'categories';
+  static const String _todoCollection = 'todos';
 
   final FirebaseFirestore _firebaseFirestore;
 
   TodoDatabase(this._firebaseFirestore);
 
   @override
-  Stream<List<Category>> getTodoCategories() {
+  Stream<List<Category>> getCategories() {
     final querySnapshot =
         _firebaseFirestore.collection(_categoryCollection).snapshots();
 
     return querySnapshot.map((query) =>
         query.docs.map((doc) => Category.fromSnapshot(doc)).toList());
+  }
+
+  @override
+  Stream<List<Todo>> getTodosByCategory(String categoryId) {
+    final querySnapshot = _firebaseFirestore
+        .collection(_todoCollection)
+        .where('categoryId', isEqualTo: categoryId)
+        .snapshots();
+
+    return querySnapshot.map(
+        (query) => query.docs.map((doc) => Todo.fromSnapshot(doc)).toList());
   }
 
   @override
@@ -37,17 +50,12 @@ class TodoDatabase implements ITodoDatabase {
           .add(category.toJson());
 
   @override
-  Future<void> saveTodo(Todo todo, String categoryId) {
-    final categoryRef =
-        _firebaseFirestore.collection(_categoryCollection).doc(categoryId);
-
-    return _firebaseFirestore.runTransaction((transaction) async {
-      final snapshot = await transaction.get(categoryRef);
-      await transaction.update(snapshot.reference, <String, dynamic>{
-        'todos': FieldValue.arrayUnion([todo]),
-      });
-    });
-  }
+  Future<void> saveTodo(Todo todo, String categoryId) async => todo.id != null
+      ? await _firebaseFirestore
+          .collection(_todoCollection)
+          .doc(todo.id)
+          .update(todo.toJson())
+      : await _firebaseFirestore.collection(_todoCollection).add(todo.toJson());
 
   @override
   Future<void> deleteCategory(String categoryId) async =>
@@ -57,15 +65,6 @@ class TodoDatabase implements ITodoDatabase {
           .delete();
 
   @override
-  Future<void> deleteTodo(Todo todo, String categoryId) {
-    final categoryRef =
-        _firebaseFirestore.collection(_categoryCollection).doc(categoryId);
-
-    return _firebaseFirestore.runTransaction((transaction) async {
-      final snapshot = await transaction.get(categoryRef);
-      await transaction.update(snapshot.reference, <String, dynamic>{
-        'todos': FieldValue.arrayRemove([todo]),
-      });
-    });
-  }
+  Future<void> deleteTodo(String todoId) async =>
+      await _firebaseFirestore.collection(_todoCollection).doc(todoId).delete();
 }
