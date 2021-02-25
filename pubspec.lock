@@ -79,7 +79,7 @@ packages:
     source: hosted
     version: "1.2.0-nullsafety.1"
   firebase_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: firebase_core
       url: "https://pub.dartlang.org"
@@ -112,7 +112,7 @@ packages:
     source: hosted
     version: "2.2.1+1"
   flutter_hooks:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_hooks
       url: "https://pub.dartlang.org"

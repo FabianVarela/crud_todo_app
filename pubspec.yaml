@@ -12,7 +12,9 @@ dependencies:
 
   cupertino_icons: ^1.0.0
   hooks_riverpod: ^0.12.4
+  flutter_hooks: ^0.15.0
   get_it: ^5.0.1
+  firebase_core: ^0.7.0
   cloud_firestore: "^0.16.0"
   intl: ^0.16.1
   flutter_emoji: ">= 2.0.0"
