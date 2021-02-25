@@ -17,6 +17,7 @@ dependencies:
   firebase_core: ^0.7.0
   cloud_firestore: "^0.16.0"
   intl: ^0.16.1
+  uuid: ^2.2.2
   flutter_emoji: ">= 2.0.0"
 
 dev_dependencies:
