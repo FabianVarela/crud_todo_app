@@ -50,7 +50,8 @@ class TodoDatabase implements ITodoDatabase {
           .add(category.toJson());
 
   @override
-  Future<void> saveTodo(Todo todo, String categoryId) async => todo.id != null
+  Future<void> saveTodo(Todo todo, String categoryId) async => todo
+          .id.isNotEmpty
       ? await _firebaseFirestore
           .collection(_todoCollection)
           .doc(todo.id)
