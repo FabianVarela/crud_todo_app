@@ -1,7 +1,9 @@
 import 'package:crud_todo_app/database/todo.database.dart';
 import 'package:crud_todo_app/dependency/injector.dart';
 import 'package:crud_todo_app/model/category.model.dart';
+import 'package:crud_todo_app/model/validation_text.model.dart';
 import 'package:crud_todo_app/utils/utils.dart';
+import 'package:crud_todo_app/utils/validations.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -11,21 +13,26 @@ final categoryDataProvider = StreamProvider<List<Category>>(
 
 final isAddedCategoryProvider = StateProvider.autoDispose((_) => false);
 
-final nameCategoryProvider = StateProvider.autoDispose((_) => '');
-final emojiCategoryProvider = StateProvider.autoDispose((_) => '');
+final nameCategoryProvider = StateProvider.autoDispose((_) => ValidationText());
+final emojiCategoryProvider =
+    StateProvider.autoDispose((_) => ValidationText());
 
 final validationCategoryProvider = StateProvider.autoDispose((ref) {
-  final name = ref.watch(nameCategoryProvider);
-  final emoji = ref.watch(emojiCategoryProvider);
+  final name = ref.watch(nameCategoryProvider).state.text;
+  final emoji = ref.watch(emojiCategoryProvider).state.text;
 
-  return name.state.isNotEmpty &&
-      (emoji.state.isNotEmpty && emoji.state.verifyEmoji);
+  return (name ?? '').isNotEmpty &&
+      ((emoji ?? '').isNotEmpty && (emoji ?? '').verifyEmoji);
 });
 
 final categoryViewModelProvider = Provider((_) => CategoryViewModel());
 
-class CategoryViewModel {
+class CategoryViewModel with Validations {
   final _database = getIt<ITodoDatabase>();
+
+  ValidationText onChangeName(String value) => validateEmpty(value);
+
+  ValidationText onChangeEmoji(String value) => validateEmoji(value);
 
   void saveCategory(String name, String emoji) async {
     final category = Category(
