@@ -45,9 +45,9 @@ class TodoCategoryListUI extends ConsumerWidget {
                       )
                     : Center(
                         child: Text(
-                          'Empty data',
+                          'Empty data, add a category',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 25,
                           ),
                         ),
                       ),
@@ -109,6 +109,9 @@ class CategoryItem extends StatelessWidget {
       ),
       child: Card(
         elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
