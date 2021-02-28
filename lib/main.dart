@@ -1,6 +1,8 @@
 import 'package:crud_todo_app/dependency/injector.dart';
+import 'package:crud_todo_app/ui/todo_category_list.ui.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 Future<void> main() async {
@@ -19,24 +21,11 @@ class TodoListApp extends StatelessWidget {
       title: 'To-Do List App',
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: TempWidget(),
-    );
-  }
-}
-
-class TempWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('To-Do List'),
-      ),
-      body: Container(
-        child: Center(
-          child: Text('Widget temporal'),
+        textTheme: GoogleFonts.latoTextTheme(
+          Theme.of(context).textTheme,
         ),
       ),
+      home: TodoCategoryListUI(),
     );
   }
 }
