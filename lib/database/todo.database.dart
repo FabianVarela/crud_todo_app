@@ -61,7 +61,7 @@ class TodoDatabase implements ITodoDatabase {
       await _firebaseFirestore
           .collection(_categoryCollection)
           .doc(catId)
-          .update({'todos': FieldValue.increment(1)});
+          .update({'todoSize': FieldValue.increment(1)});
     }
   }
 
@@ -85,6 +85,6 @@ class TodoDatabase implements ITodoDatabase {
     await _firebaseFirestore
         .collection(_categoryCollection)
         .doc(catId)
-        .update({'todos': FieldValue.increment(-1)});
+        .update({'todoSize': FieldValue.increment(-1)});
   }
 }
