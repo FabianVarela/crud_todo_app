@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:intl/intl.dart';
 
@@ -18,4 +19,21 @@ extension StringUtils on String {
 
     return false;
   }
+}
+
+extension WidgetUtils on Widget {
+  Widget paddingAll(double padding) => Padding(
+        padding: EdgeInsets.all(padding),
+        child: this,
+      );
+
+  Widget paddingHorizontal(double padding) => Padding(
+        padding: EdgeInsets.symmetric(horizontal: padding),
+        child: this,
+      );
+
+  Widget paddingVertical(double padding) => Padding(
+        padding: EdgeInsets.symmetric(vertical: padding),
+        child: this,
+      );
 }
