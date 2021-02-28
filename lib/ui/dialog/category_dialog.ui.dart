@@ -1,3 +1,4 @@
+import 'package:crud_todo_app/model/validation_text.model.dart';
 import 'package:crud_todo_app/viewModel/category.viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -8,11 +9,8 @@ class CategoryFormDialog extends HookWidget {
   Widget build(BuildContext context) {
     final categoryProvider = useProvider(categoryViewModelProvider);
 
-    final name = useProvider(nameCategoryProvider);
-    final emoji = useProvider(emojiCategoryProvider);
-
-    final nameController = useTextEditingController(text: name.state.text);
-    final emojiController = useTextEditingController(text: emoji.state.text);
+    final name = useProvider(nameCategoryProvider).state;
+    final emoji = useProvider(emojiCategoryProvider).state;
 
     return ProviderListener<StateController<bool>>(
       provider: isAddedCategoryProvider,
@@ -44,28 +42,11 @@ class CategoryFormDialog extends HookWidget {
               children: <Widget>[
                 _setTitle(),
                 const SizedBox(height: 20),
-                TextField(
-                  controller: nameController,
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    hintText: 'Name',
-                    errorText: name.state.message,
-                  ),
-                  onChanged: (val) =>
-                      name.state = categoryProvider.onChangeName(val),
-                ),
-                TextField(
-                  controller: emojiController,
-                  textInputAction: TextInputAction.done,
-                  decoration: InputDecoration(
-                    hintText: 'Emoji',
-                    errorText: emoji.state.message,
-                  ),
-                  onChanged: (val) =>
-                      emoji.state = categoryProvider.onChangeEmoji(val),
-                ),
+                _setTextName(categoryProvider, name),
+                const SizedBox(height: 10),
+                _setTextEmoji(categoryProvider, emoji),
                 const SizedBox(height: 30),
-                _setButton(categoryProvider, name.state.text, emoji.state.text),
+                _setButton(categoryProvider, name.text, emoji.text),
               ],
             ),
           ),
@@ -81,6 +62,34 @@ class CategoryFormDialog extends HookWidget {
           fontWeight: FontWeight.w600,
         ),
       );
+
+  Widget _setTextName(CategoryViewModel vm, ValidationText name) {
+    final nameController = useTextEditingController(text: name.text);
+
+    return TextField(
+      controller: nameController,
+      textInputAction: TextInputAction.next,
+      decoration: InputDecoration(
+        hintText: 'Name',
+        errorText: name.message,
+      ),
+      onChanged: (val) => name = vm.onChangeName(val),
+    );
+  }
+
+  Widget _setTextEmoji(CategoryViewModel vm, ValidationText emoji) {
+    final emojiController = useTextEditingController(text: emoji.text);
+
+    return TextField(
+      controller: emojiController,
+      textInputAction: TextInputAction.done,
+      decoration: InputDecoration(
+        hintText: 'Emoji',
+        errorText: emoji.message,
+      ),
+      onChanged: (val) => emoji = vm.onChangeEmoji(val),
+    );
+  }
 
   Widget _setButton(CategoryViewModel vm, String name, String emoji) {
     final validation = useProvider(validationCategoryProvider);
