@@ -4,11 +4,11 @@ import 'package:crud_todo_app/model/todo.model.dart';
 
 abstract class ITodoDatabase {
   Stream<List<Category>> getCategories();
-  Stream<List<Todo>> getTodosByCategory(String categoryId);
+  Stream<List<Todo>> getTodosByCategory(String catId);
   Future<void> saveCategory(Category category);
-  Future<void> saveTodo(Todo todo, String categoryId);
-  Future<void> deleteCategory(String categoryId);
-  Future<void> deleteTodo(String todoId);
+  Future<void> saveTodo(Todo todo, String catId);
+  Future<void> deleteCategory(String catId);
+  Future<void> deleteTodo(String todoId, String catId);
 }
 
 class TodoDatabase implements ITodoDatabase {
@@ -29,10 +29,10 @@ class TodoDatabase implements ITodoDatabase {
   }
 
   @override
-  Stream<List<Todo>> getTodosByCategory(String categoryId) {
+  Stream<List<Todo>> getTodosByCategory(String catId) {
     final querySnapshot = _firebaseFirestore
         .collection(_todoCollection)
-        .where('categoryId', isEqualTo: categoryId)
+        .where('categoryId', isEqualTo: catId)
         .snapshots();
 
     return querySnapshot.map(
@@ -50,22 +50,41 @@ class TodoDatabase implements ITodoDatabase {
           .add(category.toJson());
 
   @override
-  Future<void> saveTodo(Todo todo, String categoryId) async => todo
-          .id.isNotEmpty
-      ? await _firebaseFirestore
+  Future<void> saveTodo(Todo todo, String catId) async {
+    if (todo.id.isNotEmpty) {
+      await _firebaseFirestore
           .collection(_todoCollection)
           .doc(todo.id)
-          .update(todo.toJson())
-      : await _firebaseFirestore.collection(_todoCollection).add(todo.toJson());
-
-  @override
-  Future<void> deleteCategory(String categoryId) async =>
+          .update(todo.toJson());
+    } else {
+      await _firebaseFirestore.collection(_todoCollection).add(todo.toJson());
       await _firebaseFirestore
           .collection(_categoryCollection)
-          .doc(categoryId)
-          .delete();
+          .doc(catId)
+          .update({'todos': FieldValue.increment(1)});
+    }
+  }
 
   @override
-  Future<void> deleteTodo(String todoId) async =>
-      await _firebaseFirestore.collection(_todoCollection).doc(todoId).delete();
+  Future<void> deleteCategory(String catId) async {
+    await _firebaseFirestore
+        .collection(_categoryCollection)
+        .doc(catId)
+        .delete();
+
+    final snapshot = await _firebaseFirestore
+        .collection(_todoCollection)
+        .where('categoryId', isEqualTo: catId)
+        .get();
+    snapshot.docs.forEach((item) => item.reference.delete());
+  }
+
+  @override
+  Future<void> deleteTodo(String todoId, String catId) async {
+    await _firebaseFirestore.collection(_todoCollection).doc(todoId).delete();
+    await _firebaseFirestore
+        .collection(_categoryCollection)
+        .doc(catId)
+        .update({'todos': FieldValue.increment(-1)});
+  }
 }
