@@ -3,19 +3,27 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 class CustomCheckbox extends HookWidget {
   final bool value;
+  final bool enabled;
   final Function(bool) onChanged;
 
-  CustomCheckbox({Key key, this.value = false, this.onChanged});
+  CustomCheckbox({
+    Key key,
+    this.value = false,
+    this.enabled = true,
+    this.onChanged,
+  });
 
   @override
   Widget build(BuildContext context) {
     final isChecked = useState(value);
 
     return GestureDetector(
-      onTap: () {
-        isChecked.value = !isChecked.value;
-        onChanged(isChecked.value);
-      },
+      onTap: enabled
+          ? () {
+              isChecked.value = !isChecked.value;
+              onChanged(isChecked.value);
+            }
+          : null,
       child: AnimatedContainer(
         duration: Duration(milliseconds: 1000),
         curve: Curves.fastLinearToSlowEaseIn,
