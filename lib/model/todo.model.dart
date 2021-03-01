@@ -17,7 +17,7 @@ class Todo {
   final String categoryId;
 
   Todo.fromSnapshot(DocumentSnapshot snapshot)
-      : id = snapshot.data()['id'],
+      : id = snapshot.id,
         subject = snapshot.data()['subject'],
         isCompleted = snapshot.data()['isCompleted'],
         finalDate = (snapshot.data()['finalDate'] as int).millisecondsToDate,
