@@ -200,7 +200,7 @@ class AddTodoUI extends HookWidget {
       BuildContext ctx, StateController<DateTime> finalDate) async {
     final pickedDate = await showDatePicker(
       context: ctx,
-      initialDate: finalDate.state.add(Duration(minutes: 5)), // TODO: Validate date
+      initialDate: finalDate.state.add(Duration(minutes: 5)), // TODO: Validate
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
     );
@@ -222,49 +222,28 @@ class AddTodoUI extends HookWidget {
       BuildContext ctx, StateController<DateTime> finalDate) {
     showModalBottomSheet(
       context: ctx,
-      isDismissible: false,
       builder: (_) {
         return Container(
-          padding: EdgeInsets.all(10),
           height: MediaQuery.of(ctx).size.height / 3,
           width: MediaQuery.of(ctx).size.width,
           color: Colors.white,
-          child: Column(
-            children: <Widget>[
-              Align(
-                alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () => Navigator.pop(ctx),
-                  child: cupertino.Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-                    child: Text(
-                      'Close',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
+          child: cupertino.Container(
+            height: MediaQuery.of(ctx).size.height / 4.5,
+            child: cupertino.DefaultTextStyle(
+              style: TextStyle(fontSize: 22),
+              child: cupertino.CupertinoDatePicker(
+                mode: cupertino.CupertinoDatePickerMode.dateAndTime,
+                initialDateTime:
+                    finalDate.state.add(Duration(minutes: 5)), // TODO: Validate
+                minimumDate: DateTime.now(),
+                maximumDate: DateTime.now().add(Duration(days: 365)),
+                onDateTimeChanged: (DateTime pickedDate) {
+                  finalDate.state = pickedDate;
+                },
               ),
-              cupertino.Container(
-                height: MediaQuery.of(ctx).size.height / 4.5,
-                child: cupertino.DefaultTextStyle(
-                  style: TextStyle(fontSize: 22),
-                  child: cupertino.CupertinoDatePicker(
-                    mode: cupertino.CupertinoDatePickerMode.dateAndTime,
-                    initialDateTime: finalDate.state.add(Duration(minutes: 5)), // TODO: Validate date
-                    minimumDate: DateTime.now(),
-                    maximumDate: DateTime.now().add(Duration(days: 365)),
-                    onDateTimeChanged: (DateTime pickedDate) {
-                      finalDate.state = pickedDate;
-                    },
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-        );
+        ).paddingAll(10);
       },
     );
   }
