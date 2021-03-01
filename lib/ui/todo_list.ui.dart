@@ -6,6 +6,7 @@ import 'package:crud_todo_app/utils/utils.dart';
 import 'package:crud_todo_app/viewModel/todo.viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TodoListUI extends ConsumerWidget {
@@ -98,6 +99,7 @@ class TodoListUI extends ConsumerWidget {
                         itemCount: todos.length,
                         itemBuilder: (_, pos) => TodoItem(
                           item: todos[pos],
+                          category: category,
                         ),
                       ).paddingHorVer(24, 20)
                     : Center(
@@ -141,39 +143,68 @@ class TodoItem extends HookWidget {
   const TodoItem({
     Key key,
     @required this.item,
+    @required this.category,
   }) : super(key: key);
 
   final Todo item;
+  final Category category;
 
   @override
   Widget build(BuildContext context) {
     final todoProvider = useProvider(todoViewModelProvider);
 
-    return ListTile(
-      title: Text(
-        item.subject,
-        style: item.isCompleted
-            ? TextStyle(
-                fontSize: 22,
-                color: Color(0xFF6474A9),
-                decoration: TextDecoration.lineThrough,
-              )
-            : TextStyle(fontSize: 22),
+    return Slidable(
+      actionPane: SlidableDrawerActionPane(),
+      child: ListTile(
+        title: Text(
+          item.subject,
+          style: item.isCompleted
+              ? TextStyle(
+                  fontSize: 22,
+                  color: Color(0xFF6474A9),
+                  decoration: TextDecoration.lineThrough,
+                )
+              : TextStyle(fontSize: 22),
+        ),
+        subtitle: Text(
+          item.finalDate.dateTimeToFormattedString,
+          style: item.isCompleted
+              ? TextStyle(
+                  fontSize: 16,
+                  decoration: TextDecoration.lineThrough,
+                )
+              : TextStyle(fontSize: 16),
+        ).paddingVertical(4),
+        trailing: CustomCheckbox(
+          value: item.isCompleted,
+          enabled: !item.isCompleted,
+          onChanged: (bool value) => todoProvider.checkTodo(item, value),
+        ),
       ),
-      subtitle: Text(
-        item.finalDate.dateTimeToFormattedString,
-        style: item.isCompleted
-            ? TextStyle(
-                fontSize: 16,
-                decoration: TextDecoration.lineThrough,
-              )
-            : TextStyle(fontSize: 16),
-      ).paddingVertical(4),
-      trailing: CustomCheckbox(
-        value: item.isCompleted,
-        enabled: !item.isCompleted,
-        onChanged: (bool value) => todoProvider.checkTodo(item, value),
-      ),
+      actions: !item.isCompleted
+          ? <Widget>[
+              IconSlideAction(
+                caption: 'Edit',
+                color: Color(0xFF4D4E50),
+                icon: Icons.edit,
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => AddTodoUI(category: category, todo: item),
+                  ),
+                ),
+              ),
+            ]
+          : <Widget>[],
+      secondaryActions: !item.isCompleted
+          ? <Widget>[
+              IconSlideAction(
+                caption: 'Remove',
+                color: Colors.red,
+                icon: Icons.delete,
+                onTap: () => todoProvider.removeTodo(item.id, item.categoryId),
+              ),
+            ]
+          : <Widget>[],
     );
   }
 }
