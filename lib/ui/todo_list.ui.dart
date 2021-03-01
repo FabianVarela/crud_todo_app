@@ -152,14 +152,26 @@ class TodoItem extends HookWidget {
     return ListTile(
       title: Text(
         item.subject,
-        style: TextStyle(fontSize: 22),
+        style: item.isCompleted
+            ? TextStyle(
+                fontSize: 22,
+                color: Color(0xFF6474A9),
+                decoration: TextDecoration.lineThrough,
+              )
+            : TextStyle(fontSize: 22),
       ),
       subtitle: Text(
         item.finalDate.dateTimeToFormattedString,
-        style: TextStyle(fontSize: 16),
+        style: item.isCompleted
+            ? TextStyle(
+                fontSize: 16,
+                decoration: TextDecoration.lineThrough,
+              )
+            : TextStyle(fontSize: 16),
       ).paddingVertical(4),
       trailing: CustomCheckbox(
         value: item.isCompleted,
+        enabled: !item.isCompleted,
         onChanged: (bool value) => todoProvider.checkTodo(item, value),
       ),
     );
