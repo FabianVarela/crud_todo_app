@@ -36,4 +36,9 @@ extension WidgetUtils on Widget {
         padding: EdgeInsets.symmetric(vertical: padding),
         child: this,
       );
+
+  Widget paddingHorVer(double hori, double vert) => Padding(
+        padding: EdgeInsets.symmetric(horizontal: hori, vertical: vert),
+        child: this,
+      );
 }
