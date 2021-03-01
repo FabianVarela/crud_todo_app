@@ -1,4 +1,5 @@
 import 'package:crud_todo_app/model/validation_text.model.dart';
+import 'package:crud_todo_app/utils/utils.dart';
 import 'package:crud_todo_app/viewModel/category.viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -110,7 +111,7 @@ class CategoryFormDialog extends HookWidget {
             color: Colors.white,
           ),
         ),
-      ),
+      ).paddingVertical(12),
       onPressed: isValid
           ? () {
               vm.saveCategory(name, emoji);
