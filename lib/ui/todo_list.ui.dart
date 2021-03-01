@@ -1,8 +1,11 @@
 import 'package:crud_todo_app/model/category.model.dart';
+import 'package:crud_todo_app/model/todo.model.dart';
 import 'package:crud_todo_app/ui/add_todo.ui.dart';
+import 'package:crud_todo_app/ui/widgets/custom_checkbox.dart';
 import 'package:crud_todo_app/utils/utils.dart';
 import 'package:crud_todo_app/viewModel/todo.viewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TodoListUI extends ConsumerWidget {
@@ -93,23 +96,8 @@ class TodoListUI extends ConsumerWidget {
                 child: todos.isNotEmpty
                     ? ListView.builder(
                         itemCount: todos.length,
-                        itemBuilder: (_, pos) => CheckboxListTile(
-                          title: Text(
-                            todos[pos].subject,
-                            style: TextStyle(
-                              fontSize: 22,
-                            ),
-                          ),
-                          subtitle: Text(
-                            todos[pos].finalDate.dateTimeToFormattedString,
-                            style: TextStyle(
-                              fontSize: 16,
-                            ),
-                          ).paddingVertical(4),
-                          value: todos[pos].isCompleted,
-                          onChanged: (bool value) {
-                            print(value);
-                          },
+                        itemBuilder: (_, pos) => TodoItem(
+                          item: todos[pos],
                         ),
                       ).paddingHorVer(24, 20)
                     : Center(
@@ -144,6 +132,35 @@ class TodoListUI extends ConsumerWidget {
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute(builder: (_) => AddTodoUI(category: category)),
         ),
+      ),
+    );
+  }
+}
+
+class TodoItem extends HookWidget {
+  const TodoItem({
+    Key key,
+    @required this.item,
+  }) : super(key: key);
+
+  final Todo item;
+
+  @override
+  Widget build(BuildContext context) {
+    final todoProvider = useProvider(todoViewModelProvider);
+
+    return ListTile(
+      title: Text(
+        item.subject,
+        style: TextStyle(fontSize: 22),
+      ),
+      subtitle: Text(
+        item.finalDate.dateTimeToFormattedString,
+        style: TextStyle(fontSize: 16),
+      ).paddingVertical(4),
+      trailing: CustomCheckbox(
+        value: item.isCompleted,
+        onChanged: (bool value) => todoProvider.checkTodo(item, value),
       ),
     );
   }
