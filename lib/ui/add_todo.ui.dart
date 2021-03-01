@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:crud_todo_app/model/category.model.dart';
 import 'package:crud_todo_app/model/todo.model.dart';
 import 'package:crud_todo_app/model/validation_text.model.dart';
 import 'package:crud_todo_app/utils/utils.dart';
 import 'package:crud_todo_app/viewModel/todo.viewModel.dart';
+import 'package:flutter/cupertino.dart' as cupertino;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -24,14 +27,20 @@ class AddTodoUI extends HookWidget {
     final validation = useProvider(validationTodoProvider);
     final isAdded = useProvider(isAddedTodoProvider);
 
+    final subjectController = useTextEditingController();
+
     useEffect(() {
       if (todo != null) {
-        id.state = todo.id;
-        subject.state = ValidationText(text: todo.subject);
-        finalDate.state = todo.finalDate;
+        Future.microtask(() {
+          id.state = todo.id;
+          subject.state = ValidationText(text: todo.subject);
+          finalDate.state = todo.finalDate;
+
+          subjectController.text = subject.state.text;
+        });
       }
       return;
-    }, []);
+    }, const []);
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -49,7 +58,8 @@ class AddTodoUI extends HookWidget {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              _setSubjectText(todoProvider, subject).paddingHorizontal(30),
+              _setSubjectText(todoProvider, subjectController, subject)
+                  .paddingHorizontal(30),
               const SizedBox(height: 30),
               _setDateButton(context, finalDate).paddingHorizontal(30),
               const SizedBox(height: 20),
@@ -87,13 +97,10 @@ class AddTodoUI extends HookWidget {
     );
   }
 
-  Widget _setSubjectText(
-      TodoViewModel vm, StateController<ValidationText> subject) {
-    final subjectController =
-        useTextEditingController(text: subject.state.text);
-
+  Widget _setSubjectText(TodoViewModel vm, TextEditingController controller,
+      StateController<ValidationText> subject) {
     return TextField(
-      controller: subjectController,
+      controller: controller,
       maxLines: 5,
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
@@ -109,8 +116,7 @@ class AddTodoUI extends HookWidget {
     );
   }
 
-  Widget _setDateButton(
-      BuildContext context, StateController<DateTime> finalDate) {
+  Widget _setDateButton(BuildContext ctx, StateController<DateTime> finalDate) {
     return InkWell(
       child: Row(
         children: <Widget>[
@@ -128,9 +134,9 @@ class AddTodoUI extends HookWidget {
           ),
         ],
       ),
-      onTap: () => _selectedDateTimeAndroid(context).then((date) {
-        finalDate.state = date;
-      }),
+      onTap: () => Platform.isIOS
+          ? _selectedDateTimeIOS(ctx, finalDate)
+          : _selectedDateTimeAndroid(ctx, finalDate),
     );
   }
 
@@ -190,26 +196,76 @@ class AddTodoUI extends HookWidget {
     );
   }
 
-  Future<DateTime> _selectedDateTimeAndroid(BuildContext context) async {
+  void _selectedDateTimeAndroid(
+      BuildContext ctx, StateController<DateTime> finalDate) async {
     final pickedDate = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
+      context: ctx,
+      initialDate: finalDate.state.add(Duration(minutes: 5)), // TODO: Validate date
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
     );
 
     if (pickedDate != null) {
       final pickedTime = await showTimePicker(
-        context: context,
+        context: ctx,
         initialTime: TimeOfDay.now(),
       );
 
       if (pickedTime != null) {
-        return DateTime(pickedDate.year, pickedDate.month, pickedDate.day,
-            pickedTime.hour, pickedTime.minute);
+        finalDate.state = DateTime(pickedDate.year, pickedDate.month,
+            pickedDate.day, pickedTime.hour, pickedTime.minute);
       }
     }
+  }
 
-    return DateTime.now();
+  void _selectedDateTimeIOS(
+      BuildContext ctx, StateController<DateTime> finalDate) {
+    showModalBottomSheet(
+      context: ctx,
+      isDismissible: false,
+      builder: (_) {
+        return Container(
+          padding: EdgeInsets.all(10),
+          height: MediaQuery.of(ctx).size.height / 3,
+          width: MediaQuery.of(ctx).size.width,
+          color: Colors.white,
+          child: Column(
+            children: <Widget>[
+              Align(
+                alignment: Alignment.centerRight,
+                child: GestureDetector(
+                  onTap: () => Navigator.pop(ctx),
+                  child: cupertino.Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                    child: Text(
+                      'Close',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              cupertino.Container(
+                height: MediaQuery.of(ctx).size.height / 4.5,
+                child: cupertino.DefaultTextStyle(
+                  style: TextStyle(fontSize: 22),
+                  child: cupertino.CupertinoDatePicker(
+                    mode: cupertino.CupertinoDatePickerMode.dateAndTime,
+                    initialDateTime: finalDate.state.add(Duration(minutes: 5)), // TODO: Validate date
+                    minimumDate: DateTime.now(),
+                    maximumDate: DateTime.now().add(Duration(days: 365)),
+                    onDateTimeChanged: (DateTime pickedDate) {
+                      finalDate.state = pickedDate;
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
