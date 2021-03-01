@@ -45,6 +45,6 @@ class TodoViewModel with Validations {
   void removeTodo(String todoId, String catId) async =>
       await _database.deleteTodo(todoId, catId);
 
-  void checkTodo(Todo todo, String categoryId) async => await _database
-      .saveTodo(todo.copyWith(isCompleted: !todo.isCompleted), categoryId);
+  void checkTodo(Todo todo, bool isChecked) async => await _database.saveTodo(
+      todo.copyWith(isCompleted: isChecked), todo.categoryId);
 }
