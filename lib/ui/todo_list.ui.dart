@@ -16,6 +16,9 @@ class TodoListUI extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
+    // TODO: Popup menu button
+    // TODO: Remove category
+
     final todoStream = watch(todoDataProvider(category.id));
 
     return Scaffold(
@@ -48,9 +51,12 @@ class TodoListUI extends ConsumerWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   Container(
+                    height: 60,
+                    width: 60,
+                    alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(50),
+                      borderRadius: BorderRadius.circular(30),
                     ),
                     child: Text(
                       category.emoji.code,
@@ -58,7 +64,7 @@ class TodoListUI extends ConsumerWidget {
                       style: TextStyle(
                         fontSize: 30,
                       ),
-                    ).paddingHorVer(15, 10),
+                    ),
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
