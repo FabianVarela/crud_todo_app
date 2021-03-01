@@ -16,7 +16,9 @@ class CustomCheckbox extends HookWidget {
         isChecked.value = !isChecked.value;
         onChanged(isChecked.value);
       },
-      child: Container(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 1000),
+        curve: Curves.fastLinearToSlowEaseIn,
         decoration: BoxDecoration(
           color: isChecked.value ? Color(0xFF4A78FA) : Colors.transparent,
           borderRadius: BorderRadius.circular(5),
