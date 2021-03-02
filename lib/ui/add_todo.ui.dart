@@ -66,7 +66,7 @@ class AddTodoUI extends HookWidget {
               _setCategoryText().paddingHorizontal(30),
               const SizedBox(height: 40),
               _setButton(todoProvider, validation.state, id.state,
-                  subject.state.text, isAdded),
+                  subject.state.text, finalDate.state, isAdded),
             ],
           ),
         ),
@@ -171,14 +171,14 @@ class AddTodoUI extends HookWidget {
   }
 
   Widget _setButton(TodoViewModel vm, bool isValid, String id, String subject,
-      StateController<bool> isAdded) {
+      DateTime finalDate, StateController<bool> isAdded) {
     final isCompleted = todo?.isCompleted ?? false;
 
     return RaisedButton(
       color: Color(0xFF4A78FA),
       onPressed: isValid
           ? () {
-              vm.saveTodo(id, subject, isCompleted, category.id);
+              vm.saveTodo(id, subject, isCompleted, finalDate, category.id);
               isAdded.state = true;
             }
           : null,
@@ -200,7 +200,7 @@ class AddTodoUI extends HookWidget {
       BuildContext ctx, StateController<DateTime> finalDate) async {
     final pickedDate = await showDatePicker(
       context: ctx,
-      initialDate: finalDate.state.add(Duration(minutes: 5)), // TODO: Validate
+      initialDate: finalDate.state.add(Duration(minutes: 5)),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
     );
@@ -233,13 +233,11 @@ class AddTodoUI extends HookWidget {
               style: TextStyle(fontSize: 22),
               child: cupertino.CupertinoDatePicker(
                 mode: cupertino.CupertinoDatePickerMode.dateAndTime,
-                initialDateTime:
-                    finalDate.state.add(Duration(minutes: 5)), // TODO: Validate
+                initialDateTime: finalDate.state.add(Duration(minutes: 5)),
                 minimumDate: DateTime.now(),
                 maximumDate: DateTime.now().add(Duration(days: 365)),
-                onDateTimeChanged: (DateTime pickedDate) {
-                  finalDate.state = pickedDate;
-                },
+                onDateTimeChanged: (DateTime pickedDate) =>
+                    finalDate.state = pickedDate,
               ),
             ),
           ),
