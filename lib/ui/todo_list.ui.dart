@@ -24,7 +24,7 @@ class TodoListUI extends ConsumerWidget {
       backgroundColor: Color(0xFF4A78FA),
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Color(0xFF4A78FA),
+        backgroundColor: Colors.transparent,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
@@ -109,7 +109,7 @@ class TodoListUI extends ConsumerWidget {
                           item: todos[pos],
                           category: category,
                         ),
-                      ).paddingHorVer(24, 20)
+                      ).paddingSymmetric(24, 20)
                     : Center(
                         child: Text(
                           'Empty data, add a task',
@@ -175,13 +175,22 @@ class TodoItem extends HookWidget {
               : TextStyle(fontSize: 22),
         ),
         subtitle: Text(
-          item.finalDate.dateTimeToFormattedString,
+          item.finalDate.isDurationNegative
+              ? item.finalDate.timeDateToFormattedString
+              : item.finalDate.isToday
+                  ? item.finalDate.timeFormattedString
+                  : item.finalDate.dateTimeToFormattedString,
           style: item.isCompleted
               ? TextStyle(
                   fontSize: 16,
                   decoration: TextDecoration.lineThrough,
                 )
-              : TextStyle(fontSize: 16),
+              : item.finalDate.isDurationNegative
+                  ? TextStyle(
+                      fontSize: 16,
+                      color: Colors.red,
+                    )
+                  : TextStyle(fontSize: 16),
         ).paddingVertical(4),
         trailing: CustomCheckbox(
           value: item.isCompleted,
@@ -189,7 +198,7 @@ class TodoItem extends HookWidget {
           onChanged: (bool value) => todoProvider.checkTodo(item, value),
         ),
       ),
-      actions: !item.isCompleted
+      actions: !item.isCompleted && !item.finalDate.isDurationNegative
           ? <Widget>[
               IconSlideAction(
                 caption: 'Edit',
