@@ -210,7 +210,7 @@ class AddTodoUI extends HookWidget {
     if (pickedDate != null) {
       final pickedTime = await showTimePicker(
         context: ctx,
-        initialTime: TimeOfDay.now(),
+        initialTime: TimeOfDay.fromDateTime(finalDate.state),
       );
 
       if (pickedTime != null) {
