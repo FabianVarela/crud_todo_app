@@ -6,7 +6,7 @@ abstract class ITodoDatabase {
   Stream<List<Category>> getCategories();
   Stream<List<Todo>> getTodosByCategory(String catId);
   Future<void> saveCategory(Category category);
-  Future<void> saveTodo(Todo todo, String catId);
+  Future<void> saveTodo(Todo todo);
   Future<void> deleteCategory(String catId);
   Future<void> deleteTodo(String todoId, String catId);
 }
@@ -50,7 +50,7 @@ class TodoDatabase implements ITodoDatabase {
           .add(category.toJson());
 
   @override
-  Future<void> saveTodo(Todo todo, String catId) async {
+  Future<void> saveTodo(Todo todo) async {
     if (todo.id.isNotEmpty) {
       await _firebaseFirestore
           .collection(_todoCollection)
@@ -60,7 +60,7 @@ class TodoDatabase implements ITodoDatabase {
       await _firebaseFirestore.collection(_todoCollection).add(todo.toJson());
       await _firebaseFirestore
           .collection(_categoryCollection)
-          .doc(catId)
+          .doc(todo.categoryId)
           .update({'todoSize': FieldValue.increment(1)});
     }
   }

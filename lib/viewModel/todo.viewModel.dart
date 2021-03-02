@@ -30,21 +30,19 @@ class TodoViewModel with Validations {
 
   ValidationText onChangeSubject(String value) => validateEmpty(value);
 
-  void saveTodo(String id, String subject, bool isOk, String catId) async =>
-      await _database.saveTodo(
-        Todo(
-          id: id,
-          subject: subject,
-          isCompleted: isOk,
-          finalDate: DateTime.now(),
-          categoryId: catId,
-        ),
-        catId,
-      );
+  void saveTodo(String id, String subject, bool isOk, DateTime finalDate,
+          String catId) async =>
+      await _database.saveTodo(Todo(
+        id: id,
+        subject: subject,
+        isCompleted: isOk,
+        finalDate: finalDate,
+        categoryId: catId,
+      ));
 
   void removeTodo(String todoId, String catId) async =>
       await _database.deleteTodo(todoId, catId);
 
-  void checkTodo(Todo todo, bool isChecked) async => await _database.saveTodo(
-      todo.copyWith(isCompleted: isChecked), todo.categoryId);
+  void checkTodo(Todo todo, bool isChecked) async =>
+      await _database.saveTodo(todo.copyWith(isCompleted: isChecked));
 }
