@@ -200,7 +200,9 @@ class AddTodoUI extends HookWidget {
       BuildContext ctx, StateController<DateTime> finalDate) async {
     final pickedDate = await showDatePicker(
       context: ctx,
-      initialDate: finalDate.state.add(Duration(minutes: 5)),
+      initialDate: finalDate.state.isDurationNegative
+          ? DateTime.now().add(Duration(minutes: 2))
+          : finalDate.state.add(Duration(minutes: 2)),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
     );
@@ -233,7 +235,9 @@ class AddTodoUI extends HookWidget {
               style: TextStyle(fontSize: 22),
               child: cupertino.CupertinoDatePicker(
                 mode: cupertino.CupertinoDatePickerMode.dateAndTime,
-                initialDateTime: finalDate.state.add(Duration(minutes: 5)),
+                initialDateTime: finalDate.state.isDurationNegative
+                    ? DateTime.now().add(Duration(minutes: 2))
+                    : finalDate.state.add(Duration(minutes: 2)),
                 minimumDate: DateTime.now(),
                 maximumDate: DateTime.now().add(Duration(days: 365)),
                 onDateTimeChanged: (DateTime pickedDate) =>
