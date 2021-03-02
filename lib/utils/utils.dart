@@ -5,6 +5,15 @@ import 'package:intl/intl.dart';
 extension DateTimeUtils on DateTime {
   String get dateTimeToFormattedString =>
       DateFormat("MMM d, ''yy - HH:mm").format(this);
+
+  String get timeDateToFormattedString =>
+      DateFormat('HH:mm - MMMM d').format(this);
+
+  String get timeFormattedString => DateFormat('HH:mm').format(this);
+
+  bool get isDurationNegative => difference(DateTime.now()).isNegative;
+
+  bool get isToday => difference(DateTime.now()).inDays == 0;
 }
 
 extension IntUtils on int {
@@ -37,7 +46,7 @@ extension WidgetUtils on Widget {
         child: this,
       );
 
-  Widget paddingHorVer(double hori, double vert) => Padding(
+  Widget paddingSymmetric(double hori, double vert) => Padding(
         padding: EdgeInsets.symmetric(horizontal: hori, vertical: vert),
         child: this,
       );
