@@ -3,6 +3,7 @@ import 'package:crud_todo_app/model/todo.model.dart';
 import 'package:crud_todo_app/ui/add_todo.ui.dart';
 import 'package:crud_todo_app/ui/widgets/custom_checkbox.dart';
 import 'package:crud_todo_app/utils/utils.dart';
+import 'package:crud_todo_app/viewModel/category.viewModel.dart';
 import 'package:crud_todo_app/viewModel/todo.viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -16,9 +17,7 @@ class TodoListUI extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    // TODO: Popup menu button
-    // TODO: Remove category
-
+    final categoryProvider = context.read(categoryViewModelProvider);
     final todoStream = watch(todoDataProvider(category.id));
 
     return Scaffold(
@@ -33,10 +32,13 @@ class TodoListUI extends ConsumerWidget {
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: [
+        actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.more_vert),
-            onPressed: () {},
+            icon: Icon(Icons.delete),
+            onPressed: () {
+              categoryProvider.deleteCategory(category.id);
+              Navigator.pop(context);
+            },
           ),
         ],
       ),
@@ -79,7 +81,7 @@ class TodoListUI extends ConsumerWidget {
                       ),
                       const SizedBox(height: 5),
                       Text(
-                        '${category.todoSize} Tasks',
+                        '${todos.length} Tasks',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w300,
