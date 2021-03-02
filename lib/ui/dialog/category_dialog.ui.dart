@@ -12,7 +12,7 @@ class CategoryFormDialog extends HookWidget {
 
     final name = useProvider(nameCategoryProvider);
     final emoji = useProvider(emojiCategoryProvider);
-    
+
     final isAdded = useProvider(isAddedCategoryProvider);
     final validation = useProvider(validationCategoryProvider);
 
@@ -29,15 +29,12 @@ class CategoryFormDialog extends HookWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: GestureDetector(
-              onTap: () => Navigator.of(context).pop(),
-              child: Icon(Icons.close, color: Colors.white),
-            ),
-          ),
+          GestureDetector(
+            onTap: () => Navigator.of(context).pop(),
+            child: Icon(Icons.close, color: Colors.white),
+          ).paddingVertical(5),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
@@ -45,11 +42,11 @@ class CategoryFormDialog extends HookWidget {
             child: Column(
               children: <Widget>[
                 _setTitle(),
-                const SizedBox(height: 20),
+                const SizedBox(height: 15),
                 _setTextName(categoryProvider, name),
-                const SizedBox(height: 10),
+                const SizedBox(height: 5),
                 _setTextEmoji(categoryProvider, emoji),
-                const SizedBox(height: 30),
+                const SizedBox(height: 25),
                 _setButton(categoryProvider, validation.state, name.state.text,
                     emoji.state.text, isAdded),
               ],
