@@ -2,6 +2,7 @@ import 'package:crud_todo_app/database/todo.database.dart';
 import 'package:crud_todo_app/dependency/injector.dart';
 import 'package:crud_todo_app/model/todo.model.dart';
 import 'package:crud_todo_app/model/validation_text.model.dart';
+import 'package:crud_todo_app/utils/utils.dart';
 import 'package:crud_todo_app/utils/validations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -19,8 +20,7 @@ final validationTodoProvider = StateProvider.autoDispose((ref) {
   final subject = ref.watch(subjectTodoProvider).state.text;
   final date = ref.watch(dateTodoProvider).state;
 
-  return (subject ?? '').isNotEmpty &&
-      !date.difference(DateTime.now()).isNegative;
+  return (subject ?? '').isNotEmpty && !date.isDurationNegative;
 });
 
 final todoViewModelProvider = Provider((_) => TodoViewModel());
