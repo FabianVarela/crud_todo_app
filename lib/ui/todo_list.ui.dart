@@ -1,24 +1,23 @@
 import 'package:crud_todo_app/model/category.model.dart';
 import 'package:crud_todo_app/model/todo.model.dart';
+import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/ui/add_todo.ui.dart';
 import 'package:crud_todo_app/ui/widgets/custom_checkbox.dart';
-import 'package:crud_todo_app/utils/utils.dart';
-import 'package:crud_todo_app/viewModel/category.viewModel.dart';
-import 'package:crud_todo_app/viewModel/todo.viewModel.dart';
+import 'package:crud_todo_app/common/utils.dart';
+import 'package:crud_todo_app/viewmodel/todo.viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class TodoListUI extends ConsumerWidget {
-  const TodoListUI({Key key, this.category}) : super(key: key);
+  const TodoListUI({Key? key, required this.category}) : super(key: key);
 
   final Category category;
 
   @override
   Widget build(BuildContext context, ScopedReader watch) {
-    final categoryProvider = context.read(categoryViewModelProvider);
-    final todoStream = watch(todoDataProvider(category.id));
+    final todoStream = watch(todoDataProvider(category.id!));
 
     return Scaffold(
       backgroundColor: Color(0xFF4A78FA),
@@ -36,7 +35,9 @@ class TodoListUI extends ConsumerWidget {
           IconButton(
             icon: Icon(Icons.delete),
             onPressed: () {
-              categoryProvider.deleteCategory(category.id);
+              context
+                  .read(categoryViewModelProvider)
+                  .deleteCategory(category.id!);
               Navigator.pop(context);
             },
           ),
@@ -97,11 +98,12 @@ class TodoListUI extends ConsumerWidget {
               flex: 2,
               child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
-                    )),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                ),
                 child: todos.isNotEmpty
                     ? ListView.builder(
                         itemCount: todos.length,
@@ -113,35 +115,26 @@ class TodoListUI extends ConsumerWidget {
                     : Center(
                         child: Text(
                           'Empty data, add a task',
-                          style: TextStyle(
-                            fontSize: 25,
-                          ),
+                          style: TextStyle(fontSize: 25),
                         ),
                       ),
               ),
             ),
           ],
         ),
-        loading: () => const Center(
-          child: CircularProgressIndicator(),
-        ),
+        loading: () => const Center(child: CircularProgressIndicator()),
         error: (e, s) => Container(
           child: Center(
-            child: Text(
-              e.toString(),
-              style: TextStyle(
-                fontSize: 20,
-              ),
-            ),
+            child: Text(e.toString(), style: TextStyle(fontSize: 20)),
           ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xFF4A78FA),
-        child: Icon(Icons.add),
         onPressed: () => Navigator.of(context).push(
           MaterialPageRoute(builder: (_) => AddTodoUI(category: category)),
         ),
+        child: Icon(Icons.add),
       ),
     );
   }
@@ -149,9 +142,9 @@ class TodoListUI extends ConsumerWidget {
 
 class TodoItem extends HookWidget {
   const TodoItem({
-    Key key,
-    @required this.item,
-    @required this.category,
+    Key? key,
+    required this.item,
+    required this.category,
   }) : super(key: key);
 
   final Todo item;
@@ -163,6 +156,30 @@ class TodoItem extends HookWidget {
 
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
+      actions: !item.isCompleted && !item.finalDate.isDurationNegative
+          ? <Widget>[
+              IconSlideAction(
+                caption: 'Edit',
+                color: Color(0xFF4D4E50),
+                icon: Icons.edit,
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => AddTodoUI(category: category, todo: item),
+                  ),
+                ),
+              ),
+            ]
+          : <Widget>[],
+      secondaryActions: !item.isCompleted
+          ? <Widget>[
+              IconSlideAction(
+                caption: 'Remove',
+                color: Colors.red,
+                icon: Icons.delete,
+                onTap: () => todoProvider.removeTodo(item.id, item.categoryId),
+              ),
+            ]
+          : <Widget>[],
       child: ListTile(
         title: Text(
           item.subject,
@@ -198,30 +215,6 @@ class TodoItem extends HookWidget {
           onChanged: (bool value) => todoProvider.checkTodo(item, value),
         ),
       ),
-      actions: !item.isCompleted && !item.finalDate.isDurationNegative
-          ? <Widget>[
-              IconSlideAction(
-                caption: 'Edit',
-                color: Color(0xFF4D4E50),
-                icon: Icons.edit,
-                onTap: () => Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => AddTodoUI(category: category, todo: item),
-                  ),
-                ),
-              ),
-            ]
-          : <Widget>[],
-      secondaryActions: !item.isCompleted
-          ? <Widget>[
-              IconSlideAction(
-                caption: 'Remove',
-                color: Colors.red,
-                icon: Icons.delete,
-                onTap: () => todoProvider.removeTodo(item.id, item.categoryId),
-              ),
-            ]
-          : <Widget>[],
     );
   }
 }

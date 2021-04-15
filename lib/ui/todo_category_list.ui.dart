@@ -1,7 +1,7 @@
 import 'package:crud_todo_app/model/category.model.dart';
 import 'package:crud_todo_app/ui/dialog/category_dialog.ui.dart';
 import 'package:crud_todo_app/ui/todo_list.ui.dart';
-import 'package:crud_todo_app/utils/utils.dart';
+import 'package:crud_todo_app/common/utils.dart';
 import 'package:crud_todo_app/viewModel/category.viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -52,16 +52,12 @@ class TodoCategoryListUI extends ConsumerWidget {
                         ),
                       ),
               ),
-              loading: () => const Center(
-                child: CircularProgressIndicator(),
-              ),
+              loading: () => const Center(child: CircularProgressIndicator()),
               error: (e, s) => Container(
                 child: Center(
                   child: Text(
                     e.toString(),
-                    style: TextStyle(
-                      fontSize: 20,
-                    ),
+                    style: TextStyle(fontSize: 20),
                   ),
                 ),
               ),
@@ -71,8 +67,8 @@ class TodoCategoryListUI extends ConsumerWidget {
       ).paddingHorizontal(16),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xFF4A78FA),
-        child: Icon(Icons.add),
         onPressed: () => _showCategoryDialog(context),
+        child: Icon(Icons.add),
       ),
     );
   }
@@ -93,8 +89,8 @@ class TodoCategoryListUI extends ConsumerWidget {
 
 class CategoryItem extends StatelessWidget {
   const CategoryItem({
-    Key key,
-    @required this.item,
+    Key? key,
+    required this.item,
   }) : super(key: key);
 
   final Category item;
