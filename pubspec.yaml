@@ -4,28 +4,29 @@ description: Create a To-do List app managing CRUD in Firebase and Flutter
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.0
-  hooks_riverpod: ^0.12.4
-  flutter_hooks: ^0.15.0
-  get_it: ^5.0.1
-  firebase_core: ^0.7.0
-  cloud_firestore: ^0.16.0
-  flutter_slidable: ^0.5.7
-  intl: ^0.16.1
-  uuid: ^2.2.2
-  flutter_emoji: ">= 2.0.0"
-  google_fonts: ^1.1.2
+  cupertino_icons: ^1.0.2
+  hooks_riverpod: ^0.14.0+1
+  flutter_hooks: ^0.16.0
+  firebase_core: ^1.0.3
+  cloud_firestore: ^1.0.5
+  flutter_slidable: ^0.6.0
+  intl: ^0.17.0
+  uuid: ^3.0.4
+  flutter_emoji:
+    git:
+      url: git://github.com/cek-cek/flutter-emoji
+  google_fonts: ^2.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  pedantic: ^1.9.0
+  pedantic: ^1.11.0
 
 flutter:
 
