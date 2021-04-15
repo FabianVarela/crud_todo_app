@@ -7,10 +7,10 @@ class CustomCheckbox extends HookWidget {
   final Function(bool) onChanged;
 
   CustomCheckbox({
-    Key key,
+    Key? key,
     this.value = false,
     this.enabled = true,
-    this.onChanged,
+    required this.onChanged,
   });
 
   @override
