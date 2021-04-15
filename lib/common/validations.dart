@@ -1,5 +1,5 @@
 import 'package:crud_todo_app/model/validation_text.model.dart';
-import 'package:crud_todo_app/utils/utils.dart';
+import 'package:crud_todo_app/common/utils.dart';
 
 mixin Validations {
   ValidationText validateEmpty(String value) => value.isNotEmpty
