@@ -1,6 +1,6 @@
-import 'package:crud_todo_app/model/validation_text.model.dart';
-import 'package:crud_todo_app/utils/utils.dart';
-import 'package:crud_todo_app/viewModel/category.viewModel.dart';
+import 'package:crud_todo_app/common/utils.dart';
+import 'package:crud_todo_app/provider_dependency.dart';
+import 'package:crud_todo_app/viewmodel/category.viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -8,19 +8,17 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class CategoryFormDialog extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final categoryProvider = useProvider(categoryViewModelProvider);
+    final name = useProvider(nameCatProvider);
+    final emoji = useProvider(emojiCatProvider);
 
-    final name = useProvider(nameCategoryProvider);
-    final emoji = useProvider(emojiCategoryProvider);
-
-    final isAdded = useProvider(isAddedCategoryProvider);
-    final validation = useProvider(validationCategoryProvider);
+    final nameText = useTextEditingController(text: name.state.text ?? '');
+    final emojiText = useTextEditingController(text: emoji.state.text ?? '');
 
     return ProviderListener<StateController<bool>>(
       provider: isAddedCategoryProvider,
       onChange: (_, addedState) {
         if (addedState.state) {
-          WidgetsBinding.instance.addPostFrameCallback(
+          WidgetsBinding.instance!.addPostFrameCallback(
             (_) => Navigator.pop(context),
           );
         }
@@ -41,14 +39,16 @@ class CategoryFormDialog extends HookWidget {
             ),
             child: Column(
               children: <Widget>[
-                _setTitle(),
+                Text(
+                  'Add category',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                ),
                 const SizedBox(height: 15),
-                _setTextName(categoryProvider, name),
+                _nameTextField(context, nameText),
                 const SizedBox(height: 5),
-                _setTextEmoji(categoryProvider, emoji),
+                _emojiTextField(context, emojiText),
                 const SizedBox(height: 25),
-                _setButton(categoryProvider, validation.state, name.state.text,
-                    emoji.state.text, isAdded),
+                _categoryButton(name.state.text ?? '', emoji.state.text ?? ''),
               ],
             ),
           ),
@@ -57,64 +57,60 @@ class CategoryFormDialog extends HookWidget {
     );
   }
 
-  Widget _setTitle() => Text(
-        'Add category',
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w600,
+  Widget _nameTextField(BuildContext ctx, TextEditingController controller) {
+    return Consumer(
+      builder: (_, watch, __) => TextField(
+        controller: controller,
+        textInputAction: TextInputAction.next,
+        decoration: InputDecoration(
+          hintText: 'Name',
+          errorText: watch(nameCatProvider).state.message,
         ),
-      );
-
-  Widget _setTextName(
-      CategoryViewModel vm, StateController<ValidationText> name) {
-    final nameController = useTextEditingController(text: name.state.text);
-
-    return TextField(
-      controller: nameController,
-      textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-        hintText: 'Name',
-        errorText: name.state.message,
+        onChanged: (value) => watch(nameCatProvider).state =
+            ctx.read(categoryViewModelProvider).onChangeName(value),
       ),
-      onChanged: (val) => name.state = vm.onChangeName(val),
     );
   }
 
-  Widget _setTextEmoji(
-      CategoryViewModel vm, StateController<ValidationText> emoji) {
-    final emojiController = useTextEditingController(text: emoji.state.text);
-    return TextField(
-      controller: emojiController,
-      textInputAction: TextInputAction.done,
-      decoration: InputDecoration(
-        hintText: 'Emoji',
-        errorText: emoji.state.message,
+  Widget _emojiTextField(BuildContext ctx, TextEditingController controller) {
+    return Consumer(
+      builder: (_, watch, __) => TextField(
+        controller: controller,
+        textInputAction: TextInputAction.done,
+        decoration: InputDecoration(
+          hintText: 'Emoji',
+          errorText: watch(emojiCatProvider).state.message,
+        ),
+        onChanged: (value) => watch(emojiCatProvider).state =
+            ctx.read(categoryViewModelProvider).onChangeEmoji(value),
       ),
-      onChanged: (val) => emoji.state = vm.onChangeEmoji(val),
     );
   }
 
-  Widget _setButton(CategoryViewModel vm, bool isValid, String name,
-      String emoji, StateController<bool> isAdded) {
-    return RaisedButton(
-      color: Color(0xFF4A78FA),
-      child: Container(
-        width: double.infinity,
-        alignment: Alignment.center,
-        child: Text(
-          'Create',
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.white,
+  Widget _categoryButton(String name, String emoji) {
+    return Consumer(builder: (_, watch, __) {
+      final categoryViewModel = watch(categoryViewModelProvider);
+
+      final isValid = watch(validationCategoryProvider).state;
+      final isAdded = watch(isAddedCategoryProvider);
+
+      return ElevatedButton(
+        style: ElevatedButton.styleFrom(primary: Color(0xFF4A78FA)),
+        onPressed: isValid
+            ? () {
+                categoryViewModel.saveCategory(name, emoji);
+                isAdded.state = true;
+              }
+            : null,
+        child: Container(
+          width: double.infinity,
+          alignment: Alignment.center,
+          child: Text(
+            'Create',
+            style: TextStyle(fontSize: 16, color: Colors.white),
           ),
-        ),
-      ).paddingVertical(12),
-      onPressed: isValid
-          ? () {
-              vm.saveCategory(name, emoji);
-              isAdded.state = true;
-            }
-          : null,
-    );
+        ).paddingVertical(12),
+      );
+    });
   }
 }
