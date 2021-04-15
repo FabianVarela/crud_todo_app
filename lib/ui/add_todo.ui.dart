@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:crud_todo_app/model/category.model.dart';
 import 'package:crud_todo_app/model/todo.model.dart';
 import 'package:crud_todo_app/model/validation_text.model.dart';
-import 'package:crud_todo_app/utils/utils.dart';
+import 'package:crud_todo_app/common/utils.dart';
+import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/viewModel/todo.viewModel.dart';
 import 'package:flutter/cupertino.dart' as cupertino;
 import 'package:flutter/material.dart';
@@ -11,46 +12,40 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AddTodoUI extends HookWidget {
-  AddTodoUI({Key key, this.category, this.todo});
+  AddTodoUI({Key? key, required this.category, this.todo});
 
   final Category category;
-  final Todo todo;
+  final Todo? todo;
 
   @override
   Widget build(BuildContext context) {
-    final todoProvider = useProvider(todoViewModelProvider);
-
     final id = useProvider(idTodoProvider);
     final subject = useProvider(subjectTodoProvider);
     final finalDate = useProvider(dateTodoProvider);
 
-    final validation = useProvider(validationTodoProvider);
-    final isAdded = useProvider(isAddedTodoProvider);
-
-    final subjectController = useTextEditingController();
+    final subjectText = useTextEditingController();
 
     useEffect(() {
       if (todo != null) {
         Future.microtask(() {
-          id.state = todo.id;
-          subject.state = ValidationText(text: todo.subject);
-          finalDate.state = todo.finalDate;
+          id.state = todo!.id;
+          subject.state = ValidationText(text: todo!.subject);
+          finalDate.state = todo!.finalDate;
 
-          subjectController.text = subject.state.text;
+          subjectText.text = subject.state.text ?? '';
         });
       }
-      return;
+      return null;
     }, const []);
 
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
       resizeToAvoidBottomInset: true,
-      appBar: _setAppBar(context),
+      appBar: _appBar(context),
       body: ProviderListener<StateController<bool>>(
         provider: isAddedTodoProvider,
         onChange: (_, addedState) {
           if (addedState.state) {
-            WidgetsBinding.instance.addPostFrameCallback(
+            WidgetsBinding.instance!.addPostFrameCallback(
               (_) => Navigator.pop(context),
             );
           }
@@ -58,15 +53,13 @@ class AddTodoUI extends HookWidget {
         child: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              _setSubjectText(todoProvider, subjectController, subject)
-                  .paddingHorizontal(30),
+              _subjectTextField(context, subjectText).paddingHorizontal(30),
               const SizedBox(height: 30),
-              _setDateButton(context, finalDate).paddingHorizontal(30),
+              _dateButton(context).paddingHorizontal(30),
               const SizedBox(height: 20),
-              _setCategoryText().paddingHorizontal(30),
+              _categoryText().paddingHorizontal(30),
               const SizedBox(height: 40),
-              _setButton(todoProvider, validation.state, id.state,
-                  subject.state.text, finalDate.state, isAdded),
+              _setButton(id.state, subject.state.text ?? '', finalDate.state),
             ],
           ),
         ),
@@ -74,7 +67,7 @@ class AddTodoUI extends HookWidget {
     );
   }
 
-  Widget _setAppBar(BuildContext context) {
+  PreferredSizeWidget _appBar(BuildContext context) {
     return AppBar(
       elevation: 0,
       centerTitle: true,
@@ -97,71 +90,58 @@ class AddTodoUI extends HookWidget {
     );
   }
 
-  Widget _setSubjectText(TodoViewModel vm, TextEditingController controller,
-      StateController<ValidationText> subject) {
-    return TextField(
-      controller: controller,
-      maxLines: 5,
-      textInputAction: TextInputAction.done,
-      decoration: InputDecoration(
-        hintText: 'What are you planning?',
-        hintStyle: TextStyle(color: Colors.grey),
-        errorText: subject.state.message,
+  Widget _subjectTextField(BuildContext ctx, TextEditingController controller) {
+    return Consumer(
+      builder: (_, watch, __) => TextField(
+        controller: controller,
+        maxLines: 5,
+        textInputAction: TextInputAction.done,
+        decoration: InputDecoration(
+          hintText: 'What are you planning?',
+          hintStyle: TextStyle(color: Colors.grey),
+          errorText: watch(subjectTodoProvider).state.message,
+        ),
+        style: TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
+        onChanged: (val) => watch(subjectTodoProvider).state =
+            ctx.read(todoViewModelProvider).onChangeSubject(val),
       ),
-      style: TextStyle(
-        fontSize: 25,
-        fontWeight: FontWeight.w300,
-      ),
-      onChanged: (val) => subject.state = vm.onChangeSubject(val),
     );
   }
 
-  Widget _setDateButton(BuildContext ctx, StateController<DateTime> finalDate) {
-    return InkWell(
-      child: Row(
-        children: <Widget>[
-          Icon(
-            Icons.notifications_active_outlined,
-            color: Color(0xFF4A78FA),
-          ),
-          const SizedBox(width: 12),
-          Text(
-            finalDate.state.dateTimeToFormattedString,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
+  Widget _dateButton(BuildContext ctx) {
+    return Consumer(builder: (_, watch, __) {
+      final finalDate = watch(dateTodoProvider);
+      return InkWell(
+        onTap: () => Platform.isIOS
+            ? _dateIOS(ctx, finalDate)
+            : _dateAndroid(ctx, finalDate),
+        child: Row(
+          children: <Widget>[
+            Icon(Icons.notifications_active_outlined, color: Color(0xFF4A78FA)),
+            const SizedBox(width: 12),
+            Text(
+              finalDate.state.dateTimeToFormattedString,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
-          ),
-        ],
-      ),
-      onTap: () => Platform.isIOS
-          ? _selectedDateTimeIOS(ctx, finalDate)
-          : _selectedDateTimeAndroid(ctx, finalDate),
-    );
+          ],
+        ),
+      );
+    });
   }
 
-  Widget _setCategoryText() {
+  Widget _categoryText() {
     return Row(
       children: <Widget>[
-        Icon(
-          Icons.local_offer_outlined,
-          color: Color(0xFF77C783),
-        ),
+        Icon(Icons.local_offer_outlined, color: Color(0xFF77C783)),
         const SizedBox(width: 12),
         Expanded(
           child: Row(
             children: <Widget>[
-              Text(
-                category.emoji.code,
-                style: TextStyle(fontSize: 16),
-              ),
+              Text(category.emoji.code, style: TextStyle(fontSize: 16)),
               const SizedBox(width: 5),
               Text(
                 category.name,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
               ),
             ],
           ),
@@ -170,39 +150,39 @@ class AddTodoUI extends HookWidget {
     );
   }
 
-  Widget _setButton(TodoViewModel vm, bool isValid, String id, String subject,
-      DateTime finalDate, StateController<bool> isAdded) {
-    final isCompleted = todo?.isCompleted ?? false;
+  Widget _setButton(String id, String subject, DateTime finalDate) {
+    return Consumer(builder: (_, watch, __) {
+      final todoViewModel = watch(todoViewModelProvider);
 
-    return RaisedButton(
-      color: Color(0xFF4A78FA),
-      onPressed: isValid
-          ? () {
-              vm.saveTodo(id, subject, isCompleted, finalDate, category.id);
-              isAdded.state = true;
-            }
-          : null,
-      child: Container(
-        width: double.infinity,
-        alignment: Alignment.center,
-        child: Text(
-          'Create',
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.white,
+      final isValid = watch(validationTodoProvider).state;
+      final isAdded = watch(isAddedTodoProvider);
+
+      return ElevatedButton(
+        style: ElevatedButton.styleFrom(primary: Color(0xFF4A78FA)),
+        onPressed: isValid
+            ? () {
+                todoViewModel.saveTodo(id, subject, finalDate, category.id!);
+                isAdded.state = true;
+              }
+            : null,
+        child: Container(
+          width: double.infinity,
+          alignment: Alignment.center,
+          child: Text(
+            'Create',
+            style: TextStyle(fontSize: 16, color: Colors.white),
           ),
-        ),
-      ).paddingVertical(16),
-    );
+        ).paddingVertical(16),
+      );
+    });
   }
 
-  void _selectedDateTimeAndroid(
-      BuildContext ctx, StateController<DateTime> finalDate) async {
+  void _dateAndroid(BuildContext ctx, StateController<DateTime> date) async {
     final pickedDate = await showDatePicker(
       context: ctx,
-      initialDate: finalDate.state.isDurationNegative
+      initialDate: date.state.isDurationNegative
           ? DateTime.now().add(Duration(minutes: 2))
-          : finalDate.state.add(Duration(minutes: 2)),
+          : date.state.add(Duration(minutes: 2)),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 365)),
     );
@@ -210,18 +190,17 @@ class AddTodoUI extends HookWidget {
     if (pickedDate != null) {
       final pickedTime = await showTimePicker(
         context: ctx,
-        initialTime: TimeOfDay.fromDateTime(finalDate.state),
+        initialTime: TimeOfDay.fromDateTime(date.state),
       );
 
       if (pickedTime != null) {
-        finalDate.state = DateTime(pickedDate.year, pickedDate.month,
-            pickedDate.day, pickedTime.hour, pickedTime.minute);
+        date.state = DateTime(pickedDate.year, pickedDate.month, pickedDate.day,
+            pickedTime.hour, pickedTime.minute);
       }
     }
   }
 
-  void _selectedDateTimeIOS(
-      BuildContext ctx, StateController<DateTime> finalDate) {
+  void _dateIOS(BuildContext ctx, StateController<DateTime> date) {
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
@@ -235,13 +214,13 @@ class AddTodoUI extends HookWidget {
               style: TextStyle(fontSize: 22),
               child: cupertino.CupertinoDatePicker(
                 mode: cupertino.CupertinoDatePickerMode.dateAndTime,
-                initialDateTime: finalDate.state.isDurationNegative
+                initialDateTime: date.state.isDurationNegative
                     ? DateTime.now().add(Duration(minutes: 2))
-                    : finalDate.state.add(Duration(minutes: 2)),
+                    : date.state.add(Duration(minutes: 2)),
                 minimumDate: DateTime.now(),
                 maximumDate: DateTime.now().add(Duration(days: 365)),
                 onDateTimeChanged: (DateTime pickedDate) =>
-                    finalDate.state = pickedDate,
+                    date.state = pickedDate,
               ),
             ),
           ),
