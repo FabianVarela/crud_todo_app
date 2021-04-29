@@ -2,7 +2,7 @@ import 'package:crud_todo_app/model/category.model.dart';
 import 'package:crud_todo_app/ui/dialog/category_dialog.ui.dart';
 import 'package:crud_todo_app/ui/todo_list.ui.dart';
 import 'package:crud_todo_app/common/utils.dart';
-import 'package:crud_todo_app/viewModel/category.viewModel.dart';
+import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -19,7 +19,7 @@ class TodoCategoryListUI extends ConsumerWidget {
           Icons.menu_rounded,
           color: Colors.black,
           size: 30,
-        ).paddingHorizontal(25),
+        ).paddingSymmetric(h: 25),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,8 +30,7 @@ class TodoCategoryListUI extends ConsumerWidget {
               fontSize: 30,
               fontWeight: FontWeight.w600,
             ),
-          ).paddingHorizontal(12),
-          const SizedBox(height: 20),
+          ).paddingSymmetric(h: 12, v: 20),
           Expanded(
             child: categoryStream.when(
               data: (categories) => Container(
@@ -64,7 +63,7 @@ class TodoCategoryListUI extends ConsumerWidget {
             ),
           ),
         ],
-      ).paddingHorizontal(16),
+      ).paddingSymmetric(h: 16),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Color(0xFF4A78FA),
         onPressed: () => _showCategoryDialog(context),
