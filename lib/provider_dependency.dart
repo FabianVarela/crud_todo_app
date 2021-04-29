@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crud_todo_app/repository/todo.repository.dart';
-import 'package:crud_todo_app/viewmodel/category.viewModel.dart';
+import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
+import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:crud_todo_app/viewmodel/todo.viewModel.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -16,10 +17,10 @@ final todoRepositoryProvider = Provider<ITodoRepository>(
 
 /// ViewModel
 
+final categoryViewModelProvider =
+    StateNotifierProvider<CategoryViewModel, CategoryState>(
+        (ref) => CategoryViewModel(ref.read));
+
 final todoViewModelProvider = Provider(
   (ref) => TodoViewModel(ref.watch(todoRepositoryProvider)),
-);
-
-final categoryViewModelProvider = Provider(
-  (ref) => CategoryViewModel(ref.watch(todoRepositoryProvider)),
 );
