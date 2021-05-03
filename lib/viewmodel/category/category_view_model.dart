@@ -28,17 +28,17 @@ class CategoryViewModel extends StateNotifier<CategoryState> with Validations {
         emoji: EmojiParser().getEmoji(emoji.text!),
       ));
 
-      state = CategoryState.success();
+      state = CategoryState.success(CategoryAction.add);
     } catch (_) {
       state = CategoryState.error();
     }
   }
 
-  void deleteCategory(String id) async {
+  void removeCategory(String id) async {
     try {
       state = CategoryState.loading();
       await _read(todoRepositoryProvider).deleteCategory(id);
-      state = CategoryState.success();
+      state = CategoryState.success(CategoryAction.remove);
     } on Exception catch (e) {
       state = CategoryState.error(e.toString());
     }

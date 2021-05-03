@@ -24,8 +24,10 @@ class _$CategoryStateTearOff {
     return const _CategoryStateLoading();
   }
 
-  _CategoryStateSuccess success() {
-    return const _CategoryStateSuccess();
+  _CategoryStateSuccess success(CategoryAction action) {
+    return _CategoryStateSuccess(
+      action,
+    );
   }
 
   _CategoryStateError error([String? message]) {
@@ -44,7 +46,7 @@ mixin _$CategoryState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(CategoryAction action) success,
     required TResult Function(String? message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -52,7 +54,7 @@ mixin _$CategoryState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(CategoryAction action)? success,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) =>
@@ -135,7 +137,7 @@ class _$_CategoryStateInitial implements _CategoryStateInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(CategoryAction action) success,
     required TResult Function(String? message) error,
   }) {
     return initial();
@@ -146,7 +148,7 @@ class _$_CategoryStateInitial implements _CategoryStateInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(CategoryAction action)? success,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
@@ -229,7 +231,7 @@ class _$_CategoryStateLoading implements _CategoryStateLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(CategoryAction action) success,
     required TResult Function(String? message) error,
   }) {
     return loading();
@@ -240,7 +242,7 @@ class _$_CategoryStateLoading implements _CategoryStateLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(CategoryAction action)? success,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
@@ -286,6 +288,7 @@ abstract class _$CategoryStateSuccessCopyWith<$Res> {
   factory _$CategoryStateSuccessCopyWith(_CategoryStateSuccess value,
           $Res Function(_CategoryStateSuccess) then) =
       __$CategoryStateSuccessCopyWithImpl<$Res>;
+  $Res call({CategoryAction action});
 }
 
 /// @nodoc
@@ -298,35 +301,60 @@ class __$CategoryStateSuccessCopyWithImpl<$Res>
 
   @override
   _CategoryStateSuccess get _value => super._value as _CategoryStateSuccess;
+
+  @override
+  $Res call({
+    Object? action = freezed,
+  }) {
+    return _then(_CategoryStateSuccess(
+      action == freezed
+          ? _value.action
+          : action // ignore: cast_nullable_to_non_nullable
+              as CategoryAction,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_CategoryStateSuccess implements _CategoryStateSuccess {
-  const _$_CategoryStateSuccess();
+  const _$_CategoryStateSuccess(this.action);
+
+  @override
+  final CategoryAction action;
 
   @override
   String toString() {
-    return 'CategoryState.success()';
+    return 'CategoryState.success(action: $action)';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _CategoryStateSuccess);
+    return identical(this, other) ||
+        (other is _CategoryStateSuccess &&
+            (identical(other.action, action) ||
+                const DeepCollectionEquality().equals(other.action, action)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(action);
+
+  @JsonKey(ignore: true)
+  @override
+  _$CategoryStateSuccessCopyWith<_CategoryStateSuccess> get copyWith =>
+      __$CategoryStateSuccessCopyWithImpl<_CategoryStateSuccess>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(CategoryAction action) success,
     required TResult Function(String? message) error,
   }) {
-    return success();
+    return success(action);
   }
 
   @override
@@ -334,12 +362,12 @@ class _$_CategoryStateSuccess implements _CategoryStateSuccess {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(CategoryAction action)? success,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success();
+      return success(action);
     }
     return orElse();
   }
@@ -372,7 +400,13 @@ class _$_CategoryStateSuccess implements _CategoryStateSuccess {
 }
 
 abstract class _CategoryStateSuccess implements CategoryState {
-  const factory _CategoryStateSuccess() = _$_CategoryStateSuccess;
+  const factory _CategoryStateSuccess(CategoryAction action) =
+      _$_CategoryStateSuccess;
+
+  CategoryAction get action => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$CategoryStateSuccessCopyWith<_CategoryStateSuccess> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -442,7 +476,7 @@ class _$_CategoryStateError implements _CategoryStateError {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() success,
+    required TResult Function(CategoryAction action) success,
     required TResult Function(String? message) error,
   }) {
     return error(message);
@@ -453,7 +487,7 @@ class _$_CategoryStateError implements _CategoryStateError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? success,
+    TResult Function(CategoryAction action)? success,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
