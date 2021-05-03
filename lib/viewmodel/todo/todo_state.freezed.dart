@@ -24,20 +24,10 @@ class _$TodoStateTearOff {
     return const _TodoStateLoading();
   }
 
-  _TodoStateAdd add() {
-    return const _TodoStateAdd();
-  }
-
-  _TodoStateUpdate update() {
-    return const _TodoStateUpdate();
-  }
-
-  _TodoStateRemove remove() {
-    return const _TodoStateRemove();
-  }
-
-  _TodoStateCheck check() {
-    return const _TodoStateCheck();
+  _TodoStateSuccess success(TodoAction action) {
+    return _TodoStateSuccess(
+      action,
+    );
   }
 
   _TodoStateError error([String? message]) {
@@ -56,10 +46,7 @@ mixin _$TodoState {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() add,
-    required TResult Function() update,
-    required TResult Function() remove,
-    required TResult Function() check,
+    required TResult Function(TodoAction action) success,
     required TResult Function(String? message) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -67,10 +54,7 @@ mixin _$TodoState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? add,
-    TResult Function()? update,
-    TResult Function()? remove,
-    TResult Function()? check,
+    TResult Function(TodoAction action)? success,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) =>
@@ -79,10 +63,7 @@ mixin _$TodoState {
   TResult map<TResult extends Object?>({
     required TResult Function(_TodoStateInitial value) initial,
     required TResult Function(_TodoStateLoading value) loading,
-    required TResult Function(_TodoStateAdd value) add,
-    required TResult Function(_TodoStateUpdate value) update,
-    required TResult Function(_TodoStateRemove value) remove,
-    required TResult Function(_TodoStateCheck value) check,
+    required TResult Function(_TodoStateSuccess value) success,
     required TResult Function(_TodoStateError value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -90,10 +71,7 @@ mixin _$TodoState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TodoStateInitial value)? initial,
     TResult Function(_TodoStateLoading value)? loading,
-    TResult Function(_TodoStateAdd value)? add,
-    TResult Function(_TodoStateUpdate value)? update,
-    TResult Function(_TodoStateRemove value)? remove,
-    TResult Function(_TodoStateCheck value)? check,
+    TResult Function(_TodoStateSuccess value)? success,
     TResult Function(_TodoStateError value)? error,
     required TResult orElse(),
   }) =>
@@ -157,10 +135,7 @@ class _$_TodoStateInitial implements _TodoStateInitial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() add,
-    required TResult Function() update,
-    required TResult Function() remove,
-    required TResult Function() check,
+    required TResult Function(TodoAction action) success,
     required TResult Function(String? message) error,
   }) {
     return initial();
@@ -171,10 +146,7 @@ class _$_TodoStateInitial implements _TodoStateInitial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? add,
-    TResult Function()? update,
-    TResult Function()? remove,
-    TResult Function()? check,
+    TResult Function(TodoAction action)? success,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
@@ -189,10 +161,7 @@ class _$_TodoStateInitial implements _TodoStateInitial {
   TResult map<TResult extends Object?>({
     required TResult Function(_TodoStateInitial value) initial,
     required TResult Function(_TodoStateLoading value) loading,
-    required TResult Function(_TodoStateAdd value) add,
-    required TResult Function(_TodoStateUpdate value) update,
-    required TResult Function(_TodoStateRemove value) remove,
-    required TResult Function(_TodoStateCheck value) check,
+    required TResult Function(_TodoStateSuccess value) success,
     required TResult Function(_TodoStateError value) error,
   }) {
     return initial(this);
@@ -203,10 +172,7 @@ class _$_TodoStateInitial implements _TodoStateInitial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TodoStateInitial value)? initial,
     TResult Function(_TodoStateLoading value)? loading,
-    TResult Function(_TodoStateAdd value)? add,
-    TResult Function(_TodoStateUpdate value)? update,
-    TResult Function(_TodoStateRemove value)? remove,
-    TResult Function(_TodoStateCheck value)? check,
+    TResult Function(_TodoStateSuccess value)? success,
     TResult Function(_TodoStateError value)? error,
     required TResult orElse(),
   }) {
@@ -263,10 +229,7 @@ class _$_TodoStateLoading implements _TodoStateLoading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() add,
-    required TResult Function() update,
-    required TResult Function() remove,
-    required TResult Function() check,
+    required TResult Function(TodoAction action) success,
     required TResult Function(String? message) error,
   }) {
     return loading();
@@ -277,10 +240,7 @@ class _$_TodoStateLoading implements _TodoStateLoading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? add,
-    TResult Function()? update,
-    TResult Function()? remove,
-    TResult Function()? check,
+    TResult Function(TodoAction action)? success,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
@@ -295,10 +255,7 @@ class _$_TodoStateLoading implements _TodoStateLoading {
   TResult map<TResult extends Object?>({
     required TResult Function(_TodoStateInitial value) initial,
     required TResult Function(_TodoStateLoading value) loading,
-    required TResult Function(_TodoStateAdd value) add,
-    required TResult Function(_TodoStateUpdate value) update,
-    required TResult Function(_TodoStateRemove value) remove,
-    required TResult Function(_TodoStateCheck value) check,
+    required TResult Function(_TodoStateSuccess value) success,
     required TResult Function(_TodoStateError value) error,
   }) {
     return loading(this);
@@ -309,10 +266,7 @@ class _$_TodoStateLoading implements _TodoStateLoading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TodoStateInitial value)? initial,
     TResult Function(_TodoStateLoading value)? loading,
-    TResult Function(_TodoStateAdd value)? add,
-    TResult Function(_TodoStateUpdate value)? update,
-    TResult Function(_TodoStateRemove value)? remove,
-    TResult Function(_TodoStateCheck value)? check,
+    TResult Function(_TodoStateSuccess value)? success,
     TResult Function(_TodoStateError value)? error,
     required TResult orElse(),
   }) {
@@ -328,53 +282,76 @@ abstract class _TodoStateLoading implements TodoState {
 }
 
 /// @nodoc
-abstract class _$TodoStateAddCopyWith<$Res> {
-  factory _$TodoStateAddCopyWith(
-          _TodoStateAdd value, $Res Function(_TodoStateAdd) then) =
-      __$TodoStateAddCopyWithImpl<$Res>;
+abstract class _$TodoStateSuccessCopyWith<$Res> {
+  factory _$TodoStateSuccessCopyWith(
+          _TodoStateSuccess value, $Res Function(_TodoStateSuccess) then) =
+      __$TodoStateSuccessCopyWithImpl<$Res>;
+  $Res call({TodoAction action});
 }
 
 /// @nodoc
-class __$TodoStateAddCopyWithImpl<$Res> extends _$TodoStateCopyWithImpl<$Res>
-    implements _$TodoStateAddCopyWith<$Res> {
-  __$TodoStateAddCopyWithImpl(
-      _TodoStateAdd _value, $Res Function(_TodoStateAdd) _then)
-      : super(_value, (v) => _then(v as _TodoStateAdd));
+class __$TodoStateSuccessCopyWithImpl<$Res>
+    extends _$TodoStateCopyWithImpl<$Res>
+    implements _$TodoStateSuccessCopyWith<$Res> {
+  __$TodoStateSuccessCopyWithImpl(
+      _TodoStateSuccess _value, $Res Function(_TodoStateSuccess) _then)
+      : super(_value, (v) => _then(v as _TodoStateSuccess));
 
   @override
-  _TodoStateAdd get _value => super._value as _TodoStateAdd;
+  _TodoStateSuccess get _value => super._value as _TodoStateSuccess;
+
+  @override
+  $Res call({
+    Object? action = freezed,
+  }) {
+    return _then(_TodoStateSuccess(
+      action == freezed
+          ? _value.action
+          : action // ignore: cast_nullable_to_non_nullable
+              as TodoAction,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$_TodoStateAdd implements _TodoStateAdd {
-  const _$_TodoStateAdd();
+class _$_TodoStateSuccess implements _TodoStateSuccess {
+  const _$_TodoStateSuccess(this.action);
+
+  @override
+  final TodoAction action;
 
   @override
   String toString() {
-    return 'TodoState.add()';
+    return 'TodoState.success(action: $action)';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _TodoStateAdd);
+    return identical(this, other) ||
+        (other is _TodoStateSuccess &&
+            (identical(other.action, action) ||
+                const DeepCollectionEquality().equals(other.action, action)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(action);
+
+  @JsonKey(ignore: true)
+  @override
+  _$TodoStateSuccessCopyWith<_TodoStateSuccess> get copyWith =>
+      __$TodoStateSuccessCopyWithImpl<_TodoStateSuccess>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() add,
-    required TResult Function() update,
-    required TResult Function() remove,
-    required TResult Function() check,
+    required TResult Function(TodoAction action) success,
     required TResult Function(String? message) error,
   }) {
-    return add();
+    return success(action);
   }
 
   @override
@@ -382,15 +359,12 @@ class _$_TodoStateAdd implements _TodoStateAdd {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? add,
-    TResult Function()? update,
-    TResult Function()? remove,
-    TResult Function()? check,
+    TResult Function(TodoAction action)? success,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
-    if (add != null) {
-      return add();
+    if (success != null) {
+      return success(action);
     }
     return orElse();
   }
@@ -400,13 +374,10 @@ class _$_TodoStateAdd implements _TodoStateAdd {
   TResult map<TResult extends Object?>({
     required TResult Function(_TodoStateInitial value) initial,
     required TResult Function(_TodoStateLoading value) loading,
-    required TResult Function(_TodoStateAdd value) add,
-    required TResult Function(_TodoStateUpdate value) update,
-    required TResult Function(_TodoStateRemove value) remove,
-    required TResult Function(_TodoStateCheck value) check,
+    required TResult Function(_TodoStateSuccess value) success,
     required TResult Function(_TodoStateError value) error,
   }) {
-    return add(this);
+    return success(this);
   }
 
   @override
@@ -414,337 +385,24 @@ class _$_TodoStateAdd implements _TodoStateAdd {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TodoStateInitial value)? initial,
     TResult Function(_TodoStateLoading value)? loading,
-    TResult Function(_TodoStateAdd value)? add,
-    TResult Function(_TodoStateUpdate value)? update,
-    TResult Function(_TodoStateRemove value)? remove,
-    TResult Function(_TodoStateCheck value)? check,
+    TResult Function(_TodoStateSuccess value)? success,
     TResult Function(_TodoStateError value)? error,
     required TResult orElse(),
   }) {
-    if (add != null) {
-      return add(this);
+    if (success != null) {
+      return success(this);
     }
     return orElse();
   }
 }
 
-abstract class _TodoStateAdd implements TodoState {
-  const factory _TodoStateAdd() = _$_TodoStateAdd;
-}
+abstract class _TodoStateSuccess implements TodoState {
+  const factory _TodoStateSuccess(TodoAction action) = _$_TodoStateSuccess;
 
-/// @nodoc
-abstract class _$TodoStateUpdateCopyWith<$Res> {
-  factory _$TodoStateUpdateCopyWith(
-          _TodoStateUpdate value, $Res Function(_TodoStateUpdate) then) =
-      __$TodoStateUpdateCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$TodoStateUpdateCopyWithImpl<$Res> extends _$TodoStateCopyWithImpl<$Res>
-    implements _$TodoStateUpdateCopyWith<$Res> {
-  __$TodoStateUpdateCopyWithImpl(
-      _TodoStateUpdate _value, $Res Function(_TodoStateUpdate) _then)
-      : super(_value, (v) => _then(v as _TodoStateUpdate));
-
-  @override
-  _TodoStateUpdate get _value => super._value as _TodoStateUpdate;
-}
-
-/// @nodoc
-
-class _$_TodoStateUpdate implements _TodoStateUpdate {
-  const _$_TodoStateUpdate();
-
-  @override
-  String toString() {
-    return 'TodoState.update()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _TodoStateUpdate);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() add,
-    required TResult Function() update,
-    required TResult Function() remove,
-    required TResult Function() check,
-    required TResult Function(String? message) error,
-  }) {
-    return update();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? add,
-    TResult Function()? update,
-    TResult Function()? remove,
-    TResult Function()? check,
-    TResult Function(String? message)? error,
-    required TResult orElse(),
-  }) {
-    if (update != null) {
-      return update();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_TodoStateInitial value) initial,
-    required TResult Function(_TodoStateLoading value) loading,
-    required TResult Function(_TodoStateAdd value) add,
-    required TResult Function(_TodoStateUpdate value) update,
-    required TResult Function(_TodoStateRemove value) remove,
-    required TResult Function(_TodoStateCheck value) check,
-    required TResult Function(_TodoStateError value) error,
-  }) {
-    return update(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_TodoStateInitial value)? initial,
-    TResult Function(_TodoStateLoading value)? loading,
-    TResult Function(_TodoStateAdd value)? add,
-    TResult Function(_TodoStateUpdate value)? update,
-    TResult Function(_TodoStateRemove value)? remove,
-    TResult Function(_TodoStateCheck value)? check,
-    TResult Function(_TodoStateError value)? error,
-    required TResult orElse(),
-  }) {
-    if (update != null) {
-      return update(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _TodoStateUpdate implements TodoState {
-  const factory _TodoStateUpdate() = _$_TodoStateUpdate;
-}
-
-/// @nodoc
-abstract class _$TodoStateRemoveCopyWith<$Res> {
-  factory _$TodoStateRemoveCopyWith(
-          _TodoStateRemove value, $Res Function(_TodoStateRemove) then) =
-      __$TodoStateRemoveCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$TodoStateRemoveCopyWithImpl<$Res> extends _$TodoStateCopyWithImpl<$Res>
-    implements _$TodoStateRemoveCopyWith<$Res> {
-  __$TodoStateRemoveCopyWithImpl(
-      _TodoStateRemove _value, $Res Function(_TodoStateRemove) _then)
-      : super(_value, (v) => _then(v as _TodoStateRemove));
-
-  @override
-  _TodoStateRemove get _value => super._value as _TodoStateRemove;
-}
-
-/// @nodoc
-
-class _$_TodoStateRemove implements _TodoStateRemove {
-  const _$_TodoStateRemove();
-
-  @override
-  String toString() {
-    return 'TodoState.remove()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _TodoStateRemove);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() add,
-    required TResult Function() update,
-    required TResult Function() remove,
-    required TResult Function() check,
-    required TResult Function(String? message) error,
-  }) {
-    return remove();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? add,
-    TResult Function()? update,
-    TResult Function()? remove,
-    TResult Function()? check,
-    TResult Function(String? message)? error,
-    required TResult orElse(),
-  }) {
-    if (remove != null) {
-      return remove();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_TodoStateInitial value) initial,
-    required TResult Function(_TodoStateLoading value) loading,
-    required TResult Function(_TodoStateAdd value) add,
-    required TResult Function(_TodoStateUpdate value) update,
-    required TResult Function(_TodoStateRemove value) remove,
-    required TResult Function(_TodoStateCheck value) check,
-    required TResult Function(_TodoStateError value) error,
-  }) {
-    return remove(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_TodoStateInitial value)? initial,
-    TResult Function(_TodoStateLoading value)? loading,
-    TResult Function(_TodoStateAdd value)? add,
-    TResult Function(_TodoStateUpdate value)? update,
-    TResult Function(_TodoStateRemove value)? remove,
-    TResult Function(_TodoStateCheck value)? check,
-    TResult Function(_TodoStateError value)? error,
-    required TResult orElse(),
-  }) {
-    if (remove != null) {
-      return remove(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _TodoStateRemove implements TodoState {
-  const factory _TodoStateRemove() = _$_TodoStateRemove;
-}
-
-/// @nodoc
-abstract class _$TodoStateCheckCopyWith<$Res> {
-  factory _$TodoStateCheckCopyWith(
-          _TodoStateCheck value, $Res Function(_TodoStateCheck) then) =
-      __$TodoStateCheckCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$TodoStateCheckCopyWithImpl<$Res> extends _$TodoStateCopyWithImpl<$Res>
-    implements _$TodoStateCheckCopyWith<$Res> {
-  __$TodoStateCheckCopyWithImpl(
-      _TodoStateCheck _value, $Res Function(_TodoStateCheck) _then)
-      : super(_value, (v) => _then(v as _TodoStateCheck));
-
-  @override
-  _TodoStateCheck get _value => super._value as _TodoStateCheck;
-}
-
-/// @nodoc
-
-class _$_TodoStateCheck implements _TodoStateCheck {
-  const _$_TodoStateCheck();
-
-  @override
-  String toString() {
-    return 'TodoState.check()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _TodoStateCheck);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function() add,
-    required TResult Function() update,
-    required TResult Function() remove,
-    required TResult Function() check,
-    required TResult Function(String? message) error,
-  }) {
-    return check();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? add,
-    TResult Function()? update,
-    TResult Function()? remove,
-    TResult Function()? check,
-    TResult Function(String? message)? error,
-    required TResult orElse(),
-  }) {
-    if (check != null) {
-      return check();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_TodoStateInitial value) initial,
-    required TResult Function(_TodoStateLoading value) loading,
-    required TResult Function(_TodoStateAdd value) add,
-    required TResult Function(_TodoStateUpdate value) update,
-    required TResult Function(_TodoStateRemove value) remove,
-    required TResult Function(_TodoStateCheck value) check,
-    required TResult Function(_TodoStateError value) error,
-  }) {
-    return check(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_TodoStateInitial value)? initial,
-    TResult Function(_TodoStateLoading value)? loading,
-    TResult Function(_TodoStateAdd value)? add,
-    TResult Function(_TodoStateUpdate value)? update,
-    TResult Function(_TodoStateRemove value)? remove,
-    TResult Function(_TodoStateCheck value)? check,
-    TResult Function(_TodoStateError value)? error,
-    required TResult orElse(),
-  }) {
-    if (check != null) {
-      return check(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _TodoStateCheck implements TodoState {
-  const factory _TodoStateCheck() = _$_TodoStateCheck;
+  TodoAction get action => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$TodoStateSuccessCopyWith<_TodoStateSuccess> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -813,10 +471,7 @@ class _$_TodoStateError implements _TodoStateError {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function() add,
-    required TResult Function() update,
-    required TResult Function() remove,
-    required TResult Function() check,
+    required TResult Function(TodoAction action) success,
     required TResult Function(String? message) error,
   }) {
     return error(message);
@@ -827,10 +482,7 @@ class _$_TodoStateError implements _TodoStateError {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function()? add,
-    TResult Function()? update,
-    TResult Function()? remove,
-    TResult Function()? check,
+    TResult Function(TodoAction action)? success,
     TResult Function(String? message)? error,
     required TResult orElse(),
   }) {
@@ -845,10 +497,7 @@ class _$_TodoStateError implements _TodoStateError {
   TResult map<TResult extends Object?>({
     required TResult Function(_TodoStateInitial value) initial,
     required TResult Function(_TodoStateLoading value) loading,
-    required TResult Function(_TodoStateAdd value) add,
-    required TResult Function(_TodoStateUpdate value) update,
-    required TResult Function(_TodoStateRemove value) remove,
-    required TResult Function(_TodoStateCheck value) check,
+    required TResult Function(_TodoStateSuccess value) success,
     required TResult Function(_TodoStateError value) error,
   }) {
     return error(this);
@@ -859,10 +508,7 @@ class _$_TodoStateError implements _TodoStateError {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_TodoStateInitial value)? initial,
     TResult Function(_TodoStateLoading value)? loading,
-    TResult Function(_TodoStateAdd value)? add,
-    TResult Function(_TodoStateUpdate value)? update,
-    TResult Function(_TodoStateRemove value)? remove,
-    TResult Function(_TodoStateCheck value)? check,
+    TResult Function(_TodoStateSuccess value)? success,
     TResult Function(_TodoStateError value)? error,
     required TResult orElse(),
   }) {

@@ -2,6 +2,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'todo_state.freezed.dart';
 
+enum TodoAction { add, update, remove, check }
+
 @freezed
 abstract class TodoState with _$TodoState {
   ///Initial
@@ -11,13 +13,7 @@ abstract class TodoState with _$TodoState {
   const factory TodoState.loading() = _TodoStateLoading;
 
   /// Success
-  const factory TodoState.add() = _TodoStateAdd;
-
-  const factory TodoState.update() = _TodoStateUpdate;
-
-  const factory TodoState.remove() = _TodoStateRemove;
-
-  const factory TodoState.check() = _TodoStateCheck;
+  const factory TodoState.success(TodoAction action) = _TodoStateSuccess;
 
   /// Error
   const factory TodoState.error([String? message]) = _TodoStateError;
