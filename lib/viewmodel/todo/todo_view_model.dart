@@ -26,9 +26,9 @@ class TodoViewModel extends StateNotifier<TodoState> with Validations {
       );
 
       if (id.isEmpty) {
-        state = TodoState.add();
+        state = TodoState.success(TodoAction.add);
       } else {
-        state = TodoState.update();
+        state = TodoState.success(TodoAction.update);
       }
     } catch (e) {
       state = TodoState.error(e.toString());
@@ -38,7 +38,7 @@ class TodoViewModel extends StateNotifier<TodoState> with Validations {
   void removeTodo(String todoId, String catId) async {
     try {
       await _read(todoRepositoryProvider).deleteTodo(todoId, catId);
-      state = TodoState.remove();
+      state = TodoState.success(TodoAction.remove);
     } catch (e) {
       state = TodoState.error(e.toString());
     }
@@ -49,7 +49,7 @@ class TodoViewModel extends StateNotifier<TodoState> with Validations {
       await _read(todoRepositoryProvider).saveTodo(
         todo.copyWith(isCompleted: isChecked),
       );
-      state = TodoState.check();
+      state = TodoState.success(TodoAction.check);
     } catch (e) {
       state = TodoState.error(e.toString());
     }
