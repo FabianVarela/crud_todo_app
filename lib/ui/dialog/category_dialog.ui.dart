@@ -13,11 +13,7 @@ class CategoryFormDialog extends HookWidget {
 
     return ProviderListener(
       provider: categoryViewModelProvider,
-      onChange: (_, CategoryState state) {
-        if (state == CategoryState.success()) {
-          Navigator.pop(context);
-        }
-      },
+      onChange: _onChangeState,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -52,15 +48,18 @@ class CategoryFormDialog extends HookWidget {
       ),
     );
   }
+
+  void _onChangeState(BuildContext context, CategoryState state) {
+    final action = state.maybeWhen(success: (a) => a, orElse: () => null);
+    if (action == CategoryAction.add) Navigator.pop(context);
+  }
 }
 
 class _Name extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final nameText = useProvider(nameCatProvider);
-    final textController = useTextEditingController(
-      text: nameText.state.text ?? '',
-    );
+    final textController = useTextEditingController();
 
     return TextField(
       controller: textController,
@@ -79,9 +78,7 @@ class _Emoji extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final emoji = useProvider(emojiCatProvider);
-    final textController = useTextEditingController(
-      text: emoji.state.text ?? '',
-    );
+    final textController = useTextEditingController();
 
     return TextField(
       controller: textController,
