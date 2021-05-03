@@ -26,13 +26,13 @@ class AddTodoView extends HookWidget {
       }
     }, const []);
 
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: _appBar(context),
-      body: ProviderListener(
-        provider: todoViewModelProvider,
-        onChange: _onChangeState,
-        child: SingleChildScrollView(
+    return ProviderListener(
+      provider: todoViewModelProvider,
+      onChange: _onChangeState,
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: _appBar(context),
+        body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
               SubjectTextField(todo: todo).paddingSymmetric(h: 30, v: 30),
@@ -41,8 +41,8 @@ class AddTodoView extends HookWidget {
               SubmitButton(categoryId: category.id!),
             ],
           ),
-        ),
-      ).paddingSymmetric(v: 20),
+        ).paddingSymmetric(v: 20),
+      ),
     );
   }
 
@@ -70,8 +70,11 @@ class AddTodoView extends HookWidget {
   }
 
   void _onChangeState(BuildContext context, TodoState state) {
-    if (state == TodoState.add() || state == TodoState.update()) {
-      Navigator.pop(context);
+    final action = state.maybeWhen(success: (a) => a, orElse: () => null);
+    if (action != null) {
+      if (action == TodoAction.add || action == TodoAction.update) {
+        Navigator.pop(context);
+      }
     }
   }
 }
@@ -138,7 +141,7 @@ class DateButton extends HookWidget {
           Icon(
             Icons.notifications_active_outlined,
             color: Color(0xFF4A78FA),
-          ).paddingOnly(b: 12),
+          ).paddingOnly(r: 12),
           Text(
             finalDate.state.dateTimeToFormattedString,
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
@@ -217,7 +220,7 @@ class CategoryText extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Text(category.emoji.code, style: TextStyle(fontSize: 16))
-                  .paddingOnly(b: 5),
+                  .paddingOnly(b: 5, r: 5),
               Text(
                 category.name,
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
