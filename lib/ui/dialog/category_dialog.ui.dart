@@ -96,7 +96,7 @@ class _Emoji extends HookWidget {
 class _Submit extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final categoryViewModel = context.read(categoryViewModelProvider.notifier);
+    final categoryViewModel = useProvider(categoryViewModelProvider.notifier);
     final isValid = useProvider(validationCategoryProvider).state;
 
     return ElevatedButton(

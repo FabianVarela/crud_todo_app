@@ -18,7 +18,7 @@ class TodoListView extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final todoStream = useProvider(todoDataProvider(category.id!));
-    final categoryVm = context.read(categoryViewModelProvider.notifier);
+    final categoryVm = useProvider(categoryViewModelProvider.notifier);
 
     return ProviderListener(
       provider: todoViewModelProvider,
