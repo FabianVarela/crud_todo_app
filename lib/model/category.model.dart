@@ -14,6 +14,15 @@ class Category {
   final Emoji emoji;
   final int? todoSize;
 
+  factory Category.fromMap(Map<String, dynamic> map) {
+    return Category(
+      id: map['id'],
+      name: map['name'],
+      emoji: map['emoji'],
+      todoSize: map['todoSize'],
+    );
+  }
+
   Category.fromSnapshot(DocumentSnapshot snapshot)
       : id = snapshot.id,
         name = snapshot.data()!['name'],
