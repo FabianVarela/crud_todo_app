@@ -13,14 +13,15 @@ final databaseProvider = Provider((_) => FirebaseFirestore.instance);
 /// Repository
 
 final todoRepositoryProvider = Provider<ITodoRepository>(
-  (ref) => TodoRepository(ref.watch(databaseProvider)),
+  (ref) => TodoRepository(ref.read),
 );
 
 /// ViewModel
 
 final categoryViewModelProvider =
     StateNotifierProvider<CategoryViewModel, CategoryState>(
-        (ref) => CategoryViewModel(ref.read));
+  (ref) => CategoryViewModel(ref.read),
+);
 
 final todoViewModelProvider = StateNotifierProvider<TodoViewModel, TodoState>(
   (ref) => TodoViewModel(ref.read),

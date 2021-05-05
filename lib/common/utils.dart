@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:intl/intl.dart';
@@ -46,5 +47,15 @@ extension WidgetUtils on Widget {
       padding: EdgeInsets.only(left: l, top: t, bottom: b, right: r),
       child: this,
     );
+  }
+}
+
+extension ToMapX on DocumentSnapshot {
+  Map<String, dynamic> toMap() {
+    final _map = data();
+    return {
+      'id': id,
+      if (_map != null) ..._map,
+    };
   }
 }
