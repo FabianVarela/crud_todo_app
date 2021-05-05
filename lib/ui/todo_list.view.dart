@@ -7,18 +7,17 @@ import 'package:crud_todo_app/ui/widgets/todo_item.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:crud_todo_app/common/common.dart';
 
-class TodoListView extends HookWidget {
+class TodoListView extends HookConsumerWidget {
   const TodoListView({Key? key, required this.category}) : super(key: key);
 
   final Category category;
 
   @override
-  Widget build(BuildContext context) {
-    final todoStream = useProvider(todoDataProvider(category.id!));
-    final categoryVm = useProvider(categoryViewModelProvider.notifier);
+  Widget build(BuildContext context, WidgetReference ref) {
+    final todoStream = ref.watch(todoDataProvider(category.id!));
+    final categoryVm = ref.watch(categoryViewModelProvider.notifier);
 
     return ProviderListener(
       provider: todoViewModelProvider,
@@ -130,18 +129,21 @@ class TodoListView extends HookWidget {
   }
 
   Widget _todoList(BuildContext context, List<Todo> todos) {
-    final viewModel = context.read(todoViewModelProvider.notifier);
-
-    return ListView.builder(
-      itemCount: todos.length,
-      itemBuilder: (_, pos) => TodoItem(
-        item: todos[pos],
-        category: category,
-        onEdit: () => _goToTodo(context, todo: todos[pos]),
-        onRemove: () =>
-            viewModel.removeTodo(todos[pos].id, todos[pos].categoryId),
-        onCheck: (value) => viewModel.checkTodo(todos[pos], value),
-      ),
+    return Consumer(
+      builder: (_, ref, __) {
+        final viewModel = ref.watch(todoViewModelProvider.notifier);
+        return ListView.builder(
+          itemCount: todos.length,
+          itemBuilder: (_, pos) => TodoItem(
+            item: todos[pos],
+            category: category,
+            onEdit: () => _goToTodo(context, todo: todos[pos]),
+            onRemove: () =>
+                viewModel.removeTodo(todos[pos].id, todos[pos].categoryId),
+            onCheck: (value) => viewModel.checkTodo(todos[pos], value),
+          ),
+        );
+      },
     );
   }
 

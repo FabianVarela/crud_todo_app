@@ -4,12 +4,12 @@ import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:crud_todo_app/common/common.dart';
 
-class CategoryFormDialog extends HookWidget {
+class CategoryFormDialog extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    final categoryViewModel = useProvider(categoryViewModelProvider);
+  Widget build(BuildContext context, WidgetReference ref) {
+    final categoryViewModel = ref.watch(categoryViewModelProvider);
 
     return ProviderListener(
       provider: categoryViewModelProvider,
@@ -55,10 +55,10 @@ class CategoryFormDialog extends HookWidget {
   }
 }
 
-class _Name extends HookWidget {
+class _Name extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    final nameText = useProvider(nameCatProvider);
+  Widget build(BuildContext context, WidgetReference ref) {
+    final nameText = ref.watch(nameCatProvider);
     final textController = useTextEditingController();
 
     return TextField(
@@ -69,15 +69,15 @@ class _Name extends HookWidget {
         errorText: nameText.state.message,
       ),
       onChanged: (value) => nameText.state =
-          context.read(categoryViewModelProvider.notifier).onChangeName(value),
+          ref.read(categoryViewModelProvider.notifier).onChangeName(value),
     );
   }
 }
 
-class _Emoji extends HookWidget {
+class _Emoji extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    final emoji = useProvider(emojiCatProvider);
+  Widget build(BuildContext context, WidgetReference ref) {
+    final emoji = ref.watch(emojiCatProvider);
     final textController = useTextEditingController();
 
     return TextField(
@@ -88,16 +88,16 @@ class _Emoji extends HookWidget {
         errorText: emoji.state.message,
       ),
       onChanged: (value) => emoji.state =
-          context.read(categoryViewModelProvider.notifier).onChangeEmoji(value),
+          ref.read(categoryViewModelProvider.notifier).onChangeEmoji(value),
     );
   }
 }
 
-class _Submit extends HookWidget {
+class _Submit extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context) {
-    final categoryViewModel = useProvider(categoryViewModelProvider.notifier);
-    final isValid = useProvider(validationCategoryProvider).state;
+  Widget build(BuildContext context, WidgetReference ref) {
+    final categoryViewModel = ref.watch(categoryViewModelProvider.notifier);
+    final isValid = ref.watch(validationCategoryProvider).state;
 
     return ElevatedButton(
       style: ElevatedButton.styleFrom(primary: Color(0xFF4A78FA)),

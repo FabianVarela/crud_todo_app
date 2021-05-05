@@ -10,19 +10,19 @@ import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:flutter/cupertino.dart' as cupertino;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:crud_todo_app/common/common.dart';
 
-class AddTodoView extends HookWidget {
+class AddTodoView extends HookConsumerWidget {
   const AddTodoView({Key? key, required this.category, this.todo});
 
   final Category category;
   final Todo? todo;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetReference ref) {
     useEffect(() {
       if (todo != null) {
-        Future.microtask(() => context.read(idTodoProvider).state = todo!.id);
+        Future.microtask(() => ref.read(idTodoProvider).state = todo!.id);
       }
     }, const []);
 
@@ -79,20 +79,20 @@ class AddTodoView extends HookWidget {
   }
 }
 
-class SubjectTextField extends HookWidget {
+class SubjectTextField extends HookConsumerWidget {
   const SubjectTextField({Key? key, required this.todo}) : super(key: key);
 
   final Todo? todo;
 
   @override
-  Widget build(BuildContext context) {
-    final subject = useProvider(subjectTodoProvider);
+  Widget build(BuildContext context, WidgetReference ref) {
+    final subject = ref.watch(subjectTodoProvider);
     final subjectTextController = useTextEditingController();
 
     useEffect(() {
       if (todo != null) {
         Future.microtask(() {
-          context.read(subjectTodoProvider).state =
+          ref.read(subjectTodoProvider).state =
               ValidationText(text: todo!.subject);
           subjectTextController.text = todo!.subject;
         });
@@ -110,24 +110,24 @@ class SubjectTextField extends HookWidget {
       ),
       style: TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
       onChanged: (val) => subject.state =
-          context.read(todoViewModelProvider.notifier).onChangeSubject(val),
+          ref.read(todoViewModelProvider.notifier).onChangeSubject(val),
     );
   }
 }
 
-class DateButton extends HookWidget {
+class DateButton extends HookConsumerWidget {
   const DateButton({Key? key, required this.todo}) : super(key: key);
 
   final Todo? todo;
 
   @override
-  Widget build(BuildContext context) {
-    final finalDate = useProvider(dateTodoProvider);
+  Widget build(BuildContext context, WidgetReference ref) {
+    final finalDate = ref.watch(dateTodoProvider);
 
     useEffect(() {
       if (todo != null) {
         Future.microtask(
-          () => context.read(dateTodoProvider).state = todo!.finalDate,
+          () => ref.read(dateTodoProvider).state = todo!.finalDate,
         );
       }
     }, const []);
@@ -233,17 +233,17 @@ class CategoryText extends StatelessWidget {
   }
 }
 
-class SubmitButton extends HookWidget {
+class SubmitButton extends HookConsumerWidget {
   SubmitButton({Key? key, required this.categoryId}) : super(key: key);
 
   final String categoryId;
 
   @override
-  Widget build(BuildContext context) {
-    final todoViewModel = useProvider(todoViewModelProvider.notifier);
+  Widget build(BuildContext context, WidgetReference ref) {
+    final todoViewModel = ref.watch(todoViewModelProvider.notifier);
 
-    final isValid = useProvider(validationTodoProvider).state;
-    final todoId = useProvider(idTodoProvider).state;
+    final isValid = ref.watch(validationTodoProvider).state;
+    final todoId = ref.watch(idTodoProvider).state;
 
     return ElevatedButton(
       style: ElevatedButton.styleFrom(primary: Color(0xFF4A78FA)),

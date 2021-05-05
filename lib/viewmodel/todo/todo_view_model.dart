@@ -4,7 +4,7 @@ import 'package:crud_todo_app/model/todo.model.dart';
 import 'package:crud_todo_app/model/validation_text.model.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:crud_todo_app/common/common.dart';
 
 class TodoViewModel extends StateNotifier<TodoState> with Validations {
   late final Reader _read;
