@@ -1,7 +1,7 @@
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
-import 'package:crud_todo_app/ui/add_todo.view.dart';
+import 'package:crud_todo_app/ui/add_todo_view.dart';
 import 'package:crud_todo_app/common/utils.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
