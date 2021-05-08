@@ -2,7 +2,7 @@ import 'package:crud_todo_app/common/validations.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
-import 'package:crud_todo_app/repository/todo.repository.dart';
+import 'package:crud_todo_app/repository/todo_repository.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:crud_todo_app/common/common.dart';

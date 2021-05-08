@@ -2,7 +2,7 @@ import 'package:crud_todo_app/common/validations.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
-import 'package:crud_todo_app/repository/todo.repository.dart';
+import 'package:crud_todo_app/repository/todo_repository.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
