@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:intl/intl.dart';
 
-extension DateTimeUtils on DateTime {
+extension DateTimeUtilsX on DateTime {
   String get dateTimeToFormattedString =>
       DateFormat("MMM d, ''yy - HH:mm").format(this);
 
@@ -17,11 +17,11 @@ extension DateTimeUtils on DateTime {
   bool get isToday => difference(DateTime.now()).inDays == 0;
 }
 
-extension IntUtils on int {
+extension IntUtilsX on int {
   DateTime get millisecondsToDate => DateTime.fromMillisecondsSinceEpoch(this);
 }
 
-extension StringUtils on String {
+extension StringUtilsX on String {
   bool get verifyEmoji {
     for (final s in EmojiParser().unemojify(this).split(' ')) {
       return s.startsWith(':') || s.endsWith(':');
@@ -31,7 +31,7 @@ extension StringUtils on String {
   }
 }
 
-extension WidgetUtils on Widget {
+extension WidgetUtilsX on Widget {
   Widget paddingAll(double padding) => Padding(
         padding: EdgeInsets.all(padding),
         child: this,
