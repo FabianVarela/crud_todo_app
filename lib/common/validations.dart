@@ -1,4 +1,4 @@
-import 'package:crud_todo_app/model/validation_text.model.dart';
+import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:crud_todo_app/common/utils.dart';
 
 mixin Validations {

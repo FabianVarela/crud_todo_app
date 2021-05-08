@@ -1,6 +1,6 @@
 import 'package:crud_todo_app/common/utils.dart';
-import 'package:crud_todo_app/model/category.model.dart';
-import 'package:crud_todo_app/model/todo.model.dart';
+import 'package:crud_todo_app/model/category_model.dart';
+import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/ui/widgets/custom_checkbox.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';

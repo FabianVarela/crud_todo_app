@@ -1,4 +1,4 @@
-import 'package:crud_todo_app/model/category.model.dart';
+import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/ui/dialog/category_dialog.ui.dart';
 import 'package:crud_todo_app/ui/todo_list.view.dart';

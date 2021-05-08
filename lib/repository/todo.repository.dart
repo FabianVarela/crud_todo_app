@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crud_todo_app/model/category.model.dart';
-import 'package:crud_todo_app/model/todo.model.dart';
+import 'package:crud_todo_app/model/category_model.dart';
+import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/common/common.dart';
 
 import '../provider_dependency.dart';

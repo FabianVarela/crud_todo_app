@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:crud_todo_app/model/category.model.dart';
-import 'package:crud_todo_app/model/todo.model.dart';
-import 'package:crud_todo_app/model/validation_text.model.dart';
+import 'package:crud_todo_app/model/category_model.dart';
+import 'package:crud_todo_app/model/todo_model.dart';
+import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:crud_todo_app/common/utils.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';

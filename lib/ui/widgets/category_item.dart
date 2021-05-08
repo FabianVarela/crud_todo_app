@@ -1,5 +1,5 @@
 import 'package:crud_todo_app/common/utils.dart';
-import 'package:crud_todo_app/model/category.model.dart';
+import 'package:crud_todo_app/model/category_model.dart';
 import 'package:flutter/material.dart';
 
 class CategoryItem extends StatelessWidget {
