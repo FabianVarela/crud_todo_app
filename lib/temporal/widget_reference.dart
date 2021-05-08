@@ -5,7 +5,7 @@
 /// - RFC: https://github.com/rrousselGit/river_pod/issues/335
 /// - PR: https://github.com/rrousselGit/river_pod/pull/462
 ///
-/// Medum article about the usage: https://link.medium.com/4F5gdDISXfb
+/// Medium article about the usage: https://link.medium.com/4F5gdDISXfb
 library temporal_widget_reference_migration;
 
 import 'package:flutter/widgets.dart';
