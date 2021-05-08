@@ -2,14 +2,22 @@ import 'package:crud_todo_app/common/validations.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/model/todo.model.dart';
 import 'package:crud_todo_app/model/validation_text.model.dart';
+import 'package:crud_todo_app/repository/todo.repository.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:crud_todo_app/common/common.dart';
 
-class TodoViewModel extends StateNotifier<TodoState> with Validations {
-  late final Reader _read;
+abstract class ITodoViewModel extends StateNotifier<TodoState>
+    with Validations {
+  ITodoViewModel() : super(const TodoState.initial());
 
-  TodoViewModel(this._read) : super(const TodoState.initial());
+  String get idTodo;
+
+  ValidationText get subjectTodo;
+
+  DateTime get dateTodo;
+
+  ITodoRepository get todoRepository;
 
   ValidationText onChangeSubject(String value) => validateEmpty(value);
 
@@ -17,11 +25,11 @@ class TodoViewModel extends StateNotifier<TodoState> with Validations {
     try {
       state = TodoState.loading();
 
-      final id = _read(idTodoProvider).state;
-      final subject = _read(subjectTodoProvider).state.text ?? '';
-      final date = _read(dateTodoProvider).state;
+      final id = idTodo;
+      final subject = subjectTodo.text ?? '';
+      final date = dateTodo;
 
-      await _read(todoRepositoryProvider).saveTodo(
+      await todoRepository.saveTodo(
         Todo(id: id, subject: subject, finalDate: date, categoryId: catId),
       );
 
@@ -37,7 +45,7 @@ class TodoViewModel extends StateNotifier<TodoState> with Validations {
 
   void removeTodo(String todoId, String catId) async {
     try {
-      await _read(todoRepositoryProvider).deleteTodo(todoId, catId);
+      await todoRepository.deleteTodo(todoId, catId);
       state = TodoState.success(TodoAction.remove);
     } catch (e) {
       state = TodoState.error(e.toString());
@@ -46,7 +54,7 @@ class TodoViewModel extends StateNotifier<TodoState> with Validations {
 
   void checkTodo(Todo todo, bool isChecked) async {
     try {
-      await _read(todoRepositoryProvider).saveTodo(
+      await todoRepository.saveTodo(
         todo.copyWith(isCompleted: isChecked),
       );
       state = TodoState.success(TodoAction.check);
@@ -54,4 +62,22 @@ class TodoViewModel extends StateNotifier<TodoState> with Validations {
       state = TodoState.error(e.toString());
     }
   }
+}
+
+class TodoViewModel extends ITodoViewModel {
+  TodoViewModel(this._read);
+
+  late final Reader _read;
+
+  @override
+  String get idTodo => _read(idTodoProvider).state;
+
+  @override
+  ValidationText get subjectTodo => _read(subjectTodoProvider).state;
+
+  @override
+  DateTime get dateTodo => _read(dateTodoProvider).state;
+
+  @override
+  ITodoRepository get todoRepository => _read(todoRepositoryProvider);
 }
