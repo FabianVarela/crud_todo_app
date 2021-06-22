@@ -8,44 +8,45 @@ import 'package:crud_todo_app/common/common.dart';
 
 class CategoryFormDialog extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context, WidgetReference ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final categoryViewModel = ref.watch(categoryViewModelProvider);
 
-    return ProviderListener(
-      provider: categoryViewModelProvider,
-      onChange: _onChangeState,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          GestureDetector(
-            onTap: () => Navigator.of(context).pop(),
-            child: Icon(Icons.close, color: Colors.white),
-          ).paddingSymmetric(v: 5),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Column(
-              children: <Widget>[
-                Text(
-                  'Add category',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ).paddingOnly(b: 15),
-                _Name().paddingOnly(b: 5),
-                _Emoji().paddingOnly(b: 25),
-                if (categoryViewModel != CategoryState.loading()) _Submit(),
-                if (categoryViewModel == CategoryState.loading())
-                  CircularProgressIndicator()
-              ],
-            ).paddingSymmetric(h: 16, v: 10),
+    ref.listen(
+      categoryViewModelProvider,
+      (CategoryState state) => _onChangeState(context, state),
+    );
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: <Widget>[
+        GestureDetector(
+          onTap: () => Navigator.of(context).pop(),
+          child: Icon(Icons.close, color: Colors.white),
+        ).paddingSymmetric(v: 5),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
           ),
-        ],
-      ),
+          child: Column(
+            children: <Widget>[
+              Text(
+                'Add category',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
+              ).paddingOnly(b: 15),
+              _Name().paddingOnly(b: 5),
+              _Emoji().paddingOnly(b: 25),
+              if (categoryViewModel != CategoryState.loading()) _Submit(),
+              if (categoryViewModel == CategoryState.loading())
+                CircularProgressIndicator()
+            ],
+          ).paddingSymmetric(h: 16, v: 10),
+        ),
+      ],
     );
   }
 
@@ -57,7 +58,7 @@ class CategoryFormDialog extends HookConsumerWidget {
 
 class _Name extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context, WidgetReference ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final nameText = ref.watch(nameCatProvider);
     final textController = useTextEditingController();
 
@@ -76,7 +77,7 @@ class _Name extends HookConsumerWidget {
 
 class _Emoji extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context, WidgetReference ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final emoji = ref.watch(emojiCatProvider);
     final textController = useTextEditingController();
 
@@ -95,7 +96,7 @@ class _Emoji extends HookConsumerWidget {
 
 class _Submit extends HookConsumerWidget {
   @override
-  Widget build(BuildContext context, WidgetReference ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final categoryViewModel = ref.watch(categoryViewModelProvider.notifier);
     final isValid = ref.watch(validationCategoryProvider).state;
 

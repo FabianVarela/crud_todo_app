@@ -15,115 +15,115 @@ class TodoListView extends HookConsumerWidget {
   final Category category;
 
   @override
-  Widget build(BuildContext context, WidgetReference ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final todoStream = ref.watch(todoDataProvider(category.id!));
     final categoryVm = ref.watch(categoryViewModelProvider.notifier);
 
-    return ProviderListener(
-      provider: todoViewModelProvider,
-      onChange: _onChangeState,
-      child: Scaffold(
-        backgroundColor: Color(0xFF4A78FA),
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
-            ),
-            onPressed: () => Navigator.pop(context),
+    ref.listen(
+      todoViewModelProvider,
+      (TodoState state) => _onChangeState(context, state),
+    );
+
+    return Scaffold(
+      backgroundColor: Color(0xFF4A78FA),
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
           ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () {
-                categoryVm.removeCategory(category.id!);
-                Navigator.pop(context);
-              },
-            ),
-          ],
+          onPressed: () => Navigator.pop(context),
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Container(
-                    height: 60,
-                    width: 60,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Text(
-                      category.emoji.code,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 30),
-                    ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () {
+              categoryVm.removeCategory(category.id!);
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            flex: 1,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Container(
+                  height: 60,
+                  width: 60,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        category.name,
-                        style: TextStyle(
-                          fontSize: 35,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
-                      ).paddingOnly(b: 5),
-                      Text(
-                        '${category.todoSize} Tasks',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.white,
-                        ),
+                  child: Text(
+                    category.emoji.code,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 30),
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      category.name,
+                      style: TextStyle(
+                        fontSize: 35,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
                       ),
-                    ],
-                  ),
-                ],
-              ).paddingOnly(l: 35),
-            ),
-            Expanded(
-              flex: 2,
-              child: todoStream.when(
-                data: (todos) {
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
+                    ).paddingOnly(b: 5),
+                    Text(
+                      '${category.todoSize} Tasks',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w300,
+                        color: Colors.white,
                       ),
                     ),
-                    child: todos.isNotEmpty
-                        ? _todoList(context, todos)
-                            .paddingSymmetric(h: 24, v: 20)
-                        : _emptyMessage(),
-                  );
-                },
-                loading: () => const Center(child: CircularProgressIndicator()),
-                error: (e, s) => Container(
-                  child: Center(
-                    child: Text(e.toString(), style: TextStyle(fontSize: 20)),
+                  ],
+                ),
+              ],
+            ).paddingOnly(l: 35),
+          ),
+          Expanded(
+            flex: 2,
+            child: todoStream.when(
+              data: (todos) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
                   ),
+                  child: todos.isNotEmpty
+                      ? _todoList(context, todos).paddingSymmetric(h: 24, v: 20)
+                      : _emptyMessage(),
+                );
+              },
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (e, s) => Container(
+                child: Center(
+                  child: Text(e.toString(), style: TextStyle(fontSize: 20)),
                 ),
               ),
             ),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Color(0xFF4A78FA),
-          onPressed: () => _goToTodo(context),
-          child: Icon(Icons.add),
-        ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color(0xFF4A78FA),
+        onPressed: () => _goToTodo(context),
+        child: Icon(Icons.add),
       ),
     );
   }

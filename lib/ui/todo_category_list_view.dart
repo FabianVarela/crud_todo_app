@@ -13,60 +13,61 @@ class TodoCategoryListView extends ConsumerWidget {
   const TodoCategoryListView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetReference ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final categoryStream = ref.watch(categoryDataProvider);
 
-    return ProviderListener(
-      provider: categoryViewModelProvider,
-      onChange: _onChangeState,
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          leading: Icon(Icons.menu_rounded, color: Colors.black, size: 30)
-              .paddingSymmetric(h: 25),
-        ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'Lists',
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
-            ).paddingSymmetric(h: 12, v: 20),
-            Expanded(
-              child: categoryStream.when(
-                data: (categories) => categories.isNotEmpty
-                    ? GridView.count(
-                        crossAxisCount: 2,
-                        children: <Widget>[
-                          for (final item in categories)
-                            CategoryItem(
-                              item: item,
-                              onClick: () => _goToTodo(context, item),
-                            ),
-                        ],
-                      )
-                    : Center(
-                        child: Text(
-                          'Empty data, add a category',
-                          style: TextStyle(fontSize: 25),
-                        ),
+    ref.listen(
+      categoryViewModelProvider,
+      (CategoryState state) => _onChangeState(context, state),
+    );
+
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: Icon(Icons.menu_rounded, color: Colors.black, size: 30)
+            .paddingSymmetric(h: 25),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Lists',
+            style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+          ).paddingSymmetric(h: 12, v: 20),
+          Expanded(
+            child: categoryStream.when(
+              data: (categories) => categories.isNotEmpty
+                  ? GridView.count(
+                      crossAxisCount: 2,
+                      children: <Widget>[
+                        for (final item in categories)
+                          CategoryItem(
+                            item: item,
+                            onClick: () => _goToTodo(context, item),
+                          ),
+                      ],
+                    )
+                  : Center(
+                      child: Text(
+                        'Empty data, add a category',
+                        style: TextStyle(fontSize: 25),
                       ),
-                loading: () => const Center(child: CircularProgressIndicator()),
-                error: (e, s) => Container(
-                  child: Center(
-                    child: Text(e.toString(), style: TextStyle(fontSize: 20)),
-                  ),
+                    ),
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (e, s) => Container(
+                child: Center(
+                  child: Text(e.toString(), style: TextStyle(fontSize: 20)),
                 ),
               ),
             ),
-          ],
-        ).paddingSymmetric(h: 16),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Color(0xFF4A78FA),
-          onPressed: () => _showCategoryDialog(context),
-          child: Icon(Icons.add),
-        ),
+          ),
+        ],
+      ).paddingSymmetric(h: 16),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color(0xFF4A78FA),
+        onPressed: () => _showCategoryDialog(context),
+        child: Icon(Icons.add),
       ),
     );
   }

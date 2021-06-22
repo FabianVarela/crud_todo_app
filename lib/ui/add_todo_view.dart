@@ -19,30 +19,31 @@ class AddTodoView extends HookConsumerWidget {
   final Todo? todo;
 
   @override
-  Widget build(BuildContext context, WidgetReference ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     useEffect(() {
       if (todo != null) {
         Future.microtask(() => ref.read(idTodoProvider).state = todo!.id);
       }
     }, const []);
 
-    return ProviderListener(
-      provider: todoViewModelProvider,
-      onChange: _onChangeState,
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: _appBar(context),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              SubjectTextField(todo: todo).paddingSymmetric(h: 30, v: 30),
-              DateButton(todo: todo).paddingSymmetric(h: 30, v: 20),
-              CategoryText(category: category).paddingSymmetric(h: 30, v: 20),
-              SubmitButton(categoryId: category.id!),
-            ],
-          ),
-        ).paddingSymmetric(v: 20),
-      ),
+    ref.listen(
+      todoViewModelProvider,
+      (TodoState state) => _onChangeState(context, state),
+    );
+
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      appBar: _appBar(context),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            SubjectTextField(todo: todo).paddingSymmetric(h: 30, v: 30),
+            DateButton(todo: todo).paddingSymmetric(h: 30, v: 20),
+            CategoryText(category: category).paddingSymmetric(h: 30, v: 20),
+            SubmitButton(categoryId: category.id!),
+          ],
+        ),
+      ).paddingSymmetric(v: 20),
     );
   }
 
@@ -85,7 +86,7 @@ class SubjectTextField extends HookConsumerWidget {
   final Todo? todo;
 
   @override
-  Widget build(BuildContext context, WidgetReference ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final subject = ref.watch(subjectTodoProvider);
     final subjectTextController = useTextEditingController();
 
@@ -121,7 +122,7 @@ class DateButton extends HookConsumerWidget {
   final Todo? todo;
 
   @override
-  Widget build(BuildContext context, WidgetReference ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final finalDate = ref.watch(dateTodoProvider);
 
     useEffect(() {
@@ -239,7 +240,7 @@ class SubmitButton extends HookConsumerWidget {
   final String categoryId;
 
   @override
-  Widget build(BuildContext context, WidgetReference ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final todoViewModel = ref.watch(todoViewModelProvider.notifier);
 
     final isValid = ref.watch(validationTodoProvider).state;
