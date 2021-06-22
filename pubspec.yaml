@@ -11,8 +11,8 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  hooks_riverpod: ^0.14.0+3
-  flutter_hooks: ^0.16.0
+  hooks_riverpod: ^1.0.0-dev.1
+  flutter_hooks: ^0.17.0
   freezed_annotation: ^0.14.1
   firebase_core: ^1.0.3
   cloud_firestore: ^1.0.5
