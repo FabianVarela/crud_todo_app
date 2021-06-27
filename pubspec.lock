@@ -453,7 +453,7 @@ packages:
     source: hosted
     version: "2.0.0"
   pedantic:
-    dependency: "direct dev"
+    dependency: transitive
     description:
       name: pedantic
       url: "https://pub.dartlang.org"
@@ -618,6 +618,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  very_good_analysis:
+    dependency: "direct dev"
+    description:
+      name: very_good_analysis
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.2"
   watcher:
     dependency: transitive
     description:
