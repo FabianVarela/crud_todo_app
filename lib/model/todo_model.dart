@@ -10,18 +10,18 @@ class Todo {
     this.isCompleted = false,
   });
 
-  final String id;
-  final String subject;
-  final DateTime finalDate;
-  final String categoryId;
-  final bool isCompleted;
-
   Todo.fromSnapshot(DocumentSnapshot snapshot)
       : id = snapshot.id,
         subject = snapshot.data()!['subject'],
         finalDate = (snapshot.data()!['finalDate'] as int).millisecondsToDate,
         categoryId = snapshot.data()!['categoryId'],
         isCompleted = snapshot.data()!['isCompleted'];
+
+  final String id;
+  final String subject;
+  final DateTime finalDate;
+  final String categoryId;
+  final bool isCompleted;
 
   Map<String, dynamic> toJson() => {
         'subject': subject,

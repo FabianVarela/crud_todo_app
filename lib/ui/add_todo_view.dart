@@ -13,7 +13,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:crud_todo_app/common/common.dart';
 
 class AddTodoView extends HookConsumerWidget {
-  const AddTodoView({Key? key, required this.category, this.todo});
+  const AddTodoView({Key? key, required this.category, this.todo})
+      : super(key: key);
 
   final Category category;
   final Todo? todo;
@@ -53,7 +54,7 @@ class AddTodoView extends HookConsumerWidget {
       centerTitle: true,
       automaticallyImplyLeading: false,
       backgroundColor: Colors.transparent,
-      title: Text(
+      title: const Text(
         'New Task',
         style: TextStyle(
           fontSize: 20,
@@ -63,7 +64,7 @@ class AddTodoView extends HookConsumerWidget {
       ),
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.close, color: Colors.black),
+          icon: const Icon(Icons.close, color: Colors.black),
           onPressed: () => Navigator.pop(context),
         )
       ],
@@ -106,10 +107,10 @@ class SubjectTextField extends HookConsumerWidget {
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
         hintText: 'What are you planning?',
-        hintStyle: TextStyle(color: Colors.grey),
+        hintStyle: const TextStyle(color: Colors.grey),
         errorText: subject.state.message,
       ),
-      style: TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
+      style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
       onChanged: (val) => subject.state =
           ref.read(todoViewModelProvider.notifier).onChangeSubject(val),
     );
@@ -139,13 +140,13 @@ class DateButton extends HookConsumerWidget {
           : _dateAndroid(context, finalDate),
       child: Row(
         children: <Widget>[
-          Icon(
+          const Icon(
             Icons.notifications_active_outlined,
             color: Color(0xFF4A78FA),
           ).paddingOnly(r: 12),
           Text(
             finalDate.state.dateTimeToFormattedString,
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
         ],
       ),
@@ -156,10 +157,10 @@ class DateButton extends HookConsumerWidget {
     final pickedDate = await showDatePicker(
       context: ctx,
       initialDate: date.state.isDurationNegative
-          ? DateTime.now().add(Duration(minutes: 2))
-          : date.state.add(Duration(minutes: 2)),
+          ? DateTime.now().add(const Duration(minutes: 2))
+          : date.state.add(const Duration(minutes: 2)),
       firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 365)),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
     );
 
     if (pickedDate != null) {
@@ -183,17 +184,17 @@ class DateButton extends HookConsumerWidget {
           height: MediaQuery.of(ctx).size.height / 3,
           width: MediaQuery.of(ctx).size.width,
           color: Colors.white,
-          child: cupertino.Container(
+          child: cupertino.SizedBox(
             height: MediaQuery.of(ctx).size.height / 4.5,
             child: cupertino.DefaultTextStyle(
-              style: TextStyle(fontSize: 22),
+              style: const TextStyle(fontSize: 22),
               child: cupertino.CupertinoDatePicker(
                 mode: cupertino.CupertinoDatePickerMode.dateAndTime,
                 initialDateTime: date.state.isDurationNegative
-                    ? DateTime.now().add(Duration(minutes: 2))
-                    : date.state.add(Duration(minutes: 2)),
+                    ? DateTime.now().add(const Duration(minutes: 2))
+                    : date.state.add(const Duration(minutes: 2)),
                 minimumDate: DateTime.now(),
-                maximumDate: DateTime.now().add(Duration(days: 365)),
+                maximumDate: DateTime.now().add(const Duration(days: 365)),
                 onDateTimeChanged: (DateTime pickedDate) =>
                     date.state = pickedDate,
               ),
@@ -215,16 +216,19 @@ class CategoryText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Icon(Icons.local_offer_outlined, color: Color(0xFF77C783))
+        const Icon(Icons.local_offer_outlined, color: Color(0xFF77C783))
             .paddingOnly(r: 12),
         Expanded(
           child: Row(
             children: <Widget>[
-              Text(category.emoji.code, style: TextStyle(fontSize: 16))
+              Text(category.emoji.code, style: const TextStyle(fontSize: 16))
                   .paddingOnly(b: 5, r: 5),
               Text(
                 category.name,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ],
           ),
@@ -235,7 +239,7 @@ class CategoryText extends StatelessWidget {
 }
 
 class SubmitButton extends HookConsumerWidget {
-  SubmitButton({Key? key, required this.categoryId}) : super(key: key);
+  const SubmitButton({Key? key, required this.categoryId}) : super(key: key);
 
   final String categoryId;
 
@@ -247,14 +251,14 @@ class SubmitButton extends HookConsumerWidget {
     final todoId = ref.watch(idTodoProvider).state;
 
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(primary: Color(0xFF4A78FA)),
+      style: ElevatedButton.styleFrom(primary: const Color(0xFF4A78FA)),
       onPressed: isValid ? () => todoViewModel.saveTodo(categoryId) : null,
       child: Container(
         width: double.infinity,
         alignment: Alignment.center,
         child: Text(
           todoId.isEmpty ? 'Create' : 'Update',
-          style: TextStyle(fontSize: 16, color: Colors.white),
+          style: const TextStyle(fontSize: 16, color: Colors.white),
         ),
       ).paddingSymmetric(v: 16),
     );

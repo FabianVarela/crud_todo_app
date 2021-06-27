@@ -9,11 +9,6 @@ class Category {
     this.todoSize,
   });
 
-  final String? id;
-  final String name;
-  final Emoji emoji;
-  final int? todoSize;
-
   factory Category.fromMap(Map<String, dynamic> map) {
     return Category(
       id: map['id'],
@@ -28,6 +23,11 @@ class Category {
         name = snapshot.data()!['name'],
         emoji = EmojiParser().get(snapshot.data()!['emoji']),
         todoSize = (snapshot.data()!['todoSize'] ?? 0);
+
+  final String? id;
+  final String name;
+  final Emoji emoji;
+  final int? todoSize;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'name': name,

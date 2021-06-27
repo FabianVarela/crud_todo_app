@@ -24,7 +24,7 @@ abstract class ICategoryViewModel extends StateNotifier<CategoryState>
 
   void saveCategory() async {
     try {
-      state = CategoryState.loading();
+      state = const CategoryState.loading();
 
       final name = nameCat;
       final emoji = emojiCat;
@@ -34,17 +34,17 @@ abstract class ICategoryViewModel extends StateNotifier<CategoryState>
         emoji: EmojiParser().getEmoji(emoji.text!),
       ));
 
-      state = CategoryState.success(CategoryAction.add);
+      state = const CategoryState.success(CategoryAction.add);
     } catch (_) {
-      state = CategoryState.error();
+      state = const CategoryState.error();
     }
   }
 
   void removeCategory(String id) async {
     try {
-      state = CategoryState.loading();
+      state = const CategoryState.loading();
       await todoRepository.deleteCategory(id);
-      state = CategoryState.success(CategoryAction.remove);
+      state = const CategoryState.success(CategoryAction.remove);
     } on Exception catch (e) {
       state = CategoryState.error(e.toString());
     }

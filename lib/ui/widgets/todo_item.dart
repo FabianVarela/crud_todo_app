@@ -24,12 +24,12 @@ class TodoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Slidable(
-      actionPane: SlidableDrawerActionPane(),
+      actionPane: const SlidableDrawerActionPane(),
       actions: !item.isCompleted && !item.finalDate.isDurationNegative
           ? <Widget>[
               IconSlideAction(
                 caption: 'Edit',
-                color: Color(0xFF4D4E50),
+                color: const Color(0xFF4D4E50),
                 icon: Icons.edit,
                 onTap: onEdit,
               ),
@@ -49,12 +49,12 @@ class TodoItem extends StatelessWidget {
         title: Text(
           item.subject,
           style: item.isCompleted
-              ? TextStyle(
+              ? const TextStyle(
                   fontSize: 22,
                   color: Color(0xFF6474A9),
                   decoration: TextDecoration.lineThrough,
                 )
-              : TextStyle(fontSize: 22),
+              : const TextStyle(fontSize: 22),
         ),
         subtitle: Text(
           item.finalDate.isDurationNegative
@@ -63,16 +63,16 @@ class TodoItem extends StatelessWidget {
                   ? item.finalDate.timeFormattedString
                   : item.finalDate.dateTimeToFormattedString,
           style: item.isCompleted
-              ? TextStyle(
+              ? const TextStyle(
                   fontSize: 16,
                   decoration: TextDecoration.lineThrough,
                 )
               : item.finalDate.isDurationNegative
-                  ? TextStyle(
+                  ? const TextStyle(
                       fontSize: 16,
                       color: Colors.red,
                     )
-                  : TextStyle(fontSize: 16),
+                  : const TextStyle(fontSize: 16),
         ).paddingSymmetric(v: 4),
         trailing: CustomCheckbox(
           value: item.isCompleted,

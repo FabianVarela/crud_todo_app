@@ -7,6 +7,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:crud_todo_app/common/common.dart';
 
 class CategoryFormDialog extends HookConsumerWidget {
+  const CategoryFormDialog({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final categoryViewModel = ref.watch(categoryViewModelProvider);
@@ -22,7 +24,7 @@ class CategoryFormDialog extends HookConsumerWidget {
       children: <Widget>[
         GestureDetector(
           onTap: () => Navigator.of(context).pop(),
-          child: Icon(Icons.close, color: Colors.white),
+          child: const Icon(Icons.close, color: Colors.white),
         ).paddingSymmetric(v: 5),
         Container(
           decoration: BoxDecoration(
@@ -31,18 +33,15 @@ class CategoryFormDialog extends HookConsumerWidget {
           ),
           child: Column(
             children: <Widget>[
-              Text(
+              const Text(
                 'Add category',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               ).paddingOnly(b: 15),
               _Name().paddingOnly(b: 5),
               _Emoji().paddingOnly(b: 25),
-              if (categoryViewModel != CategoryState.loading()) _Submit(),
-              if (categoryViewModel == CategoryState.loading())
-                CircularProgressIndicator()
+              if (categoryViewModel != const CategoryState.loading()) _Submit(),
+              if (categoryViewModel == const CategoryState.loading())
+                const CircularProgressIndicator()
             ],
           ).paddingSymmetric(h: 16, v: 10),
         ),
@@ -101,12 +100,12 @@ class _Submit extends HookConsumerWidget {
     final isValid = ref.watch(validationCategoryProvider).state;
 
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(primary: Color(0xFF4A78FA)),
+      style: ElevatedButton.styleFrom(primary: const Color(0xFF4A78FA)),
       onPressed: isValid ? categoryViewModel.saveCategory : null,
       child: Container(
         width: double.infinity,
         alignment: Alignment.center,
-        child: Text(
+        child: const Text(
           'Create',
           style: TextStyle(fontSize: 16, color: Colors.white),
         ),

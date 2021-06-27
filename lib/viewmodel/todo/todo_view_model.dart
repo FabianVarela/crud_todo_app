@@ -23,7 +23,7 @@ abstract class ITodoViewModel extends StateNotifier<TodoState>
 
   void saveTodo(String catId) async {
     try {
-      state = TodoState.loading();
+      state = const TodoState.loading();
 
       final id = idTodo;
       final subject = subjectTodo.text ?? '';
@@ -34,9 +34,9 @@ abstract class ITodoViewModel extends StateNotifier<TodoState>
       );
 
       if (id.isEmpty) {
-        state = TodoState.success(TodoAction.add);
+        state = const TodoState.success(TodoAction.add);
       } else {
-        state = TodoState.success(TodoAction.update);
+        state = const TodoState.success(TodoAction.update);
       }
     } catch (e) {
       state = TodoState.error(e.toString());
@@ -46,7 +46,7 @@ abstract class ITodoViewModel extends StateNotifier<TodoState>
   void removeTodo(String todoId, String catId) async {
     try {
       await todoRepository.deleteTodo(todoId, catId);
-      state = TodoState.success(TodoAction.remove);
+      state = const TodoState.success(TodoAction.remove);
     } catch (e) {
       state = TodoState.error(e.toString());
     }
@@ -57,7 +57,7 @@ abstract class ITodoViewModel extends StateNotifier<TodoState>
       await todoRepository.saveTodo(
         todo.copyWith(isCompleted: isChecked),
       );
-      state = TodoState.success(TodoAction.check);
+      state = const TodoState.success(TodoAction.check);
     } catch (e) {
       state = TodoState.error(e.toString());
     }

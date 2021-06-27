@@ -25,13 +25,13 @@ class TodoCategoryListView extends ConsumerWidget {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        leading: Icon(Icons.menu_rounded, color: Colors.black, size: 30)
+        leading: const Icon(Icons.menu_rounded, color: Colors.black, size: 30)
             .paddingSymmetric(h: 25),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
+          const Text(
             'Lists',
             style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
           ).paddingSymmetric(h: 12, v: 20),
@@ -48,16 +48,17 @@ class TodoCategoryListView extends ConsumerWidget {
                           ),
                       ],
                     )
-                  : Center(
+                  : const Center(
                       child: Text(
                         'Empty data, add a category',
                         style: TextStyle(fontSize: 25),
                       ),
                     ),
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (e, s) => Container(
-                child: Center(
-                  child: Text(e.toString(), style: TextStyle(fontSize: 20)),
+              error: (e, s) => Center(
+                child: Text(
+                  e.toString(),
+                  style: const TextStyle(fontSize: 20),
                 ),
               ),
             ),
@@ -65,9 +66,9 @@ class TodoCategoryListView extends ConsumerWidget {
         ],
       ).paddingSymmetric(h: 16),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xFF4A78FA),
+        backgroundColor: const Color(0xFF4A78FA),
         onPressed: () => _showCategoryDialog(context),
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -82,7 +83,7 @@ class TodoCategoryListView extends ConsumerWidget {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (_) => Center(
+      builder: (_) => const Center(
         child: Dialog(
           backgroundColor: Colors.transparent,
           child: CategoryFormDialog(),

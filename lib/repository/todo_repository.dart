@@ -80,7 +80,10 @@ class TodoRepository implements ITodoRepository {
         .collection(_todoCollection)
         .where('categoryId', isEqualTo: catId)
         .get();
-    snapshot.docs.forEach((item) => item.reference.delete());
+
+    for (var i = 0; i < snapshot.docs.length; i++) {
+      await snapshot.docs[i].reference.delete();
+    }
   }
 
   @override

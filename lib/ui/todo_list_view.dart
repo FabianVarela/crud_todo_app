@@ -25,12 +25,12 @@ class TodoListView extends HookConsumerWidget {
     );
 
     return Scaffold(
-      backgroundColor: Color(0xFF4A78FA),
+      backgroundColor: const Color(0xFF4A78FA),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back_ios,
             color: Colors.white,
           ),
@@ -38,7 +38,7 @@ class TodoListView extends HookConsumerWidget {
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.delete),
+            icon: const Icon(Icons.delete),
             onPressed: () {
               categoryVm.removeCategory(category.id!);
               Navigator.pop(context);
@@ -66,7 +66,7 @@ class TodoListView extends HookConsumerWidget {
                   child: Text(
                     category.emoji.code,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 30),
+                    style: const TextStyle(fontSize: 30),
                   ),
                 ),
                 Column(
@@ -74,7 +74,7 @@ class TodoListView extends HookConsumerWidget {
                   children: <Widget>[
                     Text(
                       category.name,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 35,
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
@@ -82,7 +82,7 @@ class TodoListView extends HookConsumerWidget {
                     ).paddingOnly(b: 5),
                     Text(
                       '${category.todoSize} Tasks',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w300,
                         color: Colors.white,
@@ -98,7 +98,7 @@ class TodoListView extends HookConsumerWidget {
             child: todoStream.when(
               data: (todos) {
                 return Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30),
@@ -111,9 +111,10 @@ class TodoListView extends HookConsumerWidget {
                 );
               },
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (e, s) => Container(
-                child: Center(
-                  child: Text(e.toString(), style: TextStyle(fontSize: 20)),
+              error: (e, s) => Center(
+                child: Text(
+                  e.toString(),
+                  style: const TextStyle(fontSize: 20),
                 ),
               ),
             ),
@@ -121,9 +122,9 @@ class TodoListView extends HookConsumerWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Color(0xFF4A78FA),
+        backgroundColor: const Color(0xFF4A78FA),
         onPressed: () => _goToTodo(context),
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -148,7 +149,7 @@ class TodoListView extends HookConsumerWidget {
   }
 
   Widget _emptyMessage() {
-    return Center(
+    return const Center(
       child: Text(
         'Empty data, add a task',
         style: TextStyle(fontSize: 25),

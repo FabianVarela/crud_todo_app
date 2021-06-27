@@ -8,10 +8,12 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp(ProviderScope(child: TodoListApp()));
+  runApp(const ProviderScope(child: TodoListApp()));
 }
 
 class TodoListApp extends StatelessWidget {
+  const TodoListApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,7 +24,7 @@ class TodoListApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
       ),
-      home: TodoCategoryListView(),
+      home: const TodoCategoryListView(),
     );
   }
 }

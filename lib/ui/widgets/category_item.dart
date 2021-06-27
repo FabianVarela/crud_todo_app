@@ -24,21 +24,21 @@ class CategoryItem extends StatelessWidget {
           children: <Widget>[
             Text(
               item.emoji.code,
-              style: TextStyle(fontSize: 30),
+              style: const TextStyle(fontSize: 30),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
                   item.name,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
                 ).paddingOnly(b: 3),
                 Text(
                   '${item.todoSize} Tasks',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                     color: Colors.black38,
