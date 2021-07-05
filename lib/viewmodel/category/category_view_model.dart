@@ -1,26 +1,25 @@
-import 'package:crud_todo_app/common/validations.dart';
+import 'package:crud_todo_app/common/utils.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
-import 'package:crud_todo_app/repository/todo_repository.dart';
+import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
-import 'package:crud_todo_app/common/common.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-abstract class ICategoryViewModel extends StateNotifier<CategoryState>
-    with Validations {
+abstract class ICategoryViewModel extends StateNotifier<CategoryState> {
   ICategoryViewModel() : super(const CategoryState.initial());
 
   ValidationText get nameCat;
 
   ValidationText get emojiCat;
 
-  ITodoRepository get todoRepository;
+  ICategoryRepository get categoryRepository;
 
-  ValidationText onChangeName(String value) => validateEmpty(value);
+  ValidationText onChangeName(String value) => Utils.validateEmpty(value);
 
-  ValidationText onChangeEmoji(String value) => validateEmoji(value);
+  ValidationText onChangeEmoji(String value) => Utils.validateEmoji(value);
 
   void saveCategory() async {
     try {
@@ -29,7 +28,7 @@ abstract class ICategoryViewModel extends StateNotifier<CategoryState>
       final name = nameCat;
       final emoji = emojiCat;
 
-      await todoRepository.saveCategory(Category(
+      await categoryRepository.saveCategory(Category(
         name: name.text!,
         emoji: EmojiParser().getEmoji(emoji.text!),
       ));
@@ -43,7 +42,7 @@ abstract class ICategoryViewModel extends StateNotifier<CategoryState>
   void removeCategory(String id) async {
     try {
       state = const CategoryState.loading();
-      await todoRepository.deleteCategory(id);
+      await categoryRepository.deleteCategory(id);
       state = const CategoryState.success(CategoryAction.remove);
     } on Exception catch (e) {
       state = CategoryState.error(e.toString());
@@ -63,5 +62,6 @@ class CategoryViewModel extends ICategoryViewModel {
   ValidationText get emojiCat => _read(emojiCatProvider).state;
 
   @override
-  ITodoRepository get todoRepository => _read(todoRepositoryProvider);
+  ICategoryRepository get categoryRepository =>
+      _read(categoryRepositoryProvider);
 }

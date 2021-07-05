@@ -1,14 +1,13 @@
-import 'package:crud_todo_app/common/validations.dart';
+import 'package:crud_todo_app/common/utils.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
-import 'package:crud_todo_app/common/common.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-abstract class ITodoViewModel extends StateNotifier<TodoState>
-    with Validations {
+abstract class ITodoViewModel extends StateNotifier<TodoState> {
   ITodoViewModel() : super(const TodoState.initial());
 
   String get idTodo;
@@ -19,7 +18,7 @@ abstract class ITodoViewModel extends StateNotifier<TodoState>
 
   ITodoRepository get todoRepository;
 
-  ValidationText onChangeSubject(String value) => validateEmpty(value);
+  ValidationText onChangeSubject(String value) => Utils.validateEmpty(value);
 
   void saveTodo(String catId) async {
     try {

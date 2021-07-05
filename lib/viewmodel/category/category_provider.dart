@@ -1,15 +1,19 @@
-import 'package:crud_todo_app/common/utils.dart';
+import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
-import 'package:crud_todo_app/common/common.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final categoryDataProvider = StreamProvider.autoDispose<List<Category>>(
-  (ref) => ref.watch(todoRepositoryProvider).getCategories(),
+  (ref) => ref.watch(categoryRepositoryProvider).getCategories(),
 );
 
-final nameCatProvider = StateProvider.autoDispose((_) => ValidationText());
-final emojiCatProvider = StateProvider.autoDispose((_) => ValidationText());
+final nameCatProvider = StateProvider.autoDispose(
+  (_) => const ValidationText(),
+);
+final emojiCatProvider = StateProvider.autoDispose(
+  (_) => const ValidationText(),
+);
 
 final validationCategoryProvider = StateProvider.autoDispose((ref) {
   final name = ref.watch(nameCatProvider).state.text;
