@@ -23,6 +23,7 @@ dependencies:
     git:
       url: git://github.com/cek-cek/flutter-emoji
   google_fonts: ^2.0.0
+  equatable: ^2.0.3
 
 dev_dependencies:
   flutter_test:
