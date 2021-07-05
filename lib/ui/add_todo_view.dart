@@ -3,14 +3,14 @@ import 'dart:io';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
-import 'package:crud_todo_app/common/utils.dart';
+import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:flutter/cupertino.dart' as cupertino;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:crud_todo_app/common/common.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AddTodoView extends HookConsumerWidget {
   const AddTodoView({Key? key, required this.category, this.todo})

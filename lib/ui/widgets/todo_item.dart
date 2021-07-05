@@ -1,4 +1,4 @@
-import 'package:crud_todo_app/common/utils.dart';
+import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/ui/widgets/custom_checkbox.dart';
