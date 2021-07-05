@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crud_todo_app/common/utils.dart';
+import 'package:crud_todo_app/common/extension.dart';
+import 'package:equatable/equatable.dart';
 
-class Todo {
-  Todo({
+class Todo extends Equatable {
+  const Todo({
     required this.id,
     required this.subject,
     required this.finalDate,
@@ -10,12 +10,12 @@ class Todo {
     this.isCompleted = false,
   });
 
-  Todo.fromSnapshot(DocumentSnapshot snapshot)
-      : id = snapshot.id,
-        subject = snapshot.data()!['subject'],
-        finalDate = (snapshot.data()!['finalDate'] as int).millisecondsToDate,
-        categoryId = snapshot.data()!['categoryId'],
-        isCompleted = snapshot.data()!['isCompleted'];
+  Todo.fromMap(Map<String, dynamic> map)
+      : id = map['id'],
+        subject = map['subject'],
+        finalDate = (map['finalDate'] as int).millisecondsToDate,
+        categoryId = map['categoryId'],
+        isCompleted = map['isCompleted'];
 
   final String id;
   final String subject;
@@ -44,4 +44,7 @@ class Todo {
         categoryId: categoryId ?? this.categoryId,
         isCompleted: isCompleted ?? this.isCompleted,
       );
+
+  @override
+  List<Object?> get props => [id, subject, finalDate, categoryId, isCompleted];
 }

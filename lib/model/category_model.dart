@@ -1,28 +1,19 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
 
-class Category {
-  Category({
+class Category extends Equatable {
+  const Category({
     this.id,
     required this.name,
     required this.emoji,
     this.todoSize,
   });
 
-  factory Category.fromMap(Map<String, dynamic> map) {
-    return Category(
-      id: map['id'],
-      name: map['name'],
-      emoji: map['emoji'],
-      todoSize: map['todoSize'],
-    );
-  }
-
-  Category.fromSnapshot(DocumentSnapshot snapshot)
-      : id = snapshot.id,
-        name = snapshot.data()!['name'],
-        emoji = EmojiParser().get(snapshot.data()!['emoji']),
-        todoSize = (snapshot.data()!['todoSize'] ?? 0);
+  Category.fromMap(Map<String, dynamic> map)
+      : id = map['id'],
+        name = map['name'],
+        emoji = EmojiParser().get(map['emoji']),
+        todoSize = map['todoSize'] ?? 0;
 
   final String? id;
   final String name;
@@ -42,4 +33,7 @@ class Category {
         emoji: emoji ?? this.emoji,
         todoSize: todoSize ?? this.todoSize,
       );
+
+  @override
+  List<Object?> get props => [id, name, emoji, todoSize];
 }
