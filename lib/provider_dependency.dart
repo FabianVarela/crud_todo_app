@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
 import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
@@ -7,18 +6,14 @@ import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-/// Firestore
-
-final databaseProvider = Provider((_) => FirebaseFirestore.instance);
-
 /// Repository
 
 final categoryRepositoryProvider = Provider<ICategoryRepository>(
-  (ref) => CategoryRepository(ref.read),
+  (ref) => CategoryRepository(),
 );
 
 final todoRepositoryProvider = Provider<ITodoRepository>(
-  (ref) => TodoRepository(ref.read),
+  (ref) => TodoRepository(),
 );
 
 /// ViewModel

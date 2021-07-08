@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/model/category_model.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-import '../provider_dependency.dart';
 
 abstract class ICategoryRepository {
   Stream<List<Category>> getCategories();
@@ -14,14 +11,12 @@ abstract class ICategoryRepository {
 }
 
 class CategoryRepository implements ICategoryRepository {
-  CategoryRepository(this.read);
-
-  final Reader read;
-
-  FirebaseFirestore get _database => read(databaseProvider);
+  CategoryRepository();
 
   static const String _categoryCollection = 'categories';
   static const String _todoCollection = 'todos';
+
+  late final _database = FirebaseFirestore.instance;
 
   @override
   Stream<List<Category>> getCategories() {
