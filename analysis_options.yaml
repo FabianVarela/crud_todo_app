@@ -4,6 +4,7 @@ analyzer:
   exclude:
     - lib/**.g.dart
     - lib/**.freezed.dart
+    - test/**.mocks.dart
 
 linter:
   rules:
