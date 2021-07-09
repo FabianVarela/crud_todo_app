@@ -5,7 +5,7 @@ part 'category_state.freezed.dart';
 enum CategoryAction { add, remove }
 
 @freezed
-abstract class CategoryState with _$CategoryState {
+class CategoryState with _$CategoryState {
   ///Initial
   const factory CategoryState.initial() = _CategoryStateInitial;
 

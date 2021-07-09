@@ -5,7 +5,7 @@ part 'todo_state.freezed.dart';
 enum TodoAction { add, update, remove, check }
 
 @freezed
-abstract class TodoState with _$TodoState {
+class TodoState with _$TodoState {
   ///Initial
   const factory TodoState.initial() = _TodoStateInitial;
 
