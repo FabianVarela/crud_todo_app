@@ -8,7 +8,6 @@ import 'package:mockito/annotations.dart';
     MockSpec<DateTime>(
       as: #ArgelDateTimeMock,
       returnNullOnMissingStub: true,
-
     ),
   ],
 )
