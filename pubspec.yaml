@@ -31,6 +31,8 @@ dev_dependencies:
   very_good_analysis: ^2.1.2
   build_runner: ^2.0.1
   freezed: ^0.14.1+3
+  mocktail: any
+  mockito: any
 
 flutter:
 

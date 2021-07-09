@@ -1,19 +1,32 @@
 import 'package:crud_todo_app/repository/category_repository.dart';
+import 'package:crud_todo_app/repository/category_service.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
+import 'package:crud_todo_app/repository/todo_service.dart';
 import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
 import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-/// Repository
+/// Service
+final categoryServiceProvider =
+    Provider<CategoryService>((ref) => CategoryService());
 
+final todoServiceProvider = Provider<TodoService>((ref) => TodoService());
+
+/// Repository
 final categoryRepositoryProvider = Provider<ICategoryRepository>(
-  (ref) => CategoryRepository(),
+  (ref) {
+    final service = ref.read(categoryServiceProvider);
+    return CategoryRepository(service);
+  },
 );
 
 final todoRepositoryProvider = Provider<ITodoRepository>(
-  (ref) => TodoRepository(),
+  (ref) {
+    final service = ref.read(todoServiceProvider);
+    return TodoRepository(service);
+  },
 );
 
 /// ViewModel
