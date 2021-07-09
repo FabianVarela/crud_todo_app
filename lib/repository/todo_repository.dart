@@ -1,5 +1,5 @@
 import 'package:crud_todo_app/model/todo_model.dart';
-import 'package:crud_todo_app/repository/todo_service.dart';
+import 'package:crud_todo_app/service/todo_service.dart';
 
 abstract class ITodoRepository {
   Stream<List<Todo>> getTodosByCategory(String catId);

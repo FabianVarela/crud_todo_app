@@ -1,5 +1,5 @@
-import 'package:crud_todo_app/repository/category_service.dart';
-import 'package:crud_todo_app/repository/todo_service.dart';
+import 'package:crud_todo_app/service/category_service.dart';
+import 'package:crud_todo_app/service/todo_service.dart';
 import 'package:mockito/annotations.dart';
 
 @GenerateMocks(

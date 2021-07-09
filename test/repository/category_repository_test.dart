@@ -1,6 +1,6 @@
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
-import 'package:crud_todo_app/repository/category_service.dart';
+import 'package:crud_todo_app/service/category_service.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

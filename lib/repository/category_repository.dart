@@ -1,5 +1,5 @@
 import 'package:crud_todo_app/model/category_model.dart';
-import 'package:crud_todo_app/repository/category_service.dart';
+import 'package:crud_todo_app/service/category_service.dart';
 
 abstract class ICategoryRepository {
   Stream<List<Category>> getCategories();

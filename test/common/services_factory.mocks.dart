@@ -6,8 +6,8 @@ import 'dart:async' as _i3;
 
 import 'package:crud_todo_app/model/category_model.dart' as _i6;
 import 'package:crud_todo_app/model/todo_model.dart' as _i4;
-import 'package:crud_todo_app/repository/category_service.dart' as _i5;
-import 'package:crud_todo_app/repository/todo_service.dart' as _i2;
+import 'package:crud_todo_app/service/category_service.dart' as _i5;
+import 'package:crud_todo_app/service/todo_service.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: avoid_redundant_argument_values
