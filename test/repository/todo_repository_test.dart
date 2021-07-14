@@ -3,7 +3,7 @@ import 'package:crud_todo_app/repository/todo_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import '../common/services_factory.mocks.dart';
+import '../service/services_factory.mocks.dart';
 
 void main() {
   late MockTodoService mockTodoService;
