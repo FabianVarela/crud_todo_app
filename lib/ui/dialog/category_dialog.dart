@@ -37,9 +37,10 @@ class CategoryFormDialog extends HookConsumerWidget {
                 'Add category',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
               ).paddingOnly(b: 15),
-              _Name().paddingOnly(b: 5),
-              _Emoji().paddingOnly(b: 25),
-              if (categoryViewModel != const CategoryState.loading()) _Submit(),
+              const NameCategory().paddingOnly(b: 5),
+              const EmojiCategory().paddingOnly(b: 25),
+              if (categoryViewModel != const CategoryState.loading())
+                const SubmitCategory(),
               if (categoryViewModel == const CategoryState.loading())
                 const CircularProgressIndicator()
             ],
@@ -55,7 +56,9 @@ class CategoryFormDialog extends HookConsumerWidget {
   }
 }
 
-class _Name extends HookConsumerWidget {
+class NameCategory extends HookConsumerWidget {
+  const NameCategory({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final nameText = ref.watch(nameCatProvider);
@@ -74,7 +77,9 @@ class _Name extends HookConsumerWidget {
   }
 }
 
-class _Emoji extends HookConsumerWidget {
+class EmojiCategory extends HookConsumerWidget {
+  const EmojiCategory({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final emoji = ref.watch(emojiCatProvider);
@@ -93,7 +98,9 @@ class _Emoji extends HookConsumerWidget {
   }
 }
 
-class _Submit extends HookConsumerWidget {
+class SubmitCategory extends HookConsumerWidget {
+  const SubmitCategory({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final categoryViewModel = ref.watch(categoryViewModelProvider.notifier);
