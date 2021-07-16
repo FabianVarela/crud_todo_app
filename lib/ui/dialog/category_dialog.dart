@@ -12,6 +12,7 @@ class CategoryFormDialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final categoryViewModel = ref.watch(categoryViewModelProvider);
+    final isValidForm = ref.watch(validationCategoryProvider).state;
 
     ref.listen(
       categoryViewModelProvider,
@@ -40,8 +41,8 @@ class CategoryFormDialog extends HookConsumerWidget {
               const NameCategory().paddingOnly(b: 5),
               const EmojiCategory().paddingOnly(b: 25),
               if (categoryViewModel != const CategoryState.loading())
-                const SubmitCategory(),
-              if (categoryViewModel == const CategoryState.loading())
+                SubmitCategory(enabled: isValidForm)
+              else
                 const CircularProgressIndicator()
             ],
           ).paddingSymmetric(h: 16, v: 10),
@@ -99,16 +100,19 @@ class EmojiCategory extends HookConsumerWidget {
 }
 
 class SubmitCategory extends HookConsumerWidget {
-  const SubmitCategory({Key? key}) : super(key: key);
+  const SubmitCategory({Key? key, this.enabled = false}) : super(key: key);
+
+  final bool enabled;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final categoryViewModel = ref.watch(categoryViewModelProvider.notifier);
-    final isValid = ref.watch(validationCategoryProvider).state;
 
     return ElevatedButton(
       style: ElevatedButton.styleFrom(primary: const Color(0xFF4A78FA)),
-      onPressed: isValid ? categoryViewModel.saveCategory : null,
+      onPressed: enabled
+          ? categoryViewModel.saveCategory
+          : null,
       child: Container(
         width: double.infinity,
         alignment: Alignment.center,
