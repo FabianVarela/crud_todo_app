@@ -25,7 +25,8 @@ class TodoItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Slidable(
       actionPane: const SlidableDrawerActionPane(),
-      actions: !item.isCompleted && !item.finalDate.isDurationNegative
+      actions: onEdit != null &&
+              (!item.isCompleted && !item.finalDate.isDurationNegative)
           ? <Widget>[
               IconSlideAction(
                 caption: 'Edit',
@@ -35,7 +36,7 @@ class TodoItem extends StatelessWidget {
               ),
             ]
           : <Widget>[],
-      secondaryActions: !item.isCompleted
+      secondaryActions: onRemove != null && !item.isCompleted
           ? <Widget>[
               IconSlideAction(
                 caption: 'Remove',
@@ -77,7 +78,9 @@ class TodoItem extends StatelessWidget {
         trailing: CustomCheckbox(
           value: item.isCompleted,
           enabled: !item.isCompleted,
-          onChanged: onCheck!,
+          onChanged: (value) {
+            if (onCheck != null) onCheck!(value);
+          },
         ),
       ),
     );
