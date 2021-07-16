@@ -34,10 +34,10 @@ final todoRepositoryProvider = Provider<ITodoRepository>(
 /// ViewModel
 
 final categoryViewModelProvider =
-    StateNotifierProvider<CategoryViewModel, CategoryState>(
+    StateNotifierProvider<ICategoryViewModel, CategoryState>(
   (ref) => CategoryViewModel(ref.read),
 );
 
-final todoViewModelProvider = StateNotifierProvider<TodoViewModel, TodoState>(
+final todoViewModelProvider = StateNotifierProvider<ITodoViewModel, TodoState>(
   (ref) => TodoViewModel(ref.read),
 );
