@@ -9,7 +9,6 @@ import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 /// Service
-
 final categoryServiceProvider = Provider<CategoryService>(
   (ref) => CategoryService(),
 );
@@ -32,7 +31,6 @@ final todoRepositoryProvider = Provider<ITodoRepository>(
 );
 
 /// ViewModel
-
 final categoryViewModelProvider =
     StateNotifierProvider<ICategoryViewModel, CategoryState>(
   (ref) => CategoryViewModel(ref.read),
