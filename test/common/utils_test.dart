@@ -74,7 +74,7 @@ void main() {
       );
       expect(textValidation, isA<ValidationText>());
     });
-    test('Validate that ValidationText model can be cloneable', () {
+    test('Validate if ValidationText model can be cloneable', () {
       // Arrange
       const initialTextValidation = ValidationText(text: '');
 
