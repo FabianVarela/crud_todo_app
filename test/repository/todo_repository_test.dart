@@ -4,6 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import '../service/services_factory.mocks.dart';
+import '../test_utils/params_factory.dart';
 
 void main() {
   late MockTodoService mockTodoService;
@@ -15,13 +16,6 @@ void main() {
   });
 
   group('$TodoRepository', () {
-    final todo = Todo(
-      id: 'id',
-      subject: 'subject',
-      finalDate: DateTime.now(),
-      categoryId: 'categoryId',
-    );
-
     test(
         'should return $List of $Todo '
         'when getTodosByCategory is called', () async {
