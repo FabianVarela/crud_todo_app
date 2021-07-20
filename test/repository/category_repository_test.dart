@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockCategoryService extends Mock implements CategoryService {}
+
 class MyCategoryFake extends Fake implements Category {}
 
 void main() {
