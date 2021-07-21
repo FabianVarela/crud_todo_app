@@ -11,9 +11,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../repository/category_repository_test.dart';
-import '../../test_utils/params_factory.dart';
-
-class MockCategoryViewModel extends Mock implements ICategoryViewModel {}
+import '../../test_utils/mocks.dart';
 
 void main() {
   late MockNavigator mockNavigator;
