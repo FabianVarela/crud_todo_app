@@ -11,10 +11,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../repository/category_repository_test.dart';
+import '../../test_utils/params_factory.dart';
 
 class MockCategoryViewModel extends Mock implements ICategoryViewModel {}
 
 void main() {
+  late MockNavigator mockNavigator;
+
   late MockCategoryService mockCategoryService;
   late ICategoryRepository categoryRepository;
 
@@ -22,6 +25,9 @@ void main() {
     mockCategoryService = MockCategoryService();
     categoryRepository = CategoryRepository(mockCategoryService);
     registerFallbackValue(MyCategoryFake());
+
+    registerFallbackValue(MyRouteFake());
+    mockNavigator = MockNavigator();
   });
 
   group('$CategoryFormDialog UI section', () {
@@ -51,10 +57,27 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(Dialog), findsOneWidget);
 
+      expect(find.byIcon(Icons.close), findsOneWidget);
       expect(find.text('Add category'), findsOneWidget);
       expect(find.byType(NameCategory), findsOneWidget);
       expect(find.byType(EmojiCategory), findsOneWidget);
       expect(find.byType(SubmitCategory), findsOneWidget);
+    });
+
+    testWidgets(
+        'Check $Dialog close button and verify if close it '
+        'when set tap in $GestureDetector', (tester) async {
+      await tester.pumpWidget(ProviderScope(
+        child: MaterialApp(
+          home: const Scaffold(body: CategoryFormDialog()),
+          navigatorObservers: [mockNavigator],
+        ),
+      ));
+
+      await tester.tap(find.byIcon(Icons.close));
+      await tester.pumpAndSettle();
+
+      verify(() => mockNavigator.didPop(any(), any())).called(1);
     });
 
     testWidgets(
