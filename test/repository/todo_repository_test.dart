@@ -47,5 +47,21 @@ void main() {
       verify(mockTodoService.saveTodo(any));
       verifyNoMoreInteractions(mockTodoService);
     });
+
+    test('should delete todo when deleteTodo is called', () {
+      // arrange
+      when(mockTodoService.deleteTodo(any, any)).thenAnswer(
+        (_) => Future.value(),
+      );
+
+      // act
+      final result = todoRepository.deleteTodo(todoId, categoryId);
+
+      // assert
+      expect(result, isA<Future<void>>());
+
+      verify(mockTodoService.deleteTodo(any, any));
+      verifyNoMoreInteractions(mockTodoService);
+    });
   });
 }
