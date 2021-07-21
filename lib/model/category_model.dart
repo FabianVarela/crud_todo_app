@@ -9,11 +9,12 @@ class Category extends Equatable {
     this.todoSize,
   });
 
-  Category.fromMap(Map<String, dynamic> map)
-      : id = map['id'],
-        name = map['name'],
-        emoji = EmojiParser().get(map['emoji']),
-        todoSize = map['todoSize'] ?? 0;
+  factory Category.fromJson(Map<String, dynamic> json) => Category(
+        id: json['id'],
+        name: json['name'],
+        emoji: EmojiParser().get(json['emoji']),
+        todoSize: json['todoSize'] ?? 0,
+      );
 
   final String? id;
   final String name;

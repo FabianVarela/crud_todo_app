@@ -14,7 +14,7 @@ class CategoryService {
     final querySnapshot = _database.collection(_categoryCollection).snapshots();
 
     return querySnapshot.map((query) =>
-        query.docs.map((doc) => Category.fromMap(doc.toMap())).toList());
+        query.docs.map((doc) => Category.fromJson(doc.toMap())).toList());
   }
 
   Future<void> saveCategory(Category category) async => category.id != null

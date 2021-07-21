@@ -16,8 +16,8 @@ class TodoService {
         .where('categoryId', isEqualTo: catId)
         .snapshots();
 
-    return querySnapshot.map(
-        (query) => query.docs.map((doc) => Todo.fromMap(doc.toMap())).toList());
+    return querySnapshot.map((query) =>
+        query.docs.map((doc) => Todo.fromJson(doc.toMap())).toList());
   }
 
   Future<void> saveTodo(Todo todo) async {
