@@ -1,13 +1,10 @@
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
-import 'package:crud_todo_app/service/category_service.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockCategoryService extends Mock implements CategoryService {}
-
-class MyCategoryFake extends Fake implements Category {}
+import '../test_utils/mocks.dart';
 
 void main() {
   late MockCategoryService mockCategoryService;
