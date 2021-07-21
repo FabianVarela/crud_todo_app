@@ -3,7 +3,7 @@ import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('Validation text fields', () {
+  group('Validation TextFields', () {
     test('Validate if text is Empty', () {
       // arrange
       const textEmpty = '';
@@ -18,6 +18,7 @@ void main() {
       );
       expect(textValidation, isA<ValidationText>());
     });
+
     test('Validate if text is not empty', () {
       // arrange
       const textEmpty = 'Este es mi nombre';
@@ -32,6 +33,7 @@ void main() {
       );
       expect(textValidation, isA<ValidationText>());
     });
+
     test('Validate if emoji is empty', () {
       // arrange
       const textEmoji = '';
@@ -46,6 +48,7 @@ void main() {
       );
       expect(textValidation, isA<ValidationText>());
     });
+
     test('Validate if emoji is not empty', () {
       // arrange
       const textEmoji = '😀';
@@ -60,6 +63,7 @@ void main() {
       );
       expect(textValidation, isA<ValidationText>());
     });
+
     test('Validate if emoji is invalid', () {
       // arrange
       const textEmoji = ':happy';
@@ -74,7 +78,8 @@ void main() {
       );
       expect(textValidation, isA<ValidationText>());
     });
-    test('Validate if ValidationText model can be cloneable', () {
+
+    test('Check if ValidationText model can clone the message', () {
       // arrange
       const initialTextValidation = ValidationText(text: '');
 
@@ -88,10 +93,25 @@ void main() {
       );
 
       // assert
-      expect(newTextValidation, isA<ValidationText>());
-      expect(newTextValidation.text, isNull);
-      expect(newTextValidation.message, isNotNull);
+      expect(cloneTextValidation, isA<ValidationText>());
+      expect(cloneTextValidation.text, isNotNull);
+      expect(cloneTextValidation.message, isNotNull);
+    });
 
+    test('Check if ValidationText model can clone the text', () {
+      // arrange
+      const initialTextValidation = ValidationText(text: '', message: '');
+
+      // act
+      final newTextValidation = Utils.validateEmpty(
+        initialTextValidation.text!,
+      );
+
+      final cloneTextValidation = initialTextValidation.copyWith(
+        text: newTextValidation.text,
+      );
+
+      // assert
       expect(cloneTextValidation, isA<ValidationText>());
       expect(cloneTextValidation.text, isNotNull);
       expect(cloneTextValidation.message, isNotNull);
