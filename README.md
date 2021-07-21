@@ -1,20 +1,56 @@
-# crud_todo_app
+# Flutter · CRUD TODO App
 
-Create a To-do List app managing CRUD in Firebase and Flutter
+![Coverage](./coverage_badge.svg?sanitize=true)
 
-## Getting Started
+Create a To-do List Flutter app managing CRUD with Firebase, using RiverPod as state management and dependency injection
 
-This project is a starting point for a Flutter application.
+### Getting Started (Firebase)
+* To execute the app, you have to Firebase Project already created.
+* Create an app in Firebase for Android and iOS with the existing project.
+    * For Android you must rename the bundle Id on ```app/build.gradle```.
+    * For iOS in XCode IDE, you select ```Runner``` and change the 'Bundle Identifier' text.
 
-A few resources to get you started if this is your first Flutter project:
+### Getting Started (Flutter)
+* Clone this project.
+* Set in Android ```google-services.json``` file in ```app``` folder.
+* Set in iOS ```GoogleServices-Info.plist``` file in ```Runner``` folder.
+* Run project and enjoy :smile:
 
-- [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
+### Firebase Scheme
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+    ├── categories
+      ├── id (generated)
+        ├── emoji (String)
+        ├── name (String)
+        ├── todoSize (Number)
 
+    ├── todos
+      ├── id (generated)
+        ├── categoryId (String)
+        ├── finalDate (Number)
+        ├── isCompleted (Boolean)
+        ├── subject (String)
+ 
+### Used packages
 
-Mockito NullSafety recipe
-https://github.com/dart-lang/mockito/blob/master/NULL_SAFETY_README.md
+------
+#### Dependencies
+- Firebase (firebase_core, cloud_firestore)
+- Hooks (flutter_hooks) 
+- Riverpod (hooks_riverpod)
+- Equatable (equatable)
+- Intl (intl)
+- Flutter Emoji (flutter_emoji)
+- UUID (uuid)
+- Flutter Slidable (flutter_slidable)
+
+#### Dev dependencies
+- Freezed (freezed, freezed_annotation)
+- Mocktail (mocktail)
+- Mockito (mockito)
+- Very Good Analysis (very_good_analysis)
+------
+
+#### Help mockito reference
+
+Mockito Null Safety recipe [link](https://github.com/dart-lang/mockito/blob/master/NULL_SAFETY_README.md)
