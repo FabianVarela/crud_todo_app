@@ -536,6 +536,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  remove_from_coverage:
+    dependency: "direct dev"
+    description:
+      name: remove_from_coverage
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   riverpod:
     dependency: transitive
     description:
