@@ -1,6 +1,12 @@
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
+import 'package:mocktail/mocktail.dart';
+
+class MockNavigator extends Mock implements NavigatorObserver {}
+
+class MyRouteFake extends Fake implements Route<dynamic> {}
 
 const categoryId = 'ABC123';
 const categoryName = 'Test Category';
