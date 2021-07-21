@@ -21,6 +21,8 @@ class AddTodoView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isValidForm = ref.watch(validationTodoProvider).state;
+
     useEffect(() {
       if (todo != null) {
         Future.microtask(() => ref.read(idTodoProvider).state = todo!.id);
@@ -38,10 +40,10 @@ class AddTodoView extends HookConsumerWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            SubjectTextField(todo: todo).paddingSymmetric(h: 30, v: 30),
-            DateButton(todo: todo).paddingSymmetric(h: 30, v: 20),
-            CategoryText(category: category).paddingSymmetric(h: 30, v: 20),
-            SubmitButton(categoryId: category.id!),
+            SubjectTodo(todo: todo).paddingSymmetric(h: 30, v: 30),
+            DateTodo(todo: todo).paddingSymmetric(h: 30, v: 20),
+            CategoryTodo(category: category).paddingSymmetric(h: 30, v: 20),
+            SubmitTodo(categoryId: category.id!, enabled: isValidForm),
           ],
         ),
       ).paddingSymmetric(v: 20),
@@ -81,8 +83,8 @@ class AddTodoView extends HookConsumerWidget {
   }
 }
 
-class SubjectTextField extends HookConsumerWidget {
-  const SubjectTextField({Key? key, required this.todo}) : super(key: key);
+class SubjectTodo extends HookConsumerWidget {
+  const SubjectTodo({Key? key, required this.todo}) : super(key: key);
 
   final Todo? todo;
 
@@ -117,8 +119,8 @@ class SubjectTextField extends HookConsumerWidget {
   }
 }
 
-class DateButton extends HookConsumerWidget {
-  const DateButton({Key? key, required this.todo}) : super(key: key);
+class DateTodo extends HookConsumerWidget {
+  const DateTodo({Key? key, required this.todo}) : super(key: key);
 
   final Todo? todo;
 
@@ -206,8 +208,8 @@ class DateButton extends HookConsumerWidget {
   }
 }
 
-class CategoryText extends StatelessWidget {
-  const CategoryText({cupertino.Key? key, required this.category})
+class CategoryTodo extends StatelessWidget {
+  const CategoryTodo({cupertino.Key? key, required this.category})
       : super(key: key);
 
   final Category category;
@@ -238,21 +240,22 @@ class CategoryText extends StatelessWidget {
   }
 }
 
-class SubmitButton extends HookConsumerWidget {
-  const SubmitButton({Key? key, required this.categoryId}) : super(key: key);
+class SubmitTodo extends HookConsumerWidget {
+  const SubmitTodo({Key? key, required this.categoryId, this.enabled = false})
+      : super(key: key);
 
+  final bool enabled;
   final String categoryId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final todoViewModel = ref.watch(todoViewModelProvider.notifier);
 
-    final isValid = ref.watch(validationTodoProvider).state;
     final todoId = ref.watch(idTodoProvider).state;
 
     return ElevatedButton(
       style: ElevatedButton.styleFrom(primary: const Color(0xFF4A78FA)),
-      onPressed: isValid ? () => todoViewModel.saveTodo(categoryId) : null,
+      onPressed: enabled ? () => todoViewModel.saveTodo(categoryId) : null,
       child: Container(
         width: double.infinity,
         alignment: Alignment.center,
