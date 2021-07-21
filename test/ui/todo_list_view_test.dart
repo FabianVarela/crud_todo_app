@@ -1,5 +1,6 @@
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
+import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,20 @@ void main() {
     todoRepository = TodoRepository(mockTodoService);
   });
 
-  group('Todo list view UI', () {
-    testWidgets('Show empty data in todo', (WidgetTester tester) async {
+  group('$TodoListView UI screen', () {
+    testWidgets('Show $TodoListView screen', (tester) async {
+      await tester.pumpWidget(ProviderScope(
+        child: MaterialApp(
+          home: TodoListView(category: category),
+        ),
+      ));
+
+      expect(find.byIcon(Icons.arrow_back_ios), findsOneWidget);
+      expect(find.byIcon(Icons.delete), findsOneWidget);
+      expect(find.byType(FloatingActionButton), findsOneWidget);
+    });
+
+    testWidgets('Show $TodoListView screen with empty data', (tester) async {
       when(mockTodoService.getTodosByCategory(any)).thenAnswer(
         (_) => Stream.value([]),
       );
@@ -54,7 +67,7 @@ void main() {
       expect(find.text('Empty data'), findsOneWidget);
     });
 
-    testWidgets('Show data in todo', (WidgetTester tester) async {
+    testWidgets('Show $TodoListView screen with data', (tester) async {
       when(mockTodoService.getTodosByCategory(any)).thenAnswer(
         (_) => Stream.value([todo]),
       );
