@@ -10,7 +10,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../repository/category_repository_test.dart';
 import '../../test_utils/mocks.dart';
 
 void main() {
@@ -138,15 +137,13 @@ void main() {
         ),
       ));
 
-      final foundSubmitButtonCat = find.byType(SubmitCategory);
-
       await tester.enterText(find.byType(NameCategory), 'Test Category');
       await tester.enterText(find.byType(EmojiCategory), '😀');
 
       await tester.pumpAndSettle();
 
       expect(viewModel.debugState, isA<CategoryStateInitial>());
-      await tester.tap(foundSubmitButtonCat);
+      await tester.tap(find.byType(SubmitCategory));
 
       verify(() => mockCategoryService.saveCategory(any())).called(1);
 
