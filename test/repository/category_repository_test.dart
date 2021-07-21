@@ -39,20 +39,6 @@ void main() {
       verifyNoMoreInteractions(mockCategoryService);
     });
 
-    test('should delete when deleteCategory is called', () {
-      // arrange
-      when(() => mockCategoryService.deleteCategory(any()))
-          .thenAnswer((_) => Future.value());
-
-      // act
-      final result = categoryRepository.deleteCategory('catId');
-
-      // assert
-      expect(result, isA<Future<void>>());
-      verify(() => mockCategoryService.deleteCategory(any()));
-      verifyNoMoreInteractions(mockCategoryService);
-    });
-
     test('should save new category when saveCategory is called', () {
       // arrange
       when(() => mockCategoryService.saveCategory(any()))
@@ -64,6 +50,20 @@ void main() {
       // assert
       expect(result, isA<Future<void>>());
       verify(() => mockCategoryService.saveCategory(any()));
+      verifyNoMoreInteractions(mockCategoryService);
+    });
+
+    test('should delete when deleteCategory is called', () {
+      // arrange
+      when(() => mockCategoryService.deleteCategory(any()))
+          .thenAnswer((_) => Future.value());
+
+      // act
+      final result = categoryRepository.deleteCategory('catId');
+
+      // assert
+      expect(result, isA<Future<void>>());
+      verify(() => mockCategoryService.deleteCategory(any()));
       verifyNoMoreInteractions(mockCategoryService);
     });
   });
