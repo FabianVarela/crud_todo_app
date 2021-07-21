@@ -1,9 +1,9 @@
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+import 'package:mocktail/mocktail.dart';
 
-import '../service/services_factory.mocks.dart';
+import '../test_utils/mocks.dart';
 import '../test_utils/params_factory.dart';
 
 void main() {
@@ -13,6 +13,7 @@ void main() {
   setUpAll(() {
     mockTodoService = MockTodoService();
     todoRepository = TodoRepository(mockTodoService);
+    registerFallbackValue(MyTodoFake());
   });
 
   group('$TodoRepository', () {
@@ -21,7 +22,9 @@ void main() {
         'when getTodosByCategory is called', () async {
       // arrange
       final stream = Stream.value([todo]);
-      when(mockTodoService.getTodosByCategory(any)).thenAnswer((_) => stream);
+      when(() => mockTodoService.getTodosByCategory(any())).thenAnswer(
+        (_) => stream,
+      );
 
       // act
       final result = todoRepository.getTodosByCategory('catId');
@@ -30,13 +33,15 @@ void main() {
       expect(result, isA<Stream<List<Todo>>>());
       expect(result, stream);
 
-      verify(mockTodoService.getTodosByCategory(any));
+      verify(() => mockTodoService.getTodosByCategory(any()));
       verifyNoMoreInteractions(mockTodoService);
     });
 
     test('should save todo when saveTodo is called', () {
       // arrange
-      when(mockTodoService.saveTodo(any)).thenAnswer((_) => Future.value());
+      when(() => mockTodoService.saveTodo(any())).thenAnswer(
+        (_) => Future.value(),
+      );
 
       // act
       final result = todoRepository.saveTodo(todo);
@@ -44,13 +49,13 @@ void main() {
       // assert
       expect(result, isA<Future<void>>());
 
-      verify(mockTodoService.saveTodo(any));
+      verify(() => mockTodoService.saveTodo(any()));
       verifyNoMoreInteractions(mockTodoService);
     });
 
     test('should delete todo when deleteTodo is called', () {
       // arrange
-      when(mockTodoService.deleteTodo(any, any)).thenAnswer(
+      when(() => mockTodoService.deleteTodo(any(), any())).thenAnswer(
         (_) => Future.value(),
       );
 
@@ -60,7 +65,7 @@ void main() {
       // assert
       expect(result, isA<Future<void>>());
 
-      verify(mockTodoService.deleteTodo(any, any));
+      verify(() => mockTodoService.deleteTodo(any(), any()));
       verifyNoMoreInteractions(mockTodoService);
     });
   });
