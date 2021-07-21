@@ -21,8 +21,8 @@ void main() {
     registerFallbackValue(MyCategoryFake());
   });
 
-  group('Category list UI screen', () {
-    testWidgets('Show category UI', (WidgetTester tester) async {
+  group('$TodoCategoryListView UI screen', () {
+    testWidgets('Show $TodoCategoryListView screen', (tester) async {
       await tester.pumpWidget(const ProviderScope(
         child: MaterialApp(home: TodoCategoryListView()),
       ));
@@ -32,7 +32,9 @@ void main() {
       expect(find.byType(FloatingActionButton), findsOneWidget);
     });
 
-    testWidgets('Show category empty data', (WidgetTester tester) async {
+    testWidgets(
+        'Show empty data in '
+        '$TodoCategoryListView screen', (tester) async {
       when(mockCategoryService.getCategories).thenAnswer(
         (_) => Stream.value([]),
       );
@@ -66,7 +68,7 @@ void main() {
       expect(find.text('Empty data'), findsOneWidget);
     });
 
-    testWidgets('Show category with data', (WidgetTester tester) async {
+    testWidgets('Show data $TodoCategoryListView in screen', (tester) async {
       when(categoryRepository.getCategories).thenAnswer(
         (_) => Stream.value([category]),
       );
