@@ -1,23 +1,31 @@
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
+import 'package:crud_todo_app/ui/todo_category_list_view.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:mockito/mockito.dart';
+
+import 'package:mocktail/mocktail.dart' as mocktail;
+import 'package:mockito/mockito.dart' as mockito;
 
 import '../service/services_factory.mocks.dart';
 import '../test_utils/params_factory.dart';
 
 void main() {
+  late MockNavigator mockNavigator;
+
   late MockTodoService mockTodoService;
   late ITodoRepository todoRepository;
 
   setUpAll(() {
     mockTodoService = MockTodoService();
     todoRepository = TodoRepository(mockTodoService);
+
+    mocktail.registerFallbackValue(MyRouteFake());
+    mockNavigator = MockNavigator();
   });
 
   group('$TodoListView UI screen', () {
@@ -33,10 +41,28 @@ void main() {
       expect(find.byType(FloatingActionButton), findsOneWidget);
     });
 
+    testWidgets(
+        'Check back button in $TodoListView screen '
+        'and return to $TodoCategoryListView screen', (tester) async {
+      await tester.pumpWidget(ProviderScope(
+        child: MaterialApp(
+          home: TodoListView(category: category),
+          navigatorObservers: [mockNavigator],
+        ),
+      ));
+
+      await tester.tap(find.byIcon(Icons.arrow_back_ios));
+      await tester.pumpAndSettle();
+
+      mocktail
+          .verify(() => mockNavigator.didPop(mocktail.any(), mocktail.any()))
+          .called(1);
+    });
+
     testWidgets('Show $TodoListView screen with empty data', (tester) async {
-      when(mockTodoService.getTodosByCategory(any)).thenAnswer(
-        (_) => Stream.value([]),
-      );
+      mockito
+          .when(mockTodoService.getTodosByCategory(mockito.any))
+          .thenAnswer((_) => Stream.value([]));
 
       await tester.pumpWidget(ProviderScope(
         overrides: [
@@ -68,9 +94,9 @@ void main() {
     });
 
     testWidgets('Show $TodoListView screen with data', (tester) async {
-      when(mockTodoService.getTodosByCategory(any)).thenAnswer(
-        (_) => Stream.value([todo]),
-      );
+      mockito
+          .when(mockTodoService.getTodosByCategory(mockito.any))
+          .thenAnswer((_) => Stream.value([todo]));
 
       await tester.pumpWidget(ProviderScope(
         overrides: [
@@ -102,6 +128,8 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
 
       expect(find.byType(CircularProgressIndicator), findsNothing);
+      expect(find.byType(ListView), findsOneWidget);
+
       expect(tester.widgetList(find.byType(TodoItem)), [
         isA<TodoItem>()
             .having((w) => w.item.id, 'id', todoId)
