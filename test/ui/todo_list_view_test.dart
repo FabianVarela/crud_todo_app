@@ -1,30 +1,38 @@
+import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
+import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
 import 'package:crud_todo_app/ui/todo_category_list_view.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
+import 'package:crud_todo_app/viewmodel/category/category_state.dart';
+import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:mocktail/mocktail.dart';
 
-import 'package:mocktail/mocktail.dart' as mocktail;
-import 'package:mockito/mockito.dart' as mockito;
-
-import '../service/services_factory.mocks.dart';
+import '../test_utils/mocks.dart';
 import '../test_utils/params_factory.dart';
 
 void main() {
   late MockNavigator mockNavigator;
 
+  late MockCategoryService mockCategoryService;
+  late ICategoryRepository categoryRepository;
+
   late MockTodoService mockTodoService;
   late ITodoRepository todoRepository;
 
   setUpAll(() {
+    mockCategoryService = MockCategoryService();
+    categoryRepository = CategoryRepository(mockCategoryService);
+
     mockTodoService = MockTodoService();
     todoRepository = TodoRepository(mockTodoService);
 
-    mocktail.registerFallbackValue(MyRouteFake());
+    registerFallbackValue(MyRouteFake());
     mockNavigator = MockNavigator();
   });
 
@@ -54,14 +62,50 @@ void main() {
       await tester.tap(find.byIcon(Icons.arrow_back_ios));
       await tester.pumpAndSettle();
 
-      mocktail
-          .verify(() => mockNavigator.didPop(mocktail.any(), mocktail.any()))
-          .called(1);
+      verify(() => mockNavigator.didPop(any(), any())).called(1);
+    });
+
+    testWidgets(
+        'Check remove $Category button in $TodoListView screen '
+        'and return to $TodoCategoryListView screen', (tester) async {
+      late final ICategoryViewModel viewModel;
+
+      when(() => mockCategoryService.deleteCategory(any()))
+          .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
+
+      await tester.pumpWidget(ProviderScope(
+        overrides: [
+          categoryRepositoryProvider.overrideWithValue(categoryRepository),
+        ],
+        child: Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(categoryViewModelProvider.notifier);
+            return child!;
+          },
+          child: MaterialApp(
+            home: TodoListView(category: category),
+            navigatorObservers: [mockNavigator],
+          ),
+        ),
+      ));
+
+      expect(viewModel.debugState, isA<CategoryStateInitial>());
+      await tester.tap(find.byIcon(Icons.delete));
+
+      verify(() => mockCategoryService.deleteCategory(any())).called(1);
+
+      expect(viewModel.debugState, isA<CategoryStateLoading>());
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pumpAndSettle();
+
+      expect(viewModel.debugState, isA<CategoryStateSuccess>());
+      await tester.pumpAndSettle();
+
+      verify(() => mockNavigator.didPop(any(), any())).called(1);
     });
 
     testWidgets('Show $TodoListView screen with empty data', (tester) async {
-      mockito
-          .when(mockTodoService.getTodosByCategory(mockito.any))
+      when(() => mockTodoService.getTodosByCategory(any()))
           .thenAnswer((_) => Stream.value([]));
 
       await tester.pumpWidget(ProviderScope(
@@ -94,9 +138,9 @@ void main() {
     });
 
     testWidgets('Show $TodoListView screen with data', (tester) async {
-      mockito
-          .when(mockTodoService.getTodosByCategory(mockito.any))
-          .thenAnswer((_) => Stream.value([todo]));
+      when(() => mockTodoService.getTodosByCategory(any())).thenAnswer(
+        (_) => Stream.value([todo]),
+      );
 
       await tester.pumpWidget(ProviderScope(
         overrides: [
