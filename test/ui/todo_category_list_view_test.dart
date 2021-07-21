@@ -103,6 +103,8 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
 
       expect(find.byType(CircularProgressIndicator), findsNothing);
+      expect(find.byType(GridView), findsOneWidget);
+
       expect(tester.widgetList(find.byType(CategoryItem)), [
         isA<CategoryItem>()
             .having((w) => w.item.id, 'id', categoryId)
