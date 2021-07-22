@@ -20,8 +20,16 @@ final todoFinalDate = DateTime.now().add(const Duration(days: 10));
 
 Todo get initialTodo => Todo(
       categoryId: categoryId,
-      id: todoId,
+      id: '',
       finalDate: todoInitialDate,
+      subject: todoSubject,
+      isCompleted: false,
+    );
+
+Todo get addingTodo => Todo(
+      categoryId: categoryId,
+      id: '',
+      finalDate: todoFinalDate,
       subject: todoSubject,
       isCompleted: false,
     );
