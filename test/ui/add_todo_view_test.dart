@@ -19,15 +19,15 @@ void main() {
     mockTodoService = MockTodoService();
     todoRepository = TodoRepository(mockTodoService);
 
-    registerFallbackValue(MyRouteFake());
     mockNavigator = MockNavigator();
+    registerFallbackValue(MyRouteFake());
   });
 
   group('$AddTodoView UI screen', () {
     testWidgets('Show $AddTodoView screen', (tester) async {
       await tester.pumpWidget(ProviderScope(
         child: MaterialApp(
-          home: AddTodoView(category: category, todo: todo),
+          home: AddTodoView(category: category, todo: existingTodo),
         ),
       ));
 
@@ -44,7 +44,7 @@ void main() {
         'and return to $TodoListView screen', (tester) async {
       await tester.pumpWidget(ProviderScope(
         child: MaterialApp(
-          home: AddTodoView(category: category, todo: todo),
+          home: AddTodoView(category: category, todo: existingTodo),
           navigatorObservers: [mockNavigator],
         ),
       ));
@@ -58,7 +58,7 @@ void main() {
     testWidgets('Show $DatePickerDialog when tap $DateTodo', (tester) async {
       await tester.pumpWidget(ProviderScope(
         child: MaterialApp(
-          home: AddTodoView(category: category, todo: todo),
+          home: AddTodoView(category: category, todo: existingTodo),
         ),
       ));
 
@@ -91,7 +91,7 @@ void main() {
         '$SubjectTodo or $DateTodo widgets are not empty', (tester) async {
       await tester.pumpWidget(ProviderScope(
         child: MaterialApp(
-          home: AddTodoView(category: category, todo: todo),
+          home: AddTodoView(category: category, todo: existingTodo),
         ),
       ));
 
