@@ -1,6 +1,8 @@
+import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/ui/todo_category_list_view.dart';
+import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:flutter/material.dart';
@@ -12,13 +14,40 @@ import '../test_utils/mocks.dart';
 import '../test_utils/params_factory.dart';
 
 void main() {
+  late MockNavigator mockNavigator;
+
   late MockCategoryService mockCategoryService;
   late ICategoryRepository categoryRepository;
+
+  Widget _categoryListWithData() {
+    return Scaffold(
+      body: Consumer(
+        builder: (_, ref, __) {
+          final categories = ref.watch(categoryDataProvider);
+
+          if (categories.data == null) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          final list = categories.data!.value;
+          return list.isNotEmpty
+              ? GridView.count(crossAxisCount: 2, children: <Widget>[
+                  for (final item in list)
+                    CategoryItem(item: item, onClick: () {}),
+                ])
+              : const Offstage();
+        },
+      ),
+    );
+  }
 
   setUpAll(() {
     mockCategoryService = MockCategoryService();
     categoryRepository = CategoryRepository(mockCategoryService);
     registerFallbackValue(MyCategoryFake());
+
+    mockNavigator = MockNavigator();
+    registerFallbackValue(MyRouteFake());
   });
 
   group('$TodoCategoryListView UI screen', () {
@@ -77,26 +106,7 @@ void main() {
         overrides: [
           categoryRepositoryProvider.overrideWithValue(categoryRepository),
         ],
-        child: MaterialApp(
-          home: Scaffold(
-            body: Consumer(
-              builder: (_, ref, __) {
-                final categories = ref.watch(categoryDataProvider);
-
-                if (categories.data == null) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-
-                final list = categories.data!.value;
-                return list.isNotEmpty
-                    ? GridView.count(crossAxisCount: 2, children: <Widget>[
-                        for (final item in list) CategoryItem(item: item),
-                      ])
-                    : const Offstage();
-              },
-            ),
-          ),
-        ),
+        child: MaterialApp(home: _categoryListWithData()),
       ));
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
@@ -112,6 +122,41 @@ void main() {
             .having((w) => w.item.emoji, 'emoji', categoryEmoji)
             .having((w) => w.item.todoSize, 'todoSize', 0),
       ]);
+    });
+
+    testWidgets(
+        'Make redirection when tap '
+        'selected $Category to $TodoListView screen', (tester) async {
+      when(categoryRepository.getCategories).thenAnswer(
+        (_) => Stream.value([category]),
+      );
+
+      await tester.pumpWidget(ProviderScope(
+        overrides: [
+          categoryRepositoryProvider.overrideWithValue(categoryRepository),
+        ],
+        child: MaterialApp(
+          home: _categoryListWithData(),
+          navigatorObservers: [mockNavigator],
+        ),
+      ));
+
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      await tester.pump(const Duration(seconds: 1));
+
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+      expect(find.byType(GridView), findsOneWidget);
+
+      final foundCatItem = find.descendant(
+        of: find.byType(GridView),
+        matching: find.byType(CategoryItem),
+      );
+
+      expect(foundCatItem, findsOneWidget);
+      await tester.tap(foundCatItem);
+
+      await tester.pumpAndSettle();
+      verify(() => mockNavigator.didPush(any(), any())).called(1);
     });
   });
 }
