@@ -118,9 +118,8 @@ void main() {
     testWidgets('Add $Category model from $CategoryFormDialog', (tester) async {
       late final ICategoryViewModel viewModel;
 
-      when(() => mockCategoryService.saveCategory(any())).thenAnswer((_) {
-        return Future<void>.delayed(const Duration(seconds: 1));
-      });
+      when(() => mockCategoryService.saveCategory(any()))
+          .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
       await tester.pumpWidget(ProviderScope(
         overrides: [
