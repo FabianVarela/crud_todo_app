@@ -18,18 +18,18 @@ const todoSubject = 'Test TODO';
 final todoInitialDate = DateTime.now();
 final todoFinalDate = DateTime.now().add(const Duration(days: 10));
 
-Todo get todo => Todo(
-      categoryId: categoryId,
-      id: todoId,
-      finalDate: todoFinalDate,
-      subject: todoSubject,
-      isCompleted: false,
-    );
-
 Todo get initialTodo => Todo(
       categoryId: categoryId,
       id: todoId,
       finalDate: todoInitialDate,
+      subject: todoSubject,
+      isCompleted: false,
+    );
+
+Todo get existingTodo => Todo(
+      categoryId: categoryId,
+      id: todoId,
+      finalDate: todoFinalDate,
       subject: todoSubject,
       isCompleted: false,
     );
