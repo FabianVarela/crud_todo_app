@@ -18,13 +18,17 @@ void main() {
   late MockCategoryService mockCategoryService;
   late ICategoryRepository categoryRepository;
 
+  Widget _categoryFormDialog() {
+    return const Scaffold(body: CategoryFormDialog());
+  }
+
   setUpAll(() {
     mockCategoryService = MockCategoryService();
     categoryRepository = CategoryRepository(mockCategoryService);
     registerFallbackValue(MyCategoryFake());
 
-    registerFallbackValue(MyRouteFake());
     mockNavigator = MockNavigator();
+    registerFallbackValue(MyRouteFake());
   });
 
   group('$CategoryFormDialog UI section', () {
@@ -66,7 +70,7 @@ void main() {
         'when set tap in $GestureDetector', (tester) async {
       await tester.pumpWidget(ProviderScope(
         child: MaterialApp(
-          home: const Scaffold(body: CategoryFormDialog()),
+          home: _categoryFormDialog(),
           navigatorObservers: [mockNavigator],
         ),
       ));
@@ -80,10 +84,8 @@ void main() {
     testWidgets(
         '$CategoryFormDialog show $SubmitCategory disabled when $NameCategory '
         'or $EmojiCategory TextField are empty', (tester) async {
-      await tester.pumpWidget(const ProviderScope(
-        child: MaterialApp(
-          home: Scaffold(body: CategoryFormDialog()),
-        ),
+      await tester.pumpWidget(ProviderScope(
+        child: MaterialApp(home: _categoryFormDialog()),
       ));
 
       final foundSubmitButton = find.byType(SubmitCategory);
@@ -98,10 +100,8 @@ void main() {
     testWidgets(
         '$CategoryFormDialog show $SubmitCategory enabled when $NameCategory '
         'or $EmojiCategory TextField are not empty', (tester) async {
-      await tester.pumpWidget(const ProviderScope(
-        child: MaterialApp(
-          home: Scaffold(body: CategoryFormDialog()),
-        ),
+      await tester.pumpWidget(ProviderScope(
+        child: MaterialApp(home: _categoryFormDialog()),
       ));
 
       final foundSubmitButton = find.byType(SubmitCategory);
@@ -130,9 +130,7 @@ void main() {
             viewModel = ref.read(categoryViewModelProvider.notifier);
             return child!;
           },
-          child: const MaterialApp(
-            home: Scaffold(body: CategoryFormDialog()),
-          ),
+          child: MaterialApp(home: _categoryFormDialog()),
         ),
       ));
 
@@ -154,6 +152,37 @@ void main() {
 
       expect(viewModel.debugState, isA<CategoryStateSuccess>());
       expect(find.byType(CircularProgressIndicator), findsNothing);
+    });
+
+    testWidgets('When Add $Category model set an exception', (tester) async {
+      late final ICategoryViewModel viewModel;
+
+      when(() => mockCategoryService.saveCategory(any()))
+          .thenThrow(Exception('Error'));
+
+      await tester.pumpWidget(ProviderScope(
+        overrides: [
+          categoryRepositoryProvider.overrideWithValue(categoryRepository),
+        ],
+        child: Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(categoryViewModelProvider.notifier);
+            return child!;
+          },
+          child: MaterialApp(home: _categoryFormDialog()),
+        ),
+      ));
+
+      await tester.enterText(find.byType(NameCategory), 'Test Category');
+      await tester.enterText(find.byType(EmojiCategory), '😀');
+
+      await tester.pumpAndSettle();
+
+      expect(viewModel.debugState, isA<CategoryStateInitial>());
+      await tester.tap(find.byType(SubmitCategory));
+
+      verify(() => mockCategoryService.saveCategory(any())).called(1);
+      expect(viewModel.debugState, isA<CategoryStateError>());
     });
   });
 }
