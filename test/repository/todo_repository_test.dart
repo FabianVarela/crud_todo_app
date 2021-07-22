@@ -21,7 +21,7 @@ void main() {
         'should return $List of $Todo '
         'when getTodosByCategory is called', () async {
       // arrange
-      final stream = Stream.value([todo]);
+      final stream = Stream.value([existingTodo]);
       when(() => mockTodoService.getTodosByCategory(any())).thenAnswer(
         (_) => stream,
       );
@@ -44,7 +44,7 @@ void main() {
       );
 
       // act
-      final result = todoRepository.saveTodo(todo);
+      final result = todoRepository.saveTodo(existingTodo);
 
       // assert
       expect(result, isA<Future<void>>());
