@@ -1,6 +1,10 @@
+import 'package:crud_todo_app/model/todo_model.dart';
+import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
 import 'package:crud_todo_app/ui/add_todo_view.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
+import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
+import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -18,6 +22,7 @@ void main() {
   setUpAll(() {
     mockTodoService = MockTodoService();
     todoRepository = TodoRepository(mockTodoService);
+    registerFallbackValue(MyTodoFake());
 
     mockNavigator = MockNavigator();
     registerFallbackValue(MyRouteFake());
@@ -79,7 +84,7 @@ void main() {
 
       final foundSubmitButton = find.byType(SubmitTodo);
 
-      await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
+      await tester.enterText(find.byType(SubjectTodo), '');
       await tester.pumpAndSettle();
 
       final enabled = tester.widget<SubmitTodo>(foundSubmitButton).enabled;
@@ -102,6 +107,116 @@ void main() {
 
       final enabled = tester.widget<SubmitTodo>(foundSubmitButton).enabled;
       expect(enabled, isTrue);
+    });
+
+    testWidgets('Add a $Todo model from $AddTodoView', (tester) async {
+      late final ITodoViewModel viewModel;
+
+      when(() => mockTodoService.saveTodo(any()))
+          .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
+
+      await tester.pumpWidget(ProviderScope(
+        overrides: [
+          todoRepositoryProvider.overrideWithValue(todoRepository),
+        ],
+        child: Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(todoViewModelProvider.notifier);
+            return child!;
+          },
+          child: MaterialApp(
+            home: AddTodoView(category: category, todo: addingTodo),
+            navigatorObservers: [mockNavigator],
+          ),
+        ),
+      ));
+
+      await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
+      await tester.pump();
+
+      expect(viewModel.debugState, isA<TodoStateInitial>());
+      await tester.tap(find.byType(SubmitTodo));
+
+      verify(() => mockTodoService.saveTodo(any())).called(1);
+
+      expect(viewModel.debugState, isA<TodoStateLoading>());
+      await tester.pump(const Duration(seconds: 1));
+
+      await tester.pumpAndSettle();
+
+      expect(viewModel.debugState, isA<TodoStateSuccess>());
+      verify(() => mockNavigator.didPop(any(), any())).called(1);
+    });
+
+    testWidgets('Update a $Todo model from $AddTodoView', (tester) async {
+      late final ITodoViewModel viewModel;
+
+      when(() => mockTodoService.saveTodo(any()))
+          .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
+
+      await tester.pumpWidget(ProviderScope(
+        overrides: [
+          todoRepositoryProvider.overrideWithValue(todoRepository),
+        ],
+        child: Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(todoViewModelProvider.notifier);
+            return child!;
+          },
+          child: MaterialApp(
+            home: AddTodoView(category: category, todo: existingTodo),
+            navigatorObservers: [mockNavigator],
+          ),
+        ),
+      ));
+
+      await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
+      await tester.pumpAndSettle();
+
+      expect(viewModel.debugState, isA<TodoStateInitial>());
+      await tester.tap(find.byType(SubmitTodo));
+
+      verify(() => mockTodoService.saveTodo(any())).called(1);
+
+      expect(viewModel.debugState, isA<TodoStateLoading>());
+      await tester.pump(const Duration(seconds: 1));
+
+      await tester.pumpAndSettle();
+
+      expect(viewModel.debugState, isA<TodoStateSuccess>());
+      verify(() => mockNavigator.didPop(any(), any())).called(1);
+    });
+
+    testWidgets(
+        'When add or update a $Todo '
+        'model set an $Exception', (tester) async {
+      late final ITodoViewModel viewModel;
+
+      when(() => mockTodoService.saveTodo(any())).thenThrow(Exception('Error'));
+
+      await tester.pumpWidget(ProviderScope(
+        overrides: [
+          todoRepositoryProvider.overrideWithValue(todoRepository),
+        ],
+        child: Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(todoViewModelProvider.notifier);
+            return child!;
+          },
+          child: MaterialApp(
+            home: AddTodoView(category: category, todo: existingTodo),
+          ),
+        ),
+      ));
+
+      await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
+      await tester.pumpAndSettle();
+
+      expect(viewModel.debugState, isA<TodoStateInitial>());
+      await tester.tap(find.byType(SubmitTodo));
+
+      verify(() => mockTodoService.saveTodo(any())).called(1);
+      expect(viewModel.debugState, isA<TodoStateError>());
     });
   });
 }
