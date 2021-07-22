@@ -128,7 +128,7 @@ void main() {
       verify(() => mockNavigator.didPop(any(), any())).called(1);
     });
 
-    testWidgets('When remove $Category model set an exception', (tester) async {
+    testWidgets('When remove $Category model set $Exception', (tester) async {
       late final ICategoryViewModel viewModel;
 
       when(() => mockCategoryService.deleteCategory(any()))

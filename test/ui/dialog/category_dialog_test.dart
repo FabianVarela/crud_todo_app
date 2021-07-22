@@ -154,7 +154,7 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsNothing);
     });
 
-    testWidgets('When Add $Category model set an exception', (tester) async {
+    testWidgets('When Add $Category model set an $Exception', (tester) async {
       late final ICategoryViewModel viewModel;
 
       when(() => mockCategoryService.saveCategory(any()))
