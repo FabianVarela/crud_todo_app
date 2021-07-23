@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
-class CustomCheckbox extends HookWidget {
+class CustomCheckbox extends StatelessWidget {
   const CustomCheckbox({
     Key? key,
     this.value = false,
@@ -15,22 +14,15 @@ class CustomCheckbox extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isChecked = useState(value);
-
     return GestureDetector(
-      onTap: enabled
-          ? () {
-              isChecked.value = !isChecked.value;
-              onChanged(isChecked.value);
-            }
-          : null,
+      onTap: enabled ? () => onChanged(!value) : null,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 1000),
         curve: Curves.fastLinearToSlowEaseIn,
         decoration: BoxDecoration(
-          color: isChecked.value ? const Color(0xFF4A78FA) : Colors.transparent,
+          color: value ? const Color(0xFF4A78FA) : Colors.transparent,
           borderRadius: BorderRadius.circular(5),
-          border: isChecked.value
+          border: value
               ? null
               : Border.all(
                   color: Colors.grey.withOpacity(.6),
@@ -39,9 +31,7 @@ class CustomCheckbox extends HookWidget {
         ),
         width: 25,
         height: 25,
-        child: isChecked.value
-            ? const Icon(Icons.check, color: Colors.white)
-            : null,
+        child: value ? const Icon(Icons.check, color: Colors.white) : null,
       ),
     );
   }
