@@ -1,10 +1,13 @@
 import 'package:crud_todo_app/model/category_model.dart';
+import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
 import 'package:crud_todo_app/ui/todo_category_list_view.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
+import 'package:crud_todo_app/ui/widgets/custom_checkbox.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
+import 'package:crud_todo_app/ui/widgets/todo_item_tile.dart';
 import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
@@ -36,12 +39,10 @@ void main() {
             }
 
             final list = todos.data!.value;
-            return list.isNotEmpty
-                ? ListView(children: <Widget>[
-                    for (final item in list)
-                      TodoItem(item: item, category: category, onCheck: (_) {}),
-                  ])
-                : const Offstage();
+            return Offstage(
+              offstage: list.isEmpty,
+              child: TodoList(todoList: list, onEditTap: (_) {}),
+            );
           },
         ),
       ),
@@ -207,12 +208,111 @@ void main() {
 
       expect(tester.widgetList(find.byType(TodoItem)), [
         isA<TodoItem>()
-            .having((w) => w.item.id, 'id', todoId)
-            .having((w) => w.item.categoryId, 'categoryId', categoryId)
-            .having((w) => w.item.subject, 'subject', todoSubject)
-            .having((w) => w.item.finalDate, 'finalDate', todoFinalDate)
-            .having((w) => w.item.isCompleted, 'isCompleted', false),
+            .having((w) => w.todo.id, 'id', todoId)
+            .having((w) => w.todo.categoryId, 'categoryId', categoryId)
+            .having((w) => w.todo.subject, 'subject', todoSubject)
+            .having((w) => w.todo.finalDate, 'finalDate', todoFinalDate)
+            .having((w) => w.todo.isCompleted, 'isCompleted', false),
       ]);
     });
+
+    testWidgets(
+        'Update $Todo model when check '
+        'an existing $TodoItem widget', (tester) async {
+      when(() => mockTodoService.getTodosByCategory(any())).thenAnswer(
+        (_) => Stream.value([existingTodo]),
+      );
+
+      when(() => mockTodoService.saveTodo(any())).thenAnswer((_) {
+        return Future<void>.delayed(const Duration(milliseconds: 100));
+      });
+
+      await tester.pumpWidget(ProviderScope(
+        overrides: [
+          todoRepositoryProvider.overrideWithValue(todoRepository),
+        ],
+        child: _todoListWithData(),
+      ));
+
+      await tester.pumpAndSettle();
+
+      final foundItemList = find.descendant(
+        of: find.byType(ListView),
+        matching: find.byType(TodoItem),
+      );
+      expect(foundItemList, findsOneWidget);
+
+      final foundItemCheck = find.descendant(
+        of: foundItemList,
+        matching: find.byType(CustomCheckbox),
+      );
+      expect(foundItemCheck, findsOneWidget);
+
+      _expectTileState(tester, foundItemList, TodoItemState.unchecked);
+      await tester.tap(foundItemCheck);
+
+      verify(() => mockTodoService.saveTodo(any())).called(1);
+
+      await tester.pump();
+      _expectTileState(tester, foundItemList, TodoItemState.loading);
+
+      await tester.pumpAndSettle();
+      _expectTileState(tester, foundItemList, TodoItemState.checked);
+    });
+
+    testWidgets('When update $Todo model set $Exception', (tester) async {
+      when(() => mockTodoService.getTodosByCategory(any())).thenAnswer(
+        (_) => Stream.value([existingTodo]),
+      );
+
+      when(() => mockTodoService.saveTodo(any())).thenAnswer((_) {
+        return Future<void>.delayed(
+          const Duration(milliseconds: 100),
+          () async => throw Exception('Error'),
+        );
+      });
+
+      await tester.pumpWidget(ProviderScope(
+        overrides: [
+          todoRepositoryProvider.overrideWithValue(todoRepository),
+        ],
+        child: _todoListWithData(),
+      ));
+
+      await tester.pumpAndSettle();
+
+      final foundItemList = find.descendant(
+        of: find.byType(ListView),
+        matching: find.byType(TodoItem),
+      );
+      expect(foundItemList, findsOneWidget);
+
+      final foundItemCheck = find.descendant(
+        of: foundItemList,
+        matching: find.byType(CustomCheckbox),
+      );
+      expect(foundItemCheck, findsOneWidget);
+
+      _expectTileState(tester, foundItemList, TodoItemState.unchecked);
+      await tester.tap(foundItemCheck);
+
+      verify(() => mockTodoService.saveTodo(any())).called(1);
+
+      await tester.pump();
+      _expectTileState(tester, foundItemList, TodoItemState.loading);
+
+      await tester.pumpAndSettle();
+      _expectTileState(tester, foundItemList, TodoItemState.unchecked);
+    });
   });
+}
+
+void _expectTileState(WidgetTester tester, Finder finder, TodoItemState state) {
+  final foundItemTile = find.descendant(
+    of: finder,
+    matching: find.byType(TodoItemTile),
+  );
+
+  final _state = tester.widget<TodoItemTile>(foundItemTile).state;
+  expect(_state, equals(state));
 }
