@@ -106,8 +106,16 @@ class TodoListView extends HookConsumerWidget {
                     ),
                   ),
                   child: todos.isNotEmpty
-                      ? _todoList(context, todos).paddingSymmetric(h: 24, v: 20)
-                      : _emptyMessage(),
+                      ? TodoList(
+                          todoList: todos,
+                          onEditTap: (todo) => _goToTodo(context, todo: todo),
+                        ).paddingSymmetric(h: 24, v: 20)
+                      : const Center(
+                          child: Text(
+                            'Empty data, add a task',
+                            style: TextStyle(fontSize: 25),
+                          ),
+                        ),
                 );
               },
               loading: () => const Center(child: CircularProgressIndicator()),
@@ -125,34 +133,6 @@ class TodoListView extends HookConsumerWidget {
         backgroundColor: const Color(0xFF4A78FA),
         onPressed: () => _goToTodo(context),
         child: const Icon(Icons.add),
-      ),
-    );
-  }
-
-  Widget _todoList(BuildContext context, List<Todo> todos) {
-    return Consumer(
-      builder: (_, ref, __) {
-        final viewModel = ref.watch(todoViewModelProvider.notifier);
-        return ListView.builder(
-          itemCount: todos.length,
-          itemBuilder: (_, pos) => TodoItem(
-            item: todos[pos],
-            category: category,
-            onEdit: () => _goToTodo(context, todo: todos[pos]),
-            onRemove: () =>
-                viewModel.removeTodo(todos[pos].id, todos[pos].categoryId),
-            onCheck: (value) => viewModel.checkTodo(todos[pos], value),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _emptyMessage() {
-    return const Center(
-      child: Text(
-        'Empty data, add a task',
-        style: TextStyle(fontSize: 25),
       ),
     );
   }
@@ -189,6 +169,32 @@ class TodoListView extends HookConsumerWidget {
   void _showMessage(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(message)),
+    );
+  }
+}
+
+class TodoList extends ConsumerWidget {
+  const TodoList({
+    Key? key,
+    required this.todoList,
+    required this.onEditTap,
+  }) : super(key: key);
+
+  final List<Todo> todoList;
+  final ValueSetter<Todo> onEditTap;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final viewModel = ref.watch(todoViewModelProvider.notifier);
+    return ListView.builder(
+      itemCount: todoList.length,
+      itemBuilder: (_, pos) => TodoItem(
+        todo: todoList[pos],
+        onEdit: () => onEditTap(todoList[pos]),
+        onRemove: () =>
+            viewModel.removeTodo(todoList[pos].id, todoList[pos].categoryId),
+        onCheck: (value) => viewModel.checkTodo(todoList[pos], value),
+      ),
     );
   }
 }
