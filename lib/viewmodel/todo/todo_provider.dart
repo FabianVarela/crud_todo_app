@@ -8,7 +8,6 @@ final todoDataProvider = StreamProvider.autoDispose.family<List<Todo>, String>(
   (ref, catId) => ref.read(todoRepositoryProvider).getTodosByCategory(catId),
 );
 
-final idTodoProvider = StateProvider.autoDispose((_) => '');
 final subjectTodoProvider = StateProvider.autoDispose(
   (_) => const ValidationText(),
 );

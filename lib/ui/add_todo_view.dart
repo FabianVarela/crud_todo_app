@@ -21,13 +21,7 @@ class AddTodoView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isValidForm = ref.watch(validationTodoProvider).state;
-
-    useEffect(() {
-      if (todo != null) {
-        Future.microtask(() => ref.read(idTodoProvider).state = todo!.id);
-      }
-    }, const []);
+    final isValid = ref.watch(validationTodoProvider).state;
 
     ref.listen(
       todoViewModelProvider,
@@ -43,7 +37,7 @@ class AddTodoView extends HookConsumerWidget {
             SubjectTodo(todo: todo).paddingSymmetric(h: 30, v: 30),
             DateTodo(todo: todo).paddingSymmetric(h: 30, v: 20),
             CategoryTodo(category: category).paddingSymmetric(h: 30, v: 20),
-            SubmitTodo(categoryId: category.id!, enabled: isValidForm),
+            SubmitTodo(catId: category.id!, todoId: todo?.id, enabled: isValid),
           ],
         ),
       ).paddingSymmetric(v: 20),
@@ -241,26 +235,29 @@ class CategoryTodo extends StatelessWidget {
 }
 
 class SubmitTodo extends HookConsumerWidget {
-  const SubmitTodo({Key? key, required this.categoryId, this.enabled = false})
-      : super(key: key);
+  const SubmitTodo({
+    Key? key,
+    required this.catId,
+    this.todoId,
+    this.enabled = false,
+  }) : super(key: key);
 
+  final String catId;
+  final String? todoId;
   final bool enabled;
-  final String categoryId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final todoViewModel = ref.watch(todoViewModelProvider.notifier);
 
-    final todoId = ref.watch(idTodoProvider).state;
-
     return ElevatedButton(
       style: ElevatedButton.styleFrom(primary: const Color(0xFF4A78FA)),
-      onPressed: enabled ? () => todoViewModel.saveTodo(categoryId) : null,
+      onPressed: enabled ? () => todoViewModel.saveTodo(catId, todoId) : null,
       child: Container(
         width: double.infinity,
         alignment: Alignment.center,
         child: Text(
-          todoId.isEmpty ? 'Create' : 'Update',
+          todoId == null ? 'Create' : 'Update',
           style: const TextStyle(fontSize: 16, color: Colors.white),
         ),
       ).paddingSymmetric(v: 16),
