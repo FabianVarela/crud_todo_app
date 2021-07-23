@@ -1,32 +1,43 @@
 import 'package:crud_todo_app/common/extension.dart';
-import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
-import 'package:crud_todo_app/ui/widgets/custom_checkbox.dart';
+import 'package:crud_todo_app/ui/widgets/todo_item_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-class TodoItem extends StatelessWidget {
+enum TodoItemState { unchecked, loading, checked }
+
+class TodoItem extends HookWidget {
   const TodoItem({
     Key? key,
-    required this.item,
-    required this.category,
+    required this.todo,
     this.onEdit,
     this.onRemove,
     this.onCheck,
   }) : super(key: key);
 
-  final Todo item;
-  final Category category;
+  final Todo todo;
   final Function()? onEdit;
   final Function()? onRemove;
-  final Function(bool)? onCheck;
+  final Future<bool> Function(bool)? onCheck;
 
   @override
   Widget build(BuildContext context) {
+    final tileState = useState(
+      todo.isCompleted ? TodoItemState.checked : TodoItemState.unchecked,
+    );
+
+    useValueChanged<bool, void>(todo.isCompleted, (_, __) {
+      tileState.value =
+          todo.isCompleted ? TodoItemState.checked : TodoItemState.unchecked;
+    });
+
+    final canShowCheck = tileState.value != TodoItemState.unchecked;
+
     return Slidable(
       actionPane: const SlidableDrawerActionPane(),
       actions: onEdit != null &&
-              (!item.isCompleted && !item.finalDate.isDurationNegative)
+              (!canShowCheck && !todo.finalDate.isDurationNegative)
           ? <Widget>[
               IconSlideAction(
                 caption: 'Edit',
@@ -36,7 +47,7 @@ class TodoItem extends StatelessWidget {
               ),
             ]
           : <Widget>[],
-      secondaryActions: onRemove != null && !item.isCompleted
+      secondaryActions: onRemove != null && !canShowCheck
           ? <Widget>[
               IconSlideAction(
                 caption: 'Remove',
@@ -46,42 +57,29 @@ class TodoItem extends StatelessWidget {
               ),
             ]
           : <Widget>[],
-      child: ListTile(
-        title: Text(
-          item.subject,
-          style: item.isCompleted
-              ? const TextStyle(
-                  fontSize: 22,
-                  color: Color(0xFF6474A9),
-                  decoration: TextDecoration.lineThrough,
-                )
-              : const TextStyle(fontSize: 22),
-        ),
-        subtitle: Text(
-          item.finalDate.isDurationNegative
-              ? item.finalDate.timeDateToFormattedString
-              : item.finalDate.isToday
-                  ? item.finalDate.timeFormattedString
-                  : item.finalDate.dateTimeToFormattedString,
-          style: item.isCompleted
-              ? const TextStyle(
-                  fontSize: 16,
-                  decoration: TextDecoration.lineThrough,
-                )
-              : item.finalDate.isDurationNegative
-                  ? const TextStyle(
-                      fontSize: 16,
-                      color: Colors.red,
-                    )
-                  : const TextStyle(fontSize: 16),
-        ).paddingSymmetric(v: 4),
-        trailing: CustomCheckbox(
-          value: item.isCompleted,
-          enabled: !item.isCompleted,
-          onChanged: (value) {
-            if (onCheck != null) onCheck!(value);
-          },
-        ),
+      child: TodoItemTile(
+        title: todo.subject,
+        subTitle: todo.finalDate.isDurationNegative
+            ? todo.finalDate.timeDateToFormattedString
+            : todo.finalDate.isToday
+                ? todo.finalDate.timeFormattedString
+                : todo.finalDate.dateTimeToFormattedString,
+        isNegative: todo.finalDate.isDurationNegative,
+        state: tileState.value,
+        onTap: () async {
+          const value = true;
+
+          if (onCheck != null && tileState.value == TodoItemState.unchecked) {
+            tileState.value = TodoItemState.loading;
+            final isSuccess = await onCheck!(value);
+
+            if (isSuccess) {
+              tileState.value = TodoItemState.checked;
+            } else {
+              tileState.value = TodoItemState.unchecked;
+            }
+          }
+        },
       ),
     );
   }
