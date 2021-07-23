@@ -10,8 +10,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 abstract class ITodoViewModel extends StateNotifier<TodoState> {
   ITodoViewModel() : super(const TodoState.initial());
 
-  String get idTodo;
-
   ValidationText get subjectTodo;
 
   DateTime get dateTodo;
@@ -20,11 +18,11 @@ abstract class ITodoViewModel extends StateNotifier<TodoState> {
 
   ValidationText onChangeSubject(String value) => Utils.validateEmpty(value);
 
-  void saveTodo(String catId) async {
+  void saveTodo(String catId, String? todoId) async {
     try {
       state = const TodoState.loading();
 
-      final id = idTodo;
+      final id = todoId ?? '';
       final subject = subjectTodo.text ?? '';
       final date = dateTodo;
 
@@ -51,14 +49,17 @@ abstract class ITodoViewModel extends StateNotifier<TodoState> {
     }
   }
 
-  void checkTodo(Todo todo, bool isChecked) async {
+  Future<bool> checkTodo(Todo todo, bool isChecked) async {
     try {
+      state = const TodoState.loading();
       await todoRepository.saveTodo(
         todo.copyWith(isCompleted: isChecked),
       );
       state = const TodoState.success(TodoAction.check);
+      return true;
     } catch (e) {
       state = TodoState.error(e.toString());
+      return false;
     }
   }
 }
@@ -67,9 +68,6 @@ class TodoViewModel extends ITodoViewModel {
   TodoViewModel(this._read);
 
   late final Reader _read;
-
-  @override
-  String get idTodo => _read(idTodoProvider).state;
 
   @override
   ValidationText get subjectTodo => _read(subjectTodoProvider).state;
