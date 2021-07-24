@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/service/category_service.dart';
@@ -11,6 +12,28 @@ import 'package:mocktail/mocktail.dart';
 class MockNavigator extends Mock implements NavigatorObserver {}
 
 class MyRouteFake extends Fake implements Route<dynamic> {}
+
+/// Firestore
+
+class MockFirestore extends Mock implements FirebaseFirestore {}
+
+class MockCollectionReference extends Mock
+    implements CollectionReference<Map<String, dynamic>> {}
+
+class MockQuerySnapshot extends Mock
+    implements QuerySnapshot<Map<String, dynamic>> {}
+
+class MockQueryDocumentSnapshot extends Mock
+    implements QueryDocumentSnapshot<Map<String, dynamic>> {
+  MockQueryDocumentSnapshot(this.id);
+
+  final String id;
+}
+
+class MockDocumentReference extends Mock
+    implements DocumentReference<Map<String, dynamic>> {}
+
+class MockQuery extends Mock implements Query<Map<String, dynamic>> {}
 
 /// Services
 
