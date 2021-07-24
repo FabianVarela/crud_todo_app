@@ -52,7 +52,7 @@ extension WidgetUtilsX on Widget {
 
 extension ToMapX on DocumentSnapshot {
   Map<String, dynamic> toMap() {
-    final _map = data();
+    final _map = data() as Map<String, dynamic>?;
     return {
       'id': id,
       if (_map != null) ..._map,
