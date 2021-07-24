@@ -1,0 +1,128 @@
+import 'package:crud_todo_app/common/extension.dart';
+import 'package:crud_todo_app/model/category_model.dart';
+import 'package:crud_todo_app/service/category_service.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+
+import '../test_utils/mocks.dart';
+import '../test_utils/params_factory.dart';
+
+void main() {
+  late MockFirestore mockFirestoreInstance;
+  late MockCollectionReference mockCollectionReference;
+  late MockDocumentReference mockDocumentReference;
+  late MockQuerySnapshot mockQuerySnapshot;
+  late MockQueryDocumentSnapshot mockQueryDocumentSnapshot;
+  late MockQuery mockQuery;
+
+  late CategoryService categoryService;
+
+  setUpAll(() {
+    mockFirestoreInstance = MockFirestore();
+    mockCollectionReference = MockCollectionReference();
+    mockDocumentReference = MockDocumentReference();
+    mockQuerySnapshot = MockQuerySnapshot();
+    mockQueryDocumentSnapshot = MockQueryDocumentSnapshot(category.id!);
+    mockQuery = MockQuery();
+
+    categoryService = CategoryService(mockFirestoreInstance);
+  });
+
+  group('$CategoryService', () {
+    test('Get $Category from Firestore mock', () async {
+      // arrange
+      when(() => mockFirestoreInstance.collection(any()))
+          .thenReturn(mockCollectionReference);
+
+      when(() => mockCollectionReference.snapshots())
+          .thenAnswer((_) => Stream.value(mockQuerySnapshot));
+
+      when(() => mockQuerySnapshot.docs)
+          .thenReturn([mockQueryDocumentSnapshot]);
+
+      when(() => mockQueryDocumentSnapshot.toMap())
+          .thenReturn(category.toJson());
+
+      // act
+      final result = categoryService.getCategories();
+      final finalResult = await result.first;
+
+      // assert
+      expect(result, isA<Stream<List<Category>>>());
+      expect(finalResult, [category]);
+      verify(() => mockFirestoreInstance.collection(any())).called(1);
+    });
+
+    test('Save $Category from Firebase mock', () async {
+      // arrange
+      when(() => mockFirestoreInstance.collection(any()))
+          .thenReturn(mockCollectionReference);
+
+      when(() => mockCollectionReference.add(any()))
+          .thenAnswer((_) async => mockDocumentReference);
+
+      // act
+      final result = categoryService.saveCategory(initialCategory);
+
+      // assert
+      expect(result, isA<Future<void>>());
+      verify(() => mockFirestoreInstance.collection(any()).add(any()))
+          .called(1);
+    });
+
+    test('Update $Category from Firebase mock', () {
+      // arrange
+      when(() => mockFirestoreInstance.collection(any()))
+          .thenReturn(mockCollectionReference);
+
+      when(() => mockCollectionReference.doc(any()))
+          .thenReturn(mockDocumentReference);
+
+      when(() => mockDocumentReference.update(any()))
+          .thenAnswer((_) => Future.value());
+
+      // act
+      final result = categoryService.saveCategory(category);
+
+      // assert
+      expect(result, isA<Future<void>>());
+      verify(
+        () => mockFirestoreInstance.collection(any()).doc(any()).update(any()),
+      ).called(1);
+    });
+
+    test('Remove $Category from Firebase mock', () {
+      // arrange
+      when(() => mockFirestoreInstance.collection(any()))
+          .thenReturn(mockCollectionReference);
+
+      when(() => mockCollectionReference.doc(any()))
+          .thenReturn(mockDocumentReference);
+
+      when(() => mockDocumentReference.delete())
+          .thenAnswer((_) => Future.value());
+
+      when(() => mockCollectionReference.where(any(),
+          isEqualTo: any(named: 'isEqualTo'))).thenReturn(mockQuery);
+
+      when(() => mockQuery.get()).thenAnswer((_) async => mockQuerySnapshot);
+
+      when(() => mockQuerySnapshot.docs)
+          .thenReturn([mockQueryDocumentSnapshot]);
+
+      when(() => mockQueryDocumentSnapshot.reference)
+          .thenReturn(mockDocumentReference);
+
+      when(() => mockDocumentReference.delete())
+          .thenAnswer((_) => Future.value());
+
+      // act
+      final result = categoryService.deleteCategory(category.id!);
+
+      // assert
+      expect(result, isA<Future<void>>());
+      verify(() => mockFirestoreInstance.collection(any()).doc(any()).delete())
+          .called(1);
+    });
+  });
+}
