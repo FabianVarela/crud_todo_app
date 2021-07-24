@@ -10,19 +10,19 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
-  hooks_riverpod: ^1.0.0-dev.1
-  flutter_hooks: ^0.17.0
+  cupertino_icons: ^1.0.3
+  hooks_riverpod: ^1.0.0-dev.6
+  flutter_hooks: ^0.18.0
   freezed_annotation: ^0.14.1
-  firebase_core: ^1.0.3
-  cloud_firestore: ^1.0.5
+  firebase_core: ^1.4.0
+  cloud_firestore: ^2.4.0
   flutter_slidable: ^0.6.0
   intl: ^0.17.0
   uuid: ^3.0.4
   flutter_emoji:
     git:
       url: git://github.com/cek-cek/flutter-emoji
-  google_fonts: ^2.0.0
+  google_fonts: ^2.1.0
   equatable: ^2.0.3
 
 dev_dependencies:
