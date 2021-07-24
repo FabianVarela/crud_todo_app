@@ -3,12 +3,12 @@ import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/common/extension.dart';
 
 class CategoryService {
-  CategoryService();
+  CategoryService(this._database);
+
+  late final FirebaseFirestore _database;
 
   static const String _categoryCollection = 'categories';
   static const String _todoCollection = 'todos';
-
-  late final _database = FirebaseFirestore.instance;
 
   Stream<List<Category>> getCategories() {
     final querySnapshot = _database.collection(_categoryCollection).snapshots();
