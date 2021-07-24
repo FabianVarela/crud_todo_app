@@ -29,7 +29,7 @@ void main() {
   });
 
   group('$CategoryService', () {
-    test('Get $Category from Firestore mock', () async {
+    test('Get $Category list from Firestore mock', () async {
       // arrange
       when(() => mockFirestoreInstance.collection(any()))
           .thenReturn(mockCollectionReference);
