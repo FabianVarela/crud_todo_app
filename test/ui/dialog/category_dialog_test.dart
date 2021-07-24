@@ -18,10 +18,6 @@ void main() {
   late MockCategoryService mockCategoryService;
   late ICategoryRepository categoryRepository;
 
-  Widget _categoryFormDialog() {
-    return const Scaffold(body: CategoryFormDialog());
-  }
-
   setUpAll(() {
     mockCategoryService = MockCategoryService();
     categoryRepository = CategoryRepository(mockCategoryService);
@@ -70,7 +66,7 @@ void main() {
         'when set tap in $GestureDetector', (tester) async {
       await tester.pumpWidget(ProviderScope(
         child: MaterialApp(
-          home: _categoryFormDialog(),
+          home: const Scaffold(body: CategoryFormDialog()),
           navigatorObservers: [mockNavigator],
         ),
       ));
@@ -84,8 +80,8 @@ void main() {
     testWidgets(
         '$CategoryFormDialog show $SubmitCategory disabled when $NameCategory '
         'or $EmojiCategory TextField are empty', (tester) async {
-      await tester.pumpWidget(ProviderScope(
-        child: MaterialApp(home: _categoryFormDialog()),
+      await tester.pumpWidget(const ProviderScope(
+        child: MaterialApp(home: Scaffold(body: CategoryFormDialog())),
       ));
 
       final foundSubmitButton = find.byType(SubmitCategory);
@@ -100,8 +96,8 @@ void main() {
     testWidgets(
         '$CategoryFormDialog show $SubmitCategory enabled when $NameCategory '
         'or $EmojiCategory TextField are not empty', (tester) async {
-      await tester.pumpWidget(ProviderScope(
-        child: MaterialApp(home: _categoryFormDialog()),
+      await tester.pumpWidget(const ProviderScope(
+        child: MaterialApp(home: Scaffold(body: CategoryFormDialog())),
       ));
 
       final foundSubmitButton = find.byType(SubmitCategory);
@@ -130,7 +126,7 @@ void main() {
             viewModel = ref.read(categoryViewModelProvider.notifier);
             return child!;
           },
-          child: MaterialApp(home: _categoryFormDialog()),
+          child: const MaterialApp(home: Scaffold(body: CategoryFormDialog())),
         ),
       ));
 
@@ -169,7 +165,7 @@ void main() {
             viewModel = ref.read(categoryViewModelProvider.notifier);
             return child!;
           },
-          child: MaterialApp(home: _categoryFormDialog()),
+          child: const MaterialApp(home: Scaffold(body: CategoryFormDialog())),
         ),
       ));
 
