@@ -6,6 +6,11 @@ const categoryId = 'ABC123';
 const categoryName = 'Test Category';
 final categoryEmoji = EmojiParser().get('😀');
 
+Category get initialCategory => Category(
+      name: categoryName,
+      emoji: categoryEmoji,
+    );
+
 Category get category => Category(
       id: categoryId,
       name: categoryName,
