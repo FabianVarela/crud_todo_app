@@ -39,7 +39,7 @@ abstract class ICategoryViewModel extends StateNotifier<CategoryState> {
     }
   }
 
-  void removeCategory(String id) async {
+  void deleteCategory(String id) async {
     try {
       state = const CategoryState.loading();
       await categoryRepository.deleteCategory(id);

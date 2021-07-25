@@ -40,8 +40,9 @@ abstract class ITodoViewModel extends StateNotifier<TodoState> {
     }
   }
 
-  void removeTodo(String todoId, String catId) async {
+  void deleteTodo(String todoId, String catId) async {
     try {
+      state = const TodoState.loading();
       await todoRepository.deleteTodo(todoId, catId);
       state = const TodoState.success(TodoAction.remove);
     } catch (e) {
