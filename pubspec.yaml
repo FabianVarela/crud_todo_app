@@ -16,7 +16,7 @@ dependencies:
   freezed_annotation: ^0.14.1
   firebase_core: ^1.4.0
   cloud_firestore: ^2.4.0
-  flutter_slidable: ^0.6.0
+  flutter_slidable: ^1.0.0-dev.8
   intl: ^0.17.0
   uuid: ^3.0.4
   flutter_emoji:
