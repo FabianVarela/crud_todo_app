@@ -12,6 +12,7 @@ import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
@@ -151,6 +152,7 @@ void main() {
 
       verify(() => mockCategoryService.deleteCategory(any())).called(1);
       expect(viewModel.debugState, isA<CategoryStateError>());
+      verifyNoMoreInteractions(mockCategoryService);
     });
 
     testWidgets('Show $TodoListView screen with empty data', (tester) async {
@@ -301,6 +303,42 @@ void main() {
 
       await tester.pumpAndSettle();
       _expectTileState(tester, foundItemList, TodoItemState.unchecked);
+    });
+
+    testWidgets('Slide a $TodoItem and go to edit $Todo', (tester) async {
+      when(() => mockTodoService.getTodosByCategory(any())).thenAnswer(
+        (_) => Stream.value([existingTodo]),
+      );
+
+      await tester.pumpWidget(ProviderScope(
+        overrides: [
+          todoRepositoryProvider.overrideWithValue(todoRepository),
+        ],
+        child: MaterialApp(
+          home: _todoListWithData(),
+          navigatorObservers: [mockNavigator],
+        ),
+      ));
+
+      await tester.pumpAndSettle();
+
+      final foundItemList = find.descendant(
+        of: find.byType(ListView),
+        matching: find.byType(TodoItem),
+      );
+      expect(foundItemList, findsOneWidget);
+
+      await tester.drag(foundItemList, const Offset(20, 0));
+      await tester.pump(const Duration(seconds: 3));
+
+      final foundSlideAction = find.byType(SlidableAction);
+      expect(foundSlideAction, findsOneWidget);
+      expect(find.byIcon(Icons.edit), findsOneWidget);
+
+      await tester.tap(foundSlideAction, warnIfMissed: false);
+      await tester.pumpAndSettle();
+
+      verify(() => mockNavigator.didPush(any(), any()));
     });
   });
 }
