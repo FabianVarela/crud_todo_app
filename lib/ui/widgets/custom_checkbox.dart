@@ -24,10 +24,7 @@ class CustomCheckbox extends StatelessWidget {
           borderRadius: BorderRadius.circular(5),
           border: value
               ? null
-              : Border.all(
-                  color: Colors.grey.withOpacity(.6),
-                  width: 2,
-                ),
+              : Border.all(color: Colors.grey.withOpacity(.6), width: 2),
         ),
         width: 25,
         height: 25,
