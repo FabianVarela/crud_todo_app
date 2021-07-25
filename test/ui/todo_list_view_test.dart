@@ -29,22 +29,20 @@ void main() {
   late ITodoRepository todoRepository;
 
   Widget _todoListWithData() {
-    return MaterialApp(
-      home: Scaffold(
-        body: Consumer(
-          builder: (_, ref, __) {
-            final todos = ref.watch(todoDataProvider(categoryId));
-            if (todos.data == null) {
-              return const Center(child: CircularProgressIndicator());
-            }
+    return Scaffold(
+      body: Consumer(
+        builder: (_, ref, __) {
+          final todos = ref.watch(todoDataProvider(categoryId));
+          if (todos.data == null) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-            final list = todos.data!.value;
-            return Offstage(
-              offstage: list.isEmpty,
-              child: TodoList(todoList: list, onEditTap: (_) {}),
-            );
-          },
-        ),
+          final list = todos.data!.value;
+          return Offstage(
+            offstage: list.isEmpty,
+            child: TodoList(todoList: list, onEditTap: (_) {}),
+          );
+        },
       ),
     );
   }
@@ -197,7 +195,7 @@ void main() {
         overrides: [
           todoRepositoryProvider.overrideWithValue(todoRepository),
         ],
-        child: _todoListWithData(),
+        child: MaterialApp(home: _todoListWithData()),
       ));
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
@@ -231,7 +229,7 @@ void main() {
         overrides: [
           todoRepositoryProvider.overrideWithValue(todoRepository),
         ],
-        child: _todoListWithData(),
+        child: MaterialApp(home: _todoListWithData()),
       ));
 
       await tester.pumpAndSettle();
@@ -276,7 +274,7 @@ void main() {
         overrides: [
           todoRepositoryProvider.overrideWithValue(todoRepository),
         ],
-        child: _todoListWithData(),
+        child: MaterialApp(home: _todoListWithData()),
       ));
 
       await tester.pumpAndSettle();
