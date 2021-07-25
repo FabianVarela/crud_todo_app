@@ -35,28 +35,33 @@ class TodoItem extends HookWidget {
     final canShowCheck = tileState.value != TodoItemState.unchecked;
 
     return Slidable(
-      actionPane: const SlidableDrawerActionPane(),
-      actions: onEdit != null &&
-              (!canShowCheck && !todo.finalDate.isDurationNegative)
-          ? <Widget>[
-              IconSlideAction(
-                caption: 'Edit',
-                color: const Color(0xFF4D4E50),
-                icon: Icons.edit,
-                onTap: onEdit,
-              ),
-            ]
-          : <Widget>[],
-      secondaryActions: onRemove != null && !canShowCheck
-          ? <Widget>[
-              IconSlideAction(
-                caption: 'Remove',
-                color: Colors.red,
-                icon: Icons.delete,
-                onTap: onRemove,
-              ),
-            ]
-          : <Widget>[],
+      enabled: !canShowCheck,
+      startActionPane: onEdit != null && !todo.finalDate.isDurationNegative
+          ? ActionPane(
+              motion: const DrawerMotion(),
+              children: <Widget>[
+                SlidableAction(
+                  label: 'Edit',
+                  backgroundColor: const Color(0xFF4D4E50),
+                  icon: Icons.edit,
+                  onPressed: (_) => onEdit,
+                ),
+              ],
+            )
+          : null,
+      endActionPane: onRemove != null
+          ? ActionPane(
+              motion: const DrawerMotion(),
+              children: <Widget>[
+                SlidableAction(
+                  label: 'Remove',
+                  backgroundColor: Colors.red,
+                  icon: Icons.delete,
+                  onPressed: (_) => onRemove,
+                ),
+              ],
+            )
+          : null,
       child: TodoItemTile(
         title: todo.subject,
         subTitle: todo.finalDate.isDurationNegative
@@ -73,11 +78,8 @@ class TodoItem extends HookWidget {
             tileState.value = TodoItemState.loading;
             final isSuccess = await onCheck!(value);
 
-            if (isSuccess) {
-              tileState.value = TodoItemState.checked;
-            } else {
-              tileState.value = TodoItemState.unchecked;
-            }
+            tileState.value =
+                isSuccess ? TodoItemState.checked : TodoItemState.unchecked;
           }
         },
       ),
