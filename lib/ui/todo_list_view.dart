@@ -108,7 +108,7 @@ class TodoListView extends HookConsumerWidget {
                   child: todos.isNotEmpty
                       ? TodoList(
                           todoList: todos,
-                          onEditTap: (todo) => _goToTodo(context, todo: todo),
+                          onEditItem: (todo) => _goToTodo(context, todo: todo),
                         ).paddingSymmetric(h: 24, v: 20)
                       : const Center(
                           child: Text(
@@ -174,27 +174,25 @@ class TodoListView extends HookConsumerWidget {
 }
 
 class TodoList extends ConsumerWidget {
-  const TodoList({
-    Key? key,
-    required this.todoList,
-    required this.onEditTap,
-  }) : super(key: key);
+  const TodoList({Key? key, required this.todoList, required this.onEditItem})
+      : super(key: key);
 
   final List<Todo> todoList;
-  final ValueSetter<Todo> onEditTap;
+  final ValueSetter<Todo> onEditItem;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(todoViewModelProvider.notifier);
-    return ListView.builder(
-      itemCount: todoList.length,
-      itemBuilder: (_, pos) => TodoItem(
-        todo: todoList[pos],
-        onEdit: () => onEditTap(todoList[pos]),
-        onRemove: () =>
-            viewModel.deleteTodo(todoList[pos].id, todoList[pos].categoryId),
-        onCheck: (value) => viewModel.checkTodo(todoList[pos], value),
-      ),
+    return ListView(
+      children: <Widget>[
+        for (final item in todoList)
+          TodoItem(
+            todo: item,
+            onEdit: () => onEditItem(item),
+            onRemove: () => viewModel.deleteTodo(item.id, item.categoryId),
+            onCheck: (value) => viewModel.checkTodo(item, value),
+          )
+      ],
     );
   }
 }

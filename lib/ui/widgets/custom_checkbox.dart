@@ -10,7 +10,7 @@ class CustomCheckbox extends StatelessWidget {
 
   final bool value;
   final bool enabled;
-  final Function(bool) onChanged;
+  final ValueSetter<bool> onChanged;
 
   @override
   Widget build(BuildContext context) {

@@ -7,7 +7,7 @@ class CategoryItem extends StatelessWidget {
       : super(key: key);
 
   final Category item;
-  final Function()? onClick;
+  final VoidCallback? onClick;
 
   @override
   Widget build(BuildContext context) {

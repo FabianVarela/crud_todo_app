@@ -17,8 +17,8 @@ class TodoItem extends HookWidget {
   }) : super(key: key);
 
   final Todo todo;
-  final Function()? onEdit;
-  final Function()? onRemove;
+  final VoidCallback? onEdit;
+  final VoidCallback? onRemove;
   final Future<bool> Function(bool)? onCheck;
 
   @override
