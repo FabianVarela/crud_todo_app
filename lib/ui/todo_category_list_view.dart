@@ -73,8 +73,8 @@ class TodoCategoryListView extends ConsumerWidget {
     );
   }
 
-  void _goToTodo(BuildContext context, Category category) {
-    Navigator.of(context).push(
+  Future<void> _goToTodo(BuildContext context, Category category) async  {
+    await Navigator.of(context).push(
       MaterialPageRoute(builder: (_) => TodoListView(category: category)),
     );
   }
