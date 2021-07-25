@@ -79,8 +79,8 @@ class TodoCategoryListView extends ConsumerWidget {
     );
   }
 
-  void _showCategoryDialog(BuildContext context) {
-    showDialog(
+  Future<void> _showCategoryDialog(BuildContext context) async {
+    await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (_) => const Center(
