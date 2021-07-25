@@ -44,7 +44,7 @@ class TodoItem extends HookWidget {
                   label: 'Edit',
                   backgroundColor: const Color(0xFF4D4E50),
                   icon: Icons.edit,
-                  onPressed: (_) => onEdit,
+                  onPressed: (_) => onEdit!(),
                 ),
               ],
             )
@@ -57,7 +57,7 @@ class TodoItem extends HookWidget {
                   label: 'Remove',
                   backgroundColor: Colors.red,
                   icon: Icons.delete,
-                  onPressed: (_) => onRemove,
+                  onPressed: (_) => onRemove!(),
                 ),
               ],
             )
