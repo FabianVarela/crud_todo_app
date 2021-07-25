@@ -17,7 +17,7 @@ class TodoListView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final todoStream = ref.watch(todoDataProvider(category.id!));
-    final categoryVm = ref.watch(categoryViewModelProvider.notifier);
+    final categoryViewModel = ref.watch(categoryViewModelProvider.notifier);
 
     ref.listen(
       todoViewModelProvider,
@@ -40,7 +40,7 @@ class TodoListView extends HookConsumerWidget {
           IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () {
-              categoryVm.removeCategory(category.id!);
+              categoryViewModel.deleteCategory(category.id!);
               Navigator.pop(context);
             },
           ),
@@ -192,7 +192,7 @@ class TodoList extends ConsumerWidget {
         todo: todoList[pos],
         onEdit: () => onEditTap(todoList[pos]),
         onRemove: () =>
-            viewModel.removeTodo(todoList[pos].id, todoList[pos].categoryId),
+            viewModel.deleteTodo(todoList[pos].id, todoList[pos].categoryId),
         onCheck: (value) => viewModel.checkTodo(todoList[pos], value),
       ),
     );
