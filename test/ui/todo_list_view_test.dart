@@ -3,14 +3,15 @@ import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
+import 'package:crud_todo_app/ui/add_todo_view.dart';
 import 'package:crud_todo_app/ui/todo_category_list_view.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/custom_checkbox.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
-import 'package:crud_todo_app/ui/widgets/todo_item_tile.dart';
 import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
-import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
+import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
+import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,52 +22,42 @@ import '../test_utils/mocks.dart';
 import '../test_utils/params_factory.dart';
 
 void main() {
-  late MockNavigator mockNavigator;
-
-  late MockCategoryService mockCategoryService;
-  late ICategoryRepository categoryRepository;
-
-  late MockTodoService mockTodoService;
-  late ITodoRepository todoRepository;
-
-  Widget _todoListWithData() {
-    return Scaffold(
-      body: Consumer(
-        builder: (_, ref, __) {
-          final todos = ref.watch(todoDataProvider(categoryId));
-          if (todos.data == null) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          final list = todos.data!.value;
-          return Offstage(
-            offstage: list.isEmpty,
-            child: TodoList(todoList: list, onEditTap: (_) {}),
-          );
-        },
-      ),
-    );
-  }
-
-  setUpAll(() {
-    mockCategoryService = MockCategoryService();
-    categoryRepository = CategoryRepository(mockCategoryService);
-
-    mockTodoService = MockTodoService();
-    todoRepository = TodoRepository(mockTodoService);
-    registerFallbackValue(MyTodoFake());
-
-    mockNavigator = MockNavigator();
-    registerFallbackValue(MyRouteFake());
-  });
-
   group('$TodoListView UI screen', () {
-    testWidgets('Show $TodoListView screen', (tester) async {
+    late MockCategoryService mockCategoryService;
+    late ICategoryRepository categoryRepository;
+
+    late MockTodoService mockTodoService;
+    late ITodoRepository todoRepository;
+
+    late MockNavigator mockNavigator;
+
+    setUpAll(() {
+      mockCategoryService = MockCategoryService();
+      categoryRepository = CategoryRepository(mockCategoryService);
+
+      mockTodoService = MockTodoService();
+      todoRepository = TodoRepository(mockTodoService);
+      registerFallbackValue(MyTodoFake());
+
+      mockNavigator = MockNavigator();
+      registerFallbackValue(MyRouteFake());
+    });
+
+    Future<void> _pumpMainScreen(WidgetTester tester, Widget child) async {
       await tester.pumpWidget(ProviderScope(
+        overrides: [
+          categoryRepositoryProvider.overrideWithValue(categoryRepository),
+          todoRepositoryProvider.overrideWithValue(todoRepository),
+        ],
         child: MaterialApp(
-          home: TodoListView(category: category),
+          home: child,
+          navigatorObservers: [mockNavigator],
         ),
       ));
+    }
+
+    testWidgets('Show $TodoListView screen', (tester) async {
+      await _pumpMainScreen(tester, TodoListView(category: category));
 
       expect(find.byIcon(Icons.arrow_back_ios), findsOneWidget);
       expect(find.byIcon(Icons.delete), findsOneWidget);
@@ -76,12 +67,7 @@ void main() {
     testWidgets(
         'Check back button in $TodoListView screen '
         'and return to $TodoCategoryListView screen', (tester) async {
-      await tester.pumpWidget(ProviderScope(
-        child: MaterialApp(
-          home: TodoListView(category: category),
-          navigatorObservers: [mockNavigator],
-        ),
-      ));
+      await _pumpMainScreen(tester, TodoListView(category: category));
 
       await tester.tap(find.byIcon(Icons.arrow_back_ios));
       await tester.pumpAndSettle();
@@ -97,21 +83,12 @@ void main() {
       when(() => mockCategoryService.deleteCategory(any()))
           .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
-      await tester.pumpWidget(ProviderScope(
-        overrides: [
-          categoryRepositoryProvider.overrideWithValue(categoryRepository),
-        ],
-        child: Consumer(
-          builder: (_, ref, child) {
-            viewModel = ref.read(categoryViewModelProvider.notifier);
-            return child!;
-          },
-          child: MaterialApp(
-            home: TodoListView(category: category),
-            navigatorObservers: [mockNavigator],
-          ),
-        ),
-      ));
+      final mainScreenConsumer = Consumer(builder: (_, ref, child) {
+        viewModel = ref.read(categoryViewModelProvider.notifier);
+        return TodoListView(category: category);
+      });
+
+      await _pumpMainScreen(tester, mainScreenConsumer);
 
       expect(viewModel.debugState, isA<CategoryStateInitial>());
       await tester.tap(find.byIcon(Icons.delete));
@@ -134,18 +111,12 @@ void main() {
       when(() => mockCategoryService.deleteCategory(any()))
           .thenThrow(Exception('Error'));
 
-      await tester.pumpWidget(ProviderScope(
-        overrides: [
-          categoryRepositoryProvider.overrideWithValue(categoryRepository),
-        ],
-        child: Consumer(
-          builder: (_, ref, child) {
-            viewModel = ref.read(categoryViewModelProvider.notifier);
-            return child!;
-          },
-          child: MaterialApp(home: TodoListView(category: category)),
-        ),
-      ));
+      final mainScreenConsumer = Consumer(builder: (_, ref, child) {
+        viewModel = ref.read(categoryViewModelProvider.notifier);
+        return TodoListView(category: category);
+      });
+
+      await _pumpMainScreen(tester, mainScreenConsumer);
 
       expect(viewModel.debugState, isA<CategoryStateInitial>());
       await tester.tap(find.byIcon(Icons.delete));
@@ -159,46 +130,20 @@ void main() {
       when(() => mockTodoService.getTodosByCategory(any()))
           .thenAnswer((_) => Stream.value([]));
 
-      await tester.pumpWidget(ProviderScope(
-        overrides: [
-          todoRepositoryProvider.overrideWithValue(todoRepository),
-        ],
-        child: MaterialApp(
-          home: Scaffold(
-            body: Consumer(
-              builder: (_, ref, __) {
-                final todos = ref.watch(todoDataProvider(categoryId));
-                if (todos.data == null) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-
-                return todos.data!.value.isEmpty
-                    ? const Center(child: Text('Empty data'))
-                    : const Offstage();
-              },
-            ),
-          ),
-        ),
-      ));
+      await _pumpMainScreen(tester, TodoListView(category: category));
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
       await tester.pump(const Duration(seconds: 1));
 
       expect(find.byType(CircularProgressIndicator), findsNothing);
-      expect(find.text('Empty data'), findsOneWidget);
+      expect(find.text('Empty data, add a task'), findsOneWidget);
     });
 
     testWidgets('Show $TodoListView screen with data', (tester) async {
-      when(() => mockTodoService.getTodosByCategory(any())).thenAnswer(
-        (_) => Stream.value([existingTodo]),
-      );
+      when(() => mockTodoService.getTodosByCategory(any()))
+          .thenAnswer((_) => Stream.value([existingTodo]));
 
-      await tester.pumpWidget(ProviderScope(
-        overrides: [
-          todoRepositoryProvider.overrideWithValue(todoRepository),
-        ],
-        child: MaterialApp(home: _todoListWithData()),
-      ));
+      await _pumpMainScreen(tester, TodoListView(category: category));
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
       await tester.pump(const Duration(seconds: 1));
@@ -219,21 +164,21 @@ void main() {
     testWidgets(
         'Update $Todo model when check '
         'an existing $TodoItem widget', (tester) async {
-      when(() => mockTodoService.getTodosByCategory(any())).thenAnswer(
-        (_) => Stream.value([existingTodo]),
-      );
+      late final ITodoViewModel viewModel;
+
+      when(() => mockTodoService.getTodosByCategory(any()))
+          .thenAnswer((_) => Stream.value([existingTodo]));
 
       when(() => mockTodoService.saveTodo(any())).thenAnswer((_) {
         return Future<void>.delayed(const Duration(milliseconds: 100));
       });
 
-      await tester.pumpWidget(ProviderScope(
-        overrides: [
-          todoRepositoryProvider.overrideWithValue(todoRepository),
-        ],
-        child: MaterialApp(home: _todoListWithData()),
-      ));
+      final mainScreenConsumer = Consumer(builder: (_, ref, child) {
+        viewModel = ref.read(todoViewModelProvider.notifier);
+        return TodoListView(category: category);
+      });
 
+      await _pumpMainScreen(tester, mainScreenConsumer);
       await tester.pumpAndSettle();
 
       final foundItemList = find.descendant(
@@ -248,22 +193,23 @@ void main() {
       );
       expect(foundItemCheck, findsOneWidget);
 
-      _expectTileState(tester, foundItemList, TodoItemState.unchecked);
+      expect(viewModel.debugState, isA<TodoStateInitial>());
       await tester.tap(foundItemCheck);
 
       verify(() => mockTodoService.saveTodo(any())).called(1);
 
       await tester.pump();
-      _expectTileState(tester, foundItemList, TodoItemState.loading);
+      expect(viewModel.debugState, isA<TodoStateLoading>());
 
       await tester.pumpAndSettle();
-      _expectTileState(tester, foundItemList, TodoItemState.checked);
+      expect(viewModel.debugState, isA<TodoStateSuccess>());
     });
 
     testWidgets('When update $Todo model set $Exception', (tester) async {
-      when(() => mockTodoService.getTodosByCategory(any())).thenAnswer(
-        (_) => Stream.value([existingTodo]),
-      );
+      late ITodoViewModel viewModel;
+
+      when(() => mockTodoService.getTodosByCategory(any()))
+          .thenAnswer((_) => Stream.value([existingTodo]));
 
       when(() => mockTodoService.saveTodo(any())).thenAnswer((_) {
         return Future<void>.delayed(
@@ -272,13 +218,12 @@ void main() {
         );
       });
 
-      await tester.pumpWidget(ProviderScope(
-        overrides: [
-          todoRepositoryProvider.overrideWithValue(todoRepository),
-        ],
-        child: MaterialApp(home: _todoListWithData()),
-      ));
+      final mainScreenConsumer = Consumer(builder: (_, ref, child) {
+        viewModel = ref.read(todoViewModelProvider.notifier);
+        return TodoListView(category: category);
+      });
 
+      await _pumpMainScreen(tester, mainScreenConsumer);
       await tester.pumpAndSettle();
 
       final foundItemList = find.descendant(
@@ -293,33 +238,25 @@ void main() {
       );
       expect(foundItemCheck, findsOneWidget);
 
-      _expectTileState(tester, foundItemList, TodoItemState.unchecked);
+      expect(viewModel.debugState, isA<TodoStateInitial>());
       await tester.tap(foundItemCheck);
 
       verify(() => mockTodoService.saveTodo(any())).called(1);
 
       await tester.pump();
-      _expectTileState(tester, foundItemList, TodoItemState.loading);
+      expect(viewModel.debugState, isA<TodoStateLoading>());
 
       await tester.pumpAndSettle();
-      _expectTileState(tester, foundItemList, TodoItemState.unchecked);
+      expect(viewModel.debugState, isA<TodoStateError>());
     });
 
-    testWidgets('Slide a $TodoItem and go to edit $Todo', (tester) async {
-      when(() => mockTodoService.getTodosByCategory(any())).thenAnswer(
-        (_) => Stream.value([existingTodo]),
-      );
+    testWidgets(
+        'Slide a $TodoItem and go to '
+        'edit $Todo in $AddTodoView screen', (tester) async {
+      when(() => mockTodoService.getTodosByCategory(any()))
+          .thenAnswer((_) => Stream.value([existingTodo]));
 
-      await tester.pumpWidget(ProviderScope(
-        overrides: [
-          todoRepositoryProvider.overrideWithValue(todoRepository),
-        ],
-        child: MaterialApp(
-          home: _todoListWithData(),
-          navigatorObservers: [mockNavigator],
-        ),
-      ));
-
+      await _pumpMainScreen(tester, TodoListView(category: category));
       await tester.pumpAndSettle();
 
       final foundItemList = find.descendant(
@@ -341,14 +278,4 @@ void main() {
       verify(() => mockNavigator.didPush(any(), any()));
     });
   });
-}
-
-void _expectTileState(WidgetTester tester, Finder finder, TodoItemState state) {
-  final foundItemTile = find.descendant(
-    of: finder,
-    matching: find.byType(TodoItemTile),
-  );
-
-  final _state = tester.widget<TodoItemTile>(foundItemTile).state;
-  expect(_state, equals(state));
 }
