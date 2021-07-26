@@ -2,7 +2,6 @@ import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/ui/dialog/category_dialog.dart';
-import 'package:crud_todo_app/ui/todo_category_list_view.dart';
 import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
 import 'package:flutter/material.dart';
@@ -13,63 +12,37 @@ import 'package:mocktail/mocktail.dart';
 import '../../test_utils/mocks.dart';
 
 void main() {
-  late MockNavigator mockNavigator;
-
-  late MockCategoryService mockCategoryService;
-  late ICategoryRepository categoryRepository;
-
-  setUpAll(() {
-    mockCategoryService = MockCategoryService();
-    categoryRepository = CategoryRepository(mockCategoryService);
-    registerFallbackValue(MyCategoryFake());
-
-    mockNavigator = MockNavigator();
-    registerFallbackValue(MyRouteFake());
-  });
-
   group('$CategoryFormDialog UI section', () {
-    testWidgets(
-        'Show $Dialog section in $TodoCategoryListView screen '
-        'when set tap in $FloatingActionButton', (tester) async {
-      await tester.pumpWidget(const ProviderScope(
-        child: MaterialApp(home: TodoCategoryListView()),
-      ));
+    late MockCategoryService mockCategoryService;
+    late ICategoryRepository categoryRepository;
 
-      final finderFloatingButton = find.byType(FloatingActionButton);
-      final BuildContext context = tester.element(finderFloatingButton);
+    late MockNavigator mockNavigator;
 
-      await tester.press(finderFloatingButton);
+    setUpAll(() {
+      mockCategoryService = MockCategoryService();
+      categoryRepository = CategoryRepository(mockCategoryService);
+      registerFallbackValue(MyCategoryFake());
 
-      // ignore: unawaited_futures
-      showDialog<void>(
-        context: context,
-        builder: (_) => const Center(
-          child: Dialog(
-            backgroundColor: Colors.transparent,
-            child: CategoryFormDialog(),
-          ),
-        ),
-      );
-
-      await tester.pumpAndSettle();
-      expect(find.byType(Dialog), findsOneWidget);
-
-      expect(find.byIcon(Icons.close), findsOneWidget);
-      expect(find.text('Add category'), findsOneWidget);
-      expect(find.byType(NameCategory), findsOneWidget);
-      expect(find.byType(EmojiCategory), findsOneWidget);
-      expect(find.byType(SubmitCategory), findsOneWidget);
+      mockNavigator = MockNavigator();
+      registerFallbackValue(MyRouteFake());
     });
+
+    Future<void> _pumpDialog(WidgetTester tester, Widget child) async {
+      await tester.pumpWidget(ProviderScope(
+        overrides: [
+          categoryRepositoryProvider.overrideWithValue(categoryRepository),
+        ],
+        child: MaterialApp(
+          home: child,
+          navigatorObservers: [mockNavigator],
+        ),
+      ));
+    }
 
     testWidgets(
         'Check $Dialog close button and verify if close it '
         'when set tap in $GestureDetector', (tester) async {
-      await tester.pumpWidget(ProviderScope(
-        child: MaterialApp(
-          home: const Scaffold(body: CategoryFormDialog()),
-          navigatorObservers: [mockNavigator],
-        ),
-      ));
+      await _pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
 
       await tester.tap(find.byIcon(Icons.close));
       await tester.pumpAndSettle();
@@ -80,9 +53,7 @@ void main() {
     testWidgets(
         '$CategoryFormDialog show $SubmitCategory disabled when $NameCategory '
         'or $EmojiCategory TextField are empty', (tester) async {
-      await tester.pumpWidget(const ProviderScope(
-        child: MaterialApp(home: Scaffold(body: CategoryFormDialog())),
-      ));
+      await _pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
 
       final foundSubmitButton = find.byType(SubmitCategory);
 
@@ -96,9 +67,7 @@ void main() {
     testWidgets(
         '$CategoryFormDialog show $SubmitCategory enabled when $NameCategory '
         'or $EmojiCategory TextField are not empty', (tester) async {
-      await tester.pumpWidget(const ProviderScope(
-        child: MaterialApp(home: Scaffold(body: CategoryFormDialog())),
-      ));
+      await _pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
 
       final foundSubmitButton = find.byType(SubmitCategory);
 
@@ -117,18 +86,12 @@ void main() {
       when(() => mockCategoryService.saveCategory(any()))
           .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
-      await tester.pumpWidget(ProviderScope(
-        overrides: [
-          categoryRepositoryProvider.overrideWithValue(categoryRepository),
-        ],
-        child: Consumer(
-          builder: (_, ref, child) {
-            viewModel = ref.read(categoryViewModelProvider.notifier);
-            return child!;
-          },
-          child: const MaterialApp(home: Scaffold(body: CategoryFormDialog())),
-        ),
-      ));
+      final mainScreenConsumer = Consumer(builder: (_, ref, child) {
+        viewModel = ref.read(categoryViewModelProvider.notifier);
+        return const Scaffold(body: CategoryFormDialog());
+      });
+
+      await _pumpDialog(tester, mainScreenConsumer);
 
       await tester.enterText(find.byType(NameCategory), 'Test Category');
       await tester.enterText(find.byType(EmojiCategory), '😀');
@@ -156,18 +119,12 @@ void main() {
       when(() => mockCategoryService.saveCategory(any()))
           .thenThrow(Exception('Error'));
 
-      await tester.pumpWidget(ProviderScope(
-        overrides: [
-          categoryRepositoryProvider.overrideWithValue(categoryRepository),
-        ],
-        child: Consumer(
-          builder: (_, ref, child) {
-            viewModel = ref.read(categoryViewModelProvider.notifier);
-            return child!;
-          },
-          child: const MaterialApp(home: Scaffold(body: CategoryFormDialog())),
-        ),
-      ));
+      final mainScreenConsumer = Consumer(builder: (_, ref, child) {
+        viewModel = ref.read(categoryViewModelProvider.notifier);
+        return const Scaffold(body: CategoryFormDialog());
+      });
+
+      await _pumpDialog(tester, mainScreenConsumer);
 
       await tester.enterText(find.byType(NameCategory), 'Test Category');
       await tester.enterText(find.byType(EmojiCategory), '😀');
