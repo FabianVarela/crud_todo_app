@@ -14,27 +14,38 @@ import '../test_utils/mocks.dart';
 import '../test_utils/params_factory.dart';
 
 void main() {
-  late MockNavigator mockNavigator;
-
-  late MockTodoService mockTodoService;
-  late ITodoRepository todoRepository;
-
-  setUpAll(() {
-    mockTodoService = MockTodoService();
-    todoRepository = TodoRepository(mockTodoService);
-    registerFallbackValue(MyTodoFake());
-
-    mockNavigator = MockNavigator();
-    registerFallbackValue(MyRouteFake());
-  });
-
   group('$AddTodoView UI screen', () {
-    testWidgets('Show $AddTodoView screen', (tester) async {
+    late MockTodoService mockTodoService;
+    late ITodoRepository todoRepository;
+
+    late MockNavigator mockNavigator;
+
+    setUpAll(() {
+      mockTodoService = MockTodoService();
+      todoRepository = TodoRepository(mockTodoService);
+      registerFallbackValue(MyTodoFake());
+
+      mockNavigator = MockNavigator();
+      registerFallbackValue(MyRouteFake());
+    });
+
+    Future<void> _pumpMainScreen(WidgetTester tester, Widget child) async {
       await tester.pumpWidget(ProviderScope(
+        overrides: [
+          todoRepositoryProvider.overrideWithValue(todoRepository),
+        ],
         child: MaterialApp(
-          home: AddTodoView(category: category, todo: existingTodo),
+          home: child,
+          navigatorObservers: [mockNavigator],
         ),
       ));
+    }
+
+    testWidgets('Show $AddTodoView screen', (tester) async {
+      await _pumpMainScreen(
+        tester,
+        AddTodoView(category: category, todo: existingTodo),
+      );
 
       expect(find.text('New Task'), findsOneWidget);
       expect(find.byIcon(Icons.close), findsOneWidget);
@@ -47,12 +58,10 @@ void main() {
     testWidgets(
         'Check close button in $AddTodoView screen '
         'and return to $TodoListView screen', (tester) async {
-      await tester.pumpWidget(ProviderScope(
-        child: MaterialApp(
-          home: AddTodoView(category: category, todo: existingTodo),
-          navigatorObservers: [mockNavigator],
-        ),
-      ));
+      await _pumpMainScreen(
+        tester,
+        AddTodoView(category: category, todo: existingTodo),
+      );
 
       await tester.tap(find.byIcon(Icons.close));
       await tester.pumpAndSettle();
@@ -61,11 +70,10 @@ void main() {
     });
 
     testWidgets('Show $DatePickerDialog when tap $DateTodo', (tester) async {
-      await tester.pumpWidget(ProviderScope(
-        child: MaterialApp(
-          home: AddTodoView(category: category, todo: existingTodo),
-        ),
-      ));
+      await _pumpMainScreen(
+        tester,
+        AddTodoView(category: category, todo: existingTodo),
+      );
 
       await tester.tap(find.byType(DateTodo));
       await tester.pump();
@@ -76,11 +84,10 @@ void main() {
     testWidgets(
         '$AddTodoView show $SubmitTodo disabled when '
         '$SubjectTodo or $DateTodo widgets are empty', (tester) async {
-      await tester.pumpWidget(ProviderScope(
-        child: MaterialApp(
-          home: AddTodoView(category: category, todo: initialTodo),
-        ),
-      ));
+      await _pumpMainScreen(
+        tester,
+        AddTodoView(category: category, todo: existingTodo),
+      );
 
       final foundSubmitButton = find.byType(SubmitTodo);
 
@@ -94,11 +101,10 @@ void main() {
     testWidgets(
         '$AddTodoView show $SubmitTodo enabled when '
         '$SubjectTodo or $DateTodo widgets are not empty', (tester) async {
-      await tester.pumpWidget(ProviderScope(
-        child: MaterialApp(
-          home: AddTodoView(category: category, todo: existingTodo),
-        ),
-      ));
+      await _pumpMainScreen(
+        tester,
+        AddTodoView(category: category, todo: existingTodo),
+      );
 
       final foundSubmitButton = find.byType(SubmitTodo);
 
@@ -115,21 +121,10 @@ void main() {
       when(() => mockTodoService.saveTodo(any()))
           .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
-      await tester.pumpWidget(ProviderScope(
-        overrides: [
-          todoRepositoryProvider.overrideWithValue(todoRepository),
-        ],
-        child: Consumer(
-          builder: (_, ref, child) {
-            viewModel = ref.read(todoViewModelProvider.notifier);
-            return child!;
-          },
-          child: MaterialApp(
-            home: AddTodoView(category: category, todo: addingTodo),
-            navigatorObservers: [mockNavigator],
-          ),
-        ),
-      ));
+      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
+        viewModel = ref.read(todoViewModelProvider.notifier);
+        return AddTodoView(category: category, todo: addingTodo);
+      }));
 
       await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
       await tester.pump();
@@ -154,21 +149,10 @@ void main() {
       when(() => mockTodoService.saveTodo(any()))
           .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
-      await tester.pumpWidget(ProviderScope(
-        overrides: [
-          todoRepositoryProvider.overrideWithValue(todoRepository),
-        ],
-        child: Consumer(
-          builder: (_, ref, child) {
-            viewModel = ref.read(todoViewModelProvider.notifier);
-            return child!;
-          },
-          child: MaterialApp(
-            home: AddTodoView(category: category, todo: existingTodo),
-            navigatorObservers: [mockNavigator],
-          ),
-        ),
-      ));
+      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
+        viewModel = ref.read(todoViewModelProvider.notifier);
+        return AddTodoView(category: category, todo: existingTodo);
+      }));
 
       await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
       await tester.pumpAndSettle();
@@ -194,20 +178,10 @@ void main() {
 
       when(() => mockTodoService.saveTodo(any())).thenThrow(Exception('Error'));
 
-      await tester.pumpWidget(ProviderScope(
-        overrides: [
-          todoRepositoryProvider.overrideWithValue(todoRepository),
-        ],
-        child: Consumer(
-          builder: (_, ref, child) {
-            viewModel = ref.read(todoViewModelProvider.notifier);
-            return child!;
-          },
-          child: MaterialApp(
-            home: AddTodoView(category: category, todo: existingTodo),
-          ),
-        ),
-      ));
+      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
+        viewModel = ref.read(todoViewModelProvider.notifier);
+        return AddTodoView(category: category, todo: existingTodo);
+      }));
 
       await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
       await tester.pumpAndSettle();

@@ -86,12 +86,10 @@ void main() {
       when(() => mockCategoryService.saveCategory(any()))
           .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
-      final mainScreenConsumer = Consumer(builder: (_, ref, child) {
+      await _pumpDialog(tester, Consumer(builder: (_, ref, child) {
         viewModel = ref.read(categoryViewModelProvider.notifier);
         return const Scaffold(body: CategoryFormDialog());
-      });
-
-      await _pumpDialog(tester, mainScreenConsumer);
+      }));
 
       await tester.enterText(find.byType(NameCategory), 'Test Category');
       await tester.enterText(find.byType(EmojiCategory), '😀');
@@ -111,6 +109,8 @@ void main() {
 
       expect(viewModel.debugState, isA<CategoryStateSuccess>());
       expect(find.byType(CircularProgressIndicator), findsNothing);
+
+      verify(() => mockNavigator.didPop(any(), any())).called(1);
     });
 
     testWidgets('When Add $Category model set an $Exception', (tester) async {
@@ -119,12 +119,10 @@ void main() {
       when(() => mockCategoryService.saveCategory(any()))
           .thenThrow(Exception('Error'));
 
-      final mainScreenConsumer = Consumer(builder: (_, ref, child) {
+      await _pumpDialog(tester, Consumer(builder: (_, ref, child) {
         viewModel = ref.read(categoryViewModelProvider.notifier);
         return const Scaffold(body: CategoryFormDialog());
-      });
-
-      await _pumpDialog(tester, mainScreenConsumer);
+      }));
 
       await tester.enterText(find.byType(NameCategory), 'Test Category');
       await tester.enterText(find.byType(EmojiCategory), '😀');
