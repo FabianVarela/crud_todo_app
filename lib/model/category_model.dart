@@ -27,14 +27,6 @@ class Category extends Equatable {
         'todoSize': todoSize ?? 0
       };
 
-  Category copyWith({String? id, String? name, Emoji? emoji, int? todoSize}) =>
-      Category(
-        id: id ?? this.id,
-        name: name ?? this.name,
-        emoji: emoji ?? this.emoji,
-        todoSize: todoSize ?? this.todoSize,
-      );
-
   @override
   List<Object?> get props => [id, name, emoji, todoSize];
 }
