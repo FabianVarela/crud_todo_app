@@ -205,7 +205,7 @@ void main() {
       expect(viewModel.debugState, isA<TodoStateSuccess>());
     });
 
-    testWidgets('When update $Todo model set $Exception', (tester) async {
+    testWidgets('When update a $Todo model set an $Exception', (tester) async {
       late ITodoViewModel viewModel;
 
       when(() => mockTodoService.getTodosByCategory(any()))
@@ -325,6 +325,50 @@ void main() {
 
       expect(viewModel.debugState, isA<TodoStateSuccess>());
       expect(foundSlideAction, findsNothing);
+    });
+
+    testWidgets('When remove a $Todo model set an $Exception', (tester) async {
+      late ITodoViewModel viewModel;
+
+      when(() => mockTodoService.getTodosByCategory(any()))
+          .thenAnswer((_) => Stream.value([existingTodo]));
+
+      when(() => mockTodoService.deleteTodo(any(), any())).thenAnswer((_) {
+        return Future<void>.delayed(
+          const Duration(milliseconds: 100),
+          () async => throw Exception('Error'),
+        );
+      });
+
+      final mainScreenConsumer = Consumer(builder: (_, ref, child) {
+        viewModel = ref.read(todoViewModelProvider.notifier);
+        return TodoListView(category: category);
+      });
+
+      await _pumpMainScreen(tester, mainScreenConsumer);
+      await tester.pumpAndSettle();
+
+      final foundItemList = find.descendant(
+        of: find.byType(ListView),
+        matching: find.byType(TodoItem),
+      );
+      expect(foundItemList, findsOneWidget);
+
+      await tester.drag(foundItemList, const Offset(-600, 0));
+      await tester.pump();
+
+      final foundSlideAction = find.byType(SlidableAction);
+      expect(foundSlideAction, findsOneWidget);
+
+      expect(viewModel.debugState, isA<TodoStateInitial>());
+      await tester.tap(foundSlideAction);
+
+      verify(() => mockTodoService.deleteTodo(any(), any())).called(1);
+
+      expect(viewModel.debugState, isA<TodoStateLoading>());
+      await tester.pumpAndSettle();
+
+      expect(viewModel.debugState, isA<TodoStateError>());
     });
   });
 }
