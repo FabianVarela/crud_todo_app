@@ -27,6 +27,7 @@ class MockQueryDocumentSnapshot extends Mock
     implements QueryDocumentSnapshot<Map<String, dynamic>> {
   MockQueryDocumentSnapshot(this.id);
 
+  @override
   final String id;
 }
 
