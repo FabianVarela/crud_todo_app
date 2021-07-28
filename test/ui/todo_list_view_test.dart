@@ -60,7 +60,7 @@ void main() {
       await _pumpMainScreen(tester, TodoListView(category: category));
 
       expect(find.byIcon(Icons.arrow_back_ios), findsOneWidget);
-      expect(find.byIcon(Icons.delete), findsOneWidget);
+      expect(find.byIcon(Icons.delete_forever), findsOneWidget);
       expect(find.byType(FloatingActionButton), findsOneWidget);
     });
 
@@ -91,7 +91,7 @@ void main() {
       await _pumpMainScreen(tester, mainScreenConsumer);
 
       expect(viewModel.debugState, isA<CategoryStateInitial>());
-      await tester.tap(find.byIcon(Icons.delete));
+      await tester.tap(find.byIcon(Icons.delete_forever));
 
       verify(() => mockCategoryService.deleteCategory(any())).called(1);
 
@@ -119,7 +119,7 @@ void main() {
       await _pumpMainScreen(tester, mainScreenConsumer);
 
       expect(viewModel.debugState, isA<CategoryStateInitial>());
-      await tester.tap(find.byIcon(Icons.delete));
+      await tester.tap(find.byIcon(Icons.delete_forever));
 
       verify(() => mockCategoryService.deleteCategory(any())).called(1);
       expect(viewModel.debugState, isA<CategoryStateError>());
@@ -265,17 +265,66 @@ void main() {
       );
       expect(foundItemList, findsOneWidget);
 
-      await tester.drag(foundItemList, const Offset(20, 0));
-      await tester.pump(const Duration(seconds: 3));
-
       final foundSlideAction = find.byType(SlidableAction);
+      expect(foundSlideAction, findsNothing);
+
+      await tester.drag(foundItemList, const Offset(600, 0));
+      await tester.pump();
+      await tester.ensureVisible(foundSlideAction);
+
       expect(foundSlideAction, findsOneWidget);
       expect(find.byIcon(Icons.edit), findsOneWidget);
 
-      await tester.tap(foundSlideAction, warnIfMissed: false);
+      await tester.tap(foundSlideAction);
       await tester.pumpAndSettle();
 
       verify(() => mockNavigator.didPush(any(), any()));
+      expect(find.byType(AddTodoView), findsOneWidget);
+    });
+
+    testWidgets('Slide a $TodoItem and remove $Todo from list', (tester) async {
+      late ITodoViewModel viewModel;
+
+      when(() => mockTodoService.getTodosByCategory(any()))
+          .thenAnswer((_) => Stream.value([existingTodo]));
+
+      when(() => mockTodoService.deleteTodo(any(), any())).thenAnswer((_) {
+        return Future<void>.delayed(const Duration(milliseconds: 100));
+      });
+
+      final mainScreenConsumer = Consumer(builder: (_, ref, child) {
+        viewModel = ref.read(todoViewModelProvider.notifier);
+        return TodoListView(category: category);
+      });
+
+      await _pumpMainScreen(tester, mainScreenConsumer);
+      await tester.pumpAndSettle();
+
+      final foundItemList = find.descendant(
+        of: find.byType(ListView),
+        matching: find.byType(TodoItem),
+      );
+      expect(foundItemList, findsOneWidget);
+
+      final foundSlideAction = find.byType(SlidableAction);
+      expect(foundSlideAction, findsNothing);
+
+      await tester.drag(foundItemList, const Offset(-600, 0));
+      await tester.pump();
+
+      expect(foundSlideAction, findsOneWidget);
+      expect(find.byIcon(Icons.delete), findsOneWidget);
+
+      expect(viewModel.debugState, isA<TodoStateInitial>());
+      await tester.tap(foundSlideAction);
+
+      verify(() => mockTodoService.deleteTodo(any(), any())).called(1);
+
+      expect(viewModel.debugState, isA<TodoStateLoading>());
+      await tester.pumpAndSettle();
+
+      expect(viewModel.debugState, isA<TodoStateSuccess>());
+      expect(foundSlideAction, findsNothing);
     });
   });
 }
