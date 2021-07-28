@@ -22,6 +22,7 @@ const todoId = 'TODO-456';
 const todoSubject = 'Test TODO';
 final todoInitialDate = DateTime.now();
 final todoFinalDate = DateTime.now().add(const Duration(days: 10));
+final expiredDate = DateTime.now().add(const Duration(days: -1));
 
 Todo get initialTodo => Todo(
       categoryId: categoryId,
@@ -45,4 +46,20 @@ Todo get existingTodo => Todo(
       finalDate: todoFinalDate,
       subject: todoSubject,
       isCompleted: false,
+    );
+
+Todo get expiredTodo => Todo(
+      categoryId: categoryId,
+      id: todoId,
+      finalDate: expiredDate,
+      subject: todoSubject,
+      isCompleted: false,
+    );
+
+Todo get completeTodo => Todo(
+      categoryId: categoryId,
+      id: todoId,
+      finalDate: todoFinalDate,
+      subject: todoSubject,
+      isCompleted: true,
     );
