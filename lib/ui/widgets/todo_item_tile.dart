@@ -43,10 +43,7 @@ class TodoItemTile extends StatelessWidget {
                 decoration: TextDecoration.lineThrough,
               )
             : isNegative
-                ? const TextStyle(
-                    fontSize: 16,
-                    color: Colors.red,
-                  )
+                ? const TextStyle(fontSize: 16, color: Colors.red)
                 : const TextStyle(fontSize: 16),
       ).paddingSymmetric(v: 4),
       trailing: CustomCheckbox(
