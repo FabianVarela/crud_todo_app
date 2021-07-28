@@ -64,6 +64,16 @@ void main() {
       expect(find.byType(FloatingActionButton), findsOneWidget);
     });
 
+    testWidgets('Redirect to $AddTodoView screen', (tester) async {
+      await _pumpMainScreen(tester, TodoListView(category: category));
+
+      await tester.tap(find.byType(FloatingActionButton));
+      await tester.pumpAndSettle();
+
+      verify(() => mockNavigator.didPush(any(), any()));
+      expect(find.byType(AddTodoView), findsOneWidget);
+    });
+
     testWidgets(
         'Check back button in $TodoListView screen '
         'and return to $TodoCategoryListView screen', (tester) async {
