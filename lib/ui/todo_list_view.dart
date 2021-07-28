@@ -38,7 +38,7 @@ class TodoListView extends HookConsumerWidget {
         ),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.delete),
+            icon: const Icon(Icons.delete_forever),
             onPressed: () {
               categoryViewModel.deleteCategory(category.id!);
               Navigator.pop(context);
