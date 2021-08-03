@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-enum TodoItemState { unchecked, loading, checked }
-
 class TodoItem extends HookWidget {
   const TodoItem({
     Key? key,
@@ -19,23 +17,12 @@ class TodoItem extends HookWidget {
   final Todo todo;
   final VoidCallback? onEdit;
   final VoidCallback? onRemove;
-  final Future<bool> Function(bool)? onCheck;
+  final ValueSetter<bool>? onCheck;
 
   @override
   Widget build(BuildContext context) {
-    final tileState = useState(
-      todo.isCompleted ? TodoItemState.checked : TodoItemState.unchecked,
-    );
-
-    useValueChanged<bool, void>(todo.isCompleted, (_, __) {
-      tileState.value =
-          todo.isCompleted ? TodoItemState.checked : TodoItemState.unchecked;
-    });
-
-    final canShowCheck = tileState.value != TodoItemState.unchecked;
-
     return Slidable(
-      enabled: !canShowCheck,
+      enabled: !todo.isCompleted,
       startActionPane: onEdit != null && !todo.finalDate.isDurationNegative
           ? ActionPane(
               motion: const DrawerMotion(),
@@ -70,17 +57,9 @@ class TodoItem extends HookWidget {
                 ? todo.finalDate.timeFormattedString
                 : todo.finalDate.dateTimeToFormattedString,
         isNegative: todo.finalDate.isDurationNegative,
-        state: tileState.value,
-        onTap: () async {
-          const value = true;
-
-          if (onCheck != null && tileState.value == TodoItemState.unchecked) {
-            tileState.value = TodoItemState.loading;
-            final isSuccess = await onCheck!(value);
-
-            tileState.value =
-                isSuccess ? TodoItemState.checked : TodoItemState.unchecked;
-          }
+        isSuccess: todo.isCompleted,
+        onTap: () {
+          if (onCheck != null) onCheck!(true);
         },
       ),
     );
