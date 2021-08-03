@@ -50,9 +50,9 @@ class AddTodoView extends HookConsumerWidget {
       centerTitle: true,
       automaticallyImplyLeading: false,
       backgroundColor: Colors.transparent,
-      title: const Text(
-        'New Task',
-        style: TextStyle(
+      title: Text(
+        todo == null ? 'New Task' : 'Update Task',
+        style: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w400,
           color: Colors.black,

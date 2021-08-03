@@ -47,7 +47,7 @@ void main() {
         AddTodoView(category: category, todo: existingTodo),
       );
 
-      expect(find.text('New Task'), findsOneWidget);
+      expect(find.text('Update Task'), findsOneWidget);
       expect(find.byIcon(Icons.close), findsOneWidget);
       expect(find.byType(SubjectTodo), findsOneWidget);
       expect(find.byType(DateTodo), findsOneWidget);
