@@ -50,17 +50,15 @@ abstract class ITodoViewModel extends StateNotifier<TodoState> {
     }
   }
 
-  Future<bool> checkTodo(Todo todo, bool isChecked) async {
+  void checkTodo(Todo todo, bool isChecked) async {
     try {
       state = const TodoState.loading();
       await todoRepository.saveTodo(
         todo.copyWith(isCompleted: isChecked),
       );
       state = const TodoState.success(TodoAction.check);
-      return true;
     } catch (e) {
       state = TodoState.error(e.toString());
-      return false;
     }
   }
 }
