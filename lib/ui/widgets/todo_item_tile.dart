@@ -1,6 +1,5 @@
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/ui/widgets/custom_checkbox.dart';
-import 'package:crud_todo_app/ui/widgets/todo_item.dart';
 import 'package:flutter/material.dart';
 
 class TodoItemTile extends StatelessWidget {
@@ -9,21 +8,18 @@ class TodoItemTile extends StatelessWidget {
     required this.title,
     required this.subTitle,
     required this.isNegative,
-    required this.state,
+    required this.isSuccess,
     required this.onTap,
   }) : super(key: key);
 
   final String title;
   final String subTitle;
   final bool isNegative;
-  final TodoItemState state;
+  final bool isSuccess;
   final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    final canShowCheck = state != TodoItemState.unchecked;
-    final isSuccess = state == TodoItemState.checked;
-
     return ListTile(
       title: Text(
         title,
@@ -47,8 +43,8 @@ class TodoItemTile extends StatelessWidget {
                 : const TextStyle(fontSize: 16),
       ).paddingSymmetric(v: 4),
       trailing: CustomCheckbox(
-        value: canShowCheck,
-        enabled: !canShowCheck,
+        value: isSuccess,
+        enabled: !isSuccess,
         onChanged: (_) => onTap(),
       ),
     );
