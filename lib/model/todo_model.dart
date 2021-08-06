@@ -11,11 +11,11 @@ class Todo extends Equatable {
   });
 
   factory Todo.fromJson(Map<String, dynamic> json) => Todo(
-        id: json['id'],
-        subject: json['subject'],
+        id: json['id'] as String,
+        subject: json['subject'] as String,
         finalDate: (json['finalDate'] as int).millisecondsToDate,
-        categoryId: json['categoryId'],
-        isCompleted: json['isCompleted'],
+        categoryId: json['categoryId'] as String,
+        isCompleted: json['isCompleted'] as bool,
       );
 
   final String id;
@@ -24,7 +24,7 @@ class Todo extends Equatable {
   final String categoryId;
   final bool isCompleted;
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => <String, dynamic>{
         'subject': subject,
         'finalDate': finalDate.millisecondsSinceEpoch,
         'categoryId': categoryId,

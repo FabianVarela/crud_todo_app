@@ -21,7 +21,7 @@ abstract class ICategoryViewModel extends StateNotifier<CategoryState> {
 
   ValidationText onChangeEmoji(String value) => Utils.validateEmoji(value);
 
-  void saveCategory() async {
+  Future<void> saveCategory() async {
     try {
       state = const CategoryState.loading();
 
@@ -39,7 +39,7 @@ abstract class ICategoryViewModel extends StateNotifier<CategoryState> {
     }
   }
 
-  void deleteCategory(String id) async {
+  Future<void> deleteCategory(String id) async {
     try {
       state = const CategoryState.loading();
       await categoryRepository.deleteCategory(id);

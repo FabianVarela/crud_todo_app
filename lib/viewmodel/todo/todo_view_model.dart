@@ -18,7 +18,7 @@ abstract class ITodoViewModel extends StateNotifier<TodoState> {
 
   ValidationText onChangeSubject(String value) => Utils.validateEmpty(value);
 
-  void saveTodo(String catId, String? todoId) async {
+  Future<void> saveTodo(String catId, String? todoId) async {
     try {
       state = const TodoState.loading();
 
@@ -40,7 +40,7 @@ abstract class ITodoViewModel extends StateNotifier<TodoState> {
     }
   }
 
-  void deleteTodo(String todoId, String catId) async {
+  Future<void> deleteTodo(String todoId, String catId) async {
     try {
       state = const TodoState.loading();
       await todoRepository.deleteTodo(todoId, catId);
@@ -50,7 +50,7 @@ abstract class ITodoViewModel extends StateNotifier<TodoState> {
     }
   }
 
-  void checkTodo(Todo todo, bool isChecked) async {
+  Future<void> checkTodo(Todo todo, bool isChecked) async {
     try {
       state = const TodoState.loading();
       await todoRepository.saveTodo(

@@ -74,13 +74,13 @@ class TodoCategoryListView extends ConsumerWidget {
   }
 
   Future<void> _goToTodo(BuildContext context, Category category) async  {
-    await Navigator.of(context).push(
+    await Navigator.of(context).push<void>(
       MaterialPageRoute(builder: (_) => TodoListView(category: category)),
     );
   }
 
   Future<void> _showCategoryDialog(BuildContext context) async {
-    await showDialog(
+    await showDialog<void>(
       context: context,
       barrierDismissible: false,
       builder: (_) => const Center(

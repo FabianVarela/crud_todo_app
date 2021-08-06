@@ -149,7 +149,8 @@ class DateTodo extends HookConsumerWidget {
     );
   }
 
-  void _dateAndroid(BuildContext ctx, StateController<DateTime> date) async {
+  Future<void> _dateAndroid(
+      BuildContext ctx, StateController<DateTime> date) async {
     final pickedDate = await showDatePicker(
       context: ctx,
       initialDate: date.state.isDurationNegative
@@ -173,7 +174,7 @@ class DateTodo extends HookConsumerWidget {
   }
 
   void _dateIOS(BuildContext ctx, StateController<DateTime> date) {
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: ctx,
       builder: (_) {
         return Container(
@@ -185,7 +186,6 @@ class DateTodo extends HookConsumerWidget {
             child: cupertino.DefaultTextStyle(
               style: const TextStyle(fontSize: 22),
               child: cupertino.CupertinoDatePicker(
-                mode: cupertino.CupertinoDatePickerMode.dateAndTime,
                 initialDateTime: date.state.isDurationNegative
                     ? DateTime.now().add(const Duration(minutes: 2))
                     : date.state.add(const Duration(minutes: 2)),

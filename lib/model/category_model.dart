@@ -10,10 +10,10 @@ class Category extends Equatable {
   });
 
   factory Category.fromJson(Map<String, dynamic> json) => Category(
-        id: json['id'],
-        name: json['name'],
-        emoji: EmojiParser().get(json['emoji']),
-        todoSize: json['todoSize'] ?? 0,
+        id: json['id'] as String?,
+        name: json['name'] as String,
+        emoji: EmojiParser().get(json['emoji'] as String),
+        todoSize: (json['todoSize'] as int?) ?? 0,
       );
 
   final String? id;

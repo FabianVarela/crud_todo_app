@@ -50,7 +50,6 @@ class TodoListView extends HookConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Expanded(
-            flex: 1,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -138,7 +137,7 @@ class TodoListView extends HookConsumerWidget {
   }
 
   Future<void> _goToTodo(BuildContext context, {Todo? todo}) async {
-    await Navigator.of(context).push(
+    await Navigator.of(context).push<void>(
       MaterialPageRoute(
         builder: (_) => AddTodoView(category: category, todo: todo),
       ),
