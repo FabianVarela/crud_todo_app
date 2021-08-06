@@ -29,7 +29,6 @@ Todo get initialTodo => Todo(
       id: '',
       finalDate: todoInitialDate,
       subject: todoSubject,
-      isCompleted: false,
     );
 
 Todo get addingTodo => Todo(
@@ -37,7 +36,6 @@ Todo get addingTodo => Todo(
       id: '',
       finalDate: todoFinalDate,
       subject: todoSubject,
-      isCompleted: false,
     );
 
 Todo get existingTodo => Todo(
@@ -45,7 +43,6 @@ Todo get existingTodo => Todo(
       id: todoId,
       finalDate: todoFinalDate,
       subject: todoSubject,
-      isCompleted: false,
     );
 
 Todo get expiredTodo => Todo(
@@ -53,7 +50,6 @@ Todo get expiredTodo => Todo(
       id: todoId,
       finalDate: expiredDate,
       subject: todoSubject,
-      isCompleted: false,
     );
 
 Todo get completeTodo => Todo(
