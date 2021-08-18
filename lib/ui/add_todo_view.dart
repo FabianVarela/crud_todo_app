@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
@@ -8,6 +6,7 @@ import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:flutter/cupertino.dart' as cupertino;
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -131,9 +130,11 @@ class DateTodo extends HookConsumerWidget {
     }, const []);
 
     return InkWell(
-      onTap: () => Platform.isIOS
-          ? _dateIOS(context, finalDate)
-          : _dateAndroid(context, finalDate),
+      onTap: () {
+        foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS
+            ? _dateIOS(context, finalDate)
+            : _dateAndroid(context, finalDate);
+      },
       child: Row(
         children: <Widget>[
           const Icon(
@@ -158,6 +159,13 @@ class DateTodo extends HookConsumerWidget {
           : date.state.add(const Duration(minutes: 2)),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365)),
+      builder: (_, child) {
+        if (foundation.kIsWeb) {
+          return Center(child: SizedBox(width: 500, height: 500, child: child));
+        }
+
+        return child!;
+      },
     );
 
     if (pickedDate != null) {
