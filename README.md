@@ -6,14 +6,16 @@ Create a To-do List Flutter app managing CRUD with Firebase, using RiverPod as s
 
 ### Getting Started (Firebase)
 * To execute the app, you have to Firebase Project already created.
-* Create an app in Firebase for Android and iOS with the existing project.
+* Create an app in Firebase for Android iOS and Web with the existing project.
     * For Android you must rename the bundle Id on ```app/build.gradle```.
     * For iOS in XCode IDE, you select ```Runner``` and change the 'Bundle Identifier' text.
+    * For Web, you must follow this [link](https://firebase.flutter.dev/docs/installation/web#add-firebase-sdks)
 
 ### Getting Started (Flutter)
 * Clone this project.
-* Set in Android ```google-services.json``` file in ```app``` folder.
-* Set in iOS ```GoogleServices-Info.plist``` file in ```Runner``` folder.
+* In Android, set ```google-services.json``` file in ```app``` folder.
+* In iOS, set ```GoogleServices-Info.plist``` file in ```Runner``` folder.
+* In Web, you must follow this [link](https://firebase.flutter.dev/docs/installation/web#initializing-firebase)
 * Run project and enjoy :smile:
 
 ### Firebase Scheme
