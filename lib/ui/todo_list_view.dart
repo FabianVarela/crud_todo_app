@@ -1,7 +1,6 @@
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
-import 'package:crud_todo_app/ui/add_todo_view.dart';
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
@@ -9,10 +8,17 @@ import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+typedef NavigatorToTodo = void Function(Category, Todo?);
+
 class TodoListView extends HookConsumerWidget {
-  const TodoListView({Key? key, required this.category}) : super(key: key);
+  const TodoListView({
+    Key? key,
+    required this.category,
+    required this.onGoToTodo,
+  }) : super(key: key);
 
   final Category category;
+  final NavigatorToTodo onGoToTodo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -107,7 +113,7 @@ class TodoListView extends HookConsumerWidget {
                   child: todos.isNotEmpty
                       ? TodoList(
                           todoList: todos,
-                          onEditItem: (todo) => _goToTodo(context, todo: todo),
+                          onEditItem: (todo) => onGoToTodo(category, todo),
                         ).paddingSymmetric(h: 24, v: 20)
                       : const Center(
                           child: Text(
@@ -130,16 +136,8 @@ class TodoListView extends HookConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFF4A78FA),
-        onPressed: () => _goToTodo(context),
+        onPressed: () => onGoToTodo(category, null),
         child: const Icon(Icons.add),
-      ),
-    );
-  }
-
-  Future<void> _goToTodo(BuildContext context, {Todo? todo}) async {
-    await Navigator.of(context).push<void>(
-      MaterialPageRoute(
-        builder: (_) => AddTodoView(category: category, todo: todo),
       ),
     );
   }

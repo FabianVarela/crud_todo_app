@@ -1,7 +1,6 @@
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/ui/dialog/category_dialog.dart';
-import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
@@ -9,8 +8,13 @@ import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+typedef NavigatorToDetail = void Function(Category);
+
 class TodoCategoryListView extends ConsumerWidget {
-  const TodoCategoryListView({Key? key}) : super(key: key);
+  const TodoCategoryListView({Key? key, required this.onGoToDetail})
+      : super(key: key);
+
+  final NavigatorToDetail onGoToDetail;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -44,7 +48,7 @@ class TodoCategoryListView extends ConsumerWidget {
                         for (final item in categories)
                           CategoryItem(
                             item: item,
-                            onClick: () => _goToTodo(context, item),
+                            onClick: () => onGoToDetail(item),
                           ),
                       ],
                     )
@@ -70,12 +74,6 @@ class TodoCategoryListView extends ConsumerWidget {
         onPressed: () => _showCategoryDialog(context),
         child: const Icon(Icons.add),
       ),
-    );
-  }
-
-  Future<void> _goToTodo(BuildContext context, Category category) async  {
-    await Navigator.of(context).push<void>(
-      MaterialPageRoute(builder: (_) => TodoListView(category: category)),
     );
   }
 
