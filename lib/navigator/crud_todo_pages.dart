@@ -29,10 +29,27 @@ class TodoPage extends Page<void> {
 
   @override
   Route<void> createRoute(BuildContext context) {
-    return MaterialPageRoute<void>(
+    return FadeTransitionRoute(
       settings: this,
-      builder: (_) => TodoListView(category: category, onGoToTodo: onGoToTodo),
+      child: TodoListView(category: category, onGoToTodo: onGoToTodo),
     );
+
+    // return PageRouteBuilder<void>(
+    //   settings: this,
+    //   transitionDuration: const Duration(milliseconds: 1000),
+    //   pageBuilder: (context, animation, animation2) {
+    //     return FadeTransition(
+    //       opacity: animation,
+    //       child: TodoListView(category: category, onGoToTodo: onGoToTodo),
+    //     );
+    //   },
+    // );
+
+    // return MaterialPageRoute<void>(
+    //   settings: this,
+    //   builder: (_) => TodoListView(category: category,
+    //   onGoToTodo: onGoToTodo,),
+    // );
   }
 }
 
@@ -45,9 +62,84 @@ class AddTodoPage extends Page<void> {
 
   @override
   Route<void> createRoute(BuildContext context) {
-    return MaterialPageRoute<void>(
+    return SlideTransitionRoute(
       settings: this,
-      builder: (_) => AddTodoView(category: category, todo: todo),
+      child: AddTodoView(category: category, todo: todo),
     );
+
+    // return PageRouteBuilder<void>(
+    //   settings: this,
+    //   reverseTransitionDuration: const Duration(milliseconds: 1000),
+    //   transitionDuration: const Duration(milliseconds: 1000),
+    //   pageBuilder: (context, animation, animation2) {
+    //     return ScaleTransition(
+    //       scale: animation,
+    //       child: AddTodoView(category: category, todo: todo),
+    //     );
+    //   },
+    // );
+
+    // return MaterialPageRoute<void>(
+    //   settings: this,
+    //   builder: (_) => AddTodoView(category: category, todo: todo),
+    // );
   }
+}
+
+class ScaleTransitionRoute extends PageRouteBuilder<void> {
+  ScaleTransitionRoute({
+    required RouteSettings settings,
+    required this.child,
+  }) : super(
+    settings: settings,
+    // reverseTransitionDuration: const Duration(milliseconds: 1000),
+    // transitionDuration: const Duration(milliseconds: 1000),
+    pageBuilder: (context, anim, anim2) => ScaleTransition(
+      scale: anim,
+      child: child,
+    ),
+  );
+
+  final Widget child;
+}
+
+class FadeTransitionRoute extends PageRouteBuilder<void> {
+  FadeTransitionRoute({
+    required RouteSettings settings,
+    required this.child,
+  }) : super(
+    settings: settings,
+    reverseTransitionDuration: const Duration(milliseconds: 1000),
+    transitionDuration: const Duration(milliseconds: 1000),
+    pageBuilder: (context, anim, anim2) => FadeTransition(
+      opacity: anim,
+      child: child,
+    ),
+  );
+
+  final Widget child;
+}
+
+class SlideTransitionRoute extends PageRouteBuilder<void> {
+  SlideTransitionRoute({
+    required RouteSettings settings,
+    required this.child,
+  }) : super(
+    settings: settings,
+    reverseTransitionDuration: const Duration(milliseconds: 1000),
+    transitionDuration: const Duration(milliseconds: 1000),
+    pageBuilder: (context, anim, anim2) {
+      final tween = Tween(
+        begin: const Offset(0, 1),
+        end: Offset.zero,
+      );
+      final curveTween = CurveTween(curve: Curves.easeInOut);
+      return SlideTransition(
+        position: anim.drive(curveTween).drive(tween),
+        child: child,
+      );
+    },
+  );
+
+  final Widget child;
 }
