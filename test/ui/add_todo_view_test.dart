@@ -44,7 +44,7 @@ void main() {
     testWidgets('Show $AddTodoView screen', (tester) async {
       await _pumpMainScreen(
         tester,
-        AddTodoView(category: category, todo: existingTodo),
+        AddTodoView(category: category, currentTodo: existingTodo),
       );
 
       expect(find.text('Update Task'), findsOneWidget);
@@ -60,7 +60,7 @@ void main() {
         'and return to $TodoListView screen', (tester) async {
       await _pumpMainScreen(
         tester,
-        AddTodoView(category: category, todo: existingTodo),
+        AddTodoView(category: category, currentTodo: existingTodo),
       );
 
       await tester.tap(find.byIcon(Icons.close));
@@ -72,7 +72,7 @@ void main() {
     testWidgets('Show $DatePickerDialog when tap $DateTodo', (tester) async {
       await _pumpMainScreen(
         tester,
-        AddTodoView(category: category, todo: existingTodo),
+        AddTodoView(category: category, currentTodo: existingTodo),
       );
 
       await tester.tap(find.byType(DateTodo));
@@ -86,7 +86,7 @@ void main() {
         '$SubjectTodo or $DateTodo widgets are empty', (tester) async {
       await _pumpMainScreen(
         tester,
-        AddTodoView(category: category, todo: existingTodo),
+        AddTodoView(category: category, currentTodo: existingTodo),
       );
 
       final foundSubmitButton = find.byType(SubmitTodo);
@@ -103,7 +103,7 @@ void main() {
         '$SubjectTodo or $DateTodo widgets are not empty', (tester) async {
       await _pumpMainScreen(
         tester,
-        AddTodoView(category: category, todo: existingTodo),
+        AddTodoView(category: category, currentTodo: existingTodo),
       );
 
       final foundSubmitButton = find.byType(SubmitTodo);
@@ -123,7 +123,7 @@ void main() {
 
       await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
         viewModel = ref.read(todoViewModelProvider.notifier);
-        return AddTodoView(category: category, todo: addingTodo);
+        return AddTodoView(category: category, currentTodo: addingTodo);
       }));
 
       await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
@@ -151,7 +151,7 @@ void main() {
 
       await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
         viewModel = ref.read(todoViewModelProvider.notifier);
-        return AddTodoView(category: category, todo: existingTodo);
+        return AddTodoView(category: category, currentTodo: existingTodo);
       }));
 
       await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
@@ -180,7 +180,7 @@ void main() {
 
       await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
         viewModel = ref.read(todoViewModelProvider.notifier);
-        return AddTodoView(category: category, todo: existingTodo);
+        return AddTodoView(category: category, currentTodo: existingTodo);
       }));
 
       await tester.enterText(find.byType(SubjectTodo), 'Test TODO');

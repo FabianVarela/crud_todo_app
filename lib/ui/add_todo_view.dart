@@ -12,11 +12,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class AddTodoView extends HookConsumerWidget {
-  const AddTodoView({Key? key, required this.category, this.todo})
+  const AddTodoView({Key? key, required this.category, this.currentTodo})
       : super(key: key);
 
   final Category category;
-  final Todo? todo;
+  final Todo? currentTodo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -33,10 +33,14 @@ class AddTodoView extends HookConsumerWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            SubjectTodo(todo: todo).paddingSymmetric(h: 30, v: 30),
-            DateTodo(todo: todo).paddingSymmetric(h: 30, v: 20),
+            SubjectTodo(todo: currentTodo).paddingSymmetric(h: 30, v: 30),
+            DateTodo(todo: currentTodo).paddingSymmetric(h: 30, v: 20),
             CategoryTodo(category: category).paddingSymmetric(h: 30, v: 20),
-            SubmitTodo(catId: category.id!, todoId: todo?.id, enabled: isValid),
+            SubmitTodo(
+              catId: category.id!,
+              todoId: currentTodo?.id,
+              enabled: isValid,
+            ),
           ],
         ),
       ).paddingSymmetric(v: 20),
@@ -50,7 +54,7 @@ class AddTodoView extends HookConsumerWidget {
       automaticallyImplyLeading: false,
       backgroundColor: Colors.transparent,
       title: Text(
-        todo == null ? 'New Task' : 'Update Task',
+        currentTodo == null ? 'New Task' : 'Update Task',
         style: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w400,

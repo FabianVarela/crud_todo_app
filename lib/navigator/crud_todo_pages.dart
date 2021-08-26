@@ -46,21 +46,30 @@ class TodoPage extends Page<void> {
     //     );
     //   },
     // );
+
+    /// Uncomment it and comment code above to use individually
+    // return MaterialPageRoute<void>(
+    //   settings: this,
+    //   builder: (_) => TodoListView(
+    //     category: category,
+    //     onGoToTodo: onGoToTodo,
+    //   ),
+    // );
   }
 }
 
 class AddTodoPage extends Page<void> {
-  const AddTodoPage({required this.category, this.todo})
+  const AddTodoPage({required this.category, this.currentTodo})
       : super(key: const ValueKey('AddTodoPage'));
 
   final Category category;
-  final Todo? todo;
+  final Todo? currentTodo;
 
   @override
   Route<void> createRoute(BuildContext context) {
     return SlideTransitionRoute(
       settings: this,
-      child: AddTodoView(category: category, todo: todo),
+      child: AddTodoView(category: category, currentTodo: currentTodo),
     );
 
     /// Uncomment it and comment code above to use individually
@@ -71,9 +80,18 @@ class AddTodoPage extends Page<void> {
     //   pageBuilder: (context, animation, animation2) {
     //     return ScaleTransition(
     //       scale: animation,
-    //       child: AddTodoView(category: category, todo: todo),
+    //       child: AddTodoView(category: category, currentTodo: currentTodo),
     //     );
     //   },
+    // );
+
+    /// Uncomment it and comment code above to use individually
+    // return MaterialPageRoute<void>(
+    //   settings: this,
+    //   builder: (_) => AddTodoView(
+    //     category: category,
+    //     currentTodo: currentTodo,
+    //   ),
     // );
   }
 }

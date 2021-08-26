@@ -54,7 +54,7 @@ class CrudTodoRouterDelegate extends RouterDelegate<dynamic>
             onGoToTodo: (category, todo) => selectCurrentTodo(todo, true),
           ),
         if (currentCategory != null && isTodoSelected)
-          AddTodoPage(category: currentCategory!, todo: currentTodo)
+          AddTodoPage(category: currentCategory!, currentTodo: currentTodo)
       ],
       onPopPage: (route, dynamic result) {
         if (!route.didPop(result)) return false;
