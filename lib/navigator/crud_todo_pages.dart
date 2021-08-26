@@ -1,5 +1,6 @@
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
+import 'package:crud_todo_app/navigator/crud_todo_transition_route.dart';
 import 'package:crud_todo_app/ui/add_todo_view.dart';
 import 'package:crud_todo_app/ui/todo_category_list_view.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
@@ -34,6 +35,7 @@ class TodoPage extends Page<void> {
       child: TodoListView(category: category, onGoToTodo: onGoToTodo),
     );
 
+    /// Uncomment it and comment code above to use individually
     // return PageRouteBuilder<void>(
     //   settings: this,
     //   transitionDuration: const Duration(milliseconds: 1000),
@@ -43,12 +45,6 @@ class TodoPage extends Page<void> {
     //       child: TodoListView(category: category, onGoToTodo: onGoToTodo),
     //     );
     //   },
-    // );
-
-    // return MaterialPageRoute<void>(
-    //   settings: this,
-    //   builder: (_) => TodoListView(category: category,
-    //   onGoToTodo: onGoToTodo,),
     // );
   }
 }
@@ -67,6 +63,7 @@ class AddTodoPage extends Page<void> {
       child: AddTodoView(category: category, todo: todo),
     );
 
+    /// Uncomment it and comment code above to use individually
     // return PageRouteBuilder<void>(
     //   settings: this,
     //   reverseTransitionDuration: const Duration(milliseconds: 1000),
@@ -78,68 +75,5 @@ class AddTodoPage extends Page<void> {
     //     );
     //   },
     // );
-
-    // return MaterialPageRoute<void>(
-    //   settings: this,
-    //   builder: (_) => AddTodoView(category: category, todo: todo),
-    // );
   }
-}
-
-class ScaleTransitionRoute extends PageRouteBuilder<void> {
-  ScaleTransitionRoute({
-    required RouteSettings settings,
-    required this.child,
-  }) : super(
-    settings: settings,
-    // reverseTransitionDuration: const Duration(milliseconds: 1000),
-    // transitionDuration: const Duration(milliseconds: 1000),
-    pageBuilder: (context, anim, anim2) => ScaleTransition(
-      scale: anim,
-      child: child,
-    ),
-  );
-
-  final Widget child;
-}
-
-class FadeTransitionRoute extends PageRouteBuilder<void> {
-  FadeTransitionRoute({
-    required RouteSettings settings,
-    required this.child,
-  }) : super(
-    settings: settings,
-    reverseTransitionDuration: const Duration(milliseconds: 1000),
-    transitionDuration: const Duration(milliseconds: 1000),
-    pageBuilder: (context, anim, anim2) => FadeTransition(
-      opacity: anim,
-      child: child,
-    ),
-  );
-
-  final Widget child;
-}
-
-class SlideTransitionRoute extends PageRouteBuilder<void> {
-  SlideTransitionRoute({
-    required RouteSettings settings,
-    required this.child,
-  }) : super(
-    settings: settings,
-    reverseTransitionDuration: const Duration(milliseconds: 1000),
-    transitionDuration: const Duration(milliseconds: 1000),
-    pageBuilder: (context, anim, anim2) {
-      final tween = Tween(
-        begin: const Offset(0, 1),
-        end: Offset.zero,
-      );
-      final curveTween = CurveTween(curve: Curves.easeInOut);
-      return SlideTransition(
-        position: anim.drive(curveTween).drive(tween),
-        child: child,
-      );
-    },
-  );
-
-  final Widget child;
 }
