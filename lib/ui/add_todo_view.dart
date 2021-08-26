@@ -125,6 +125,12 @@ class DateTodo extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final finalDate = ref.watch(dateTodoProvider);
 
+    final platform = foundation.defaultTargetPlatform;
+    final isWeb = foundation.kIsWeb;
+
+    final isIOS = platform == foundation.TargetPlatform.iOS;
+    final isMacOS = platform == foundation.TargetPlatform.macOS;
+
     useEffect(() {
       if (todo != null) {
         Future.microtask(
@@ -135,7 +141,7 @@ class DateTodo extends HookConsumerWidget {
 
     return InkWell(
       onTap: () {
-        foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS
+        !isWeb && (isIOS || isMacOS)
             ? _dateIOS(context, finalDate)
             : _dateAndroid(context, finalDate);
       },
