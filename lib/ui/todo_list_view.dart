@@ -139,7 +139,7 @@ class TodoListView extends HookConsumerWidget {
   Future<void> _goToTodo(BuildContext context, {Todo? todo}) async {
     await Navigator.of(context).push<void>(
       MaterialPageRoute(
-        builder: (_) => AddTodoView(category: category, todo: todo),
+        builder: (_) => AddTodoView(category: category, currentTodo: todo),
       ),
     );
   }
