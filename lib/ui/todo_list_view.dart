@@ -62,10 +62,13 @@ class TodoListView extends HookConsumerWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(30),
                   ),
-                  child: Text(
-                    category.emoji.code,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 30),
+                  child: Hero(
+                    tag: '${category.id}_${category.emoji.name}',
+                    child: Text(
+                      category.emoji.code,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 30),
+                    ),
                   ),
                 ),
                 Column(

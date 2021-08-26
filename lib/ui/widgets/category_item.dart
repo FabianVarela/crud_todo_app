@@ -22,9 +22,12 @@ class CategoryItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            Text(
-              item.emoji.code,
-              style: const TextStyle(fontSize: 30),
+            Hero(
+              tag: '${item.id}_${item.emoji.name}',
+              child: Text(
+                item.emoji.code,
+                style: const TextStyle(fontSize: 30),
+              ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
