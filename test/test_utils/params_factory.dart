@@ -31,13 +31,6 @@ Todo get initialTodo => Todo(
       subject: todoSubject,
     );
 
-Todo get addingTodo => Todo(
-      categoryId: categoryId,
-      id: '',
-      finalDate: todoFinalDate,
-      subject: todoSubject,
-    );
-
 Todo get existingTodo => Todo(
       categoryId: categoryId,
       id: todoId,
