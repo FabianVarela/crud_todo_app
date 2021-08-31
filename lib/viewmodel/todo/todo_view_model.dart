@@ -22,15 +22,14 @@ abstract class ITodoViewModel extends StateNotifier<TodoState> {
     try {
       state = const TodoState.loading();
 
-      final id = todoId ?? '';
       final subject = subjectTodo.text ?? '';
       final date = dateTodo;
 
       await todoRepository.saveTodo(
-        Todo(id: id, subject: subject, finalDate: date, categoryId: catId),
+        Todo(id: todoId, subject: subject, finalDate: date, categoryId: catId),
       );
 
-      if (id.isEmpty) {
+      if (todoId == null) {
         state = const TodoState.success(TodoAction.add);
       } else {
         state = const TodoState.success(TodoAction.update);
