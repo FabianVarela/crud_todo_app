@@ -202,7 +202,7 @@ class TodoList extends ConsumerWidget {
           TodoItem(
             todo: item,
             onEdit: () => onEditItem(item),
-            onRemove: () => viewModel.deleteTodo(item.id, item.categoryId),
+            onRemove: () => viewModel.deleteTodo(item.id!, item.categoryId),
             onCheck: (value) => viewModel.checkTodo(item, value),
           )
       ],
