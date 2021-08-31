@@ -1,8 +1,8 @@
-import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
+import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:flutter/cupertino.dart' as cupertino;
@@ -11,15 +11,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class AddTodoView extends HookConsumerWidget {
-  const AddTodoView({Key? key, required this.category, this.currentTodo})
+class FormTodoView extends HookConsumerWidget {
+  const FormTodoView({Key? key, required this.categoryId, this.todoId})
       : super(key: key);
 
-  final Category category;
-  final Todo? currentTodo;
+  final String categoryId;
+  final String? todoId;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final todoData = ref.watch(todoDataProvider(todoId));
     final isValid = ref.watch(validationTodoProvider).state;
 
     ref.listen(
@@ -30,20 +31,27 @@ class AddTodoView extends HookConsumerWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: _appBar(context),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            SubjectTodo(todo: currentTodo).paddingSymmetric(h: 30, v: 30),
-            DateTodo(todo: currentTodo).paddingSymmetric(h: 30, v: 20),
-            CategoryTodo(category: category).paddingSymmetric(h: 30, v: 20),
-            SubmitTodo(
-              catId: category.id!,
-              todoId: currentTodo?.id,
-              enabled: isValid,
-            ),
-          ],
+      body: todoData.when(
+        data: (todo) => SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              SubjectTodo(todo: todo).paddingSymmetric(h: 30, v: 30),
+              DateTodo(todo: todo).paddingSymmetric(h: 30, v: 20),
+              CategoryTodo(categoryId: categoryId)
+                  .paddingSymmetric(h: 30, v: 20),
+              SubmitTodo(
+                catId: categoryId,
+                todoId: todo?.id,
+                enabled: isValid,
+              ),
+            ],
+          ),
+        ).paddingSymmetric(v: 20),
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (e, s) => Center(
+          child: Text(e.toString(), style: const TextStyle(fontSize: 20)),
         ),
-      ).paddingSymmetric(v: 20),
+      ),
     );
   }
 
@@ -54,7 +62,7 @@ class AddTodoView extends HookConsumerWidget {
       automaticallyImplyLeading: false,
       backgroundColor: Colors.transparent,
       title: Text(
-        currentTodo == null ? 'New Task' : 'Update Task',
+        todoId == null ? 'New Task' : 'Update Task',
         style: const TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w400,
@@ -220,34 +228,40 @@ class DateTodo extends HookConsumerWidget {
   }
 }
 
-class CategoryTodo extends StatelessWidget {
-  const CategoryTodo({cupertino.Key? key, required this.category})
+class CategoryTodo extends HookConsumerWidget {
+  const CategoryTodo({cupertino.Key? key, required this.categoryId})
       : super(key: key);
 
-  final Category category;
+  final String categoryId;
 
   @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        const Icon(Icons.local_offer_outlined, color: Color(0xFF77C783))
-            .paddingOnly(r: 12),
-        Expanded(
-          child: Row(
-            children: <Widget>[
-              Text(category.emoji.code, style: const TextStyle(fontSize: 16))
-                  .paddingOnly(b: 5, r: 5),
-              Text(
-                category.name,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
+  Widget build(BuildContext context, WidgetRef ref) {
+    final categoryData = ref.watch(categoryDataProvider(categoryId));
+
+    return categoryData.when(
+      data: (category) => Row(
+        children: <Widget>[
+          const Icon(Icons.local_offer_outlined, color: Color(0xFF77C783))
+              .paddingOnly(r: 12),
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Text(category.emoji.code, style: const TextStyle(fontSize: 16))
+                    .paddingOnly(b: 5, r: 5),
+                Text(
+                  category.name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
+      loading: () => const Offstage(),
+      error: (e, s) => Text(e.toString(), style: const TextStyle(fontSize: 16)),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
-import 'package:crud_todo_app/ui/add_todo_view.dart';
+import 'package:crud_todo_app/ui/form_todo_view.dart';
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
@@ -153,7 +153,7 @@ class TodoListView extends HookConsumerWidget {
   Future<void> _goToTodo(BuildContext context, {Todo? todo}) async {
     await Navigator.of(context).push<void>(
       MaterialPageRoute(
-        builder: (_) => AddTodoView(categoryId: categoryId, todoId: todo?.id),
+        builder: (_) => FormTodoView(categoryId: categoryId, todoId: todo?.id),
       ),
     );
   }
