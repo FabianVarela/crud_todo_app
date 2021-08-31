@@ -4,8 +4,14 @@ import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final todoDataProvider = StreamProvider.autoDispose.family<List<Todo>, String>(
+final todosDataProvider = StreamProvider.autoDispose.family<List<Todo>, String>(
   (ref, catId) => ref.read(todoRepositoryProvider).getTodosByCategory(catId),
+);
+
+final todoDataProvider = FutureProvider.autoDispose.family<Todo?, String?>(
+  (ref, todoId) => todoId != null
+      ? ref.read(todoRepositoryProvider).getTodoById(todoId)
+      : Future.value(null),
 );
 
 final subjectTodoProvider = StateProvider.autoDispose(
