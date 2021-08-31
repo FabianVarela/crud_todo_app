@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 
 class Todo extends Equatable {
   const Todo({
-    required this.id,
+    this.id,
     required this.subject,
     required this.finalDate,
     required this.categoryId,
@@ -18,7 +18,7 @@ class Todo extends Equatable {
         isCompleted: json['isCompleted'] as bool,
       );
 
-  final String id;
+  final String? id;
   final String subject;
   final DateTime finalDate;
   final String categoryId;
