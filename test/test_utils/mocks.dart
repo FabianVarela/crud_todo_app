@@ -34,6 +34,14 @@ class MockQueryDocumentSnapshot extends Mock
 class MockDocumentReference extends Mock
     implements DocumentReference<Map<String, dynamic>> {}
 
+class MockDocumentSnapshot extends Mock
+    implements DocumentSnapshot<Map<String, dynamic>> {
+  MockDocumentSnapshot(this.id);
+
+  @override
+  final String id;
+}
+
 class MockQuery extends Mock implements Query<Map<String, dynamic>> {}
 
 /// Services
