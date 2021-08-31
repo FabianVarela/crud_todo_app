@@ -28,7 +28,7 @@ class TodoService {
   }
 
   Future<void> saveTodo(Todo todo) async {
-    if (todo.id.isNotEmpty) {
+    if (todo.id != null) {
       await _database
           .collection(_todoCollection)
           .doc(todo.id)
