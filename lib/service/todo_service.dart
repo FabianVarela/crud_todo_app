@@ -20,6 +20,13 @@ class TodoService {
         query.docs.map((doc) => Todo.fromJson(doc.toMap())).toList());
   }
 
+  Future<Todo> getTodoById(String todoId) async {
+    final todoCollection = _database.collection(_todoCollection);
+    final todoDocument = await todoCollection.doc(todoId).get();
+
+    return Todo.fromJson(todoDocument.toMap());
+  }
+
   Future<void> saveTodo(Todo todo) async {
     if (todo.id.isNotEmpty) {
       await _database
