@@ -1,4 +1,4 @@
-import 'package:crud_todo_app/ui/todo_category_list_view.dart';
+import 'package:crud_todo_app/ui/category_list_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,7 +24,7 @@ class TodoListApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
       ),
-      home: const TodoCategoryListView(),
+      home: const CategoryListView(),
     );
   }
 }

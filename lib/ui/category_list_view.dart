@@ -9,12 +9,12 @@ import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class TodoCategoryListView extends ConsumerWidget {
-  const TodoCategoryListView({Key? key}) : super(key: key);
+class CategoryListView extends ConsumerWidget {
+  const CategoryListView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final categoryStream = ref.watch(categoryDataProvider);
+    final categoriesDataStream = ref.watch(categoriesDataProvider);
 
     ref.listen(
       categoryViewModelProvider,
@@ -36,7 +36,7 @@ class TodoCategoryListView extends ConsumerWidget {
             style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
           ).paddingSymmetric(h: 12, v: 20),
           Expanded(
-            child: categoryStream.when(
+            child: categoriesDataStream.when(
               data: (categories) => categories.isNotEmpty
                   ? GridView.count(
                       crossAxisCount: 2,
@@ -75,7 +75,7 @@ class TodoCategoryListView extends ConsumerWidget {
 
   Future<void> _goToTodo(BuildContext context, Category category) async  {
     await Navigator.of(context).push<void>(
-      MaterialPageRoute(builder: (_) => TodoListView(category: category)),
+      MaterialPageRoute(builder: (_) => TodoListView(categoryId: category.id!)),
     );
   }
 
