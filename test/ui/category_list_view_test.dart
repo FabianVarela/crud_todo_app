@@ -2,7 +2,7 @@ import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/ui/dialog/category_dialog.dart';
-import 'package:crud_todo_app/ui/todo_category_list_view.dart';
+import 'package:crud_todo_app/ui/category_list_view.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +14,7 @@ import '../test_utils/mocks.dart';
 import '../test_utils/params_factory.dart';
 
 void main() {
-  group('$TodoCategoryListView UI screen', () {
+  group('$CategoryListView UI screen', () {
     late MockCategoryService mockCategoryService;
     late ICategoryRepository categoryRepository;
 
@@ -41,8 +41,8 @@ void main() {
       ));
     }
 
-    testWidgets('Show $TodoCategoryListView screen', (tester) async {
-      await _pumpMainScreen(tester, const TodoCategoryListView());
+    testWidgets('Show $CategoryListView screen', (tester) async {
+      await _pumpMainScreen(tester, const CategoryListView());
 
       expect(find.byIcon(Icons.menu_rounded), findsOneWidget);
       expect(find.text('Lists'), findsOneWidget);
@@ -50,9 +50,9 @@ void main() {
     });
 
     testWidgets(
-        'Show $Dialog section in $TodoCategoryListView screen '
+        'Show $Dialog section in $CategoryListView screen '
         'when set tap in $FloatingActionButton', (tester) async {
-      await _pumpMainScreen(tester, const TodoCategoryListView());
+      await _pumpMainScreen(tester, const CategoryListView());
 
       final finderFloatingButton = find.byType(FloatingActionButton);
 
@@ -71,11 +71,11 @@ void main() {
 
     testWidgets(
         'Show empty data in '
-        '$TodoCategoryListView screen', (tester) async {
+        '$CategoryListView screen', (tester) async {
       when(mockCategoryService.getCategories)
           .thenAnswer((_) => Stream.value([]));
 
-      await _pumpMainScreen(tester, const TodoCategoryListView());
+      await _pumpMainScreen(tester, const CategoryListView());
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
       await tester.pump(const Duration(seconds: 1));
@@ -84,11 +84,11 @@ void main() {
       expect(find.text('Empty data, add a category'), findsOneWidget);
     });
 
-    testWidgets('Show data $TodoCategoryListView in screen', (tester) async {
+    testWidgets('Show data $CategoryListView in screen', (tester) async {
       when(categoryRepository.getCategories)
           .thenAnswer((_) => Stream.value([category]));
 
-      await _pumpMainScreen(tester, const TodoCategoryListView());
+      await _pumpMainScreen(tester, const CategoryListView());
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
       await tester.pump(const Duration(seconds: 1));
@@ -111,7 +111,7 @@ void main() {
       when(categoryRepository.getCategories)
           .thenAnswer((_) => Stream.value([category]));
 
-      await _pumpMainScreen(tester, const TodoCategoryListView());
+      await _pumpMainScreen(tester, const CategoryListView());
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
       await tester.pump(const Duration(seconds: 1));
