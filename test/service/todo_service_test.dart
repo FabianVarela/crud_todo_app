@@ -22,9 +22,9 @@ void main() {
     mockFirestoreInstance = MockFirestore();
     mockCollectionReference = MockCollectionReference();
     mockDocumentReference = MockDocumentReference();
-    mockDocumentSnapshot = MockDocumentSnapshot(existingTodo.id);
+    mockDocumentSnapshot = MockDocumentSnapshot(existingTodo.id!);
     mockQuerySnapshot = MockQuerySnapshot();
-    mockQueryDocumentSnapshot = MockQueryDocumentSnapshot(existingTodo.id);
+    mockQueryDocumentSnapshot = MockQueryDocumentSnapshot(existingTodo.id!);
     mockQuery = MockQuery();
 
     todoService = TodoService(mockFirestoreInstance);
@@ -75,7 +75,7 @@ void main() {
           .thenReturn(existingTodo.toJson());
 
       // act
-      final result = todoService.getTodoById(existingTodo.id);
+      final result = todoService.getTodoById(existingTodo.id!);
       final finalResult = await result;
 
       // assert
@@ -144,7 +144,7 @@ void main() {
           .thenAnswer((_) => Future.value());
 
       // act
-      final result = todoService.deleteTodo(existingTodo.id, category.id!);
+      final result = todoService.deleteTodo(existingTodo.id!, category.id!);
 
       // assert
       expect(result, isA<Future<void>>());

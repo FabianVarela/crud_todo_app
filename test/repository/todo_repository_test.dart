@@ -46,7 +46,7 @@ void main() {
       when(() => mockTodoService.getTodoById(any())).thenAnswer((_) => future);
 
       // act
-      final result = todoRepository.getTodoById(existingTodo.id);
+      final result = todoRepository.getTodoById(existingTodo.id!);
 
       // assert
       expect(result, isA<Future<Todo>>());
