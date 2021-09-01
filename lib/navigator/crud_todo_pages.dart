@@ -2,6 +2,7 @@ import 'package:crud_todo_app/navigator/crud_todo_transition_route.dart';
 import 'package:crud_todo_app/ui/category_list_view.dart';
 import 'package:crud_todo_app/ui/form_todo_view.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
+import 'package:crud_todo_app/ui/unknown_view.dart';
 import 'package:flutter/material.dart';
 
 class CategoryPage extends Page<void> {
@@ -40,7 +41,10 @@ class TodoPage extends Page<void> {
     //   pageBuilder: (context, animation, animation2) {
     //     return FadeTransition(
     //       opacity: animation,
-    //       child: TodoListView(category: category, onGoToTodo: onGoToTodo),
+    //       child: TodoListView(
+    //         categoryId: categoryId,
+    //         onGoToTodo: onGoToTodo,
+    //       ),
     //     );
     //   },
     // );
@@ -49,7 +53,7 @@ class TodoPage extends Page<void> {
     // return MaterialPageRoute<void>(
     //   settings: this,
     //   builder: (_) => TodoListView(
-    //     category: category,
+    //     categoryId: categoryId,
     //     onGoToTodo: onGoToTodo,
     //   ),
     // );
@@ -76,9 +80,12 @@ class FormTodoPage extends Page<void> {
     //   reverseTransitionDuration: const Duration(milliseconds: 1000),
     //   transitionDuration: const Duration(milliseconds: 1000),
     //   pageBuilder: (context, animation, animation2) {
-    //     return ScaleTransition(
-    //       scale: animation,
-    //       child: AddTodoView(category: category, currentTodo: currentTodo),
+    //     final tween = Tween(begin: const Offset(0, 1), end: Offset.zero);
+    //     final curveTween = CurveTween(curve: Curves.easeInOut);
+    //
+    //     return SlideTransition(
+    //       position: animation.drive(curveTween).drive(tween),
+    //       child: FormTodoView(categoryId: categoryId, todoId: todoId),
     //     );
     //   },
     // );
@@ -86,10 +93,36 @@ class FormTodoPage extends Page<void> {
     /// Uncomment it and comment code above to use individually
     // return MaterialPageRoute<void>(
     //   settings: this,
-    //   builder: (_) => AddTodoView(
-    //     category: category,
-    //     currentTodo: currentTodo,
-    //   ),
+    //   builder: (_) => FormTodoView(categoryId: categoryId, todoId: todoId),
+    // );
+  }
+}
+
+class UnknownPage extends Page<void> {
+  @override
+  Route<void> createRoute(BuildContext context) {
+    return ScaleTransitionRoute(
+      settings: this,
+      child: const UnknownView(),
+    );
+
+    /// Uncomment it and comment code above to use individually
+    // return PageRouteBuilder<void>(
+    //   settings: this,
+    //   reverseTransitionDuration: const Duration(milliseconds: 1000),
+    //   transitionDuration: const Duration(milliseconds: 1000),
+    //   pageBuilder: (context, animation, animation2) {
+    //     return ScaleTransition(
+    //       scale: animation,
+    //       child: const UnknownView(),
+    //     );
+    //   },
+    // );
+
+    /// Uncomment it and comment code above to use individually
+    // return MaterialPageRoute<void>(
+    //   settings: this,
+    //   builder: (_) => const UnknownView(),
     // );
   }
 }
