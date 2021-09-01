@@ -21,8 +21,8 @@ class CategoryPage extends Page<void> {
 }
 
 class TodoPage extends Page<void> {
-  const TodoPage({required this.categoryId, required this.onGoToTodo})
-      : super(key: const ValueKey('TodoPage'));
+  TodoPage({required this.categoryId, required this.onGoToTodo})
+      : super(key: ValueKey('TodoPage_$categoryId'));
 
   final String categoryId;
   final NavigatorToTodo onGoToTodo;
@@ -61,8 +61,8 @@ class TodoPage extends Page<void> {
 }
 
 class FormTodoPage extends Page<void> {
-  const FormTodoPage({required this.categoryId, this.todoId})
-      : super(key: const ValueKey('AddTodoPage'));
+  FormTodoPage({required this.categoryId, this.todoId})
+      : super(key: ValueKey('FormTodoPage_${categoryId}_${todoId ?? 'none'}'));
 
   final String categoryId;
   final String? todoId;
@@ -99,6 +99,8 @@ class FormTodoPage extends Page<void> {
 }
 
 class UnknownPage extends Page<void> {
+  const UnknownPage() : super(key: const ValueKey('UnknownPage'));
+
   @override
   Route<void> createRoute(BuildContext context) {
     return ScaleTransitionRoute(
