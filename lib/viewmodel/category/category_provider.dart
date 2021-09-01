@@ -4,8 +4,13 @@ import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final categoryDataProvider = StreamProvider.autoDispose<List<Category>>(
+final categoriesDataProvider = StreamProvider.autoDispose<List<Category>>(
   (ref) => ref.watch(categoryRepositoryProvider).getCategories(),
+);
+
+final categoryDataProvider =
+    FutureProvider.autoDispose.family<Category, String>(
+  (ref, id) => ref.watch(categoryRepositoryProvider).getCategoryById(id),
 );
 
 final nameCatProvider = StateProvider.autoDispose(

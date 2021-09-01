@@ -4,6 +4,8 @@ import 'package:crud_todo_app/service/todo_service.dart';
 abstract class ITodoRepository {
   Stream<List<Todo>> getTodosByCategory(String catId);
 
+  Future<Todo> getTodoById(String todoId);
+
   Future<void> saveTodo(Todo todo);
 
   Future<void> deleteTodo(String todoId, String catId);
@@ -17,6 +19,9 @@ class TodoRepository implements ITodoRepository {
   @override
   Stream<List<Todo>> getTodosByCategory(String catId) =>
       _todoService.getTodosByCategory(catId);
+
+  @override
+  Future<Todo> getTodoById(String todoId) => _todoService.getTodoById(todoId);
 
   @override
   Future<void> saveTodo(Todo todo) async => _todoService.saveTodo(todo);

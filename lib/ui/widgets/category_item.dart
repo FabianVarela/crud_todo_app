@@ -24,9 +24,12 @@ class CategoryItem extends StatelessWidget {
           children: <Widget>[
             Hero(
               tag: '${item.id}_${item.emoji.name}',
-              child: Text(
-                item.emoji.code,
-                style: const TextStyle(fontSize: 30),
+              child: Material(
+                color: Colors.transparent,
+                child: Text(
+                  item.emoji.code,
+                  style: const TextStyle(fontSize: 30),
+                ),
               ),
             ),
             Column(

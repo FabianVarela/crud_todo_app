@@ -1,3 +1,4 @@
+import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -34,6 +35,24 @@ void main() {
       expect(result, stream);
 
       verify(() => mockTodoService.getTodosByCategory(any()));
+      verifyNoMoreInteractions(mockTodoService);
+    });
+
+    test(
+        'should return $Category '
+        'when getTodoById is called', () async {
+      // arrange
+      final future = Future.value(existingTodo);
+      when(() => mockTodoService.getTodoById(any())).thenAnswer((_) => future);
+
+      // act
+      final result = todoRepository.getTodoById(existingTodo.id!);
+
+      // assert
+      expect(result, isA<Future<Todo>>());
+      expect(result, future);
+
+      verify(() => mockTodoService.getTodoById(any()));
       verifyNoMoreInteractions(mockTodoService);
     });
 

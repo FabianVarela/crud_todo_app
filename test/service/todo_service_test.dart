@@ -11,6 +11,7 @@ void main() {
   late MockFirestore mockFirestoreInstance;
   late MockCollectionReference mockCollectionReference;
   late MockDocumentReference mockDocumentReference;
+  late MockDocumentSnapshot mockDocumentSnapshot;
   late MockQuerySnapshot mockQuerySnapshot;
   late MockQueryDocumentSnapshot mockQueryDocumentSnapshot;
   late MockQuery mockQuery;
@@ -21,8 +22,9 @@ void main() {
     mockFirestoreInstance = MockFirestore();
     mockCollectionReference = MockCollectionReference();
     mockDocumentReference = MockDocumentReference();
+    mockDocumentSnapshot = MockDocumentSnapshot(existingTodo.id!);
     mockQuerySnapshot = MockQuerySnapshot();
-    mockQueryDocumentSnapshot = MockQueryDocumentSnapshot(existingTodo.id);
+    mockQueryDocumentSnapshot = MockQueryDocumentSnapshot(existingTodo.id!);
     mockQuery = MockQuery();
 
     todoService = TodoService(mockFirestoreInstance);
@@ -56,6 +58,31 @@ void main() {
       verify(() => mockFirestoreInstance
           .collection(any())
           .where(any(), isEqualTo: any(named: 'isEqualTo'))).called(1);
+    });
+
+    test('Get $Todo by id from Firebase mock', () async {
+      // arrange
+      when(() => mockFirestoreInstance.collection(any()))
+          .thenReturn(mockCollectionReference);
+
+      when(() => mockCollectionReference.doc(any()))
+          .thenReturn(mockDocumentReference);
+
+      when(() => mockDocumentReference.get())
+          .thenAnswer((_) => Future.value(mockDocumentSnapshot));
+
+      when(() => mockDocumentSnapshot.toMap())
+          .thenReturn(existingTodo.toJson());
+
+      // act
+      final result = todoService.getTodoById(existingTodo.id!);
+      final finalResult = await result;
+
+      // assert
+      expect(result, isA<Future<Todo>>());
+      expect(finalResult, isA<Todo>());
+      verify(() => mockFirestoreInstance.collection(any()).doc(any()))
+          .called(1);
     });
 
     test('Save $Todo from Firebase mock', () {
@@ -117,7 +144,7 @@ void main() {
           .thenAnswer((_) => Future.value());
 
       // act
-      final result = todoService.deleteTodo(existingTodo.id, category.id!);
+      final result = todoService.deleteTodo(existingTodo.id!, category.id!);
 
       // assert
       expect(result, isA<Future<void>>());

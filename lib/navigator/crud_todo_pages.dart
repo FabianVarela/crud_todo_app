@@ -1,8 +1,6 @@
-import 'package:crud_todo_app/model/category_model.dart';
-import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/navigator/crud_todo_transition_route.dart';
-import 'package:crud_todo_app/ui/add_todo_view.dart';
-import 'package:crud_todo_app/ui/todo_category_list_view.dart';
+import 'package:crud_todo_app/ui/category_list_view.dart';
+import 'package:crud_todo_app/ui/form_todo_view.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:flutter/material.dart';
 
@@ -16,23 +14,23 @@ class CategoryPage extends Page<void> {
   Route createRoute(BuildContext context) {
     return MaterialPageRoute<void>(
       settings: this,
-      builder: (_) => TodoCategoryListView(onGoToDetail: onGoToDetail),
+      builder: (_) => CategoryListView(onGoToDetail: onGoToDetail),
     );
   }
 }
 
 class TodoPage extends Page<void> {
-  const TodoPage({required this.category, required this.onGoToTodo})
+  const TodoPage({required this.categoryId, required this.onGoToTodo})
       : super(key: const ValueKey('TodoPage'));
 
-  final Category category;
+  final String categoryId;
   final NavigatorToTodo onGoToTodo;
 
   @override
   Route<void> createRoute(BuildContext context) {
     return FadeTransitionRoute(
       settings: this,
-      child: TodoListView(category: category, onGoToTodo: onGoToTodo),
+      child: TodoListView(categoryId: categoryId, onGoToTodo: onGoToTodo),
     );
 
     /// Uncomment it and comment code above to use individually
@@ -58,18 +56,18 @@ class TodoPage extends Page<void> {
   }
 }
 
-class AddTodoPage extends Page<void> {
-  const AddTodoPage({required this.category, this.currentTodo})
+class FormTodoPage extends Page<void> {
+  const FormTodoPage({required this.categoryId, this.todoId})
       : super(key: const ValueKey('AddTodoPage'));
 
-  final Category category;
-  final Todo? currentTodo;
+  final String categoryId;
+  final String? todoId;
 
   @override
   Route<void> createRoute(BuildContext context) {
     return SlideTransitionRoute(
       settings: this,
-      child: AddTodoView(category: category, currentTodo: currentTodo),
+      child: FormTodoView(categoryId: categoryId, todoId: todoId),
     );
 
     /// Uncomment it and comment code above to use individually

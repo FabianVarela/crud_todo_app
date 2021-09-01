@@ -3,8 +3,8 @@ import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
-import 'package:crud_todo_app/ui/add_todo_view.dart';
-import 'package:crud_todo_app/ui/todo_category_list_view.dart';
+import 'package:crud_todo_app/ui/form_todo_view.dart';
+import 'package:crud_todo_app/ui/category_list_view.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/custom_checkbox.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
@@ -67,7 +67,7 @@ void main() {
     testWidgets('Show $TodoListView screen', (tester) async {
       await _pumpMainScreen(
         tester,
-        TodoListView(category: category, onGoToTodo: (_, __) {}),
+        TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {}),
       );
 
       expect(find.byIcon(Icons.arrow_back_ios), findsOneWidget);
@@ -75,25 +75,25 @@ void main() {
       expect(find.byType(FloatingActionButton), findsOneWidget);
     });
 
-    testWidgets('Redirect to $AddTodoView screen', (tester) async {
+    testWidgets('Redirect to $FormTodoView screen', (tester) async {
       await _pumpMainScreen(
         tester,
-        TodoListView(category: category, onGoToTodo: (_, __) {}),
+        TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {}),
       );
 
       await tester.tap(find.byType(FloatingActionButton));
       await tester.pumpAndSettle();
 
       verify(() => mockNavigator.didPush(any(), any()));
-      // expect(find.byType(AddTodoView), findsOneWidget);
+      // expect(find.byType(FormTodoView), findsOneWidget);
     });
 
     testWidgets(
         'Check back button in $TodoListView screen '
-        'and return to $TodoCategoryListView screen', (tester) async {
+        'and return to $CategoryListView screen', (tester) async {
       await _pumpMainScreen(
         tester,
-        TodoListView(category: category, onGoToTodo: (_, __) {}),
+        TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {}),
       );
 
       await tester.tap(find.byIcon(Icons.arrow_back_ios));
@@ -104,7 +104,7 @@ void main() {
 
     testWidgets(
         'Check remove $Category button in $TodoListView screen '
-        'and return to $TodoCategoryListView screen', (tester) async {
+        'and return to $CategoryListView screen', (tester) async {
       late final ICategoryViewModel viewModel;
 
       when(() => mockCategoryService.deleteCategory(any()))
@@ -112,7 +112,7 @@ void main() {
 
       final mainScreenConsumer = Consumer(builder: (_, ref, child) {
         viewModel = ref.read(categoryViewModelProvider.notifier);
-        return TodoListView(category: category, onGoToTodo: (_, __) {});
+        return TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {});
       });
 
       await _pumpMainScreen(tester, mainScreenConsumer);
@@ -140,7 +140,7 @@ void main() {
 
       final mainScreenConsumer = Consumer(builder: (_, ref, child) {
         viewModel = ref.read(categoryViewModelProvider.notifier);
-        return TodoListView(category: category, onGoToTodo: (_, __) {});
+        return TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {});
       });
 
       await _pumpMainScreen(tester, mainScreenConsumer);
@@ -150,16 +150,17 @@ void main() {
 
       verify(() => mockCategoryService.deleteCategory(any())).called(1);
       expect(viewModel.debugState, isA<CategoryStateError>());
-      verifyNoMoreInteractions(mockCategoryService);
     });
 
     testWidgets('Show $TodoListView screen with empty data', (tester) async {
+      when(() => mockCategoryService.getCategoryById(any()))
+          .thenAnswer((_) => Future.value(category));
       when(() => mockTodoService.getTodosByCategory(any()))
           .thenAnswer((_) => Stream.value([]));
 
       await _pumpMainScreen(
         tester,
-        TodoListView(category: category, onGoToTodo: (_, __) {}),
+        TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {}),
       );
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
@@ -175,7 +176,7 @@ void main() {
 
       await _pumpMainScreen(
         tester,
-        TodoListView(category: category, onGoToTodo: (_, __) {}),
+        TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {}),
       );
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
@@ -208,7 +209,7 @@ void main() {
 
       final mainScreenConsumer = Consumer(builder: (_, ref, child) {
         viewModel = ref.read(todoViewModelProvider.notifier);
-        return TodoListView(category: category, onGoToTodo: (_, __) {});
+        return TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {});
       });
 
       await _pumpMainScreen(tester, mainScreenConsumer);
@@ -253,7 +254,7 @@ void main() {
 
       final mainScreenConsumer = Consumer(builder: (_, ref, child) {
         viewModel = ref.read(todoViewModelProvider.notifier);
-        return TodoListView(category: category, onGoToTodo: (_, __) {});
+        return TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {});
       });
 
       await _pumpMainScreen(tester, mainScreenConsumer);
@@ -285,13 +286,13 @@ void main() {
 
     testWidgets(
         'Slide a $TodoItem and go to '
-        'edit $Todo in $AddTodoView screen', (tester) async {
+        'edit $Todo in $FormTodoView screen', (tester) async {
       when(() => mockTodoService.getTodosByCategory(any()))
           .thenAnswer((_) => Stream.value([existingTodo]));
 
       await _pumpMainScreen(
         tester,
-        TodoListView(category: category, onGoToTodo: (_, __) {}),
+        TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {}),
       );
       await tester.pumpAndSettle();
 
@@ -315,7 +316,7 @@ void main() {
       await tester.pumpAndSettle();
 
       verify(() => mockNavigator.didPush(any(), any()));
-      // expect(find.byType(AddTodoView), findsOneWidget);
+      // expect(find.byType(FormTodoView), findsOneWidget);
     });
 
     testWidgets('Slide a $TodoItem and remove $Todo from list', (tester) async {
@@ -330,7 +331,7 @@ void main() {
 
       final mainScreenConsumer = Consumer(builder: (_, ref, child) {
         viewModel = ref.read(todoViewModelProvider.notifier);
-        return TodoListView(category: category, onGoToTodo: (_, __) {});
+        return TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {});
       });
 
       await _pumpMainScreen(tester, mainScreenConsumer);
@@ -378,7 +379,7 @@ void main() {
 
       final mainScreenConsumer = Consumer(builder: (_, ref, child) {
         viewModel = ref.read(todoViewModelProvider.notifier);
-        return TodoListView(category: category, onGoToTodo: (_, __) {});
+        return TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {});
       });
 
       await _pumpMainScreen(tester, mainScreenConsumer);

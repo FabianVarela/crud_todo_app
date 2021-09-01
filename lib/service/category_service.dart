@@ -17,6 +17,13 @@ class CategoryService {
         query.docs.map((doc) => Category.fromJson(doc.toMap())).toList());
   }
 
+  Future<Category> getCategoryById(String categoryId) async {
+    final categoryCollection = _database.collection(_categoryCollection);
+    final categoryDocument = await categoryCollection.doc(categoryId).get();
+
+    return Category.fromJson(categoryDocument.toMap());
+  }
+
   Future<void> saveCategory(Category category) async => category.id != null
       ? await _database
           .collection(_categoryCollection)

@@ -1,10 +1,10 @@
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
-import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../test_utils/mocks.dart';
+import '../test_utils/params_factory.dart';
 
 void main() {
   late MockCategoryService mockCategoryService;
@@ -17,8 +17,6 @@ void main() {
   });
 
   group('$CategoryRepository', () {
-    final category = Category(name: 'name', emoji: Emoji.None);
-
     test(
         'should get a stream with a $List of $Category '
         'when getCategories is called', () async {
@@ -32,7 +30,27 @@ void main() {
       // assert
       expect(result, isA<Stream<List<Category>>>());
       expect(result, equals(stream));
+
       verify(() => mockCategoryService.getCategories());
+      verifyNoMoreInteractions(mockCategoryService);
+    });
+
+    test(
+        'should get a future with a $Category '
+        'when getCategoryById is called', () async {
+      // arrange
+      final future = Future.value(category);
+      when(() => mockCategoryService.getCategoryById(any()))
+          .thenAnswer((_) => future);
+
+      // act
+      final result = categoryRepository.getCategoryById(category.id!);
+
+      // assert
+      expect(result, isA<Future<Category>>());
+      expect(result, equals(future));
+
+      verify(() => mockCategoryService.getCategoryById(any()));
       verifyNoMoreInteractions(mockCategoryService);
     });
 
@@ -42,7 +60,7 @@ void main() {
           .thenAnswer((_) => Future.value());
 
       // act
-      final result = categoryRepository.saveCategory(category);
+      final result = categoryRepository.saveCategory(initialCategory);
 
       // assert
       expect(result, isA<Future<void>>());

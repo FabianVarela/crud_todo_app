@@ -11,6 +11,7 @@ void main() {
   late MockFirestore mockFirestoreInstance;
   late MockCollectionReference mockCollectionReference;
   late MockDocumentReference mockDocumentReference;
+  late MockDocumentSnapshot mockDocumentSnapshot;
   late MockQuerySnapshot mockQuerySnapshot;
   late MockQueryDocumentSnapshot mockQueryDocumentSnapshot;
   late MockQuery mockQuery;
@@ -21,6 +22,7 @@ void main() {
     mockFirestoreInstance = MockFirestore();
     mockCollectionReference = MockCollectionReference();
     mockDocumentReference = MockDocumentReference();
+    mockDocumentSnapshot = MockDocumentSnapshot(category.id!);
     mockQuerySnapshot = MockQuerySnapshot();
     mockQueryDocumentSnapshot = MockQueryDocumentSnapshot(category.id!);
     mockQuery = MockQuery();
@@ -49,8 +51,34 @@ void main() {
 
       // assert
       expect(result, isA<Stream<List<Category>>>());
+      expect(finalResult, isA<List<Category>>());
       expect(finalResult, [category]);
       verify(() => mockFirestoreInstance.collection(any())).called(1);
+    });
+
+    test('Get $Category data by id from Firestore mock', () async {
+      // arrange
+      when(() => mockFirestoreInstance.collection(any()))
+          .thenReturn(mockCollectionReference);
+
+      when(() => mockCollectionReference.doc(any()))
+          .thenReturn(mockDocumentReference);
+
+      when(() => mockDocumentReference.get())
+          .thenAnswer((_) => Future.value(mockDocumentSnapshot));
+
+      when(() => mockDocumentSnapshot.toMap()).thenReturn(category.toJson());
+
+      // act
+      final result = categoryService.getCategoryById(category.id!);
+      final finalResult = await result;
+
+      // assert
+      expect(result, isA<Future<Category>>());
+      expect(finalResult, isA<Category>());
+      expect(finalResult, category);
+      verify(() => mockFirestoreInstance.collection(any()).doc(any()))
+          .called(1);
     });
 
     test('Save $Category from Firebase mock', () async {
