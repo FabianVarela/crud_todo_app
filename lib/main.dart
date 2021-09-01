@@ -1,3 +1,4 @@
+import 'package:crud_todo_app/navigator/crud_todo_information_parser.dart';
 import 'package:crud_todo_app/navigator/crud_todo_router_delegate.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -20,10 +21,11 @@ class TodoListApp extends StatefulWidget {
 
 class _TodoListAppState extends State<TodoListApp> {
   final _todoRouterDelegate = CrudTodoRouterDelegate();
+  final _todoInfoParser = CrudTodoInformationParser();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'To-Do List App',
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -31,10 +33,9 @@ class _TodoListAppState extends State<TodoListApp> {
           Theme.of(context).textTheme,
         ),
       ),
-      home: Router<dynamic>(
-        routerDelegate: _todoRouterDelegate,
-        backButtonDispatcher: RootBackButtonDispatcher(),
-      ),
+      routerDelegate: _todoRouterDelegate,
+      routeInformationParser: _todoInfoParser,
+      backButtonDispatcher: RootBackButtonDispatcher(),
     );
   }
 }
