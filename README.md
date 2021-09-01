@@ -4,8 +4,6 @@
 
 Create a To-do List Flutter app managing CRUD with Firebase, using RiverPod as state management and dependency injection.
 
-Actually the project has been implemented with **Navigator 2.0**.
-
 ### Getting Started (Firebase)
 * To execute the app, you have to Firebase Project already created.
 * Create an app in Firebase for Android iOS, Web and Desktop (Mac) with the existing project.
@@ -36,7 +34,15 @@ Actually the project has been implemented with **Navigator 2.0**.
         ├── finalDate (Number)
         ├── isCompleted (Boolean)
         ├── subject (String)
- 
+
+### Navigator 2.0
+
+Actually the project has been implemented with **Navigator 2.0** or **Route API**.
+
+#### Deep linking
+
+For using deep links with flutter without any packages, review this [link](https://flutter.dev/docs/development/ui/navigation/deep-linking)
+
 ### Used packages
 
 ------
