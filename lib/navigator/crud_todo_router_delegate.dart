@@ -1,11 +1,11 @@
-import 'package:crud_todo_app/model/category_model.dart';
-import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/navigator/crud_todo_pages.dart';
 import 'package:flutter/material.dart';
 
-class CrudTodoRouterDelegate extends RouterDelegate<dynamic>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin<dynamic> {
+class CrudTodoRouterDelegate extends RouterDelegate<Object>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<Object> {
   CrudTodoRouterDelegate() : _navigatorKey = GlobalKey<NavigatorState>();
+
+  final _heroController = HeroController();
 
   // Global Key
 
@@ -16,27 +16,27 @@ class CrudTodoRouterDelegate extends RouterDelegate<dynamic>
 
   // Current category selected
 
-  Category? _currentCategory;
+  String? _currentCategoryId;
 
-  Category? get currentCategory => _currentCategory;
+  String? get currentCategoryId => _currentCategoryId;
 
-  set currentCategory(Category? value) {
-    _currentCategory = value;
+  set currentCategoryId(String? value) {
+    _currentCategoryId = value;
     notifyListeners();
   }
 
   // Current To-Do selected by category
 
-  Todo? _currentTodo;
+  String? _currentTodoId;
 
-  Todo? get currentTodo => _currentTodo;
+  String? get currentTodoId => _currentTodoId;
 
   bool _isTodoSelected = false;
 
   bool get isTodoSelected => _isTodoSelected;
 
-  void selectCurrentTodo(Todo? value, bool isSelected) {
-    _currentTodo = value;
+  void selectCurrentTodo(String? value, bool isSelected) {
+    _currentTodoId = value;
     _isTodoSelected = isSelected;
 
     notifyListeners();
@@ -46,20 +46,21 @@ class CrudTodoRouterDelegate extends RouterDelegate<dynamic>
   Widget build(BuildContext context) {
     return Navigator(
       key: navigatorKey,
+      observers: [_heroController],
       pages: <Page<void>>[
-        CategoryPage(onGoToDetail: (category) => currentCategory = category),
-        if (currentCategory != null)
+        CategoryPage(onGoToDetail: (id) => currentCategoryId = id),
+        if (currentCategoryId != null)
           TodoPage(
-            category: currentCategory!,
-            onGoToTodo: (category, todo) => selectCurrentTodo(todo, true),
+            categoryId: currentCategoryId!,
+            onGoToTodo: (categoryId, todoId) => selectCurrentTodo(todoId, true),
           ),
-        if (currentCategory != null && isTodoSelected)
-          AddTodoPage(category: currentCategory!, currentTodo: currentTodo)
+        if (currentCategoryId != null && isTodoSelected)
+          FormTodoPage(categoryId: currentCategoryId!, todoId: currentTodoId)
       ],
       onPopPage: (route, dynamic result) {
         if (!route.didPop(result)) return false;
 
-        if (!isTodoSelected) currentCategory = null;
+        if (!isTodoSelected) currentCategoryId = null;
         selectCurrentTodo(null, false);
 
         return true;
@@ -68,5 +69,5 @@ class CrudTodoRouterDelegate extends RouterDelegate<dynamic>
   }
 
   @override
-  Future<void> setNewRoutePath(dynamic configuration) async {}
+  Future<void> setNewRoutePath(Object configuration) async {}
 }
