@@ -172,6 +172,52 @@ void main() {
       ]);
     });
 
+    testWidgets('Show $TodoListView screen with expired data', (tester) async {
+      when(() => mockTodoService.getTodosByCategory(any()))
+          .thenAnswer((_) => Stream.value([expiredTodo]));
+
+      await _pumpMainScreen(tester, TodoListView(categoryId: category.id!));
+
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      await tester.pump(const Duration(seconds: 1));
+
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+      expect(find.byType(ListView), findsOneWidget);
+
+      expect(tester.widgetList(find.byType(TodoItem)), [
+        isA<TodoItem>()
+            .having((w) => w.todo.id, 'id', todoId)
+            .having((w) => w.todo.categoryId, 'categoryId', categoryId)
+            .having((w) => w.todo.subject, 'subject', todoSubject)
+            .having((w) => w.todo.finalDate, 'finalDate', todoExpiredDate)
+            .having((w) => w.todo.isCompleted, 'isCompleted', false),
+      ]);
+    });
+
+    testWidgets(
+        'Show $TodoListView screen with a '
+        '$Todo item that has current date', (tester) async {
+      when(() => mockTodoService.getTodosByCategory(any()))
+          .thenAnswer((_) => Stream.value([todayTodo]));
+
+      await _pumpMainScreen(tester, TodoListView(categoryId: category.id!));
+
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      await tester.pump(const Duration(seconds: 1));
+
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+      expect(find.byType(ListView), findsOneWidget);
+
+      expect(tester.widgetList(find.byType(TodoItem)), [
+        isA<TodoItem>()
+            .having((w) => w.todo.id, 'id', todoId)
+            .having((w) => w.todo.categoryId, 'categoryId', categoryId)
+            .having((w) => w.todo.subject, 'subject', todoSubject)
+            .having((w) => w.todo.finalDate, 'finalDate', todoTodayDate)
+            .having((w) => w.todo.isCompleted, 'isCompleted', false),
+      ]);
+    });
+
     testWidgets(
         'Update $Todo model when check '
         'an existing $TodoItem widget', (tester) async {
