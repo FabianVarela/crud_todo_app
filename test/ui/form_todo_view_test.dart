@@ -171,23 +171,44 @@ void main() {
       await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
       await tester.pump();
 
+      await tester.tap(find.byType(DateTodo));
+      await tester.pump();
+
+      final findDatePicker = find.byType(DatePickerDialog);
+      expect(findDatePicker, findsOneWidget);
+
+      final finderNext = find.byWidgetPredicate((w) =>
+          w is IconButton && (w.tooltip?.startsWith('Next month') ?? false));
+
+      await tester.tap(finderNext);
+      await tester.pumpAndSettle(const Duration(seconds: 1));
+
+      await tester.tap(find.text('1'));
+      await tester.tap(find.text('OK'));
+
+      await tester.pumpAndSettle();
+      expect(findDatePicker, findsNothing);
+
+      final findTimePicker = find.byType(Dialog);
+      expect(findTimePicker, findsOneWidget);
+
+      final center = tester.getCenter(findTimePicker);
+      await tester.tapAt(Offset(center.dx, center.dy - 50.0)); // 12:00 AM
+
+      await tester.tap(find.text('OK'));
+      await tester.pumpAndSettle();
+      expect(findTimePicker, findsNothing);
+
       expect(viewModel.debugState, isA<TodoStateInitial>());
+      await tester.tap(find.byType(SubmitTodo));
 
-      // TODO: Temp to fix
-      final button =
-          find.byType(SubmitTodo).evaluate().single.widget as SubmitTodo;
-      expect(button.enabled, false);
+      expect(viewModel.debugState, isA<TodoStateLoading>());
+      await tester.pumpAndSettle(const Duration(seconds: 1));
 
-      // await tester.tap(find.byType(SubmitTodo));
-      //
-      // verify(() => mockTodoService.saveTodo(any())).called(1);
-      //
-      // expect(viewModel.debugState, isA<TodoStateLoading>());
-      // await tester.pump(const Duration(seconds: 1));
-      //
-      // await tester.pumpAndSettle();
-      //
-      // expect(viewModel.debugState, isA<TodoStateSuccess>());
+      verify(() => mockTodoService.saveTodo(any())).called(1);
+      await tester.pumpAndSettle();
+
+      expect(viewModel.debugState, isA<TodoStateSuccess>());
       // verify(() => mockNavigator.didPop(any(), any())).called(1);
     });
 
@@ -225,7 +246,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(viewModel.debugState, isA<TodoStateSuccess>());
-      verify(() => mockNavigator.didPop(any(), any())).called(1);
+      // verify(() => mockNavigator.didPop(any(), any())).called(1);
     });
 
     testWidgets(
