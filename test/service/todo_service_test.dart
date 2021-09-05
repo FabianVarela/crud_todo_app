@@ -120,7 +120,7 @@ void main() {
           .thenAnswer((_) => Future.value());
 
       // act
-      final result = todoService.saveTodo(existingTodo);
+      final result = todoService.saveTodo(existingTodo.copyWith());
 
       // assert
       expect(result, isA<Future<void>>());
