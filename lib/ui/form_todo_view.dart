@@ -169,9 +169,9 @@ class DateTodo extends HookConsumerWidget {
   }
 
   Future<void> _dateAndroid(
-      BuildContext ctx, StateController<DateTime> date) async {
+      BuildContext context, StateController<DateTime> date) async {
     final pickedDate = await showDatePicker(
-      context: ctx,
+      context: context,
       initialDate: date.state.isDurationNegative
           ? DateTime.now().add(const Duration(minutes: 2))
           : date.state.add(const Duration(minutes: 2)),
@@ -188,7 +188,7 @@ class DateTodo extends HookConsumerWidget {
 
     if (pickedDate != null) {
       final pickedTime = await showTimePicker(
-        context: ctx,
+        context: context,
         initialTime: TimeOfDay.fromDateTime(date.state),
       );
 
@@ -199,16 +199,16 @@ class DateTodo extends HookConsumerWidget {
     }
   }
 
-  void _dateIOS(BuildContext ctx, StateController<DateTime> date) {
+  void _dateIOS(BuildContext context, StateController<DateTime> date) {
     showModalBottomSheet<void>(
-      context: ctx,
+      context: context,
       builder: (_) {
         return Container(
-          height: MediaQuery.of(ctx).size.height / 3,
-          width: MediaQuery.of(ctx).size.width,
+          height: MediaQuery.of(context).size.height / 3,
+          width: MediaQuery.of(context).size.width,
           color: Colors.white,
           child: cupertino.SizedBox(
-            height: MediaQuery.of(ctx).size.height / 4.5,
+            height: MediaQuery.of(context).size.height / 4.5,
             child: cupertino.DefaultTextStyle(
               style: const TextStyle(fontSize: 22),
               child: cupertino.CupertinoDatePicker(
@@ -217,8 +217,7 @@ class DateTodo extends HookConsumerWidget {
                     : date.state.add(const Duration(minutes: 2)),
                 minimumDate: DateTime.now(),
                 maximumDate: DateTime.now().add(const Duration(days: 365)),
-                onDateTimeChanged: (DateTime pickedDate) =>
-                    date.state = pickedDate,
+                onDateTimeChanged: (pickedDate) => date.state = pickedDate,
               ),
             ),
           ),
