@@ -6,6 +6,8 @@ import 'package:crud_todo_app/ui/form_todo_view.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -200,7 +202,12 @@ void main() {
       expect(findTimePicker, findsNothing);
 
       expect(viewModel.debugState, isA<TodoStateInitial>());
-      await tester.tap(find.byType(SubmitTodo));
+
+      final todoSubmit = find.byType(SubmitTodo);
+      final button = tester.widget<SubmitTodo>(todoSubmit);
+
+      expect(button.enabled, true);
+      await tester.tap(todoSubmit);
 
       expect(viewModel.debugState, isA<TodoStateLoading>());
       await tester.pumpAndSettle(const Duration(seconds: 1));
@@ -210,6 +217,42 @@ void main() {
 
       expect(viewModel.debugState, isA<TodoStateSuccess>());
       // verify(() => mockNavigator.didPop(any(), any())).called(1);
+    });
+
+    testWidgets('Show $CupertinoDatePicker in $FormTodoView', (tester) async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+
+      when(() => mockCategoryService.getCategoryById(any()))
+          .thenAnswer((invocation) => Future.value(category));
+
+      when(() => mockTodoService.getTodoById(any()))
+          .thenAnswer((_) => Future.value(existingTodo));
+
+      await _pumpMainScreen(tester, Consumer(builder: (_, __, child) {
+        return FormTodoView(categoryId: category.id!);
+      }));
+
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      await tester.pump(const Duration(seconds: 1));
+
+      await tester.tap(find.byType(DateTodo));
+      await tester.pumpAndSettle();
+
+      final findDatePicker = find.byType(CupertinoDatePicker);
+      expect(findDatePicker, findsOneWidget);
+
+      await tester.drag(find.text('Today'), const Offset(0, -128),
+          touchSlopY: 0, warnIfMissed: false);
+
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+
+      await tester.tapAt(const Offset(20, 20));
+
+      await tester.pumpAndSettle();
+      expect(findDatePicker, findsNothing);
+
+      debugDefaultTargetPlatformOverride = null;
     });
 
     testWidgets('Update a $Todo model from $FormTodoView', (tester) async {
