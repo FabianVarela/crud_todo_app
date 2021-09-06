@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 class CrudTodoPath {
   static const pathCategory = 'categories';
   static const pathTodo = 'todo';
-  static const pathTodoNew = 'new';
-  static const pathTodoUpdate = 'update';
   static const pathUnknown = '404';
 }
 
