@@ -17,7 +17,7 @@ class CategoryListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final categoriesDataStream = ref.watch(categoriesDataProvider);
+    final categoriesDataStream = ref.watch(categoriesProvider);
 
     ref.listen(
       categoryViewModelProvider,
@@ -57,13 +57,16 @@ class CategoryListView extends ConsumerWidget {
                         style: TextStyle(fontSize: 25),
                       ),
                     ),
-              loading: () => const Center(child: CircularProgressIndicator()),
+              loading: () => const Center(
+                child: CircularProgressIndicator(),
+              ),
               error: (e, s) => Center(
                 child: Text(
                   e.toString(),
+                  textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 20),
                 ),
-              ),
+              ).paddingSymmetric(h: 16),
             ),
           ),
         ],

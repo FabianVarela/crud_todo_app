@@ -1,3 +1,4 @@
+import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:crud_todo_app/common/extension.dart';
@@ -20,7 +21,9 @@ class FormTodoView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final todoData = ref.watch(todoDataProvider(todoId));
+    final categoryData = ref.watch(categoryProvider(categoryId));
+    final todoData = ref.watch(todoProvider('$categoryId,${todoId ?? ''}'));
+
     final isValid = ref.watch(validationTodoProvider).state;
 
     ref.listen(
@@ -30,51 +33,61 @@ class FormTodoView extends HookConsumerWidget {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: _appBar(context),
-      body: todoData.when(
-        data: (todo) => SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              SubjectTodo(todo: todo).paddingSymmetric(h: 30, v: 30),
-              DateTodo(todo: todo).paddingSymmetric(h: 30, v: 20),
-              CategoryTodo(categoryId: categoryId)
-                  .paddingSymmetric(h: 30, v: 20),
-              SubmitTodo(
-                catId: categoryId,
-                todoId: todo?.id,
-                enabled: isValid,
-              ),
-            ],
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        title: Text(
+          todoId == null ? 'New Task' : 'Update Task',
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w400,
+            color: Colors.black,
           ),
-        ).paddingSymmetric(v: 20),
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.close, color: Colors.black),
+            onPressed: () => Navigator.pop(context),
+          )
+        ],
+      ),
+      body: categoryData.when(
+        data: (category) => todoData.when(
+          data: (todo) => SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: Column(
+              children: <Widget>[
+                SubjectTodo(todo: todo).paddingSymmetric(h: 30, v: 30),
+                DateTodo(todo: todo).paddingSymmetric(h: 30, v: 20),
+                CategoryTodo(category: category).paddingSymmetric(h: 30, v: 20),
+                SubmitTodo(
+                  categoryId: categoryId,
+                  todoId: todo?.id,
+                  enabled: isValid,
+                ),
+              ],
+            ),
+          ),
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (e, _) => Center(
+            child: Text(
+              e.toString(),
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 20),
+            ),
+          ),
+        ),
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, s) => Center(
-          child: Text(e.toString(), style: const TextStyle(fontSize: 20)),
+        error: (e, _) => Center(
+          child: Text(
+            e.toString(),
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 20),
+          ),
         ),
       ),
-    );
-  }
-
-  PreferredSizeWidget _appBar(BuildContext context) {
-    return AppBar(
-      elevation: 0,
-      centerTitle: true,
-      automaticallyImplyLeading: false,
-      backgroundColor: Colors.transparent,
-      title: Text(
-        todoId == null ? 'New Task' : 'Update Task',
-        style: const TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w400,
-          color: Colors.black,
-        ),
-      ),
-      actions: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.close, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        )
-      ],
     );
   }
 
@@ -227,40 +240,38 @@ class DateTodo extends HookConsumerWidget {
   }
 }
 
-class CategoryTodo extends HookConsumerWidget {
-  const CategoryTodo({cupertino.Key? key, required this.categoryId})
+class CategoryTodo extends StatelessWidget {
+  const CategoryTodo({cupertino.Key? key, required this.category})
       : super(key: key);
 
-  final String categoryId;
+  final Category category;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final categoryData = ref.watch(categoryDataProvider(categoryId));
-
-    return categoryData.when(
-      data: (category) => Row(
-        children: <Widget>[
-          const Icon(Icons.local_offer_outlined, color: Color(0xFF77C783))
-              .paddingOnly(r: 12),
-          Expanded(
-            child: Row(
-              children: <Widget>[
-                Text(category.emoji.code, style: const TextStyle(fontSize: 16))
-                    .paddingOnly(b: 5, r: 5),
-                Text(
-                  category.name,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                  ),
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        const Icon(
+          Icons.local_offer_outlined,
+          color: Color(0xFF77C783),
+        ).paddingOnly(r: 12),
+        Expanded(
+          child: Row(
+            children: <Widget>[
+              Text(
+                category.emoji.code,
+                style: const TextStyle(fontSize: 16),
+              ).paddingOnly(b: 5, r: 5),
+              Text(
+                category.name,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
-      loading: () => const Offstage(),
-      error: (e, s) => Text(e.toString(), style: const TextStyle(fontSize: 16)),
+        ),
+      ],
     );
   }
 }
@@ -268,12 +279,12 @@ class CategoryTodo extends HookConsumerWidget {
 class SubmitTodo extends HookConsumerWidget {
   const SubmitTodo({
     Key? key,
-    required this.catId,
+    required this.categoryId,
     this.todoId,
     this.enabled = false,
   }) : super(key: key);
 
-  final String catId;
+  final String categoryId;
   final String? todoId;
   final bool enabled;
 
@@ -283,7 +294,8 @@ class SubmitTodo extends HookConsumerWidget {
 
     return ElevatedButton(
       style: ElevatedButton.styleFrom(primary: const Color(0xFF4A78FA)),
-      onPressed: enabled ? () => todoViewModel.saveTodo(catId, todoId) : null,
+      onPressed:
+          enabled ? () => todoViewModel.saveTodo(categoryId, todoId) : null,
       child: Container(
         width: double.infinity,
         alignment: Alignment.center,

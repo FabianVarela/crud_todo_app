@@ -52,17 +52,29 @@ void main() {
       ));
     }
 
-    testWidgets('Show $FormTodoView screen', (tester) async {
-      when(() => mockTodoService.getTodoById(any()))
+    Future<void> _showHideProgress(WidgetTester tester) async {
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      await tester.pump(const Duration(seconds: 1));
+
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+      await tester.pump(const Duration(seconds: 1));
+    }
+
+    void _setWhenWithGetData() {
+      when(() => mockCategoryService.getCategoryById(any()))
+          .thenAnswer((invocation) => Future.value(category));
+      when(() => mockTodoService.getTodoById(any(), any()))
           .thenAnswer((_) => Future.value(existingTodo));
+    }
+
+    testWidgets('Show $FormTodoView screen', (tester) async {
+      _setWhenWithGetData();
 
       await _pumpMainScreen(
         tester,
         FormTodoView(categoryId: category.id!, todoId: existingTodo.id),
       );
-
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      await tester.pump(const Duration(seconds: 1));
+      await _showHideProgress(tester);
 
       expect(find.text('Update Task'), findsOneWidget);
       expect(find.byIcon(Icons.close), findsOneWidget);
@@ -87,16 +99,13 @@ void main() {
     });
 
     testWidgets('Show $DatePickerDialog when tap $DateTodo', (tester) async {
-      when(() => mockTodoService.getTodoById(any()))
-          .thenAnswer((_) => Future.value(existingTodo));
+      _setWhenWithGetData();
 
       await _pumpMainScreen(
         tester,
         FormTodoView(categoryId: category.id!, todoId: existingTodo.id),
       );
-
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      await tester.pump(const Duration(seconds: 1));
+      await _showHideProgress(tester);
 
       await tester.tap(find.byType(DateTodo));
       await tester.pump();
@@ -107,16 +116,13 @@ void main() {
     testWidgets(
         '$FormTodoView show $SubmitTodo disabled when '
         '$SubjectTodo or $DateTodo widgets are empty', (tester) async {
-      when(() => mockTodoService.getTodoById(any()))
-          .thenAnswer((_) => Future.value(existingTodo));
+      _setWhenWithGetData();
 
       await _pumpMainScreen(
         tester,
         FormTodoView(categoryId: category.id!, todoId: existingTodo.id),
       );
-
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      await tester.pump(const Duration(seconds: 1));
+      await _showHideProgress(tester);
 
       final foundSubmitButton = find.byType(SubmitTodo);
 
@@ -130,16 +136,13 @@ void main() {
     testWidgets(
         '$FormTodoView show $SubmitTodo enabled when '
         '$SubjectTodo or $DateTodo widgets are not empty', (tester) async {
-      when(() => mockTodoService.getTodoById(any()))
-          .thenAnswer((_) => Future.value(existingTodo));
+      _setWhenWithGetData();
 
       await _pumpMainScreen(
         tester,
         FormTodoView(categoryId: category.id!, todoId: existingTodo.id),
       );
-
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      await tester.pump(const Duration(seconds: 1));
+      await _showHideProgress(tester);
 
       final foundSubmitButton = find.byType(SubmitTodo);
 
@@ -153,12 +156,7 @@ void main() {
     testWidgets('Add a $Todo model from $FormTodoView', (tester) async {
       late final ITodoViewModel viewModel;
 
-      when(() => mockCategoryService.getCategoryById(any()))
-          .thenAnswer((invocation) => Future.value(category));
-
-      when(() => mockTodoService.getTodoById(any()))
-          .thenAnswer((_) => Future.value(existingTodo));
-
+      _setWhenWithGetData();
       when(() => mockTodoService.saveTodo(any()))
           .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
@@ -166,9 +164,7 @@ void main() {
         viewModel = ref.read(todoViewModelProvider.notifier);
         return FormTodoView(categoryId: category.id!);
       }));
-
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      await tester.pump(const Duration(seconds: 1));
+      await _showHideProgress(tester);
 
       await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
       await tester.pump();
@@ -222,18 +218,12 @@ void main() {
     testWidgets('Show $CupertinoDatePicker in $FormTodoView', (tester) async {
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
 
-      when(() => mockCategoryService.getCategoryById(any()))
-          .thenAnswer((invocation) => Future.value(category));
-
-      when(() => mockTodoService.getTodoById(any()))
-          .thenAnswer((_) => Future.value(existingTodo));
+      _setWhenWithGetData();
 
       await _pumpMainScreen(tester, Consumer(builder: (_, __, child) {
         return FormTodoView(categoryId: category.id!);
       }));
-
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      await tester.pump(const Duration(seconds: 1));
+      await _showHideProgress(tester);
 
       await tester.tap(find.byType(DateTodo));
       await tester.pumpAndSettle();
@@ -258,12 +248,7 @@ void main() {
     testWidgets('Update a $Todo model from $FormTodoView', (tester) async {
       late final ITodoViewModel viewModel;
 
-      when(() => mockCategoryService.getCategoryById(any()))
-          .thenAnswer((invocation) => Future.value(category));
-
-      when(() => mockTodoService.getTodoById(any()))
-          .thenAnswer((_) => Future.value(existingTodo));
-
+      _setWhenWithGetData();
       when(() => mockTodoService.saveTodo(any()))
           .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
@@ -271,9 +256,7 @@ void main() {
         viewModel = ref.read(todoViewModelProvider.notifier);
         return FormTodoView(categoryId: category.id!, todoId: existingTodo.id);
       }));
-
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      await tester.pump(const Duration(seconds: 1));
+      await _showHideProgress(tester);
 
       await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
       await tester.pumpAndSettle();
@@ -297,21 +280,14 @@ void main() {
         'model set an $Exception', (tester) async {
       late final ITodoViewModel viewModel;
 
-      when(() => mockCategoryService.getCategoryById(any()))
-          .thenAnswer((invocation) => Future.value(category));
-
-      when(() => mockTodoService.getTodoById(any()))
-          .thenAnswer((_) => Future.value(existingTodo));
-
+      _setWhenWithGetData();
       when(() => mockTodoService.saveTodo(any())).thenThrow(Exception('Error'));
 
       await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
         viewModel = ref.read(todoViewModelProvider.notifier);
         return FormTodoView(categoryId: category.id!, todoId: existingTodo.id);
       }));
-
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      await tester.pump(const Duration(seconds: 1));
+      await _showHideProgress(tester);
 
       await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
       await tester.pumpAndSettle();

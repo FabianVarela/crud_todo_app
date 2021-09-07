@@ -43,16 +43,17 @@ void main() {
         'when getTodoById is called', () async {
       // arrange
       final future = Future.value(existingTodo);
-      when(() => mockTodoService.getTodoById(any())).thenAnswer((_) => future);
+      when(() => mockTodoService.getTodoById(any(), any()))
+          .thenAnswer((_) => future);
 
       // act
-      final result = todoRepository.getTodoById(existingTodo.id!);
+      final result = todoRepository.getTodoById(categoryId, existingTodo.id!);
 
       // assert
       expect(result, isA<Future<Todo>>());
       expect(result, future);
 
-      verify(() => mockTodoService.getTodoById(any()));
+      verify(() => mockTodoService.getTodoById(any(), any()));
       verifyNoMoreInteractions(mockTodoService);
     });
 

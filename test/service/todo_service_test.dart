@@ -71,16 +71,44 @@ void main() {
       when(() => mockDocumentReference.get())
           .thenAnswer((_) => Future.value(mockDocumentSnapshot));
 
+      when(() => mockDocumentSnapshot.exists).thenReturn(true);
+
       when(() => mockDocumentSnapshot.toMap())
           .thenReturn(existingTodo.toJson());
 
       // act
-      final result = todoService.getTodoById(existingTodo.id!);
+      final result = todoService.getTodoById(categoryId, existingTodo.id!);
       final finalResult = await result;
 
       // assert
       expect(result, isA<Future<Todo>>());
       expect(finalResult, isA<Todo>());
+      verify(() => mockFirestoreInstance.collection(any()).doc(any()))
+          .called(1);
+    });
+
+    test("Get $Exception if todo by id doesn't exists", () async {
+      // arrange
+      when(() => mockFirestoreInstance.collection(any()))
+          .thenReturn(mockCollectionReference);
+
+      when(() => mockCollectionReference.doc(any()))
+          .thenReturn(mockDocumentReference);
+
+      when(() => mockDocumentReference.get())
+          .thenAnswer((_) => Future.value(mockDocumentSnapshot));
+
+      when(() => mockDocumentSnapshot.exists).thenReturn(false);
+
+      when(() => mockDocumentSnapshot.toMap()).thenThrow(
+        Exception('Oops!!! Todo not found'),
+      );
+
+      // act
+      final result = todoService.getTodoById(categoryId, existingTodo.id!);
+
+      // assert
+      expect(result, throwsA(isA<Exception>()));
       verify(() => mockFirestoreInstance.collection(any()).doc(any()))
           .called(1);
     });

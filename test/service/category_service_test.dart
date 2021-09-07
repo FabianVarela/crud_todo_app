@@ -67,6 +67,8 @@ void main() {
       when(() => mockDocumentReference.get())
           .thenAnswer((_) => Future.value(mockDocumentSnapshot));
 
+      when(() => mockDocumentSnapshot.exists).thenReturn(true);
+
       when(() => mockDocumentSnapshot.toMap()).thenReturn(category.toJson());
 
       // act
@@ -77,6 +79,32 @@ void main() {
       expect(result, isA<Future<Category>>());
       expect(finalResult, isA<Category>());
       expect(finalResult, category);
+      verify(() => mockFirestoreInstance.collection(any()).doc(any()))
+          .called(1);
+    });
+
+    test("Get $Exception if category by id doesn't exists", () async {
+      // arrange
+      when(() => mockFirestoreInstance.collection(any()))
+          .thenReturn(mockCollectionReference);
+
+      when(() => mockCollectionReference.doc(any()))
+          .thenReturn(mockDocumentReference);
+
+      when(() => mockDocumentReference.get())
+          .thenAnswer((_) => Future.value(mockDocumentSnapshot));
+
+      when(() => mockDocumentSnapshot.exists).thenReturn(false);
+
+      when(() => mockDocumentSnapshot.toMap()).thenThrow(
+        Exception('Oops!!! Category not found'),
+      );
+
+      // act
+      final result = categoryService.getCategoryById(category.id!);
+
+      // assert
+      expect(result, throwsA(isA<Exception>()));
       verify(() => mockFirestoreInstance.collection(any()).doc(any()))
           .called(1);
     });
