@@ -1,6 +1,5 @@
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
-import 'package:crud_todo_app/ui/form_todo_view.dart';
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
@@ -133,7 +132,7 @@ class TodoListView extends HookConsumerWidget {
                             ? TodoList(
                                 todoList: todos,
                                 onEditItem: (todo) =>
-                                    _goToTodo(context, todo: todo),
+                                    onGoToTodo(categoryId, todo.id),
                               ).paddingSymmetric(h: 24, v: 20)
                             : const Center(
                                 child: Text(
@@ -175,18 +174,10 @@ class TodoListView extends HookConsumerWidget {
       floatingActionButton: dataCategory != null
           ? FloatingActionButton(
               backgroundColor: const Color(0xFF4A78FA),
-              onPressed: () => _goToTodo(context),
+              onPressed: () => onGoToTodo(categoryId, null),
               child: const Icon(Icons.add),
             )
           : null,
-    );
-  }
-
-  Future<void> _goToTodo(BuildContext context, {Todo? todo}) async {
-    await Navigator.of(context).push<void>(
-      MaterialPageRoute(
-        builder: (_) => FormTodoView(categoryId: categoryId, todoId: todo?.id),
-      ),
     );
   }
 
