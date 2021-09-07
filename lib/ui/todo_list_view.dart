@@ -16,9 +16,20 @@ class TodoListView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final categoryData = ref.watch(categoryDataProvider(categoryId));
-    final todoStream = ref.watch(todosDataProvider(categoryId));
+    final categoryData = ref.watch(categoryProvider(categoryId));
+    final todoStream = ref.watch(todosProvider(categoryId));
+
     final categoryViewModel = ref.watch(categoryViewModelProvider.notifier);
+
+    final dataCategory = categoryData.maybeWhen(
+      data: (data) => data,
+      orElse: () => null,
+    );
+
+    final errorCategory = categoryData.maybeWhen(
+      error: (e, _) => e.toString(),
+      orElse: () => null,
+    );
 
     ref.listen(
       todoViewModelProvider,
@@ -31,122 +42,136 @@ class TodoListView extends HookConsumerWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: Colors.white,
-          ),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.delete_forever),
-            onPressed: () {
-              categoryViewModel.deleteCategory(categoryId);
-              Navigator.pop(context);
-            },
-          ),
-        ],
+        actions: dataCategory != null
+            ? <Widget>[
+                IconButton(
+                  icon: const Icon(Icons.delete_forever),
+                  onPressed: () {
+                    categoryViewModel.deleteCategory(categoryId);
+                    Navigator.pop(context);
+                  },
+                ),
+              ]
+            : null,
       ),
-      body: categoryData.when(
-        data: (category) => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Container(
-                    height: 60,
-                    width: 60,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    child: Hero(
-                      tag: '${categoryId}_${category.emoji.name}',
-                      child: Material(
-                        color: Colors.transparent,
-                        child: Text(
-                          category.emoji.code,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 30),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Column(
+      body: dataCategory != null
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Text(
-                        category.name,
-                        style: const TextStyle(
-                          fontSize: 35,
-                          fontWeight: FontWeight.w700,
+                      Container(
+                        height: 60,
+                        width: 60,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
                           color: Colors.white,
+                          borderRadius: BorderRadius.circular(30),
                         ),
-                      ).paddingOnly(b: 5),
-                      Text(
-                        '${category.todoSize} Tasks',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ).paddingOnly(l: 35),
-            ),
-            Expanded(
-              flex: 2,
-              child: todoStream.when(
-                data: (todos) {
-                  return Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
-                      ),
-                    ),
-                    child: todos.isNotEmpty
-                        ? TodoList(
-                            todoList: todos,
-                            onEditItem: (todo) =>
-                                _goToTodo(context, todo: todo),
-                          ).paddingSymmetric(h: 24, v: 20)
-                        : const Center(
+                        child: Hero(
+                          tag: '${categoryId}_${dataCategory.emoji.name}',
+                          child: Material(
+                            color: Colors.transparent,
                             child: Text(
-                              'Empty data, add a task',
-                              style: TextStyle(fontSize: 25),
+                              dataCategory.emoji.code,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(fontSize: 30),
                             ),
                           ),
-                  );
-                },
-                loading: () => const Center(child: CircularProgressIndicator()),
-                error: (e, s) => Center(
-                  child: Text(
-                    e.toString(),
-                    style: const TextStyle(fontSize: 20),
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            dataCategory.name,
+                            style: const TextStyle(
+                              fontSize: 35,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          ).paddingOnly(b: 5),
+                          Text(
+                            '${dataCategory.todoSize} Tasks',
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ).paddingOnly(l: 35),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: todoStream.when(
+                    data: (todos) {
+                      return Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30),
+                          ),
+                        ),
+                        child: todos.isNotEmpty
+                            ? TodoList(
+                                todoList: todos,
+                                onEditItem: (todo) =>
+                                    _goToTodo(context, todo: todo),
+                              ).paddingSymmetric(h: 24, v: 20)
+                            : const Center(
+                                child: Text(
+                                  'Empty data, add a task',
+                                  style: TextStyle(fontSize: 25),
+                                ),
+                              ),
+                      );
+                    },
+                    loading: () => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    error: (e, _) => Center(
+                      child: Text(
+                        e.toString(),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ],
-        ),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, s) => Center(
-          child: Text(e.toString(), style: const TextStyle(fontSize: 20)),
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFF4A78FA),
-        onPressed: () => _goToTodo(context),
-        child: const Icon(Icons.add),
-      ),
+              ],
+            )
+          : errorCategory != null
+              ? Center(
+                  child: Text(
+                    errorCategory,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                )
+              : const Center(
+                  child: CircularProgressIndicator(
+                  color: Colors.white,
+                )),
+      floatingActionButton: dataCategory != null
+          ? FloatingActionButton(
+              backgroundColor: const Color(0xFF4A78FA),
+              onPressed: () => _goToTodo(context),
+              child: const Icon(Icons.add),
+            )
+          : null,
     );
   }
 
