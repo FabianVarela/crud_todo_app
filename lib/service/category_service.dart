@@ -21,7 +21,11 @@ class CategoryService {
     final categoryCollection = _database.collection(_categoryCollection);
     final categoryDocument = await categoryCollection.doc(categoryId).get();
 
-    return Category.fromJson(categoryDocument.toMap());
+    if (categoryDocument.exists) {
+      return Category.fromJson(categoryDocument.toMap());
+    }
+
+    throw Exception('Oops!!! Category not found');
   }
 
   Future<void> saveCategory(Category category) async => category.id != null
