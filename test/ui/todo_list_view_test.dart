@@ -56,8 +56,51 @@ void main() {
       ));
     }
 
+    Future<void> _showHideProgress(WidgetTester tester) async {
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+      await tester.pump(const Duration(seconds: 1));
+
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+      await tester.pump(const Duration(seconds: 1));
+    }
+
+    void _setWhenMethodsToGetData({
+      bool isEmptyTodo = false,
+      bool isExistsTodo = false,
+      bool isExpiredTodo = false,
+      bool isTodayTodo = false,
+    }) {
+      when(() => mockCategoryService.getCategoryById(any()))
+          .thenAnswer((_) => Future.value(category));
+
+      if (isEmptyTodo) {
+        when(() => mockTodoService.getTodosByCategory(any()))
+            .thenAnswer((_) => Stream.value([]));
+      }
+
+      if (isExistsTodo) {
+        when(() => mockTodoService.getTodosByCategory(any()))
+            .thenAnswer((_) => Stream.value([existingTodo]));
+      }
+
+      if (isExpiredTodo) {
+        when(() => mockTodoService.getTodosByCategory(any()))
+            .thenAnswer((_) => Stream.value([expiredTodo]));
+      }
+
+      if (isTodayTodo) {
+        when(() => mockTodoService.getTodosByCategory(any()))
+            .thenAnswer((_) => Stream.value([todayTodo]));
+      }
+    }
+
+
+
     testWidgets('Show $TodoListView screen', (tester) async {
+      _setWhenMethodsToGetData(isEmptyTodo: true);
+
       await _pumpMainScreen(tester, TodoListView(categoryId: category.id!));
+      await _showHideProgress(tester);
 
       expect(find.byIcon(Icons.arrow_back_ios), findsOneWidget);
       expect(find.byIcon(Icons.delete_forever), findsOneWidget);
@@ -65,7 +108,10 @@ void main() {
     });
 
     testWidgets('Redirect to $FormTodoView screen', (tester) async {
+      _setWhenMethodsToGetData(isEmptyTodo: true);
+
       await _pumpMainScreen(tester, TodoListView(categoryId: category.id!));
+      await _showHideProgress(tester);
 
       await tester.tap(find.byType(FloatingActionButton));
       await tester.pumpAndSettle();
@@ -90,15 +136,15 @@ void main() {
         'and return to $CategoryListView screen', (tester) async {
       late final ICategoryViewModel viewModel;
 
+      _setWhenMethodsToGetData(isEmptyTodo: true);
       when(() => mockCategoryService.deleteCategory(any()))
           .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
-      final mainScreenConsumer = Consumer(builder: (_, ref, child) {
+      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
         viewModel = ref.read(categoryViewModelProvider.notifier);
         return TodoListView(categoryId: category.id!);
-      });
-
-      await _pumpMainScreen(tester, mainScreenConsumer);
+      }));
+      await _showHideProgress(tester);
 
       expect(viewModel.debugState, isA<CategoryStateInitial>());
       await tester.tap(find.byIcon(Icons.delete_forever));
@@ -118,15 +164,15 @@ void main() {
     testWidgets('When remove $Category model set $Exception', (tester) async {
       late final ICategoryViewModel viewModel;
 
+      _setWhenMethodsToGetData(isEmptyTodo: true);
       when(() => mockCategoryService.deleteCategory(any()))
           .thenThrow(Exception('Error'));
 
-      final mainScreenConsumer = Consumer(builder: (_, ref, child) {
+      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
         viewModel = ref.read(categoryViewModelProvider.notifier);
         return TodoListView(categoryId: category.id!);
-      });
-
-      await _pumpMainScreen(tester, mainScreenConsumer);
+      }));
+      await _showHideProgress(tester);
 
       expect(viewModel.debugState, isA<CategoryStateInitial>());
       await tester.tap(find.byIcon(Icons.delete_forever));
@@ -136,30 +182,20 @@ void main() {
     });
 
     testWidgets('Show $TodoListView screen with empty data', (tester) async {
-      when(() => mockCategoryService.getCategoryById(any()))
-          .thenAnswer((_) => Future.value(category));
-      when(() => mockTodoService.getTodosByCategory(any()))
-          .thenAnswer((_) => Stream.value([]));
+      _setWhenMethodsToGetData(isEmptyTodo: true);
 
       await _pumpMainScreen(tester, TodoListView(categoryId: category.id!));
+      await _showHideProgress(tester);
 
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      await tester.pump(const Duration(seconds: 1));
-
-      expect(find.byType(CircularProgressIndicator), findsNothing);
       expect(find.text('Empty data, add a task'), findsOneWidget);
     });
 
     testWidgets('Show $TodoListView screen with data', (tester) async {
-      when(() => mockTodoService.getTodosByCategory(any()))
-          .thenAnswer((_) => Stream.value([existingTodo]));
+      _setWhenMethodsToGetData(isExistsTodo: true);
 
       await _pumpMainScreen(tester, TodoListView(categoryId: category.id!));
+      await _showHideProgress(tester);
 
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      await tester.pump(const Duration(seconds: 1));
-
-      expect(find.byType(CircularProgressIndicator), findsNothing);
       expect(find.byType(ListView), findsOneWidget);
 
       expect(tester.widgetList(find.byType(TodoItem)), [
@@ -173,15 +209,11 @@ void main() {
     });
 
     testWidgets('Show $TodoListView screen with expired data', (tester) async {
-      when(() => mockTodoService.getTodosByCategory(any()))
-          .thenAnswer((_) => Stream.value([expiredTodo]));
+      _setWhenMethodsToGetData(isExpiredTodo: true);
 
       await _pumpMainScreen(tester, TodoListView(categoryId: category.id!));
+      await _showHideProgress(tester);
 
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      await tester.pump(const Duration(seconds: 1));
-
-      expect(find.byType(CircularProgressIndicator), findsNothing);
       expect(find.byType(ListView), findsOneWidget);
 
       expect(tester.widgetList(find.byType(TodoItem)), [
@@ -197,15 +229,11 @@ void main() {
     testWidgets(
         'Show $TodoListView screen with a '
         '$Todo item that has current date', (tester) async {
-      when(() => mockTodoService.getTodosByCategory(any()))
-          .thenAnswer((_) => Stream.value([todayTodo]));
+      _setWhenMethodsToGetData(isTodayTodo: true);
 
       await _pumpMainScreen(tester, TodoListView(categoryId: category.id!));
+      await _showHideProgress(tester);
 
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      await tester.pump(const Duration(seconds: 1));
-
-      expect(find.byType(CircularProgressIndicator), findsNothing);
       expect(find.byType(ListView), findsOneWidget);
 
       expect(tester.widgetList(find.byType(TodoItem)), [
@@ -223,19 +251,16 @@ void main() {
         'an existing $TodoItem widget', (tester) async {
       late final ITodoViewModel viewModel;
 
-      when(() => mockTodoService.getTodosByCategory(any()))
-          .thenAnswer((_) => Stream.value([existingTodo]));
-
+      _setWhenMethodsToGetData(isExistsTodo: true);
       when(() => mockTodoService.saveTodo(any())).thenAnswer((_) {
         return Future<void>.delayed(const Duration(milliseconds: 100));
       });
 
-      final mainScreenConsumer = Consumer(builder: (_, ref, child) {
+      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
         viewModel = ref.read(todoViewModelProvider.notifier);
         return TodoListView(categoryId: category.id!);
-      });
-
-      await _pumpMainScreen(tester, mainScreenConsumer);
+      }));
+      await _showHideProgress(tester);
       await tester.pumpAndSettle();
 
       final foundItemList = find.descendant(
@@ -265,9 +290,7 @@ void main() {
     testWidgets('When update a $Todo model set an $Exception', (tester) async {
       late ITodoViewModel viewModel;
 
-      when(() => mockTodoService.getTodosByCategory(any()))
-          .thenAnswer((_) => Stream.value([existingTodo]));
-
+      _setWhenMethodsToGetData(isExistsTodo: true);
       when(() => mockTodoService.saveTodo(any())).thenAnswer((_) {
         return Future<void>.delayed(
           const Duration(milliseconds: 100),
@@ -275,12 +298,11 @@ void main() {
         );
       });
 
-      final mainScreenConsumer = Consumer(builder: (_, ref, child) {
+      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
         viewModel = ref.read(todoViewModelProvider.notifier);
         return TodoListView(categoryId: category.id!);
-      });
-
-      await _pumpMainScreen(tester, mainScreenConsumer);
+      }));
+      await _showHideProgress(tester);
       await tester.pumpAndSettle();
 
       final foundItemList = find.descendant(
@@ -310,10 +332,10 @@ void main() {
     testWidgets(
         'Slide a $TodoItem and go to '
         'edit $Todo in $FormTodoView screen', (tester) async {
-      when(() => mockTodoService.getTodosByCategory(any()))
-          .thenAnswer((_) => Stream.value([existingTodo]));
+      _setWhenMethodsToGetData(isExistsTodo: true);
 
       await _pumpMainScreen(tester, TodoListView(categoryId: category.id!));
+      await _showHideProgress(tester);
       await tester.pumpAndSettle();
 
       final foundItemList = find.descendant(
@@ -342,19 +364,16 @@ void main() {
     testWidgets('Slide a $TodoItem and remove $Todo from list', (tester) async {
       late ITodoViewModel viewModel;
 
-      when(() => mockTodoService.getTodosByCategory(any()))
-          .thenAnswer((_) => Stream.value([existingTodo]));
-
+      _setWhenMethodsToGetData(isExistsTodo: true);
       when(() => mockTodoService.deleteTodo(any(), any())).thenAnswer((_) {
         return Future<void>.delayed(const Duration(milliseconds: 100));
       });
 
-      final mainScreenConsumer = Consumer(builder: (_, ref, child) {
+      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
         viewModel = ref.read(todoViewModelProvider.notifier);
         return TodoListView(categoryId: category.id!);
-      });
-
-      await _pumpMainScreen(tester, mainScreenConsumer);
+      }));
+      await _showHideProgress(tester);
       await tester.pumpAndSettle();
 
       final foundItemList = find.descendant(
@@ -387,9 +406,7 @@ void main() {
     testWidgets('When remove a $Todo model set an $Exception', (tester) async {
       late ITodoViewModel viewModel;
 
-      when(() => mockTodoService.getTodosByCategory(any()))
-          .thenAnswer((_) => Stream.value([existingTodo]));
-
+      _setWhenMethodsToGetData(isExistsTodo: true);
       when(() => mockTodoService.deleteTodo(any(), any())).thenAnswer((_) {
         return Future<void>.delayed(
           const Duration(milliseconds: 100),
@@ -397,12 +414,11 @@ void main() {
         );
       });
 
-      final mainScreenConsumer = Consumer(builder: (_, ref, child) {
+      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
         viewModel = ref.read(todoViewModelProvider.notifier);
         return TodoListView(categoryId: category.id!);
-      });
-
-      await _pumpMainScreen(tester, mainScreenConsumer);
+      }));
+      await _showHideProgress(tester);
       await tester.pumpAndSettle();
 
       final foundItemList = find.descendant(
