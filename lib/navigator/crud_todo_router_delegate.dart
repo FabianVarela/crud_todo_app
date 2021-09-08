@@ -95,17 +95,14 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
     if (currentCategoryId == null && currentTodoId == null && !is404) {
       return const CrudTodoConfig.categoryList();
     } else if (currentCategoryId != null && currentTodoId == null && !is404) {
-      return CrudTodoConfig.todoList(categoryId: currentCategoryId);
+      return CrudTodoConfigTodoList(currentCategoryId!);
     } else if (currentCategoryId != null &&
         currentTodoId == null &&
         isTodoSelected &&
         !is404) {
-      return CrudTodoConfig.addTodo(categoryId: currentCategoryId);
+      return CrudTodoConfigAddTodo(currentCategoryId!);
     } else if (currentCategoryId != null && currentTodoId != null && !is404) {
-      return CrudTodoConfig.updateTodo(
-        categoryId: currentCategoryId,
-        todoId: currentTodoId,
-      );
+      return CrudTodoConfigUpdateTodo(currentCategoryId!, currentTodoId!);
     } else if (is404) {
       return const CrudTodoConfig.unknown();
     }
@@ -115,21 +112,18 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
 
   @override
   Future<void> setNewRoutePath(CrudTodoConfig configuration) async {
-    if (configuration.isPageUnknown) {
+    if (configuration is CrudTodoConfigUnknown) {
       _changeValues(isNoFound: true);
-    } else if (configuration.isCategoryListPage) {
+    } else if (configuration is CrudTodoConfigCategoryList) {
       _changeValues();
-    } else if (configuration.isTodoListPage) {
-      _changeValues(categoryId: configuration.currentCategoryId);
-    } else if (configuration.isAddTodoPage) {
+    } else if (configuration is CrudTodoConfigTodoList) {
+      _changeValues(categoryId: configuration.categoryId);
+    } else if (configuration is CrudTodoConfigAddTodo) {
+      _changeValues(categoryId: configuration.categoryId, isSelected: true);
+    } else if (configuration is CrudTodoConfigUpdateTodo) {
       _changeValues(
-        categoryId: configuration.currentCategoryId,
-        isSelected: true,
-      );
-    } else if (configuration.isUpdateTodoPage) {
-      _changeValues(
-        categoryId: configuration.currentCategoryId,
-        todoId: configuration.currentTodoId,
+        categoryId: configuration.categoryId,
+        todoId: configuration.todoId,
         isSelected: true,
       );
     }

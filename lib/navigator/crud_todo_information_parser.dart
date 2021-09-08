@@ -30,7 +30,7 @@ class CrudTodoInformationParser extends RouteInformationParser<CrudTodoConfig> {
 
       if (firstSegment == CrudTodoPath.pathCategory) {
         if (secondSegment.isNotEmpty) {
-          return CrudTodoConfig.todoList(categoryId: secondSegment);
+          return CrudTodoConfigTodoList(secondSegment);
         }
       }
     } else if (uri.pathSegments.length == 3) {
@@ -42,7 +42,7 @@ class CrudTodoInformationParser extends RouteInformationParser<CrudTodoConfig> {
       if (firstSegment == CrudTodoPath.pathCategory) {
         if (secondSegment.isNotEmpty) {
           if (thirdSegment == CrudTodoPath.pathTodo) {
-            return CrudTodoConfig.addTodo(categoryId: secondSegment);
+            return CrudTodoConfigAddTodo(secondSegment);
           }
         }
       }
@@ -57,10 +57,7 @@ class CrudTodoInformationParser extends RouteInformationParser<CrudTodoConfig> {
         if (secondSegment.isNotEmpty) {
           if (thirdSegment == CrudTodoPath.pathTodo) {
             if (lastSegment.isNotEmpty) {
-              return CrudTodoConfig.updateTodo(
-                categoryId: secondSegment,
-                todoId: lastSegment,
-              );
+              return CrudTodoConfigUpdateTodo(secondSegment, lastSegment);
             }
           }
         }
@@ -74,30 +71,30 @@ class CrudTodoInformationParser extends RouteInformationParser<CrudTodoConfig> {
   RouteInformation? restoreRouteInformation(
     CrudTodoConfig configuration,
   ) {
-    if (configuration.isUnknown) {
+    if (configuration is CrudTodoConfigUnknown) {
       return const RouteInformation(location: '/${CrudTodoPath.pathUnknown}');
-    } else if (configuration.isCategoryListPage) {
+    } else if (configuration is CrudTodoConfigCategoryList) {
       const categoryPath = CrudTodoPath.pathCategory;
 
       return const RouteInformation(location: '/$categoryPath');
-    } else if (configuration.isTodoListPage) {
+    } else if (configuration is CrudTodoConfigTodoList) {
       const categoryPath = CrudTodoPath.pathCategory;
-      final currentCategoryId = configuration.currentCategoryId;
+      final currentCategoryId = configuration.categoryId;
 
       return RouteInformation(location: '/$categoryPath/$currentCategoryId');
-    } else if (configuration.isAddTodoPage) {
+    } else if (configuration is CrudTodoConfigAddTodo) {
       const categoryPath = CrudTodoPath.pathCategory;
-      final currentCategoryId = configuration.currentCategoryId;
+      final currentCategoryId = configuration.categoryId;
       const todoPath = CrudTodoPath.pathTodo;
 
       return RouteInformation(
         location: '/$categoryPath/$currentCategoryId/$todoPath/',
       );
-    } else if (configuration.isUpdateTodoPage) {
+    } else if (configuration is CrudTodoConfigUpdateTodo) {
       const categoryPath = CrudTodoPath.pathCategory;
-      final currentCategoryId = configuration.currentCategoryId;
+      final currentCategoryId = configuration.categoryId;
       const todoPath = CrudTodoPath.pathTodo;
-      final currentTodoId = configuration.currentTodoId;
+      final currentTodoId = configuration.todoId;
 
       return RouteInformation(
         location: '/$categoryPath/$currentCategoryId/$todoPath/$currentTodoId',
