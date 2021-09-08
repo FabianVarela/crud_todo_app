@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crud_todo_app/navigator/crud_todo_information_parser.dart';
+import 'package:crud_todo_app/navigator/crud_todo_router_delegate.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
 import 'package:crud_todo_app/service/category_service.dart';
@@ -14,6 +16,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 final firestoreProvider = Provider((_) => FirebaseFirestore.instance);
 
 /// Service
+
 final categoryServiceProvider = Provider<CategoryService>((ref) {
   final database = ref.read(firestoreProvider);
   return CategoryService(database);
@@ -25,6 +28,7 @@ final todoServiceProvider = Provider<TodoService>((ref) {
 });
 
 /// Repository
+
 final categoryRepositoryProvider = Provider<ICategoryRepository>(
   (ref) {
     final service = ref.read(categoryServiceProvider);
@@ -40,6 +44,7 @@ final todoRepositoryProvider = Provider<ITodoRepository>(
 );
 
 /// ViewModel
+
 final categoryViewModelProvider =
     StateNotifierProvider<ICategoryViewModel, CategoryState>(
   (ref) => CategoryViewModel(ref.read),
@@ -47,4 +52,14 @@ final categoryViewModelProvider =
 
 final todoViewModelProvider = StateNotifierProvider<ITodoViewModel, TodoState>(
   (ref) => TodoViewModel(ref.read),
+);
+
+/// Navigator 2.0
+
+final crudTodoRouterDelegateProvider = ChangeNotifierProvider(
+  (_) => CrudTodoRouterDelegate(),
+);
+
+final crudTodoInformationParserProvider = Provider(
+  (ref) => CrudTodoInformationParser(),
 );
