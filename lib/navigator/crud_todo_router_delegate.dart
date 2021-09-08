@@ -111,23 +111,18 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
   }
 
   @override
-  Future<void> setNewRoutePath(CrudTodoConfig configuration) async {
-    if (configuration is CrudTodoConfigUnknown) {
-      _changeValues(isNoFound: true);
-    } else if (configuration is CrudTodoConfigCategoryList) {
-      _changeValues();
-    } else if (configuration is CrudTodoConfigTodoList) {
-      _changeValues(categoryId: configuration.categoryId);
-    } else if (configuration is CrudTodoConfigAddTodo) {
-      _changeValues(categoryId: configuration.categoryId, isSelected: true);
-    } else if (configuration is CrudTodoConfigUpdateTodo) {
-      _changeValues(
-        categoryId: configuration.categoryId,
-        todoId: configuration.todoId,
-        isSelected: true,
+  Future<void> setNewRoutePath(CrudTodoConfig configuration) async =>
+      configuration.when(
+        categoryList: _changeValues,
+        todoList: (id) => _changeValues(categoryId: id),
+        addTodo: (id) => _changeValues(categoryId: id, isSelected: true),
+        updateTodo: (categoryId, todoId) => _changeValues(
+          categoryId: categoryId,
+          todoId: todoId,
+          isSelected: true,
+        ),
+        unknown: () => _changeValues(isNoFound: true),
       );
-    }
-  }
 
   void _changeValues({
     String? categoryId,
