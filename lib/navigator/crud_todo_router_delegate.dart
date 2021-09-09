@@ -43,6 +43,8 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
     notifyListeners();
   }
 
+  // Current unknown page or 404 not found
+
   bool _is404 = false;
 
   bool get is404 => _is404;
@@ -59,14 +61,17 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
     notifyListeners();
   }
 
-  bool get isCategoryList => categoryId == null && todoId == null && !is404;
+  bool get isCategoryList =>
+      categoryId == null && todoId == null && !isTodoSelected && !is404;
 
-  bool get isTodoList => categoryId != null && todoId == null && !is404;
+  bool get isTodoList =>
+      categoryId != null && todoId == null && !isTodoSelected && !is404;
 
   bool get isTodoNew =>
       categoryId != null && todoId == null && isTodoSelected && !is404;
 
-  bool get isTodoUpdate => categoryId != null && todoId != null && !is404;
+  bool get isTodoUpdate =>
+      categoryId != null && todoId != null && isTodoSelected && !is404;
 
   @override
   Widget build(BuildContext context) {
