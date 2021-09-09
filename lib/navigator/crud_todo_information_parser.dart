@@ -68,38 +68,30 @@ class CrudTodoInformationParser extends RouteInformationParser<CrudTodoConfig> {
   }
 
   @override
-  RouteInformation? restoreRouteInformation(
-    CrudTodoConfig configuration,
-  ) {
-    if (configuration is CrudTodoConfigUnknown) {
-      return const RouteInformation(location: '/${CrudTodoPath.pathUnknown}');
-    } else if (configuration is CrudTodoConfigCategoryList) {
-      const categoryPath = CrudTodoPath.pathCategory;
-
-      return const RouteInformation(location: '/$categoryPath');
-    } else if (configuration is CrudTodoConfigTodoList) {
-      const categoryPath = CrudTodoPath.pathCategory;
-      final currentCategoryId = configuration.categoryId;
-
-      return RouteInformation(location: '/$categoryPath/$currentCategoryId');
-    } else if (configuration is CrudTodoConfigAddTodo) {
-      const categoryPath = CrudTodoPath.pathCategory;
-      final currentCategoryId = configuration.categoryId;
-      const todoPath = CrudTodoPath.pathTodo;
-
-      return RouteInformation(
-        location: '/$categoryPath/$currentCategoryId/$todoPath/',
-      );
-    } else if (configuration is CrudTodoConfigUpdateTodo) {
-      const categoryPath = CrudTodoPath.pathCategory;
-      final currentCategoryId = configuration.categoryId;
-      const todoPath = CrudTodoPath.pathTodo;
-      final currentTodoId = configuration.todoId;
-
-      return RouteInformation(
-        location: '/$categoryPath/$currentCategoryId/$todoPath/$currentTodoId',
-      );
-    }
+  RouteInformation? restoreRouteInformation(CrudTodoConfig configuration) {
+    configuration.when(
+      categoryList: () {
+        const categoryPath = CrudTodoPath.pathCategory;
+        return const RouteInformation(location: '/$categoryPath');
+      },
+      todoList: (categoryId) {
+        const categoryPath = CrudTodoPath.pathCategory;
+        return RouteInformation(location: '/$categoryPath/$categoryId');
+      },
+      addTodo: (categoryId) {
+        const catPath = CrudTodoPath.pathCategory;
+        const todoPath = CrudTodoPath.pathTodo;
+        return RouteInformation(location: '/$catPath/$categoryId/$todoPath/');
+      },
+      updateTodo: (id, todoId) {
+        const catPath = CrudTodoPath.pathCategory;
+        const todoPath = CrudTodoPath.pathTodo;
+        return RouteInformation(location: '/$catPath/$id/$todoPath/$todoId');
+      },
+      unknown: () {
+        const RouteInformation(location: '/${CrudTodoPath.pathUnknown}');
+      },
+    );
 
     return null;
   }
