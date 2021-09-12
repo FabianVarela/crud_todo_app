@@ -60,11 +60,14 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
     }
 
-    void _setWhenWithGetData() {
+    void _setWhenWithGetData({bool withTodo = true}) {
       when(() => mockCategoryService.getCategoryById(any()))
           .thenAnswer((invocation) => Future.value(category));
-      when(() => mockTodoService.getTodoById(any(), any()))
-          .thenAnswer((_) => Future.value(existingTodo));
+
+      if (withTodo) {
+        when(() => mockTodoService.getTodoById(any(), any()))
+            .thenAnswer((_) => Future.value(existingTodo));
+      }
     }
 
     testWidgets('Show $FormTodoView screen', (tester) async {
@@ -82,6 +85,41 @@ void main() {
       expect(find.byType(DateTodo), findsOneWidget);
       expect(find.byType(CategoryTodo), findsOneWidget);
       expect(find.byType(SubmitTodo), findsOneWidget);
+    });
+
+    testWidgets('Show $Exception when get $Category detail', (tester) async {
+      when(() => mockCategoryService.getCategoryById(any()))
+          .thenThrow(Exception('Category not found'));
+
+      await _pumpMainScreen(tester, FormTodoView(categoryId: category.id!));
+
+      expect(find.text('New Task'), findsOneWidget);
+      expect(find.byIcon(Icons.close), findsOneWidget);
+      expect(find.byType(SubjectTodo), findsNothing);
+      expect(find.byType(DateTodo), findsNothing);
+      expect(find.byType(CategoryTodo), findsNothing);
+      expect(find.byType(SubmitTodo), findsNothing);
+      expect(find.text('Exception: Category not found'), findsOneWidget);
+    });
+
+    testWidgets('Show $Exception when get $Todo detail', (tester) async {
+      _setWhenWithGetData(withTodo: false);
+      when(() => mockTodoService.getTodoById(any(), any()))
+          .thenThrow(Exception('Todo not found'));
+
+      await _pumpMainScreen(
+        tester,
+        FormTodoView(categoryId: category.id!, todoId: existingTodo.id),
+      );
+      await _showHideProgress(tester);
+
+      expect(find.text('Update Task'), findsOneWidget);
+      expect(find.byIcon(Icons.close), findsOneWidget);
+      expect(find.byType(SubjectTodo), findsNothing);
+      expect(find.byType(DateTodo), findsNothing);
+      expect(find.byType(CategoryTodo), findsNothing);
+      expect(find.byType(SubmitTodo), findsNothing);
+      expect(find.text('Exception: Todo not found'), findsOneWidget);
     });
 
     testWidgets(

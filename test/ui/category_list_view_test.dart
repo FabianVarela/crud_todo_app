@@ -131,5 +131,17 @@ void main() {
       verify(() => mockNavigator.didPush(any(), any()));
       expect(find.byType(TodoListView), findsOneWidget);
     });
+
+    testWidgets(
+        'Show $Exception in screen when '
+        'get $Category list data', (tester) async {
+      when(categoryRepository.getCategories)
+          .thenThrow(Exception('Category not found'));
+
+      await _pumpMainScreen(tester, const CategoryListView());
+
+      expect(find.byType(CircularProgressIndicator), findsNothing);
+      expect(find.text('Exception: Category not found'), findsOneWidget);
+    });
   });
 }
