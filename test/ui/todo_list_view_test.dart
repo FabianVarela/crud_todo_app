@@ -116,6 +116,21 @@ void main() {
       expect(find.byType(FloatingActionButton), findsOneWidget);
     });
 
+    testWidgets('Show $Exception when get $Category detail', (tester) async {
+      when(() => mockCategoryService.getCategoryById(any()))
+          .thenThrow(Exception('Category not found'));
+
+      await _pumpMainScreen(
+        tester,
+        TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {}),
+      );
+
+      expect(find.byIcon(Icons.arrow_back_ios), findsOneWidget);
+      expect(find.byIcon(Icons.delete_forever), findsNothing);
+      expect(find.byType(FloatingActionButton), findsNothing);
+      expect(find.text('Exception: Category not found'), findsOneWidget);
+    });
+
     testWidgets('Redirect to $FormTodoView screen', (tester) async {
       _setWhenMethodsToGetData(isEmptyTodo: true);
 
@@ -206,6 +221,23 @@ void main() {
       await _showHideProgress(tester);
 
       expect(find.text('Empty data, add a task'), findsOneWidget);
+    });
+
+    testWidgets('Show $Exception when get $Todo list data', (tester) async {
+      _setWhenMethodsToGetData();
+      when(() => mockTodoService.getTodosByCategory(any()))
+          .thenThrow(Exception('Todo not found'));
+
+      await _pumpMainScreen(
+        tester,
+        TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {}),
+      );
+      await _showHideProgress(tester);
+
+      expect(find.byIcon(Icons.arrow_back_ios), findsOneWidget);
+      expect(find.byIcon(Icons.delete_forever), findsOneWidget);
+      expect(find.byType(FloatingActionButton), findsOneWidget);
+      expect(find.text('Exception: Todo not found'), findsOneWidget);
     });
 
     testWidgets('Show $TodoListView screen with data', (tester) async {
