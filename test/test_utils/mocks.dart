@@ -3,7 +3,6 @@ import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/service/category_service.dart';
 import 'package:crud_todo_app/service/todo_service.dart';
-import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -55,7 +54,3 @@ class MockTodoService extends Mock implements TodoService {}
 class MyCategoryFake extends Fake implements Category {}
 
 class MyTodoFake extends Fake implements Todo {}
-
-/// ViewModels
-
-class MockCategoryViewModel extends Mock implements ICategoryViewModel {}
