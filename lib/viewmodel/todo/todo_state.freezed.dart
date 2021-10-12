@@ -16,22 +16,22 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$TodoStateTearOff {
   const _$TodoStateTearOff();
 
-  TodoStateInitial initial() {
-    return const TodoStateInitial();
+  _TodoStateInitial initial() {
+    return const _TodoStateInitial();
   }
 
-  TodoStateLoading loading() {
-    return const TodoStateLoading();
+  _TodoStateLoading loading() {
+    return const _TodoStateLoading();
   }
 
-  TodoStateSuccess success(TodoAction action) {
-    return TodoStateSuccess(
+  _TodoStateSuccess success(TodoAction action) {
+    return _TodoStateSuccess(
       action,
     );
   }
 
-  TodoStateError error([String? message]) {
-    return TodoStateError(
+  _TodoStateError error([String? message]) {
+    return _TodoStateError(
       message,
     );
   }
@@ -61,18 +61,18 @@ mixin _$TodoState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(TodoStateInitial value) initial,
-    required TResult Function(TodoStateLoading value) loading,
-    required TResult Function(TodoStateSuccess value) success,
-    required TResult Function(TodoStateError value) error,
+    required TResult Function(_TodoStateInitial value) initial,
+    required TResult Function(_TodoStateLoading value) loading,
+    required TResult Function(_TodoStateSuccess value) success,
+    required TResult Function(_TodoStateError value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(TodoStateInitial value)? initial,
-    TResult Function(TodoStateLoading value)? loading,
-    TResult Function(TodoStateSuccess value)? success,
-    TResult Function(TodoStateError value)? error,
+    TResult Function(_TodoStateInitial value)? initial,
+    TResult Function(_TodoStateLoading value)? loading,
+    TResult Function(_TodoStateSuccess value)? success,
+    TResult Function(_TodoStateError value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -94,27 +94,28 @@ class _$TodoStateCopyWithImpl<$Res> implements $TodoStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class $TodoStateInitialCopyWith<$Res> {
-  factory $TodoStateInitialCopyWith(
-          TodoStateInitial value, $Res Function(TodoStateInitial) then) =
-      _$TodoStateInitialCopyWithImpl<$Res>;
+abstract class _$TodoStateInitialCopyWith<$Res> {
+  factory _$TodoStateInitialCopyWith(
+          _TodoStateInitial value, $Res Function(_TodoStateInitial) then) =
+      __$TodoStateInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$TodoStateInitialCopyWithImpl<$Res> extends _$TodoStateCopyWithImpl<$Res>
-    implements $TodoStateInitialCopyWith<$Res> {
-  _$TodoStateInitialCopyWithImpl(
-      TodoStateInitial _value, $Res Function(TodoStateInitial) _then)
-      : super(_value, (v) => _then(v as TodoStateInitial));
+class __$TodoStateInitialCopyWithImpl<$Res>
+    extends _$TodoStateCopyWithImpl<$Res>
+    implements _$TodoStateInitialCopyWith<$Res> {
+  __$TodoStateInitialCopyWithImpl(
+      _TodoStateInitial _value, $Res Function(_TodoStateInitial) _then)
+      : super(_value, (v) => _then(v as _TodoStateInitial));
 
   @override
-  TodoStateInitial get _value => super._value as TodoStateInitial;
+  _TodoStateInitial get _value => super._value as _TodoStateInitial;
 }
 
 /// @nodoc
 
-class _$TodoStateInitial implements TodoStateInitial {
-  const _$TodoStateInitial();
+class _$_TodoStateInitial implements _TodoStateInitial {
+  const _$_TodoStateInitial();
 
   @override
   String toString() {
@@ -123,7 +124,7 @@ class _$TodoStateInitial implements TodoStateInitial {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is TodoStateInitial);
+    return identical(this, other) || (other is _TodoStateInitial);
   }
 
   @override
@@ -158,10 +159,10 @@ class _$TodoStateInitial implements TodoStateInitial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(TodoStateInitial value) initial,
-    required TResult Function(TodoStateLoading value) loading,
-    required TResult Function(TodoStateSuccess value) success,
-    required TResult Function(TodoStateError value) error,
+    required TResult Function(_TodoStateInitial value) initial,
+    required TResult Function(_TodoStateLoading value) loading,
+    required TResult Function(_TodoStateSuccess value) success,
+    required TResult Function(_TodoStateError value) error,
   }) {
     return initial(this);
   }
@@ -169,10 +170,10 @@ class _$TodoStateInitial implements TodoStateInitial {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(TodoStateInitial value)? initial,
-    TResult Function(TodoStateLoading value)? loading,
-    TResult Function(TodoStateSuccess value)? success,
-    TResult Function(TodoStateError value)? error,
+    TResult Function(_TodoStateInitial value)? initial,
+    TResult Function(_TodoStateLoading value)? loading,
+    TResult Function(_TodoStateSuccess value)? success,
+    TResult Function(_TodoStateError value)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -182,32 +183,33 @@ class _$TodoStateInitial implements TodoStateInitial {
   }
 }
 
-abstract class TodoStateInitial implements TodoState {
-  const factory TodoStateInitial() = _$TodoStateInitial;
+abstract class _TodoStateInitial implements TodoState {
+  const factory _TodoStateInitial() = _$_TodoStateInitial;
 }
 
 /// @nodoc
-abstract class $TodoStateLoadingCopyWith<$Res> {
-  factory $TodoStateLoadingCopyWith(
-          TodoStateLoading value, $Res Function(TodoStateLoading) then) =
-      _$TodoStateLoadingCopyWithImpl<$Res>;
+abstract class _$TodoStateLoadingCopyWith<$Res> {
+  factory _$TodoStateLoadingCopyWith(
+          _TodoStateLoading value, $Res Function(_TodoStateLoading) then) =
+      __$TodoStateLoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$TodoStateLoadingCopyWithImpl<$Res> extends _$TodoStateCopyWithImpl<$Res>
-    implements $TodoStateLoadingCopyWith<$Res> {
-  _$TodoStateLoadingCopyWithImpl(
-      TodoStateLoading _value, $Res Function(TodoStateLoading) _then)
-      : super(_value, (v) => _then(v as TodoStateLoading));
+class __$TodoStateLoadingCopyWithImpl<$Res>
+    extends _$TodoStateCopyWithImpl<$Res>
+    implements _$TodoStateLoadingCopyWith<$Res> {
+  __$TodoStateLoadingCopyWithImpl(
+      _TodoStateLoading _value, $Res Function(_TodoStateLoading) _then)
+      : super(_value, (v) => _then(v as _TodoStateLoading));
 
   @override
-  TodoStateLoading get _value => super._value as TodoStateLoading;
+  _TodoStateLoading get _value => super._value as _TodoStateLoading;
 }
 
 /// @nodoc
 
-class _$TodoStateLoading implements TodoStateLoading {
-  const _$TodoStateLoading();
+class _$_TodoStateLoading implements _TodoStateLoading {
+  const _$_TodoStateLoading();
 
   @override
   String toString() {
@@ -216,7 +218,7 @@ class _$TodoStateLoading implements TodoStateLoading {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is TodoStateLoading);
+    return identical(this, other) || (other is _TodoStateLoading);
   }
 
   @override
@@ -251,10 +253,10 @@ class _$TodoStateLoading implements TodoStateLoading {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(TodoStateInitial value) initial,
-    required TResult Function(TodoStateLoading value) loading,
-    required TResult Function(TodoStateSuccess value) success,
-    required TResult Function(TodoStateError value) error,
+    required TResult Function(_TodoStateInitial value) initial,
+    required TResult Function(_TodoStateLoading value) loading,
+    required TResult Function(_TodoStateSuccess value) success,
+    required TResult Function(_TodoStateError value) error,
   }) {
     return loading(this);
   }
@@ -262,10 +264,10 @@ class _$TodoStateLoading implements TodoStateLoading {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(TodoStateInitial value)? initial,
-    TResult Function(TodoStateLoading value)? loading,
-    TResult Function(TodoStateSuccess value)? success,
-    TResult Function(TodoStateError value)? error,
+    TResult Function(_TodoStateInitial value)? initial,
+    TResult Function(_TodoStateLoading value)? loading,
+    TResult Function(_TodoStateSuccess value)? success,
+    TResult Function(_TodoStateError value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -275,33 +277,34 @@ class _$TodoStateLoading implements TodoStateLoading {
   }
 }
 
-abstract class TodoStateLoading implements TodoState {
-  const factory TodoStateLoading() = _$TodoStateLoading;
+abstract class _TodoStateLoading implements TodoState {
+  const factory _TodoStateLoading() = _$_TodoStateLoading;
 }
 
 /// @nodoc
-abstract class $TodoStateSuccessCopyWith<$Res> {
-  factory $TodoStateSuccessCopyWith(
-          TodoStateSuccess value, $Res Function(TodoStateSuccess) then) =
-      _$TodoStateSuccessCopyWithImpl<$Res>;
+abstract class _$TodoStateSuccessCopyWith<$Res> {
+  factory _$TodoStateSuccessCopyWith(
+          _TodoStateSuccess value, $Res Function(_TodoStateSuccess) then) =
+      __$TodoStateSuccessCopyWithImpl<$Res>;
   $Res call({TodoAction action});
 }
 
 /// @nodoc
-class _$TodoStateSuccessCopyWithImpl<$Res> extends _$TodoStateCopyWithImpl<$Res>
-    implements $TodoStateSuccessCopyWith<$Res> {
-  _$TodoStateSuccessCopyWithImpl(
-      TodoStateSuccess _value, $Res Function(TodoStateSuccess) _then)
-      : super(_value, (v) => _then(v as TodoStateSuccess));
+class __$TodoStateSuccessCopyWithImpl<$Res>
+    extends _$TodoStateCopyWithImpl<$Res>
+    implements _$TodoStateSuccessCopyWith<$Res> {
+  __$TodoStateSuccessCopyWithImpl(
+      _TodoStateSuccess _value, $Res Function(_TodoStateSuccess) _then)
+      : super(_value, (v) => _then(v as _TodoStateSuccess));
 
   @override
-  TodoStateSuccess get _value => super._value as TodoStateSuccess;
+  _TodoStateSuccess get _value => super._value as _TodoStateSuccess;
 
   @override
   $Res call({
     Object? action = freezed,
   }) {
-    return _then(TodoStateSuccess(
+    return _then(_TodoStateSuccess(
       action == freezed
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
@@ -312,8 +315,8 @@ class _$TodoStateSuccessCopyWithImpl<$Res> extends _$TodoStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TodoStateSuccess implements TodoStateSuccess {
-  const _$TodoStateSuccess(this.action);
+class _$_TodoStateSuccess implements _TodoStateSuccess {
+  const _$_TodoStateSuccess(this.action);
 
   @override
   final TodoAction action;
@@ -326,7 +329,7 @@ class _$TodoStateSuccess implements TodoStateSuccess {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is TodoStateSuccess &&
+        (other is _TodoStateSuccess &&
             (identical(other.action, action) ||
                 const DeepCollectionEquality().equals(other.action, action)));
   }
@@ -337,8 +340,8 @@ class _$TodoStateSuccess implements TodoStateSuccess {
 
   @JsonKey(ignore: true)
   @override
-  $TodoStateSuccessCopyWith<TodoStateSuccess> get copyWith =>
-      _$TodoStateSuccessCopyWithImpl<TodoStateSuccess>(this, _$identity);
+  _$TodoStateSuccessCopyWith<_TodoStateSuccess> get copyWith =>
+      __$TodoStateSuccessCopyWithImpl<_TodoStateSuccess>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -369,10 +372,10 @@ class _$TodoStateSuccess implements TodoStateSuccess {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(TodoStateInitial value) initial,
-    required TResult Function(TodoStateLoading value) loading,
-    required TResult Function(TodoStateSuccess value) success,
-    required TResult Function(TodoStateError value) error,
+    required TResult Function(_TodoStateInitial value) initial,
+    required TResult Function(_TodoStateLoading value) loading,
+    required TResult Function(_TodoStateSuccess value) success,
+    required TResult Function(_TodoStateError value) error,
   }) {
     return success(this);
   }
@@ -380,10 +383,10 @@ class _$TodoStateSuccess implements TodoStateSuccess {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(TodoStateInitial value)? initial,
-    TResult Function(TodoStateLoading value)? loading,
-    TResult Function(TodoStateSuccess value)? success,
-    TResult Function(TodoStateError value)? error,
+    TResult Function(_TodoStateInitial value)? initial,
+    TResult Function(_TodoStateLoading value)? loading,
+    TResult Function(_TodoStateSuccess value)? success,
+    TResult Function(_TodoStateError value)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -393,38 +396,38 @@ class _$TodoStateSuccess implements TodoStateSuccess {
   }
 }
 
-abstract class TodoStateSuccess implements TodoState {
-  const factory TodoStateSuccess(TodoAction action) = _$TodoStateSuccess;
+abstract class _TodoStateSuccess implements TodoState {
+  const factory _TodoStateSuccess(TodoAction action) = _$_TodoStateSuccess;
 
   TodoAction get action => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TodoStateSuccessCopyWith<TodoStateSuccess> get copyWith =>
+  _$TodoStateSuccessCopyWith<_TodoStateSuccess> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TodoStateErrorCopyWith<$Res> {
-  factory $TodoStateErrorCopyWith(
-          TodoStateError value, $Res Function(TodoStateError) then) =
-      _$TodoStateErrorCopyWithImpl<$Res>;
+abstract class _$TodoStateErrorCopyWith<$Res> {
+  factory _$TodoStateErrorCopyWith(
+          _TodoStateError value, $Res Function(_TodoStateError) then) =
+      __$TodoStateErrorCopyWithImpl<$Res>;
   $Res call({String? message});
 }
 
 /// @nodoc
-class _$TodoStateErrorCopyWithImpl<$Res> extends _$TodoStateCopyWithImpl<$Res>
-    implements $TodoStateErrorCopyWith<$Res> {
-  _$TodoStateErrorCopyWithImpl(
-      TodoStateError _value, $Res Function(TodoStateError) _then)
-      : super(_value, (v) => _then(v as TodoStateError));
+class __$TodoStateErrorCopyWithImpl<$Res> extends _$TodoStateCopyWithImpl<$Res>
+    implements _$TodoStateErrorCopyWith<$Res> {
+  __$TodoStateErrorCopyWithImpl(
+      _TodoStateError _value, $Res Function(_TodoStateError) _then)
+      : super(_value, (v) => _then(v as _TodoStateError));
 
   @override
-  TodoStateError get _value => super._value as TodoStateError;
+  _TodoStateError get _value => super._value as _TodoStateError;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(TodoStateError(
+    return _then(_TodoStateError(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -435,8 +438,8 @@ class _$TodoStateErrorCopyWithImpl<$Res> extends _$TodoStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TodoStateError implements TodoStateError {
-  const _$TodoStateError([this.message]);
+class _$_TodoStateError implements _TodoStateError {
+  const _$_TodoStateError([this.message]);
 
   @override
   final String? message;
@@ -449,7 +452,7 @@ class _$TodoStateError implements TodoStateError {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is TodoStateError &&
+        (other is _TodoStateError &&
             (identical(other.message, message) ||
                 const DeepCollectionEquality().equals(other.message, message)));
   }
@@ -460,8 +463,8 @@ class _$TodoStateError implements TodoStateError {
 
   @JsonKey(ignore: true)
   @override
-  $TodoStateErrorCopyWith<TodoStateError> get copyWith =>
-      _$TodoStateErrorCopyWithImpl<TodoStateError>(this, _$identity);
+  _$TodoStateErrorCopyWith<_TodoStateError> get copyWith =>
+      __$TodoStateErrorCopyWithImpl<_TodoStateError>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -492,10 +495,10 @@ class _$TodoStateError implements TodoStateError {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(TodoStateInitial value) initial,
-    required TResult Function(TodoStateLoading value) loading,
-    required TResult Function(TodoStateSuccess value) success,
-    required TResult Function(TodoStateError value) error,
+    required TResult Function(_TodoStateInitial value) initial,
+    required TResult Function(_TodoStateLoading value) loading,
+    required TResult Function(_TodoStateSuccess value) success,
+    required TResult Function(_TodoStateError value) error,
   }) {
     return error(this);
   }
@@ -503,10 +506,10 @@ class _$TodoStateError implements TodoStateError {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(TodoStateInitial value)? initial,
-    TResult Function(TodoStateLoading value)? loading,
-    TResult Function(TodoStateSuccess value)? success,
-    TResult Function(TodoStateError value)? error,
+    TResult Function(_TodoStateInitial value)? initial,
+    TResult Function(_TodoStateLoading value)? loading,
+    TResult Function(_TodoStateSuccess value)? success,
+    TResult Function(_TodoStateError value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -516,11 +519,11 @@ class _$TodoStateError implements TodoStateError {
   }
 }
 
-abstract class TodoStateError implements TodoState {
-  const factory TodoStateError([String? message]) = _$TodoStateError;
+abstract class _TodoStateError implements TodoState {
+  const factory _TodoStateError([String? message]) = _$_TodoStateError;
 
   String? get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TodoStateErrorCopyWith<TodoStateError> get copyWith =>
+  _$TodoStateErrorCopyWith<_TodoStateError> get copyWith =>
       throw _privateConstructorUsedError;
 }

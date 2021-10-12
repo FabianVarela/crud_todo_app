@@ -6,16 +6,12 @@ enum CategoryAction { add, remove }
 
 @freezed
 class CategoryState with _$CategoryState {
-  ///Initial
-  const factory CategoryState.initial() = CategoryStateInitial;
+  const factory CategoryState.initial() = _CategoryStateInitial;
 
-  /// Loading
-  const factory CategoryState.loading() = CategoryStateLoading;
+  const factory CategoryState.loading() = _CategoryStateLoading;
 
-  /// Success
   const factory CategoryState.success(CategoryAction action) =
-      CategoryStateSuccess;
+      _CategoryStateSuccess;
 
-  /// Error
-  const factory CategoryState.error([String? message]) = CategoryStateError;
+  const factory CategoryState.error([String? message]) = _CategoryStateError;
 }
