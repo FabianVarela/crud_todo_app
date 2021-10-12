@@ -40,16 +40,18 @@ Create a To-do List Flutter app managing CRUD with Firebase, using RiverPod as s
 ------
 #### Dependencies
 - Firebase (firebase_core, cloud_firestore)
+- Equatable (equatable)
 - Hooks (flutter_hooks) 
 - Riverpod (hooks_riverpod)
-- Equatable (equatable)
-- Intl (intl)
 - Flutter Emoji (flutter_emoji)
-- UUID (uuid)
 - Flutter Slidable (flutter_slidable)
+- Intl (intl)
+- Json Annotation (json_annotation)
+- UUID (uuid)
 
 #### Dev dependencies
 - Freezed (freezed, freezed_annotation)
+- Json Serializable (json_serializable)
 - Mocktail (mocktail)
 - Mockito (mockito)
 - Very Good Analysis (very_good_analysis)
