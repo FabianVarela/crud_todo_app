@@ -1,6 +1,10 @@
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'todo_model.g.dart';
+
+@JsonSerializable()
 class Todo extends Equatable {
   const Todo({
     this.id,
@@ -10,26 +14,20 @@ class Todo extends Equatable {
     this.isCompleted = false,
   });
 
-  factory Todo.fromJson(Map<String, dynamic> json) => Todo(
-        id: json['id'] as String,
-        subject: json['subject'] as String,
-        finalDate: (json['finalDate'] as int).millisecondsToDate,
-        categoryId: json['categoryId'] as String,
-        isCompleted: json['isCompleted'] as bool,
-      );
+  factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
 
+  @JsonKey(includeIfNull: false)
   final String? id;
+
   final String subject;
+
+  @JsonKey(fromJson: _intFromJson, toJson: _intToJson)
   final DateTime finalDate;
+
   final String categoryId;
   final bool isCompleted;
 
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'subject': subject,
-        'finalDate': finalDate.millisecondsSinceEpoch,
-        'categoryId': categoryId,
-        'isCompleted': isCompleted,
-      };
+  Map<String, dynamic> toJson() => _$TodoToJson(this);
 
   Todo copyWith({
     String? id,
@@ -49,3 +47,7 @@ class Todo extends Equatable {
   @override
   List<Object?> get props => [id, subject, finalDate, categoryId, isCompleted];
 }
+
+DateTime _intFromJson(int milliseconds) => milliseconds.millisecondsToDate;
+
+int _intToJson(DateTime finalDate) => finalDate.millisecondsSinceEpoch;

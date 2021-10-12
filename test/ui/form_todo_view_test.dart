@@ -235,21 +235,19 @@ void main() {
       await tester.pumpAndSettle();
       expect(findTimePicker, findsNothing);
 
-      expect(viewModel.debugState, isA<TodoStateInitial>());
-
       final todoSubmit = find.byType(SubmitTodo);
       final button = tester.widget<SubmitTodo>(todoSubmit);
 
       expect(button.enabled, true);
       await tester.tap(todoSubmit);
 
-      expect(viewModel.debugState, isA<TodoStateLoading>());
+      expect(viewModel.debugState.isLoading, true);
       await tester.pumpAndSettle(const Duration(seconds: 1));
 
       verify(() => mockTodoService.saveTodo(any())).called(1);
       await tester.pumpAndSettle();
 
-      expect(viewModel.debugState, isA<TodoStateSuccess>());
+      expect(viewModel.debugState.isSuccess, true);
       // verify(() => mockNavigator.didPop(any(), any())).called(1);
     });
 
@@ -299,17 +297,16 @@ void main() {
       await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
       await tester.pumpAndSettle();
 
-      expect(viewModel.debugState, isA<TodoStateInitial>());
       await tester.tap(find.byType(SubmitTodo));
 
       verify(() => mockTodoService.saveTodo(any())).called(1);
 
-      expect(viewModel.debugState, isA<TodoStateLoading>());
+      expect(viewModel.debugState.isLoading, true);
       await tester.pump(const Duration(seconds: 1));
 
       await tester.pumpAndSettle();
 
-      expect(viewModel.debugState, isA<TodoStateSuccess>());
+      expect(viewModel.debugState.isSuccess, true);
       // verify(() => mockNavigator.didPop(any(), any())).called(1);
     });
 
@@ -330,11 +327,10 @@ void main() {
       await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
       await tester.pumpAndSettle();
 
-      expect(viewModel.debugState, isA<TodoStateInitial>());
       await tester.tap(find.byType(SubmitTodo));
 
       verify(() => mockTodoService.saveTodo(any())).called(1);
-      expect(viewModel.debugState, isA<TodoStateError>());
+      expect(viewModel.debugState.isError, true);
     });
   });
 }

@@ -11,40 +11,31 @@ import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-/// Firebase Firestore
-
+//region Firebase Firestore
 final firestoreProvider = Provider((_) => FirebaseFirestore.instance);
+//endregion
 
-/// Service
-
+//region Service layer
 final categoryServiceProvider = Provider<CategoryService>((ref) {
-  final database = ref.read(firestoreProvider);
-  return CategoryService(database);
+  return CategoryService(ref.read(firestoreProvider));
 });
 
 final todoServiceProvider = Provider<TodoService>((ref) {
-  final database = ref.read(firestoreProvider);
-  return TodoService(database);
+  return TodoService(ref.read(firestoreProvider));
 });
+//endregion
 
-/// Repository
-
+//region Repository layer
 final categoryRepositoryProvider = Provider<ICategoryRepository>(
-  (ref) {
-    final service = ref.read(categoryServiceProvider);
-    return CategoryRepository(service);
-  },
+  (ref) => CategoryRepository(ref.read(categoryServiceProvider)),
 );
 
 final todoRepositoryProvider = Provider<ITodoRepository>(
-  (ref) {
-    final service = ref.read(todoServiceProvider);
-    return TodoRepository(service);
-  },
+  (ref) => TodoRepository(ref.read(todoServiceProvider)),
 );
+//endregion
 
-/// ViewModel
-
+//region ViewModel layer
 final categoryViewModelProvider =
     StateNotifierProvider<ICategoryViewModel, CategoryState>(
   (ref) => CategoryViewModel(ref.read),
@@ -53,8 +44,9 @@ final categoryViewModelProvider =
 final todoViewModelProvider = StateNotifierProvider<ITodoViewModel, TodoState>(
   (ref) => TodoViewModel(ref.read),
 );
+//endregion
 
-/// Navigator 2.0
+//region Navigator 2.0
 
 final crudTodoRouterDelegateProvider = ChangeNotifierProvider(
   (_) => CrudTodoRouterDelegate(),
@@ -63,3 +55,5 @@ final crudTodoRouterDelegateProvider = ChangeNotifierProvider(
 final crudTodoInformationParserProvider = Provider(
   (ref) => CrudTodoInformationParser(),
 );
+
+//endregion
