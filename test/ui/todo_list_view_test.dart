@@ -176,16 +176,15 @@ void main() {
       }));
       await _showHideProgress(tester);
 
-      expect(viewModel.debugState, isA<CategoryStateInitial>());
       await tester.tap(find.byIcon(Icons.delete_forever));
 
       verify(() => mockCategoryService.deleteCategory(any())).called(1);
 
-      expect(viewModel.debugState, isA<CategoryStateLoading>());
+      expect(viewModel.debugState.isLoading, true);
       await tester.pump(const Duration(milliseconds: 500));
       await tester.pumpAndSettle();
 
-      expect(viewModel.debugState, isA<CategoryStateSuccess>());
+      expect(viewModel.debugState.isSuccess, true);
       await tester.pumpAndSettle();
 
       verify(() => mockNavigator.didPop(any(), any())).called(1);
@@ -204,11 +203,10 @@ void main() {
       }));
       await _showHideProgress(tester);
 
-      expect(viewModel.debugState, isA<CategoryStateInitial>());
       await tester.tap(find.byIcon(Icons.delete_forever));
 
       verify(() => mockCategoryService.deleteCategory(any())).called(1);
-      expect(viewModel.debugState, isA<CategoryStateError>());
+      expect(viewModel.debugState.isError, true);
     });
 
     testWidgets('Show $TodoListView screen with empty data', (tester) async {
@@ -334,16 +332,15 @@ void main() {
       );
       expect(foundItemCheck, findsOneWidget);
 
-      expect(viewModel.debugState, isA<TodoStateInitial>());
       await tester.tap(foundItemCheck);
 
       verify(() => mockTodoService.saveTodo(any())).called(1);
 
       await tester.pump();
-      expect(viewModel.debugState, isA<TodoStateLoading>());
+      expect(viewModel.debugState.isLoading, true);
 
       await tester.pumpAndSettle();
-      expect(viewModel.debugState, isA<TodoStateSuccess>());
+      expect(viewModel.debugState.isSuccess, true);
     });
 
     testWidgets('When update a $Todo model set an $Exception', (tester) async {
@@ -376,16 +373,15 @@ void main() {
       );
       expect(foundItemCheck, findsOneWidget);
 
-      expect(viewModel.debugState, isA<TodoStateInitial>());
       await tester.tap(foundItemCheck);
 
       verify(() => mockTodoService.saveTodo(any())).called(1);
 
       await tester.pump();
-      expect(viewModel.debugState, isA<TodoStateLoading>());
+      expect(viewModel.debugState.isLoading, true);
 
       await tester.pumpAndSettle();
-      expect(viewModel.debugState, isA<TodoStateError>());
+      expect(viewModel.debugState.isError, true);
     });
 
     testWidgets(
@@ -453,15 +449,14 @@ void main() {
       expect(foundSlideAction, findsOneWidget);
       expect(find.byIcon(Icons.delete), findsOneWidget);
 
-      expect(viewModel.debugState, isA<TodoStateInitial>());
       await tester.tap(foundSlideAction);
 
       verify(() => mockTodoService.deleteTodo(any(), any())).called(1);
 
-      expect(viewModel.debugState, isA<TodoStateLoading>());
+      expect(viewModel.debugState.isLoading, true);
       await tester.pumpAndSettle();
 
-      expect(viewModel.debugState, isA<TodoStateSuccess>());
+      expect(viewModel.debugState.isSuccess, true);
       expect(foundSlideAction, findsNothing);
     });
 
@@ -495,15 +490,14 @@ void main() {
       final foundSlideAction = find.byType(SlidableAction);
       expect(foundSlideAction, findsOneWidget);
 
-      expect(viewModel.debugState, isA<TodoStateInitial>());
       await tester.tap(foundSlideAction);
 
       verify(() => mockTodoService.deleteTodo(any(), any())).called(1);
 
-      expect(viewModel.debugState, isA<TodoStateLoading>());
+      expect(viewModel.debugState.isLoading, true);
       await tester.pumpAndSettle();
 
-      expect(viewModel.debugState, isA<TodoStateError>());
+      expect(viewModel.debugState.isError, true);
     });
   });
 }
