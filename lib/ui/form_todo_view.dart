@@ -93,10 +93,8 @@ class FormTodoView extends HookConsumerWidget {
 
   void _onChangeState(BuildContext context, TodoState state) {
     final action = state.maybeWhen(success: (a) => a, orElse: () => null);
-    if (action != null) {
-      if (action == TodoAction.add || action == TodoAction.update) {
-        Navigator.pop(context);
-      }
+    if (action == TodoAction.add || action == TodoAction.update) {
+      Navigator.pop(context);
     }
   }
 }
