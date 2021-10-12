@@ -15,3 +15,11 @@ class CategoryState with _$CategoryState {
 
   const factory CategoryState.error([String? message]) = _CategoryStateError;
 }
+
+extension CategoryStateX on CategoryState {
+  bool get isLoading => this is _CategoryStateLoading;
+
+  bool get isSuccess => this is _CategoryStateSuccess;
+
+  bool get isError => this is _CategoryStateError;
+}

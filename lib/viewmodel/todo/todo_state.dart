@@ -14,3 +14,11 @@ class TodoState with _$TodoState {
 
   const factory TodoState.error([String? message]) = _TodoStateError;
 }
+
+extension TodoStateX on TodoState {
+  bool get isLoading => this is _TodoStateLoading;
+
+  bool get isSuccess => this is _TodoStateSuccess;
+
+  bool get isError => this is _TodoStateError;
+}
