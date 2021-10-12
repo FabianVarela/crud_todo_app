@@ -95,19 +95,17 @@ void main() {
       await tester.enterText(find.byType(EmojiCategory), '😀');
 
       await tester.pumpAndSettle();
-
-      expect(viewModel.debugState, isA<CategoryStateInitial>());
       await tester.tap(find.byType(SubmitCategory));
 
       verify(() => mockCategoryService.saveCategory(any())).called(1);
 
-      expect(viewModel.debugState, isA<CategoryStateLoading>());
+      expect(viewModel.debugState.isLoading, true);
       await tester.pump(const Duration(milliseconds: 500));
 
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
       await tester.pumpAndSettle();
 
-      expect(viewModel.debugState, isA<CategoryStateSuccess>());
+      expect(viewModel.debugState.isSuccess, true);
       expect(find.byType(CircularProgressIndicator), findsNothing);
 
       verify(() => mockNavigator.didPop(any(), any())).called(1);
@@ -128,12 +126,10 @@ void main() {
       await tester.enterText(find.byType(EmojiCategory), '😀');
 
       await tester.pumpAndSettle();
-
-      expect(viewModel.debugState, isA<CategoryStateInitial>());
       await tester.tap(find.byType(SubmitCategory));
 
       verify(() => mockCategoryService.saveCategory(any())).called(1);
-      expect(viewModel.debugState, isA<CategoryStateError>());
+      expect(viewModel.debugState.isError, true);
     });
   });
 }
