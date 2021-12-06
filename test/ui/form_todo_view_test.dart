@@ -40,16 +40,18 @@ void main() {
     });
 
     Future<void> _pumpMainScreen(WidgetTester tester, Widget child) async {
-      await tester.pumpWidget(ProviderScope(
-        overrides: [
-          categoryRepositoryProvider.overrideWithValue(categoryRepository),
-          todoRepositoryProvider.overrideWithValue(todoRepository),
-        ],
-        child: MaterialApp(
-          home: child,
-          navigatorObservers: [mockNavigator],
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            categoryRepositoryProvider.overrideWithValue(categoryRepository),
+            todoRepositoryProvider.overrideWithValue(todoRepository),
+          ],
+          child: MaterialApp(
+            home: child,
+            navigatorObservers: [mockNavigator],
+          ),
         ),
-      ));
+      );
     }
 
     Future<void> _showHideProgress(WidgetTester tester) async {
@@ -198,10 +200,15 @@ void main() {
       when(() => mockTodoService.saveTodo(any()))
           .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
-      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(todoViewModelProvider.notifier);
-        return FormTodoView(categoryId: category.id!);
-      }));
+      await _pumpMainScreen(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(todoViewModelProvider.notifier);
+            return FormTodoView(categoryId: category.id!);
+          },
+        ),
+      );
       await _showHideProgress(tester);
 
       await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
@@ -213,8 +220,11 @@ void main() {
       final findDatePicker = find.byType(DatePickerDialog);
       expect(findDatePicker, findsOneWidget);
 
-      final finderNext = find.byWidgetPredicate((w) =>
-          w is IconButton && (w.tooltip?.startsWith('Next month') ?? false));
+      final finderNext = find.byWidgetPredicate(
+        (widget) =>
+            widget is IconButton &&
+            (widget.tooltip?.startsWith('Next month') ?? false),
+      );
 
       await tester.tap(finderNext);
       await tester.pumpAndSettle(const Duration(seconds: 1));
@@ -256,9 +266,14 @@ void main() {
 
       _setWhenWithGetData();
 
-      await _pumpMainScreen(tester, Consumer(builder: (_, __, child) {
-        return FormTodoView(categoryId: category.id!);
-      }));
+      await _pumpMainScreen(
+        tester,
+        Consumer(
+          builder: (_, __, child) {
+            return FormTodoView(categoryId: category.id!);
+          },
+        ),
+      );
       await _showHideProgress(tester);
 
       await tester.tap(find.byType(DateTodo));
@@ -267,8 +282,12 @@ void main() {
       final findDatePicker = find.byType(CupertinoDatePicker);
       expect(findDatePicker, findsOneWidget);
 
-      await tester.drag(find.text('Today'), const Offset(0, -128),
-          touchSlopY: 0, warnIfMissed: false);
+      await tester.drag(
+        find.text('Today'),
+        const Offset(0, -128),
+        touchSlopY: 0,
+        warnIfMissed: false,
+      );
 
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
@@ -288,10 +307,18 @@ void main() {
       when(() => mockTodoService.saveTodo(any()))
           .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
-      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(todoViewModelProvider.notifier);
-        return FormTodoView(categoryId: category.id!, todoId: existingTodo.id);
-      }));
+      await _pumpMainScreen(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(todoViewModelProvider.notifier);
+            return FormTodoView(
+              categoryId: category.id!,
+              todoId: existingTodo.id,
+            );
+          },
+        ),
+      );
       await _showHideProgress(tester);
 
       await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
@@ -318,10 +345,18 @@ void main() {
       _setWhenWithGetData();
       when(() => mockTodoService.saveTodo(any())).thenThrow(Exception('Error'));
 
-      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(todoViewModelProvider.notifier);
-        return FormTodoView(categoryId: category.id!, todoId: existingTodo.id);
-      }));
+      await _pumpMainScreen(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(todoViewModelProvider.notifier);
+            return FormTodoView(
+              categoryId: category.id!,
+              todoId: existingTodo.id,
+            );
+          },
+        ),
+      );
       await _showHideProgress(tester);
 
       await tester.enterText(find.byType(SubjectTodo), 'Test TODO');

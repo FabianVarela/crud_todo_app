@@ -28,15 +28,17 @@ void main() {
     });
 
     Future<void> _pumpDialog(WidgetTester tester, Widget child) async {
-      await tester.pumpWidget(ProviderScope(
-        overrides: [
-          categoryRepositoryProvider.overrideWithValue(categoryRepository),
-        ],
-        child: MaterialApp(
-          home: child,
-          navigatorObservers: [mockNavigator],
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            categoryRepositoryProvider.overrideWithValue(categoryRepository),
+          ],
+          child: MaterialApp(
+            home: child,
+            navigatorObservers: [mockNavigator],
+          ),
         ),
-      ));
+      );
     }
 
     testWidgets(
@@ -86,10 +88,15 @@ void main() {
       when(() => mockCategoryService.saveCategory(any()))
           .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
-      await _pumpDialog(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(categoryViewModelProvider.notifier);
-        return const Scaffold(body: CategoryFormDialog());
-      }));
+      await _pumpDialog(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(categoryViewModelProvider.notifier);
+            return const Scaffold(body: CategoryFormDialog());
+          },
+        ),
+      );
 
       await tester.enterText(find.byType(NameCategory), 'Test Category');
       await tester.enterText(find.byType(EmojiCategory), '😀');
@@ -117,10 +124,15 @@ void main() {
       when(() => mockCategoryService.saveCategory(any()))
           .thenThrow(Exception('Error'));
 
-      await _pumpDialog(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(categoryViewModelProvider.notifier);
-        return const Scaffold(body: CategoryFormDialog());
-      }));
+      await _pumpDialog(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(categoryViewModelProvider.notifier);
+            return const Scaffold(body: CategoryFormDialog());
+          },
+        ),
+      );
 
       await tester.enterText(find.byType(NameCategory), 'Test Category');
       await tester.enterText(find.byType(EmojiCategory), '😀');

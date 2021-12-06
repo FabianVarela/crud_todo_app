@@ -3,8 +3,8 @@ import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
-import 'package:crud_todo_app/ui/form_todo_view.dart';
 import 'package:crud_todo_app/ui/category_list_view.dart';
+import 'package:crud_todo_app/ui/form_todo_view.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/custom_checkbox.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
@@ -44,16 +44,18 @@ void main() {
     });
 
     Future<void> _pumpMainScreen(WidgetTester tester, Widget child) async {
-      await tester.pumpWidget(ProviderScope(
-        overrides: [
-          categoryRepositoryProvider.overrideWithValue(categoryRepository),
-          todoRepositoryProvider.overrideWithValue(todoRepository),
-        ],
-        child: MaterialApp(
-          home: child,
-          navigatorObservers: [mockNavigator],
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            categoryRepositoryProvider.overrideWithValue(categoryRepository),
+            todoRepositoryProvider.overrideWithValue(todoRepository),
+          ],
+          child: MaterialApp(
+            home: child,
+            navigatorObservers: [mockNavigator],
+          ),
         ),
-      ));
+      );
     }
 
     Future<void> _showHideProgress(WidgetTester tester) async {
@@ -150,10 +152,15 @@ void main() {
       when(() => mockCategoryService.deleteCategory(any()))
           .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
-      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(categoryViewModelProvider.notifier);
-        return TodoListView(categoryId: category.id!);
-      }));
+      await _pumpMainScreen(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(categoryViewModelProvider.notifier);
+            return TodoListView(categoryId: category.id!);
+          },
+        ),
+      );
       await _showHideProgress(tester);
 
       await tester.tap(find.byIcon(Icons.delete_forever));
@@ -177,10 +184,15 @@ void main() {
       when(() => mockCategoryService.deleteCategory(any()))
           .thenThrow(Exception('Error'));
 
-      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(categoryViewModelProvider.notifier);
-        return TodoListView(categoryId: category.id!);
-      }));
+      await _pumpMainScreen(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(categoryViewModelProvider.notifier);
+            return TodoListView(categoryId: category.id!);
+          },
+        ),
+      );
       await _showHideProgress(tester);
 
       await tester.tap(find.byIcon(Icons.delete_forever));
@@ -278,10 +290,15 @@ void main() {
         return Future<void>.delayed(const Duration(milliseconds: 100));
       });
 
-      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(todoViewModelProvider.notifier);
-        return TodoListView(categoryId: category.id!);
-      }));
+      await _pumpMainScreen(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(todoViewModelProvider.notifier);
+            return TodoListView(categoryId: category.id!);
+          },
+        ),
+      );
       await _showHideProgress(tester);
       await tester.pumpAndSettle();
 
@@ -319,10 +336,15 @@ void main() {
         );
       });
 
-      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(todoViewModelProvider.notifier);
-        return TodoListView(categoryId: category.id!);
-      }));
+      await _pumpMainScreen(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(todoViewModelProvider.notifier);
+            return TodoListView(categoryId: category.id!);
+          },
+        ),
+      );
       await _showHideProgress(tester);
       await tester.pumpAndSettle();
 
@@ -389,10 +411,15 @@ void main() {
         return Future<void>.delayed(const Duration(milliseconds: 100));
       });
 
-      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(todoViewModelProvider.notifier);
-        return TodoListView(categoryId: category.id!);
-      }));
+      await _pumpMainScreen(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(todoViewModelProvider.notifier);
+            return TodoListView(categoryId: category.id!);
+          },
+        ),
+      );
       await _showHideProgress(tester);
       await tester.pumpAndSettle();
 
@@ -433,10 +460,15 @@ void main() {
         );
       });
 
-      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(todoViewModelProvider.notifier);
-        return TodoListView(categoryId: category.id!);
-      }));
+      await _pumpMainScreen(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(todoViewModelProvider.notifier);
+            return TodoListView(categoryId: category.id!);
+          },
+        ),
+      );
       await _showHideProgress(tester);
       await tester.pumpAndSettle();
 

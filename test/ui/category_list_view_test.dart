@@ -1,8 +1,8 @@
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
-import 'package:crud_todo_app/ui/dialog/category_dialog.dart';
 import 'package:crud_todo_app/ui/category_list_view.dart';
+import 'package:crud_todo_app/ui/dialog/category_dialog.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:flutter/material.dart';
@@ -30,15 +30,17 @@ void main() {
     });
 
     Future<void> _pumpMainScreen(WidgetTester tester, Widget child) async {
-      await tester.pumpWidget(ProviderScope(
-        overrides: [
-          categoryRepositoryProvider.overrideWithValue(categoryRepository),
-        ],
-        child: MaterialApp(
-          home: child,
-          navigatorObservers: [mockNavigator],
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            categoryRepositoryProvider.overrideWithValue(categoryRepository),
+          ],
+          child: MaterialApp(
+            home: child,
+            navigatorObservers: [mockNavigator],
+          ),
         ),
-      ));
+      );
     }
 
     testWidgets('Show $CategoryListView screen', (tester) async {
