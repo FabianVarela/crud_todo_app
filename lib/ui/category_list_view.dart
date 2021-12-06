@@ -1,8 +1,8 @@
+import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/ui/dialog/category_dialog.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
-import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/category/category_state.dart';
@@ -18,7 +18,7 @@ class CategoryListView extends ConsumerWidget {
 
     ref.listen(
       categoryViewModelProvider,
-      (CategoryState state) => _onChangeState(context, state),
+      (_, CategoryState state) => _onChangeState(context, state),
     );
 
     return Scaffold(

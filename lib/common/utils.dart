@@ -1,5 +1,5 @@
-import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:crud_todo_app/common/extension.dart';
+import 'package:crud_todo_app/model/validation_text_model.dart';
 
 class Utils {
   static ValidationText validateEmpty(String value) => value.isNotEmpty

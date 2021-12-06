@@ -1,11 +1,11 @@
 import 'package:crud_todo_app/common/utils.dart';
-import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
+import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/category/category_state.dart';
-import 'package:flutter_emoji/flutter_emoji.dart';
+import 'package:dart_emoji/dart_emoji.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 abstract class ICategoryViewModel extends StateNotifier<CategoryState> {
@@ -28,10 +28,12 @@ abstract class ICategoryViewModel extends StateNotifier<CategoryState> {
       final name = nameCat;
       final emoji = emojiCat;
 
-      await categoryRepository.saveCategory(Category(
-        name: name.text!,
-        emoji: EmojiParser().getEmoji(emoji.text!),
-      ));
+      await categoryRepository.saveCategory(
+        Category(
+          name: name.text!,
+          emoji: EmojiParser().getEmoji(emoji.text!),
+        ),
+      );
 
       state = const CategoryState.success(CategoryAction.add);
     } catch (_) {
@@ -56,10 +58,10 @@ class CategoryViewModel extends ICategoryViewModel {
   late final Reader _read;
 
   @override
-  ValidationText get nameCat => _read(nameCatProvider).state;
+  ValidationText get nameCat => _read(nameCatProvider);
 
   @override
-  ValidationText get emojiCat => _read(emojiCatProvider).state;
+  ValidationText get emojiCat => _read(emojiCatProvider);
 
   @override
   ICategoryRepository get categoryRepository =>

@@ -1,7 +1,7 @@
 import 'package:crud_todo_app/common/utils.dart';
-import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
+import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
@@ -49,7 +49,7 @@ abstract class ITodoViewModel extends StateNotifier<TodoState> {
     }
   }
 
-  Future<void> checkTodo(Todo todo, bool isChecked) async {
+  Future<void> checkTodo(Todo todo, {bool isChecked = false}) async {
     try {
       state = const TodoState.loading();
       await todoRepository.saveTodo(
@@ -68,10 +68,10 @@ class TodoViewModel extends ITodoViewModel {
   late final Reader _read;
 
   @override
-  ValidationText get subjectTodo => _read(subjectTodoProvider).state;
+  ValidationText get subjectTodo => _read(subjectTodoProvider);
 
   @override
-  DateTime get dateTodo => _read(dateTodoProvider).state;
+  DateTime get dateTodo => _read(dateTodoProvider);
 
   @override
   ITodoRepository get todoRepository => _read(todoRepositoryProvider);

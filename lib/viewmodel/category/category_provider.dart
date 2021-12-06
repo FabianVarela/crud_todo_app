@@ -20,8 +20,8 @@ final emojiCatProvider = StateProvider.autoDispose(
 );
 
 final validationCategoryProvider = StateProvider.autoDispose((ref) {
-  final name = ref.watch(nameCatProvider).state.text;
-  final emoji = ref.watch(emojiCatProvider).state.text;
+  final name = ref.watch(nameCatProvider).text;
+  final emoji = ref.watch(emojiCatProvider).text;
 
   final isValidEmoji = (emoji ?? '').isNotEmpty && (emoji ?? '').verifyEmoji;
   return (name ?? '').isNotEmpty && isValidEmoji;

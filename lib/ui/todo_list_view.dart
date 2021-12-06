@@ -1,7 +1,7 @@
+import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/ui/form_todo_view.dart';
-import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
@@ -33,7 +33,7 @@ class TodoListView extends HookConsumerWidget {
 
     ref.listen(
       todoViewModelProvider,
-      (TodoState state) => _onChangeState(context, state),
+      (_, TodoState state) => _onChangeState(context, state),
     );
 
     return Scaffold(
@@ -162,9 +162,8 @@ class TodoListView extends HookConsumerWidget {
                   ),
                 )
               : const Center(
-                  child: CircularProgressIndicator(
-                  color: Colors.white,
-                )),
+                  child: CircularProgressIndicator(color: Colors.white),
+                ),
       floatingActionButton: dataCategory != null
           ? FloatingActionButton(
               backgroundColor: const Color(0xFF4A78FA),
@@ -228,7 +227,7 @@ class TodoList extends ConsumerWidget {
             todo: item,
             onEdit: () => onEditItem(item),
             onRemove: () => viewModel.deleteTodo(item.id!, item.categoryId),
-            onCheck: (value) => viewModel.checkTodo(item, value),
+            onCheck: (value) => viewModel.checkTodo(item, isChecked: value),
           )
       ],
     );

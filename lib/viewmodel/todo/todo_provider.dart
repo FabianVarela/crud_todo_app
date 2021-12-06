@@ -23,8 +23,8 @@ final subjectTodoProvider = StateProvider.autoDispose(
 final dateTodoProvider = StateProvider.autoDispose((_) => DateTime.now());
 
 final validationTodoProvider = StateProvider.autoDispose((ref) {
-  final subject = ref.watch(subjectTodoProvider).state.text;
-  final date = ref.watch(dateTodoProvider).state;
+  final subject = ref.watch(subjectTodoProvider).text;
+  final date = ref.watch(dateTodoProvider);
 
   return (subject ?? '').isNotEmpty && !date.isDurationNegative;
 });

@@ -58,9 +58,7 @@ class TodoItem extends HookWidget {
                 : todo.finalDate.dateTimeToFormattedString,
         isNegative: todo.finalDate.isDurationNegative,
         isSuccess: todo.isCompleted,
-        onTap: () {
-          if (onCheck != null) onCheck!(true);
-        },
+        onTap: () => onCheck?.call(true),
       ),
     );
   }

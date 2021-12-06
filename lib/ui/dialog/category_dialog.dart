@@ -12,11 +12,11 @@ class CategoryFormDialog extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final categoryState = ref.watch(categoryViewModelProvider);
-    final isValidForm = ref.watch(validationCategoryProvider).state;
+    final isValidForm = ref.watch(validationCategoryProvider);
 
     ref.listen(
       categoryViewModelProvider,
-      (CategoryState state) => _onChangeState(context, state),
+      (_, CategoryState state) => _onChangeState(context, state),
     );
 
     return Column(
@@ -62,7 +62,7 @@ class NameCategory extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final nameText = ref.watch(nameCatProvider);
+    final nameText = ref.watch(nameCatProvider.notifier);
     final textController = useTextEditingController();
 
     return TextField(
@@ -83,7 +83,7 @@ class EmojiCategory extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final emoji = ref.watch(emojiCatProvider);
+    final emoji = ref.watch(emojiCatProvider.notifier);
     final textController = useTextEditingController();
 
     return TextField(

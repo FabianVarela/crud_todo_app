@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/common/extension.dart';
+import 'package:crud_todo_app/model/todo_model.dart';
 
 class TodoService {
   TodoService(this._database);
@@ -16,8 +16,9 @@ class TodoService {
         .where('categoryId', isEqualTo: categoryId)
         .snapshots();
 
-    return querySnapshot.map((query) =>
-        query.docs.map((doc) => Todo.fromJson(doc.toMap())).toList());
+    return querySnapshot.map(
+      (query) => query.docs.map((doc) => Todo.fromJson(doc.toMap())).toList(),
+    );
   }
 
   Future<Todo> getTodoById(String categoryId, String todoId) async {

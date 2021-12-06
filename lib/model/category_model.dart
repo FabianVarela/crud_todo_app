@@ -1,5 +1,5 @@
+import 'package:dart_emoji/dart_emoji.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'category_model.g.dart';
