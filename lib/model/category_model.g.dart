@@ -6,14 +6,12 @@ part of 'category_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Category _$CategoryFromJson(Map<String, dynamic> json) {
-  return Category(
-    id: json['id'] as String?,
-    name: json['name'] as String,
-    emoji: _emojiFromJson(json['emoji'] as String),
-    todoSize: json['todoSize'] as int,
-  );
-}
+Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
+      id: json['id'] as String?,
+      name: json['name'] as String,
+      emoji: Category._emojiFromJson(json['emoji'] as String),
+      todoSize: json['todoSize'] as int? ?? 0,
+    );
 
 Map<String, dynamic> _$CategoryToJson(Category instance) {
   final val = <String, dynamic>{};
@@ -26,7 +24,7 @@ Map<String, dynamic> _$CategoryToJson(Category instance) {
 
   writeNotNull('id', instance.id);
   val['name'] = instance.name;
-  val['emoji'] = _emojiToJson(instance.emoji);
+  val['emoji'] = Category._emojiToJson(instance.emoji);
   val['todoSize'] = instance.todoSize;
   return val;
 }

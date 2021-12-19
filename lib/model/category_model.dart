@@ -30,8 +30,8 @@ class Category extends Equatable {
 
   @override
   List<Object?> get props => [id, name, emoji, todoSize];
+
+  static Emoji _emojiFromJson(String emojiCode) => EmojiParser().get(emojiCode);
+
+  static String _emojiToJson(Emoji emoji) => emoji.full;
 }
-
-Emoji _emojiFromJson(String emojiCode) => EmojiParser().get(emojiCode);
-
-String _emojiToJson(Emoji emoji) => emoji.full;

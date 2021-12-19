@@ -46,8 +46,9 @@ class Todo extends Equatable {
 
   @override
   List<Object?> get props => [id, subject, finalDate, categoryId, isCompleted];
+
+  static DateTime _intFromJson(int milliseconds) =>
+      milliseconds.millisecondsToDate;
+
+  static int _intToJson(DateTime finalDate) => finalDate.millisecondsSinceEpoch;
 }
-
-DateTime _intFromJson(int milliseconds) => milliseconds.millisecondsToDate;
-
-int _intToJson(DateTime finalDate) => finalDate.millisecondsSinceEpoch;
