@@ -35,6 +35,7 @@ class CategoryFormDialog extends ConsumerWidget {
         children: <Widget>[
           CloseIconButton(
             onClick: () => Navigator.pop(context),
+            isDesktop: isDesktop,
           ).paddingSymmetric(v: 5),
           Container(
             decoration: BoxDecoration(
