@@ -16,11 +16,16 @@ class CategoryFormDialog extends ConsumerWidget {
     final categoryState = ref.watch(categoryViewModelPod);
     final isValidForm = ref.watch(validationCategoryPod);
 
-    final isDesktop = getFormFactor(context) == ScreenType.desktop;
-    final isTablet = getFormFactor(context) == ScreenType.tablet;
+    final isDeviceDesktop = [
+      DeviceSegment.desktop,
+      DeviceSegment.desktopWeb,
+    ].contains(getDevice());
 
-    final desktopWidth = isDesktop || isTablet ? 600.0 : null;
-    final deviceWidth = !isPortrait(context) ? 400.0 : null;
+    final isDesktopOrTablet = [ScreenType.desktop, ScreenType.tablet]
+        .contains(getFormFactor(context));
+
+    final desktopWidth = isDesktopOrTablet ? 600.0 : null;
+    final mobileWidth = !isPortrait(context) ? 400.0 : null;
 
     ref.listen(
       categoryViewModelPod,
@@ -28,14 +33,14 @@ class CategoryFormDialog extends ConsumerWidget {
     );
 
     return SizedBox(
-      width: desktopWidth ?? deviceWidth,
+      width: desktopWidth ?? mobileWidth,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
           CustomMouseRegion(
             cursor: SystemMouseCursors.click,
-            isForDesktop: isDesktop,
+            isForDesktop: isDeviceDesktop,
             child: GestureDetector(
               onTap: () => Navigator.pop(context),
               child: const Icon(Icons.close, color: Colors.white),
