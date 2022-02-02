@@ -1,7 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class FormFactor {
   static double desktop = 900;
@@ -24,17 +22,21 @@ ScreenType getFormFactor(BuildContext context) {
 enum DeviceSegment { mobile, desktop, mobileWeb, desktopWeb, other }
 
 DeviceSegment getDevice() {
-  final isAndroid = Platform.isAndroid;
-  final isIOS = Platform.isIOS;
+  final isAndroid = defaultTargetPlatform == TargetPlatform.android;
+  final isIOS = defaultTargetPlatform == TargetPlatform.iOS;
+
+  final isWindows = defaultTargetPlatform == TargetPlatform.windows;
+  final isLinux = defaultTargetPlatform == TargetPlatform.linux;
+  final isMacOS = defaultTargetPlatform == TargetPlatform.macOS;
 
   final isMobile = isAndroid || isIOS;
-  final isDesktop = Platform.isWindows || Platform.isLinux || Platform.isMacOS;
+  final isDesktop = isWindows || isLinux || isMacOS;
 
   if (!kIsWeb && isMobile) return DeviceSegment.mobile;
   if (!kIsWeb && isDesktop) return DeviceSegment.desktop;
 
-  if (kIsWeb || isMobile) return DeviceSegment.mobileWeb;
-  if (kIsWeb || isDesktop) return DeviceSegment.desktopWeb;
+  if (kIsWeb && isMobile) return DeviceSegment.mobileWeb;
+  if (kIsWeb && isDesktop) return DeviceSegment.desktopWeb;
 
   return DeviceSegment.other;
 }
