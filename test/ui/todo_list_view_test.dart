@@ -47,8 +47,8 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            categoryRepositoryProvider.overrideWithValue(categoryRepository),
-            todoRepositoryProvider.overrideWithValue(todoRepository),
+            categoryRepositoryPod.overrideWithValue(categoryRepository),
+            todoRepositoryPod.overrideWithValue(todoRepository),
           ],
           child: MaterialApp(
             home: child,
@@ -146,7 +146,7 @@ void main() {
     testWidgets(
         'Check remove $Category button in $TodoListView screen '
         'and return to $CategoryListView screen', (tester) async {
-      late final ICategoryViewModel viewModel;
+      late final CategoryViewModel viewModel;
 
       _setWhenMethodsToGetData(isEmptyTodo: true);
       when(() => mockCategoryService.deleteCategory(any()))
@@ -156,7 +156,7 @@ void main() {
         tester,
         Consumer(
           builder: (_, ref, child) {
-            viewModel = ref.read(categoryViewModelProvider.notifier);
+            viewModel = ref.read(categoryViewModelPod.notifier);
             return TodoListView(categoryId: category.id!);
           },
         ),
@@ -178,7 +178,7 @@ void main() {
     });
 
     testWidgets('When remove $Category model set $Exception', (tester) async {
-      late final ICategoryViewModel viewModel;
+      late final CategoryViewModel viewModel;
 
       _setWhenMethodsToGetData(isEmptyTodo: true);
       when(() => mockCategoryService.deleteCategory(any()))
@@ -188,7 +188,7 @@ void main() {
         tester,
         Consumer(
           builder: (_, ref, child) {
-            viewModel = ref.read(categoryViewModelProvider.notifier);
+            viewModel = ref.read(categoryViewModelPod.notifier);
             return TodoListView(categoryId: category.id!);
           },
         ),
@@ -283,7 +283,7 @@ void main() {
     testWidgets(
         'Update $Todo model when check '
         'an existing $TodoItem widget', (tester) async {
-      late final ITodoViewModel viewModel;
+      late final TodoViewModel viewModel;
 
       _setWhenMethodsToGetData(isExistsTodo: true);
       when(() => mockTodoService.saveTodo(any())).thenAnswer((_) {
@@ -294,7 +294,7 @@ void main() {
         tester,
         Consumer(
           builder: (_, ref, child) {
-            viewModel = ref.read(todoViewModelProvider.notifier);
+            viewModel = ref.read(todoViewModelPod.notifier);
             return TodoListView(categoryId: category.id!);
           },
         ),
@@ -326,7 +326,7 @@ void main() {
     });
 
     testWidgets('When update a $Todo model set an $Exception', (tester) async {
-      late ITodoViewModel viewModel;
+      late TodoViewModel viewModel;
 
       _setWhenMethodsToGetData(isExistsTodo: true);
       when(() => mockTodoService.saveTodo(any())).thenAnswer((_) {
@@ -340,7 +340,7 @@ void main() {
         tester,
         Consumer(
           builder: (_, ref, child) {
-            viewModel = ref.read(todoViewModelProvider.notifier);
+            viewModel = ref.read(todoViewModelPod.notifier);
             return TodoListView(categoryId: category.id!);
           },
         ),
@@ -404,7 +404,7 @@ void main() {
     });
 
     testWidgets('Slide a $TodoItem and remove $Todo from list', (tester) async {
-      late ITodoViewModel viewModel;
+      late TodoViewModel viewModel;
 
       _setWhenMethodsToGetData(isExistsTodo: true);
       when(() => mockTodoService.deleteTodo(any(), any())).thenAnswer((_) {
@@ -415,7 +415,7 @@ void main() {
         tester,
         Consumer(
           builder: (_, ref, child) {
-            viewModel = ref.read(todoViewModelProvider.notifier);
+            viewModel = ref.read(todoViewModelPod.notifier);
             return TodoListView(categoryId: category.id!);
           },
         ),
@@ -450,7 +450,7 @@ void main() {
     });
 
     testWidgets('When remove a $Todo model set an $Exception', (tester) async {
-      late ITodoViewModel viewModel;
+      late TodoViewModel viewModel;
 
       _setWhenMethodsToGetData(isExistsTodo: true);
       when(() => mockTodoService.deleteTodo(any(), any())).thenAnswer((_) {
@@ -464,7 +464,7 @@ void main() {
         tester,
         Consumer(
           builder: (_, ref, child) {
-            viewModel = ref.read(todoViewModelProvider.notifier);
+            viewModel = ref.read(todoViewModelPod.notifier);
             return TodoListView(categoryId: category.id!);
           },
         ),

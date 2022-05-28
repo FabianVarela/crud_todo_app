@@ -33,7 +33,7 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            categoryRepositoryProvider.overrideWithValue(categoryRepository),
+            categoryRepositoryPod.overrideWithValue(categoryRepository),
           ],
           child: MaterialApp(
             home: child,

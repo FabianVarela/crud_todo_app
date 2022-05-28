@@ -43,8 +43,8 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            categoryRepositoryProvider.overrideWithValue(categoryRepository),
-            todoRepositoryProvider.overrideWithValue(todoRepository),
+            categoryRepositoryPod.overrideWithValue(categoryRepository),
+            todoRepositoryPod.overrideWithValue(todoRepository),
           ],
           child: MaterialApp(
             home: child,
@@ -169,8 +169,8 @@ void main() {
       await tester.enterText(find.byType(SubjectTodo), '');
       await tester.pumpAndSettle();
 
-      final enabled = tester.widget<SubmitTodo>(foundSubmitButton).enabled;
-      expect(enabled, isFalse);
+      final enabled = tester.widget<SubmitTodo>(foundSubmitButton).onSubmit;
+      expect(enabled == null, isTrue);
     });
 
     testWidgets(
@@ -189,12 +189,12 @@ void main() {
       await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
       await tester.pumpAndSettle();
 
-      final enabled = tester.widget<SubmitTodo>(foundSubmitButton).enabled;
-      expect(enabled, isTrue);
+      final enabled = tester.widget<SubmitTodo>(foundSubmitButton).onSubmit;
+      expect(enabled != null, isTrue);
     });
 
     testWidgets('Add a $Todo model from $FormTodoView', (tester) async {
-      late final ITodoViewModel viewModel;
+      late final TodoViewModel viewModel;
 
       _setWhenWithGetData();
       when(() => mockTodoService.saveTodo(any()))
@@ -204,7 +204,7 @@ void main() {
         tester,
         Consumer(
           builder: (_, ref, child) {
-            viewModel = ref.read(todoViewModelProvider.notifier);
+            viewModel = ref.read(todoViewModelPod.notifier);
             return FormTodoView(categoryId: category.id!);
           },
         ),
@@ -248,7 +248,7 @@ void main() {
       final todoSubmit = find.byType(SubmitTodo);
       final button = tester.widget<SubmitTodo>(todoSubmit);
 
-      expect(button.enabled, true);
+      expect(button.onSubmit != null, true);
       await tester.tap(todoSubmit);
 
       expect(viewModel.debugState.isLoading, true);
@@ -301,7 +301,7 @@ void main() {
     });
 
     testWidgets('Update a $Todo model from $FormTodoView', (tester) async {
-      late final ITodoViewModel viewModel;
+      late final TodoViewModel viewModel;
 
       _setWhenWithGetData();
       when(() => mockTodoService.saveTodo(any()))
@@ -311,7 +311,7 @@ void main() {
         tester,
         Consumer(
           builder: (_, ref, child) {
-            viewModel = ref.read(todoViewModelProvider.notifier);
+            viewModel = ref.read(todoViewModelPod.notifier);
             return FormTodoView(
               categoryId: category.id!,
               todoId: existingTodo.id,
@@ -340,7 +340,7 @@ void main() {
     testWidgets(
         'When add or update a $Todo '
         'model set an $Exception', (tester) async {
-      late final ITodoViewModel viewModel;
+      late final TodoViewModel viewModel;
 
       _setWhenWithGetData();
       when(() => mockTodoService.saveTodo(any())).thenThrow(Exception('Error'));
@@ -349,7 +349,7 @@ void main() {
         tester,
         Consumer(
           builder: (_, ref, child) {
-            viewModel = ref.read(todoViewModelProvider.notifier);
+            viewModel = ref.read(todoViewModelPod.notifier);
             return FormTodoView(
               categoryId: category.id!,
               todoId: existingTodo.id,
