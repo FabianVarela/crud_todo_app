@@ -46,6 +46,10 @@ PODS:
   - path_provider_macos (0.0.1):
     - FlutterMacOS
   - PromisesObjC (2.0.0)
+  - url_launcher_macos (0.0.1):
+    - FlutterMacOS
+  - window_size (0.0.2):
+    - FlutterMacOS
 
 DEPENDENCIES:
   - cloud_firestore (from `Flutter/ephemeral/.symlinks/plugins/cloud_firestore/macos`)
@@ -53,6 +57,8 @@ DEPENDENCIES:
   - FirebaseFirestore (from `https://github.com/invertase/firestore-ios-sdk-frameworks.git`, tag `8.9.0`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - path_provider_macos (from `Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos`)
+  - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
+  - window_size (from `Flutter/ephemeral/.symlinks/plugins/window_size/macos`)
 
 SPEC REPOS:
   trunk:
@@ -76,6 +82,10 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral
   path_provider_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/path_provider_macos/macos
+  url_launcher_macos:
+    :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
+  window_size:
+    :path: Flutter/ephemeral/.symlinks/plugins/window_size/macos
 
 CHECKOUT OPTIONS:
   FirebaseFirestore:
@@ -95,7 +105,9 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   path_provider_macos: a0a3fd666cb7cd0448e936fb4abad4052961002b
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  url_launcher_macos: 45af3d61de06997666568a7149c1be98b41c95d4
+  window_size: 339dafa0b27a95a62a843042038fa6c3c48de195
 
 PODFILE CHECKSUM: 0c8b5c368e728239ead03c95b9c150535cc5272c
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.11.3
