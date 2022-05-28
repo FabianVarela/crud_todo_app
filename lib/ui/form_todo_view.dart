@@ -21,13 +21,13 @@ class FormTodoView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final categoryData = ref.watch(categoryProvider(categoryId));
-    final todoData = ref.watch(todoProvider('$categoryId,${todoId ?? ''}'));
+    final categoryData = ref.watch(categoryDetailPod(categoryId));
+    final todoData = ref.watch(todoDetailPod('$categoryId,${todoId ?? ''}'));
 
     final isValid = ref.watch(validationTodoProvider);
 
     ref.listen(
-      todoViewModelProvider,
+      todoViewModelPod,
       (_, TodoState state) => _onChangeState(context, state),
     );
 
@@ -65,7 +65,16 @@ class FormTodoView extends HookConsumerWidget {
                 SubmitTodo(
                   categoryId: categoryId,
                   todoId: todo?.id,
-                  enabled: isValid,
+                  onSubmit: isValid
+                      ? () {
+                          ref.read(todoViewModelPod.notifier).saveTodo(
+                                categoryId,
+                                ref.read(subjectTodoPod.notifier).state.text!,
+                                ref.read(dateTodoPod.notifier).state,
+                                todoId: todoId,
+                              );
+                        }
+                      : null,
                 ),
               ],
             ),
@@ -106,18 +115,19 @@ class SubjectTodo extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final subject = ref.watch(subjectTodoProvider.notifier);
+    final subject = ref.watch(subjectTodoPod.notifier);
     final subjectTextController = useTextEditingController();
 
     useEffect(
       () {
         if (todo != null) {
           Future.microtask(() {
-            ref.read(subjectTodoProvider.notifier).state =
+            ref.read(subjectTodoPod.notifier).state =
                 ValidationText(text: todo!.subject);
             subjectTextController.text = todo!.subject;
           });
         }
+        return null;
       },
       const [],
     );
@@ -133,7 +143,7 @@ class SubjectTodo extends HookConsumerWidget {
       ),
       style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
       onChanged: (val) => subject.state =
-          ref.read(todoViewModelProvider.notifier).onChangeSubject(val),
+          ref.read(todoViewModelPod.notifier).onChangeSubject(val),
     );
   }
 }
@@ -145,10 +155,9 @@ class DateTodo extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final finalDate = ref.watch(dateTodoProvider.notifier);
+    final finalDate = ref.watch(dateTodoPod.notifier);
 
     final platform = foundation.defaultTargetPlatform;
-    final isWeb = foundation.kIsWeb;
 
     final isIOS = platform == foundation.TargetPlatform.iOS;
     final isMacOS = platform == foundation.TargetPlatform.macOS;
@@ -157,16 +166,17 @@ class DateTodo extends HookConsumerWidget {
       () {
         if (todo != null) {
           Future.microtask(
-            () => ref.read(dateTodoProvider.notifier).state = todo!.finalDate,
+            () => ref.read(dateTodoPod.notifier).state = todo!.finalDate,
           );
         }
+        return null;
       },
       const [],
     );
 
     return InkWell(
       onTap: () {
-        !isWeb && (isIOS || isMacOS)
+        !foundation.kIsWeb && (isIOS || isMacOS)
             ? _dateIOS(context, finalDate)
             : _dateAndroid(context, finalDate);
       },
@@ -292,21 +302,18 @@ class SubmitTodo extends HookConsumerWidget {
     Key? key,
     required this.categoryId,
     this.todoId,
-    this.enabled = false,
+    this.onSubmit,
   }) : super(key: key);
 
   final String categoryId;
   final String? todoId;
-  final bool enabled;
+  final VoidCallback? onSubmit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final todoViewModel = ref.watch(todoViewModelProvider.notifier);
-
     return ElevatedButton(
       style: ElevatedButton.styleFrom(primary: const Color(0xFF4A78FA)),
-      onPressed:
-          enabled ? () => todoViewModel.saveTodo(categoryId, todoId) : null,
+      onPressed: onSubmit,
       child: Container(
         width: double.infinity,
         alignment: Alignment.center,

@@ -1,3 +1,5 @@
+import 'package:context_menus/context_menus.dart';
+import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
@@ -16,10 +18,8 @@ class TodoListView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final categoryData = ref.watch(categoryProvider(categoryId));
-    final todoStream = ref.watch(todosProvider(categoryId));
-
-    final categoryViewModel = ref.watch(categoryViewModelProvider.notifier);
+    final categoryData = ref.watch(categoryDetailPod(categoryId));
+    final todoData = ref.watch(todoListPod(categoryId));
 
     final dataCategory = categoryData.maybeWhen(
       data: (data) => data,
@@ -32,145 +32,153 @@ class TodoListView extends HookConsumerWidget {
     );
 
     ref.listen(
-      todoViewModelProvider,
+      todoViewModelPod,
       (_, TodoState state) => _onChangeState(context, state),
     );
 
-    return Scaffold(
-      backgroundColor: const Color(0xFF4A78FA),
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+    return ContextMenuOverlay(
+      child: Scaffold(
+        backgroundColor: const Color(0xFF4A78FA),
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+            onPressed: () => Navigator.pop(context),
+          ),
+          actions: dataCategory != null
+              ? <Widget>[
+                  Tooltip(
+                    message: 'Delete category',
+                    child: IconButton(
+                      icon: const Icon(Icons.delete_forever),
+                      onPressed: () {
+                        ref
+                            .read(categoryViewModelPod.notifier)
+                            .deleteCategory(categoryId);
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                ]
+              : null,
         ),
-        actions: dataCategory != null
-            ? <Widget>[
-                IconButton(
-                  icon: const Icon(Icons.delete_forever),
-                  onPressed: () {
-                    categoryViewModel.deleteCategory(categoryId);
-                    Navigator.pop(context);
-                  },
-                ),
-              ]
+        body: dataCategory != null
+            ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Expanded(
+                    flex: isPortrait(context) ? 1 : 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Container(
+                          height: 60,
+                          width: 60,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Hero(
+                            tag: '${categoryId}_${dataCategory.emoji.name}',
+                            child: Material(
+                              color: Colors.transparent,
+                              child: Text(
+                                dataCategory.emoji.code,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(fontSize: 30),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              dataCategory.name,
+                              style: const TextStyle(
+                                fontSize: 35,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white,
+                              ),
+                            ).paddingOnly(b: 5),
+                            Text(
+                              '${dataCategory.todoSize} Tasks',
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w300,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ).paddingOnly(l: 35),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: todoData.when(
+                      data: (data) {
+                        return Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30),
+                            ),
+                          ),
+                          child: data.isNotEmpty
+                              ? TodoList(
+                                  todoList: data,
+                                  onEditItem: (todo) =>
+                                      _goToTodo(context, todo: todo),
+                                ).paddingSymmetric(h: 24, v: 20)
+                              : const Center(
+                                  child: Text(
+                                    'Empty data, add a task',
+                                    style: TextStyle(fontSize: 25),
+                                  ),
+                                ),
+                        );
+                      },
+                      loading: () => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      error: (e, _) => Center(
+                        child: Text(
+                          e.toString(),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : errorCategory != null
+                ? Center(
+                    child: Text(
+                      errorCategory,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                    ),
+                  )
+                : const Center(
+                    child: CircularProgressIndicator(color: Colors.white),
+                  ),
+        floatingActionButton: dataCategory != null
+            ? FloatingActionButton(
+                backgroundColor: const Color(0xFF4A78FA),
+                onPressed: () => _goToTodo(context),
+                child: const Icon(Icons.add),
+              )
             : null,
       ),
-      body: dataCategory != null
-          ? Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Container(
-                        height: 60,
-                        width: 60,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Hero(
-                          tag: '${categoryId}_${dataCategory.emoji.name}',
-                          child: Material(
-                            color: Colors.transparent,
-                            child: Text(
-                              dataCategory.emoji.code,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(fontSize: 30),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            dataCategory.name,
-                            style: const TextStyle(
-                              fontSize: 35,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.white,
-                            ),
-                          ).paddingOnly(b: 5),
-                          Text(
-                            '${dataCategory.todoSize} Tasks',
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w300,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ).paddingOnly(l: 35),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: todoStream.when(
-                    data: (todos) {
-                      return Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30),
-                          ),
-                        ),
-                        child: todos.isNotEmpty
-                            ? TodoList(
-                                todoList: todos,
-                                onEditItem: (todo) =>
-                                    _goToTodo(context, todo: todo),
-                              ).paddingSymmetric(h: 24, v: 20)
-                            : const Center(
-                                child: Text(
-                                  'Empty data, add a task',
-                                  style: TextStyle(fontSize: 25),
-                                ),
-                              ),
-                      );
-                    },
-                    loading: () => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                    error: (e, _) => Center(
-                      child: Text(
-                        e.toString(),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          : errorCategory != null
-              ? Center(
-                  child: Text(
-                    errorCategory,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 20, color: Colors.white),
-                  ),
-                )
-              : const Center(
-                  child: CircularProgressIndicator(color: Colors.white),
-                ),
-      floatingActionButton: dataCategory != null
-          ? FloatingActionButton(
-              backgroundColor: const Color(0xFF4A78FA),
-              onPressed: () => _goToTodo(context),
-              child: const Icon(Icons.add),
-            )
-          : null,
     );
   }
 
@@ -198,9 +206,7 @@ class TodoListView extends HookConsumerWidget {
       }
     }
 
-    if (error != null) {
-      _showMessage(context, error);
-    }
+    if (error != null) _showMessage(context, error);
   }
 
   void _showMessage(BuildContext context, String message) {
@@ -219,16 +225,30 @@ class TodoList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(todoViewModelProvider.notifier);
+    final viewModel = ref.watch(todoViewModelPod.notifier);
+
+    final isDesktop = [
+      DeviceSegment.desktop,
+      DeviceSegment.desktopWeb,
+    ].contains(getDevice());
+
     return ListView(
       children: <Widget>[
         for (final item in todoList)
-          TodoItem(
-            todo: item,
-            onEdit: () => onEditItem(item),
-            onRemove: () => viewModel.deleteTodo(item.id!, item.categoryId),
-            onCheck: (value) => viewModel.checkTodo(item, isChecked: value),
-          )
+          if (isDesktop)
+            TodoItem.contextual(
+              todo: item,
+              onEdit: () => onEditItem(item),
+              onRemove: () => viewModel.deleteTodo(item.id!, item.categoryId),
+              onCheck: (value) => viewModel.checkTodo(item, isChecked: value),
+            )
+          else
+            TodoItem(
+              todo: item,
+              onEdit: () => onEditItem(item),
+              onRemove: () => viewModel.deleteTodo(item.id!, item.categoryId),
+              onCheck: (value) => viewModel.checkTodo(item, isChecked: value),
+            )
       ],
     );
   }

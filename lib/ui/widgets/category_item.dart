@@ -15,9 +15,8 @@ class CategoryItem extends StatelessWidget {
       onTap: onClick,
       child: Card(
         elevation: 5,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -35,19 +34,23 @@ class CategoryItem extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  item.name,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ).paddingOnly(b: 3),
-                Text(
-                  '${item.todoSize} Tasks',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black38,
+                FittedBox(
+                  child: Text(
+                    item.name,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ).paddingOnly(b: 3),
+                ),
+                FittedBox(
+                  child: Text(
+                    '${item.todoSize} Tasks',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black38,
+                    ),
                   ),
                 ),
               ],
