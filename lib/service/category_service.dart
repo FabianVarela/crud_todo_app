@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/common/extension.dart';
+import 'package:crud_todo_app/model/category_model.dart';
 
 class CategoryService {
   CategoryService(this._database);
@@ -13,8 +13,9 @@ class CategoryService {
   Stream<List<Category>> getCategories() {
     final querySnapshot = _database.collection(_categoryCollection).snapshots();
 
-    return querySnapshot.map((query) =>
-        query.docs.map((doc) => Category.fromJson(doc.toMap())).toList());
+    return querySnapshot.map(
+      (query) => [for (var item in query.docs) Category.fromJson(item.toMap())],
+    );
   }
 
   Future<Category> getCategoryById(String categoryId) async {

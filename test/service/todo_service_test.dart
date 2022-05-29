@@ -36,8 +36,12 @@ void main() {
       when(() => mockFirestoreInstance.collection(any()))
           .thenReturn(mockCollectionReference);
 
-      when(() => mockCollectionReference.where(any(),
-          isEqualTo: any(named: 'isEqualTo'))).thenReturn(mockQuery);
+      when(
+        () => mockCollectionReference.where(
+          any(),
+          isEqualTo: any(named: 'isEqualTo'),
+        ),
+      ).thenReturn(mockQuery);
 
       when(() => mockQuery.snapshots())
           .thenAnswer((_) => Stream.value(mockQuerySnapshot));
@@ -55,9 +59,11 @@ void main() {
       // assert
       expect(result, isA<Stream<List<Todo>>>());
       expect(finalResult, isA<List<Todo>>());
-      verify(() => mockFirestoreInstance
-          .collection(any())
-          .where(any(), isEqualTo: any(named: 'isEqualTo'))).called(1);
+      verify(
+        () => mockFirestoreInstance
+            .collection(any())
+            .where(any(), isEqualTo: any(named: 'isEqualTo')),
+      ).called(1);
     });
 
     test('Get $Todo by id from Firebase mock', () async {

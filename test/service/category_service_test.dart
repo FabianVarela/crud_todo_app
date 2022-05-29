@@ -158,8 +158,12 @@ void main() {
       when(() => mockDocumentReference.delete())
           .thenAnswer((_) => Future.value());
 
-      when(() => mockCollectionReference.where(any(),
-          isEqualTo: any(named: 'isEqualTo'))).thenReturn(mockQuery);
+      when(
+        () => mockCollectionReference.where(
+          any(),
+          isEqualTo: any(named: 'isEqualTo'),
+        ),
+      ).thenReturn(mockQuery);
 
       when(() => mockQuery.get()).thenAnswer((_) async => mockQuerySnapshot);
 

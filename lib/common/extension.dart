@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dart_emoji/dart_emoji.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_emoji/flutter_emoji.dart';
 import 'package:intl/intl.dart';
 
 extension DateTimeUtilsX on DateTime {

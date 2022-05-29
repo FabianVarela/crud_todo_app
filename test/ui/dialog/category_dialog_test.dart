@@ -28,15 +28,17 @@ void main() {
     });
 
     Future<void> _pumpDialog(WidgetTester tester, Widget child) async {
-      await tester.pumpWidget(ProviderScope(
-        overrides: [
-          categoryRepositoryProvider.overrideWithValue(categoryRepository),
-        ],
-        child: MaterialApp(
-          home: child,
-          navigatorObservers: [mockNavigator],
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            categoryRepositoryPod.overrideWithValue(categoryRepository),
+          ],
+          child: MaterialApp(
+            home: child,
+            navigatorObservers: [mockNavigator],
+          ),
         ),
-      ));
+      );
     }
 
     testWidgets(
@@ -60,8 +62,8 @@ void main() {
       await tester.enterText(find.byType(NameCategory), 'Test Category');
       await tester.pumpAndSettle();
 
-      final enabled = tester.widget<SubmitCategory>(foundSubmitButton).enabled;
-      expect(enabled, isFalse);
+      final enabled = tester.widget<SubmitCategory>(foundSubmitButton).onSubmit;
+      expect(enabled == null, isTrue);
     });
 
     testWidgets(
@@ -76,20 +78,25 @@ void main() {
 
       await tester.pumpAndSettle();
 
-      final enabled = tester.widget<SubmitCategory>(foundSubmitButton).enabled;
-      expect(enabled, isTrue);
+      final enabled = tester.widget<SubmitCategory>(foundSubmitButton).onSubmit;
+      expect(enabled != null, isTrue);
     });
 
     testWidgets('Add $Category model from $CategoryFormDialog', (tester) async {
-      late final ICategoryViewModel viewModel;
+      late final CategoryViewModel viewModel;
 
       when(() => mockCategoryService.saveCategory(any()))
           .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
-      await _pumpDialog(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(categoryViewModelProvider.notifier);
-        return const Scaffold(body: CategoryFormDialog());
-      }));
+      await _pumpDialog(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(categoryViewModelPod.notifier);
+            return const Scaffold(body: CategoryFormDialog());
+          },
+        ),
+      );
 
       await tester.enterText(find.byType(NameCategory), 'Test Category');
       await tester.enterText(find.byType(EmojiCategory), '😀');
@@ -112,15 +119,20 @@ void main() {
     });
 
     testWidgets('When Add $Category model set an $Exception', (tester) async {
-      late final ICategoryViewModel viewModel;
+      late final CategoryViewModel viewModel;
 
       when(() => mockCategoryService.saveCategory(any()))
           .thenThrow(Exception('Error'));
 
-      await _pumpDialog(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(categoryViewModelProvider.notifier);
-        return const Scaffold(body: CategoryFormDialog());
-      }));
+      await _pumpDialog(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(categoryViewModelPod.notifier);
+            return const Scaffold(body: CategoryFormDialog());
+          },
+        ),
+      );
 
       await tester.enterText(find.byType(NameCategory), 'Test Category');
       await tester.enterText(find.byType(EmojiCategory), '😀');

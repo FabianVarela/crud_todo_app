@@ -1,4 +1,5 @@
-import 'package:flutter/foundation.dart';
+import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
+import 'package:crud_todo_app/common/extension.dart';
 import 'package:flutter/material.dart';
 
 class UnknownView extends StatelessWidget {
@@ -7,6 +8,11 @@ class UnknownView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
+    final isWeb = [
+      DeviceSegment.mobileWeb,
+      DeviceSegment.desktopWeb,
+    ].contains(getDevice());
 
     return Scaffold(
       appBar: AppBar(
@@ -29,14 +35,13 @@ class UnknownView extends StatelessWidget {
             Image.asset(
               'assets/images/image 404.png',
               fit: BoxFit.contain,
-              height: size.height * 0.4,
-              width: size.width * 0.4,
+              height: size.height * .4,
+              width: size.width * .4,
             ),
-            const SizedBox(height: 50),
-            const Text(
-              kIsWeb ? 'Oops!!! Page not found' : 'Oops!!! Screen not found',
-              style: TextStyle(fontSize: 30),
-            ),
+            Text(
+              isWeb ? 'Oops!!! Page not found' : 'Oops!!! Screen not found',
+              style: const TextStyle(fontSize: 30),
+            ).paddingOnly(t: 50),
           ],
         ),
       ),
