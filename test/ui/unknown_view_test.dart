@@ -13,12 +13,11 @@ void main() {
   });
 
   Future<void> _pumpMainScreen(WidgetTester tester, Widget child) async {
-    await tester.pumpWidget(ProviderScope(
-      child: MaterialApp(
-        home: child,
-        navigatorObservers: [mockNavigator],
+    await tester.pumpWidget(
+      ProviderScope(
+        child: MaterialApp(home: child, navigatorObservers: [mockNavigator]),
       ),
-    ));
+    );
   }
 
   group('$UnknownView UI screen', () {
