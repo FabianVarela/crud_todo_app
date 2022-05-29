@@ -1,7 +1,7 @@
+import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
-import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
@@ -21,14 +21,14 @@ class FormTodoView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final categoryData = ref.watch(categoryProvider(categoryId));
-    final todoData = ref.watch(todoProvider('$categoryId,${todoId ?? ''}'));
+    final categoryData = ref.watch(categoryDetailPod(categoryId));
+    final todoData = ref.watch(todoDetailPod('$categoryId,${todoId ?? ''}'));
 
-    final isValid = ref.watch(validationTodoProvider).state;
+    final isValid = ref.watch(validationTodoProvider);
 
     ref.listen(
-      todoViewModelProvider,
-      (TodoState state) => _onChangeState(context, state),
+      todoViewModelPod,
+      (_, TodoState state) => _onChangeState(context, state),
     );
 
     return Scaffold(
@@ -65,7 +65,16 @@ class FormTodoView extends HookConsumerWidget {
                 SubmitTodo(
                   categoryId: categoryId,
                   todoId: todo?.id,
-                  enabled: isValid,
+                  onSubmit: isValid
+                      ? () {
+                          ref.read(todoViewModelPod.notifier).saveTodo(
+                                categoryId,
+                                ref.read(subjectTodoPod.notifier).state.text!,
+                                ref.read(dateTodoPod.notifier).state,
+                                todoId: todoId,
+                              );
+                        }
+                      : null,
                 ),
               ],
             ),
@@ -106,18 +115,22 @@ class SubjectTodo extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final subject = ref.watch(subjectTodoProvider);
+    final subject = ref.watch(subjectTodoPod.notifier);
     final subjectTextController = useTextEditingController();
 
-    useEffect(() {
-      if (todo != null) {
-        Future.microtask(() {
-          ref.read(subjectTodoProvider).state =
-              ValidationText(text: todo!.subject);
-          subjectTextController.text = todo!.subject;
-        });
-      }
-    }, const []);
+    useEffect(
+      () {
+        if (todo != null) {
+          Future.microtask(() {
+            ref.read(subjectTodoPod.notifier).state =
+                ValidationText(text: todo!.subject);
+            subjectTextController.text = todo!.subject;
+          });
+        }
+        return null;
+      },
+      const [],
+    );
 
     return TextField(
       controller: subjectTextController,
@@ -130,7 +143,7 @@ class SubjectTodo extends HookConsumerWidget {
       ),
       style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
       onChanged: (val) => subject.state =
-          ref.read(todoViewModelProvider.notifier).onChangeSubject(val),
+          ref.read(todoViewModelPod.notifier).onChangeSubject(val),
     );
   }
 }
@@ -142,25 +155,28 @@ class DateTodo extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final finalDate = ref.watch(dateTodoProvider);
+    final finalDate = ref.watch(dateTodoPod.notifier);
 
     final platform = foundation.defaultTargetPlatform;
-    final isWeb = foundation.kIsWeb;
 
     final isIOS = platform == foundation.TargetPlatform.iOS;
     final isMacOS = platform == foundation.TargetPlatform.macOS;
 
-    useEffect(() {
-      if (todo != null) {
-        Future.microtask(
-          () => ref.read(dateTodoProvider).state = todo!.finalDate,
-        );
-      }
-    }, const []);
+    useEffect(
+      () {
+        if (todo != null) {
+          Future.microtask(
+            () => ref.read(dateTodoPod.notifier).state = todo!.finalDate,
+          );
+        }
+        return null;
+      },
+      const [],
+    );
 
     return InkWell(
       onTap: () {
-        !isWeb && (isIOS || isMacOS)
+        !foundation.kIsWeb && (isIOS || isMacOS)
             ? _dateIOS(context, finalDate)
             : _dateAndroid(context, finalDate);
       },
@@ -180,7 +196,9 @@ class DateTodo extends HookConsumerWidget {
   }
 
   Future<void> _dateAndroid(
-      BuildContext context, StateController<DateTime> date) async {
+    BuildContext context,
+    StateController<DateTime> date,
+  ) async {
     final pickedDate = await showDatePicker(
       context: context,
       initialDate: date.state.isDurationNegative
@@ -204,8 +222,13 @@ class DateTodo extends HookConsumerWidget {
       );
 
       if (pickedTime != null) {
-        date.state = DateTime(pickedDate.year, pickedDate.month, pickedDate.day,
-            pickedTime.hour, pickedTime.minute);
+        date.state = DateTime(
+          pickedDate.year,
+          pickedDate.month,
+          pickedDate.day,
+          pickedTime.hour,
+          pickedTime.minute,
+        );
       }
     }
   }
@@ -279,21 +302,18 @@ class SubmitTodo extends HookConsumerWidget {
     Key? key,
     required this.categoryId,
     this.todoId,
-    this.enabled = false,
+    this.onSubmit,
   }) : super(key: key);
 
   final String categoryId;
   final String? todoId;
-  final bool enabled;
+  final VoidCallback? onSubmit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final todoViewModel = ref.watch(todoViewModelProvider.notifier);
-
     return ElevatedButton(
       style: ElevatedButton.styleFrom(primary: const Color(0xFF4A78FA)),
-      onPressed:
-          enabled ? () => todoViewModel.saveTodo(categoryId, todoId) : null,
+      onPressed: onSubmit,
       child: Container(
         width: double.infinity,
         alignment: Alignment.center,

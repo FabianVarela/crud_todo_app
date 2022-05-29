@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'category_state.dart';
 
@@ -51,6 +52,14 @@ mixin _$CategoryState {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(CategoryAction action)? success,
+    TResult Function(String? message)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
@@ -65,6 +74,14 @@ mixin _$CategoryState {
     required TResult Function(_CategoryStateLoading value) loading,
     required TResult Function(_CategoryStateSuccess value) success,
     required TResult Function(_CategoryStateError value) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_CategoryStateInitial value)? initial,
+    TResult Function(_CategoryStateLoading value)? loading,
+    TResult Function(_CategoryStateSuccess value)? success,
+    TResult Function(_CategoryStateError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -145,6 +162,17 @@ class _$_CategoryStateInitial implements _CategoryStateInitial {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(CategoryAction action)? success,
+    TResult Function(String? message)? error,
+  }) {
+    return initial?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
@@ -167,6 +195,17 @@ class _$_CategoryStateInitial implements _CategoryStateInitial {
     required TResult Function(_CategoryStateError value) error,
   }) {
     return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_CategoryStateInitial value)? initial,
+    TResult Function(_CategoryStateLoading value)? loading,
+    TResult Function(_CategoryStateSuccess value)? success,
+    TResult Function(_CategoryStateError value)? error,
+  }) {
+    return initial?.call(this);
   }
 
   @override
@@ -239,6 +278,17 @@ class _$_CategoryStateLoading implements _CategoryStateLoading {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(CategoryAction action)? success,
+    TResult Function(String? message)? error,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
@@ -261,6 +311,17 @@ class _$_CategoryStateLoading implements _CategoryStateLoading {
     required TResult Function(_CategoryStateError value) error,
   }) {
     return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_CategoryStateInitial value)? initial,
+    TResult Function(_CategoryStateLoading value)? loading,
+    TResult Function(_CategoryStateSuccess value)? success,
+    TResult Function(_CategoryStateError value)? error,
+  }) {
+    return loading?.call(this);
   }
 
   @override
@@ -359,6 +420,17 @@ class _$_CategoryStateSuccess implements _CategoryStateSuccess {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(CategoryAction action)? success,
+    TResult Function(String? message)? error,
+  }) {
+    return success?.call(action);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
@@ -381,6 +453,17 @@ class _$_CategoryStateSuccess implements _CategoryStateSuccess {
     required TResult Function(_CategoryStateError value) error,
   }) {
     return success(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_CategoryStateInitial value)? initial,
+    TResult Function(_CategoryStateLoading value)? loading,
+    TResult Function(_CategoryStateSuccess value)? success,
+    TResult Function(_CategoryStateError value)? error,
+  }) {
+    return success?.call(this);
   }
 
   @override
@@ -484,6 +567,17 @@ class _$_CategoryStateError implements _CategoryStateError {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(CategoryAction action)? success,
+    TResult Function(String? message)? error,
+  }) {
+    return error?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
@@ -506,6 +600,17 @@ class _$_CategoryStateError implements _CategoryStateError {
     required TResult Function(_CategoryStateError value) error,
   }) {
     return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_CategoryStateInitial value)? initial,
+    TResult Function(_CategoryStateLoading value)? loading,
+    TResult Function(_CategoryStateSuccess value)? success,
+    TResult Function(_CategoryStateError value)? error,
+  }) {
+    return error?.call(this);
   }
 
   @override

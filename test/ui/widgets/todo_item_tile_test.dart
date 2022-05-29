@@ -8,17 +8,19 @@ void main() {
     testWidgets('Check when $TodoItemTile is initial', (tester) async {
       var counter = 0;
 
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: TodoItemTile(
-            title: 'title',
-            subTitle: 'subtitle',
-            isNegative: false,
-            isSuccess: false,
-            onTap: () => counter++,
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: TodoItemTile(
+              title: 'title',
+              subTitle: 'subtitle',
+              isNegative: false,
+              isSuccess: false,
+              onTap: () => counter++,
+            ),
           ),
         ),
-      ));
+      );
 
       final foundTile = find.byType(TodoItemTile);
       final foundCheck = find.descendant(
@@ -26,7 +28,7 @@ void main() {
         matching: find.byType(CustomCheckbox),
       );
 
-      expectTile(tester, foundCheck, false, false);
+      expectTile(tester, foundCheck);
       expect(counter, 0);
 
       await tester.tap(foundCheck);
@@ -38,17 +40,19 @@ void main() {
     testWidgets('Check when $TodoItemTile is success', (tester) async {
       var counter = 0;
 
-      await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-          body: TodoItemTile(
-            title: 'title',
-            subTitle: 'subtitle',
-            isNegative: false,
-            isSuccess: true,
-            onTap: () => counter++,
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: TodoItemTile(
+              title: 'title',
+              subTitle: 'subtitle',
+              isNegative: false,
+              isSuccess: true,
+              onTap: () => counter++,
+            ),
           ),
         ),
-      ));
+      );
 
       final foundTile = find.byType(TodoItemTile);
       final foundCheck = find.descendant(
@@ -56,7 +60,7 @@ void main() {
         matching: find.byType(CustomCheckbox),
       );
 
-      expectTile(tester, foundCheck, true, true);
+      expectTile(tester, foundCheck, isChecked: true, isLineThrough: true);
       expect(counter, 0);
 
       await tester.tap(foundCheck);
@@ -68,7 +72,11 @@ void main() {
 }
 
 void expectTile(
-    WidgetTester tester, Finder finder, bool isChecked, bool isLineThrough) {
+  WidgetTester tester,
+  Finder finder, {
+  bool isChecked = false,
+  bool isLineThrough = false,
+}) {
   final _isChecked = tester.widget<CustomCheckbox>(finder).value;
   expect(_isChecked, equals(isChecked));
 

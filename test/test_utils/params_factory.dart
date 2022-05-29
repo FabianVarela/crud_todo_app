@@ -1,6 +1,6 @@
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
-import 'package:flutter_emoji/flutter_emoji.dart';
+import 'package:dart_emoji/dart_emoji.dart';
 
 const categoryId = 'ABC123';
 const categoryName = 'Test Category';
@@ -15,7 +15,6 @@ Category get category => Category(
       id: categoryId,
       name: categoryName,
       emoji: categoryEmoji,
-      todoSize: 0,
     );
 
 const todoId = 'TODO-456';

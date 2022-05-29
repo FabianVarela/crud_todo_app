@@ -3,8 +3,8 @@ import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
-import 'package:crud_todo_app/ui/form_todo_view.dart';
 import 'package:crud_todo_app/ui/category_list_view.dart';
+import 'package:crud_todo_app/ui/form_todo_view.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/custom_checkbox.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
@@ -44,24 +44,26 @@ void main() {
     });
 
     Future<void> _pumpMainScreen(WidgetTester tester, Widget child) async {
-      await tester.pumpWidget(ProviderScope(
-        overrides: [
-          categoryRepositoryProvider.overrideWithValue(categoryRepository),
-          todoRepositoryProvider.overrideWithValue(todoRepository),
-        ],
-        child: MaterialApp(
-          home: child,
-          navigatorObservers: [mockNavigator],
-          // TODO: Review unit test for Navigator 2.0
-          // Navigator(
-          //   observers: [mockNavigator],
-          //   pages: <Page<dynamic>>[
-          //     MaterialPage<dynamic>(child: child),
-          //   ],
-          //   onPopPage: (route, dynamic result) => route.didPop(result),
-          // ),
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            categoryRepositoryPod.overrideWithValue(categoryRepository),
+            todoRepositoryPod.overrideWithValue(todoRepository),
+          ],
+          child: MaterialApp(
+            home: child,
+            navigatorObservers: [mockNavigator],
+            // TODO: Review unit test for Navigator 2.0
+            // Navigator(
+            //   observers: [mockNavigator],
+            //   pages: <Page<dynamic>>[
+            //     MaterialPage<dynamic>(child: child),
+            //   ],
+            //   onPopPage: (route, dynamic result) => route.didPop(result),
+            // ),
+          ),
         ),
-      ));
+      );
     }
 
     Future<void> _showHideProgress(WidgetTester tester) async {
@@ -164,16 +166,24 @@ void main() {
     testWidgets(
         'Check remove $Category button in $TodoListView screen '
         'and return to $CategoryListView screen', (tester) async {
-      late final ICategoryViewModel viewModel;
+      late final CategoryViewModel viewModel;
 
       _setWhenMethodsToGetData(isEmptyTodo: true);
       when(() => mockCategoryService.deleteCategory(any()))
           .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
-      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(categoryViewModelProvider.notifier);
-        return TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {});
-      }));
+      await _pumpMainScreen(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(categoryViewModelPod.notifier);
+            return TodoListView(
+              categoryId: category.id!,
+              onGoToTodo: (_, __) {},
+            );
+          },
+        ),
+      );
       await _showHideProgress(tester);
 
       await tester.tap(find.byIcon(Icons.delete_forever));
@@ -191,16 +201,24 @@ void main() {
     });
 
     testWidgets('When remove $Category model set $Exception', (tester) async {
-      late final ICategoryViewModel viewModel;
+      late final CategoryViewModel viewModel;
 
       _setWhenMethodsToGetData(isEmptyTodo: true);
       when(() => mockCategoryService.deleteCategory(any()))
           .thenThrow(Exception('Error'));
 
-      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(categoryViewModelProvider.notifier);
-        return TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {});
-      }));
+      await _pumpMainScreen(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(categoryViewModelPod.notifier);
+            return TodoListView(
+              categoryId: category.id!,
+              onGoToTodo: (_, __) {},
+            );
+          },
+        ),
+      );
       await _showHideProgress(tester);
 
       await tester.tap(find.byIcon(Icons.delete_forever));
@@ -306,17 +324,25 @@ void main() {
     testWidgets(
         'Update $Todo model when check '
         'an existing $TodoItem widget', (tester) async {
-      late final ITodoViewModel viewModel;
+      late final TodoViewModel viewModel;
 
       _setWhenMethodsToGetData(isExistsTodo: true);
       when(() => mockTodoService.saveTodo(any())).thenAnswer((_) {
         return Future<void>.delayed(const Duration(milliseconds: 100));
       });
 
-      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(todoViewModelProvider.notifier);
-        return TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {});
-      }));
+      await _pumpMainScreen(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(todoViewModelPod.notifier);
+            return TodoListView(
+              categoryId: category.id!,
+              onGoToTodo: (_, __) {},
+            );
+          },
+        ),
+      );
       await _showHideProgress(tester);
       await tester.pumpAndSettle();
 
@@ -344,7 +370,7 @@ void main() {
     });
 
     testWidgets('When update a $Todo model set an $Exception', (tester) async {
-      late ITodoViewModel viewModel;
+      late TodoViewModel viewModel;
 
       _setWhenMethodsToGetData(isExistsTodo: true);
       when(() => mockTodoService.saveTodo(any())).thenAnswer((_) {
@@ -354,10 +380,18 @@ void main() {
         );
       });
 
-      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(todoViewModelProvider.notifier);
-        return TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {});
-      }));
+      await _pumpMainScreen(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(todoViewModelPod.notifier);
+            return TodoListView(
+              categoryId: category.id!,
+              onGoToTodo: (_, __) {},
+            );
+          },
+        ),
+      );
       await _showHideProgress(tester);
       await tester.pumpAndSettle();
 
@@ -420,17 +454,25 @@ void main() {
     });
 
     testWidgets('Slide a $TodoItem and remove $Todo from list', (tester) async {
-      late ITodoViewModel viewModel;
+      late TodoViewModel viewModel;
 
       _setWhenMethodsToGetData(isExistsTodo: true);
       when(() => mockTodoService.deleteTodo(any(), any())).thenAnswer((_) {
         return Future<void>.delayed(const Duration(milliseconds: 100));
       });
 
-      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(todoViewModelProvider.notifier);
-        return TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {});
-      }));
+      await _pumpMainScreen(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(todoViewModelPod.notifier);
+            return TodoListView(
+              categoryId: category.id!,
+              onGoToTodo: (_, __) {},
+            );
+          },
+        ),
+      );
       await _showHideProgress(tester);
       await tester.pumpAndSettle();
 
@@ -461,7 +503,7 @@ void main() {
     });
 
     testWidgets('When remove a $Todo model set an $Exception', (tester) async {
-      late ITodoViewModel viewModel;
+      late TodoViewModel viewModel;
 
       _setWhenMethodsToGetData(isExistsTodo: true);
       when(() => mockTodoService.deleteTodo(any(), any())).thenAnswer((_) {
@@ -471,10 +513,18 @@ void main() {
         );
       });
 
-      await _pumpMainScreen(tester, Consumer(builder: (_, ref, child) {
-        viewModel = ref.read(todoViewModelProvider.notifier);
-        return TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {});
-      }));
+      await _pumpMainScreen(
+        tester,
+        Consumer(
+          builder: (_, ref, child) {
+            viewModel = ref.read(todoViewModelPod.notifier);
+            return TodoListView(
+              categoryId: category.id!,
+              onGoToTodo: (_, __) {},
+            );
+          },
+        ),
+      );
       await _showHideProgress(tester);
       await tester.pumpAndSettle();
 

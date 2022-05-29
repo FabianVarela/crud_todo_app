@@ -1,5 +1,6 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'todo_state.dart';
 
@@ -51,6 +52,14 @@ mixin _$TodoState {
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(TodoAction action)? success,
+    TResult Function(String? message)? error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
@@ -65,6 +74,14 @@ mixin _$TodoState {
     required TResult Function(_TodoStateLoading value) loading,
     required TResult Function(_TodoStateSuccess value) success,
     required TResult Function(_TodoStateError value) error,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_TodoStateInitial value)? initial,
+    TResult Function(_TodoStateLoading value)? loading,
+    TResult Function(_TodoStateSuccess value)? success,
+    TResult Function(_TodoStateError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -143,6 +160,17 @@ class _$_TodoStateInitial implements _TodoStateInitial {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(TodoAction action)? success,
+    TResult Function(String? message)? error,
+  }) {
+    return initial?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
@@ -165,6 +193,17 @@ class _$_TodoStateInitial implements _TodoStateInitial {
     required TResult Function(_TodoStateError value) error,
   }) {
     return initial(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_TodoStateInitial value)? initial,
+    TResult Function(_TodoStateLoading value)? loading,
+    TResult Function(_TodoStateSuccess value)? success,
+    TResult Function(_TodoStateError value)? error,
+  }) {
+    return initial?.call(this);
   }
 
   @override
@@ -237,6 +276,17 @@ class _$_TodoStateLoading implements _TodoStateLoading {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(TodoAction action)? success,
+    TResult Function(String? message)? error,
+  }) {
+    return loading?.call();
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
@@ -259,6 +309,17 @@ class _$_TodoStateLoading implements _TodoStateLoading {
     required TResult Function(_TodoStateError value) error,
   }) {
     return loading(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_TodoStateInitial value)? initial,
+    TResult Function(_TodoStateLoading value)? loading,
+    TResult Function(_TodoStateSuccess value)? success,
+    TResult Function(_TodoStateError value)? error,
+  }) {
+    return loading?.call(this);
   }
 
   @override
@@ -356,6 +417,17 @@ class _$_TodoStateSuccess implements _TodoStateSuccess {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(TodoAction action)? success,
+    TResult Function(String? message)? error,
+  }) {
+    return success?.call(action);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
@@ -378,6 +450,17 @@ class _$_TodoStateSuccess implements _TodoStateSuccess {
     required TResult Function(_TodoStateError value) error,
   }) {
     return success(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_TodoStateInitial value)? initial,
+    TResult Function(_TodoStateLoading value)? loading,
+    TResult Function(_TodoStateSuccess value)? success,
+    TResult Function(_TodoStateError value)? error,
+  }) {
+    return success?.call(this);
   }
 
   @override
@@ -479,6 +562,17 @@ class _$_TodoStateError implements _TodoStateError {
 
   @override
   @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function(TodoAction action)? success,
+    TResult Function(String? message)? error,
+  }) {
+    return error?.call(message);
+  }
+
+  @override
+  @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
@@ -501,6 +595,17 @@ class _$_TodoStateError implements _TodoStateError {
     required TResult Function(_TodoStateError value) error,
   }) {
     return error(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_TodoStateInitial value)? initial,
+    TResult Function(_TodoStateLoading value)? loading,
+    TResult Function(_TodoStateSuccess value)? success,
+    TResult Function(_TodoStateError value)? error,
+  }) {
+    return error?.call(this);
   }
 
   @override
