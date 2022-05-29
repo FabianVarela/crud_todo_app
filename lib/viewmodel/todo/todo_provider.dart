@@ -13,7 +13,7 @@ final todoDetailPod = FutureProvider.autoDispose.family<Todo?, String>(
     final params = param.split(',');
     return params[0].isNotEmpty && params[1].isNotEmpty
         ? ref.watch(todoRepositoryPod).getTodoById(params[0], params[1])
-        : Future.value(null);
+        : Future.value();
   },
 );
 

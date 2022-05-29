@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crud_todo_app/navigator/crud_todo_information_parser.dart';
+import 'package:crud_todo_app/navigator/crud_todo_router_delegate.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
 import 'package:crud_todo_app/service/category_service.dart';
@@ -42,4 +44,16 @@ final categoryViewModelPod =
 final todoViewModelPod = StateNotifierProvider<TodoViewModel, TodoState>(
   (ref) => TodoViewModel(ref.watch(todoRepositoryPod)),
 );
+//endregion
+
+//region Navigator 2.0
+
+final crudTodoRouterDelegateProvider = ChangeNotifierProvider(
+  (_) => CrudTodoRouterDelegate(),
+);
+
+final crudTodoInformationParserProvider = Provider(
+  (ref) => CrudTodoInformationParser(),
+);
+
 //endregion

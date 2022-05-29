@@ -1,83 +1,19 @@
-import 'package:equatable/equatable.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class CrudTodoConfig extends Equatable {
-  const CrudTodoConfig.categoryList()
-      : currentCategoryId = null,
-        currentTodoId = null,
-        isTodoNew = false,
-        isTodoUpdate = false,
-        isUnknown = false;
+part 'crud_todo_config.freezed.dart';
 
-  const CrudTodoConfig.todoList({String? categoryId})
-      : currentCategoryId = categoryId,
-        currentTodoId = null,
-        isTodoNew = false,
-        isTodoUpdate = false,
-        isUnknown = false;
+@freezed
+class CrudTodoConfig with _$CrudTodoConfig {
+  const factory CrudTodoConfig.categoryList() = CrudTodoConfigCategoryList;
 
-  const CrudTodoConfig.addTodo({String? categoryId})
-      : currentCategoryId = categoryId,
-        currentTodoId = null,
-        isTodoNew = true,
-        isTodoUpdate = false,
-        isUnknown = false;
+  const factory CrudTodoConfig.todoList(String categoryId) =
+      CrudTodoConfigTodoList;
 
-  const CrudTodoConfig.updateTodo({String? categoryId, String? todoId})
-      : currentCategoryId = categoryId,
-        currentTodoId = todoId,
-        isTodoNew = false,
-        isTodoUpdate = true,
-        isUnknown = false;
+  const factory CrudTodoConfig.addTodo(String categoryId) =
+      CrudTodoConfigAddTodo;
 
-  const CrudTodoConfig.unknown()
-      : currentCategoryId = null,
-        currentTodoId = null,
-        isTodoNew = false,
-        isTodoUpdate = false,
-        isUnknown = true;
+  const factory CrudTodoConfig.updateTodo(String categoryId, String todoId) =
+      CrudTodoConfigUpdateTodo;
 
-  final String? currentCategoryId;
-  final String? currentTodoId;
-  final bool isTodoNew;
-  final bool isTodoUpdate;
-  final bool isUnknown;
-
-  bool get isPageUnknown => isUnknown;
-
-  bool get isCategoryListPage =>
-      currentCategoryId == null &&
-      currentTodoId == null &&
-      !isTodoNew &&
-      !isTodoUpdate &&
-      !isUnknown;
-
-  bool get isTodoListPage =>
-      currentCategoryId != null &&
-      currentTodoId == null &&
-      !isTodoNew &&
-      !isTodoUpdate &&
-      !isUnknown;
-
-  bool get isAddTodoPage =>
-      currentCategoryId != null &&
-      currentTodoId == null &&
-      isTodoNew &&
-      !isTodoUpdate &&
-      !isUnknown;
-
-  bool get isUpdateTodoPage =>
-      currentCategoryId != null &&
-      currentTodoId != null &&
-      !isTodoNew &&
-      isTodoUpdate &&
-      !isUnknown;
-
-  @override
-  List<Object?> get props => [
-        currentCategoryId,
-        currentTodoId,
-        isTodoNew,
-        isTodoUpdate,
-        isUnknown,
-      ];
+  const factory CrudTodoConfig.unknown() = CrudTodoConfigUnknown;
 }

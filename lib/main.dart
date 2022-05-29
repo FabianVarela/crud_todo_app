@@ -1,6 +1,5 @@
 import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
-import 'package:crud_todo_app/navigator/crud_todo_information_parser.dart';
-import 'package:crud_todo_app/navigator/crud_todo_router_delegate.dart';
+import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,19 +18,14 @@ Future<void> main() async {
   runApp(const ProviderScope(child: TodoListApp()));
 }
 
-class TodoListApp extends StatefulWidget {
+class TodoListApp extends ConsumerWidget {
   const TodoListApp({Key? key}) : super(key: key);
 
   @override
-  _TodoListAppState createState() => _TodoListAppState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final _todoRouterDelegate = ref.watch(crudTodoRouterDelegateProvider);
+    final _todoInfoParser = ref.watch(crudTodoInformationParserProvider);
 
-class _TodoListAppState extends State<TodoListApp> {
-  final _todoRouterDelegate = CrudTodoRouterDelegate();
-  final _todoInfoParser = CrudTodoInformationParser();
-
-  @override
-  Widget build(BuildContext context) {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
