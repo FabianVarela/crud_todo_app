@@ -36,7 +36,7 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
 
   bool get isTodoSelected => _isTodoSelected;
 
-  void selectCurrentTodo(String? value, bool isSelected) {
+  void selectCurrentTodo(String? value, {required bool isSelected}) {
     _todoId = value;
     _isTodoSelected = isSelected;
 
@@ -86,7 +86,10 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
           if (categoryId != null)
             TodoPage(
               categoryId: categoryId!,
-              onGoToTodo: (catId, todoId) => selectCurrentTodo(todoId, true),
+              onGoToTodo: (catId, todoId) => selectCurrentTodo(
+                todoId,
+                isSelected: true,
+              ),
             ),
           if (categoryId != null && isTodoSelected)
             FormTodoPage(categoryId: categoryId!, todoId: todoId)
@@ -96,7 +99,7 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
         if (!route.didPop(result)) return false;
 
         if (!isTodoSelected) categoryId = null;
-        selectCurrentTodo(null, false);
+        selectCurrentTodo(null, isSelected: false);
 
         return true;
       },
@@ -136,7 +139,7 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
 
   void _values({String? catId, String? todoId, bool? selected, bool? noFound}) {
     categoryId = catId;
-    selectCurrentTodo(todoId, selected ?? false);
+    selectCurrentTodo(todoId, isSelected: selected ?? false);
     is404 = noFound ?? false;
   }
 }
