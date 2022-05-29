@@ -97,6 +97,7 @@ class TodoItem extends StatelessWidget {
             child: itemTile,
           )
         : ContextMenuRegion(
+            isEnabled: !todo.isCompleted,
             contextMenu: Container(
               width: 150,
               padding: const EdgeInsets.all(10),
