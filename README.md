@@ -2,7 +2,7 @@
 
 ![Coverage](./coverage_badge.svg?sanitize=true)
 
-Create a To-do List Flutter app managing CRUD with Firebase, using RiverPod as state management and dependency injection
+Create a To-do List Flutter app managing CRUD with Firebase, using RiverPod as state management and dependency injection.
 
 ### Getting Started (Firebase)
 * To execute the app, you have to Firebase Project already created.
@@ -34,7 +34,25 @@ Create a To-do List Flutter app managing CRUD with Firebase, using RiverPod as s
         ├── finalDate (Number)
         ├── isCompleted (Boolean)
         ├── subject (String)
- 
+
+### Navigator 2.0
+
+Actually the project has been implemented with **Navigator 2.0** or **Route API**.
+
+#### Deep linking
+
+For using deep links with flutter without any packages, review this [link](https://flutter.dev/docs/development/ui/navigation/deep-linking)
+
+Run deep links in **iOS**, use the command below:
+```bash
+xcrun simctl openurl booted crudtodoapp://crudtodoexample.com/categories/{categoryId}/todo/{todoId}
+```
+
+Run deep links in **Android**, use the command below:
+```bash
+~/Library/Android/sdk/platform-tools/adb shell am start -a android.intent.action.VIEW \ -c android.intent.category.BROWSABLE \ -d crudtodoapp://crudtodoexample.com/categories/{categoryId}/todo/{todoId}
+```
+
 ### Used packages
 
 ------

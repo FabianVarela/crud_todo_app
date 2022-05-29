@@ -1,9 +1,7 @@
 import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
 import 'package:crud_todo_app/common/extension.dart';
-import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/ui/dialog/category_dialog.dart';
-import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
@@ -13,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+typedef NavigatorToDetail = void Function(String);
+
 class CreateCategoryIntent extends Intent {
   const CreateCategoryIntent();
 }
@@ -21,21 +21,19 @@ class RefreshListIntent extends Intent {
   const RefreshListIntent();
 }
 
-class CategoryListView extends ConsumerStatefulWidget {
-  const CategoryListView({Key? key}) : super(key: key);
+class CategoryListView extends ConsumerWidget {
+  const CategoryListView({Key? key, required this.onGoToDetail})
+      : super(key: key);
+
+  final NavigatorToDetail onGoToDetail;
 
   @override
-  ConsumerState<CategoryListView> createState() => _CategoryListViewState();
-}
-
-class _CategoryListViewState extends ConsumerState<CategoryListView> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final categoriesData = ref.watch(categoryListPod);
 
     ref.listen(
       categoryViewModelPod,
-      (_, CategoryState state) => _onChangeState(state),
+      (_, CategoryState state) => _onChangeState(context, state),
     );
 
     final device = getDevice();
@@ -62,7 +60,7 @@ class _CategoryListViewState extends ConsumerState<CategoryListView> {
         child: Actions(
           actions: <Type, Action<Intent>>{
             CreateCategoryIntent: CallbackAction<CreateCategoryIntent>(
-              onInvoke: (_) => _showCategoryDialog(),
+              onInvoke: (_) => _showCategoryDialog(context),
             ),
             RefreshListIntent: CallbackAction<RefreshListIntent>(
               onInvoke: (_) => ref.refresh(categoryListPod),
@@ -92,7 +90,7 @@ class _CategoryListViewState extends ConsumerState<CategoryListView> {
                                     tooltipMessage: item.name,
                                     child: CategoryItem(
                                       item: item,
-                                      onClick: () => _goToTodo(item),
+                                      onClick: () => onGoToDetail(item.id!),
                                     ),
                                   ),
                               ],
@@ -125,7 +123,7 @@ class _CategoryListViewState extends ConsumerState<CategoryListView> {
         message: 'Add category',
         child: FloatingActionButton(
           backgroundColor: const Color(0xFF4A78FA),
-          onPressed: _showCategoryDialog,
+          onPressed: () => _showCategoryDialog(context),
           child: const Icon(Icons.add),
         ),
       ),
@@ -148,13 +146,7 @@ class _CategoryListViewState extends ConsumerState<CategoryListView> {
           };
   }
 
-  Future<void> _goToTodo(Category category) async {
-    await Navigator.of(context).push<void>(
-      MaterialPageRoute(builder: (_) => TodoListView(categoryId: category.id!)),
-    );
-  }
-
-  Future<void> _showCategoryDialog() async {
+  Future<void> _showCategoryDialog(BuildContext context) async {
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
@@ -167,20 +159,20 @@ class _CategoryListViewState extends ConsumerState<CategoryListView> {
     );
   }
 
-  void _onChangeState(CategoryState state) {
+  void _onChangeState(BuildContext context, CategoryState state) {
     final action = state.maybeWhen(success: (a) => a, orElse: () => null);
     final error = state.maybeWhen(error: (m) => m, orElse: () => null);
 
     if (action == CategoryAction.add) {
-      _showMessage('Category created successfully');
+      _showMessage(context, 'Category created successfully');
     } else if (action == CategoryAction.remove) {
-      _showMessage('Category removed successfully');
+      _showMessage(context, 'Category removed successfully');
     }
 
-    if (error != null) _showMessage(error);
+    if (error != null) _showMessage(context, error);
   }
 
-  void _showMessage(String message) {
+  void _showMessage(BuildContext context, String message) {
     final device = getDevice();
 
     if ([DeviceSegment.desktop, DeviceSegment.desktopWeb].contains(device)) {

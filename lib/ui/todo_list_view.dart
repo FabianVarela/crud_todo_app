@@ -3,7 +3,6 @@ import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/provider_dependency.dart';
-import 'package:crud_todo_app/ui/form_todo_view.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
@@ -11,10 +10,17 @@ import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+typedef NavigatorToTodo = void Function(String, String?);
+
 class TodoListView extends HookConsumerWidget {
-  const TodoListView({Key? key, required this.categoryId}) : super(key: key);
+  const TodoListView({
+    Key? key,
+    required this.categoryId,
+    required this.onGoToTodo,
+  }) : super(key: key);
 
   final String categoryId;
+  final NavigatorToTodo onGoToTodo;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -133,7 +139,7 @@ class TodoListView extends HookConsumerWidget {
                               ? TodoList(
                                   todoList: data,
                                   onEditItem: (todo) =>
-                                      _goToTodo(context, todo: todo),
+                                      onGoToTodo(categoryId, todo.id),
                                 ).paddingSymmetric(h: 24, v: 20)
                               : const Center(
                                   child: Text(
@@ -174,18 +180,10 @@ class TodoListView extends HookConsumerWidget {
         floatingActionButton: dataCategory != null
             ? FloatingActionButton(
                 backgroundColor: const Color(0xFF4A78FA),
-                onPressed: () => _goToTodo(context),
+                onPressed: () => onGoToTodo(categoryId, null),
                 child: const Icon(Icons.add),
               )
             : null,
-      ),
-    );
-  }
-
-  Future<void> _goToTodo(BuildContext context, {Todo? todo}) async {
-    await Navigator.of(context).push<void>(
-      MaterialPageRoute(
-        builder: (_) => FormTodoView(categoryId: categoryId, todoId: todo?.id),
       ),
     );
   }
