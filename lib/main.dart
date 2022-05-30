@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:crud_todo_app/app.dart';
 import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,5 +17,12 @@ Future<void> main() async {
     setWindowMaxSize(const Size(1500, 900));
   }
 
-  runApp(const ProviderScope(child: TodoApp(title: 'To-Do List App')));
+  FlutterError.onError = (details) {
+    log(details.exceptionAsString(), stackTrace: details.stack);
+  };
+
+  runZonedGuarded(
+    () => runApp(const ProviderScope(child: TodoApp(title: 'To-Do List App'))),
+    (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
+  );
 }
