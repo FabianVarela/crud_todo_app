@@ -9,7 +9,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class CategoryFormDialog extends ConsumerWidget {
-  const CategoryFormDialog({Key? key}) : super(key: key);
+  const CategoryFormDialog({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -46,7 +46,7 @@ class CategoryFormDialog extends ConsumerWidget {
               child: const Icon(Icons.close, color: Colors.white),
             ).paddingSymmetric(v: 5),
           ),
-          Container(
+          DecoratedBox(
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12),
@@ -91,7 +91,7 @@ class CategoryFormDialog extends ConsumerWidget {
 }
 
 class NameCategory extends HookConsumerWidget {
-  const NameCategory({Key? key}) : super(key: key);
+  const NameCategory({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -112,7 +112,7 @@ class NameCategory extends HookConsumerWidget {
 }
 
 class EmojiCategory extends HookConsumerWidget {
-  const EmojiCategory({Key? key}) : super(key: key);
+  const EmojiCategory({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -133,7 +133,7 @@ class EmojiCategory extends HookConsumerWidget {
 }
 
 class SubmitCategory extends ConsumerWidget {
-  const SubmitCategory({Key? key, this.onSubmit}) : super(key: key);
+  const SubmitCategory({super.key, this.onSubmit});
 
   final VoidCallback? onSubmit;
 

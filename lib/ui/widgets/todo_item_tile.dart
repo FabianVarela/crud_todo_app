@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 class TodoItemTile extends StatelessWidget {
   const TodoItemTile({
-    Key? key,
+    super.key,
     required this.title,
     required this.subTitle,
     required this.isNegative,
     required this.isSuccess,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   final String title;
   final String subTitle;

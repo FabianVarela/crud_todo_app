@@ -36,13 +36,13 @@ class TodoItem extends StatelessWidget {
         );
 
   const TodoItem._({
-    Key? key,
+    super.key,
     required this.todo,
     this.onEdit,
     this.onRemove,
     this.onCheck,
     this.isSlidable = true,
-  }) : super(key: key);
+  });
 
   final Todo todo;
   final VoidCallback? onEdit;
@@ -121,7 +121,7 @@ class TodoItem extends StatelessWidget {
                         onEdit != null && !todo.finalDate.isDurationNegative
                             ? () {
                                 onEdit?.call();
-                                context.contextMenuOverlay.hide();
+                                context.contextMenuOverlay.close();
                               }
                             : null,
                     icon: const Icon(Icons.edit, color: Color(0xFF4D4E50)),
@@ -131,7 +131,7 @@ class TodoItem extends StatelessWidget {
                   TextButton.icon(
                     onPressed: () {
                       onRemove?.call();
-                      context.contextMenuOverlay.hide();
+                      context.contextMenuOverlay.close();
                     },
                     icon: const Icon(Icons.delete, color: Colors.red),
                     label: const Text('Remove'),

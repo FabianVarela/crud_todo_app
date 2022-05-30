@@ -13,8 +13,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class FormTodoView extends HookConsumerWidget {
-  const FormTodoView({Key? key, required this.categoryId, this.todoId})
-      : super(key: key);
+  const FormTodoView({super.key, required this.categoryId, this.todoId});
 
   final String categoryId;
   final String? todoId;
@@ -109,7 +108,7 @@ class FormTodoView extends HookConsumerWidget {
 }
 
 class SubjectTodo extends HookConsumerWidget {
-  const SubjectTodo({Key? key, required this.todo}) : super(key: key);
+  const SubjectTodo({super.key, required this.todo});
 
   final Todo? todo;
 
@@ -149,7 +148,7 @@ class SubjectTodo extends HookConsumerWidget {
 }
 
 class DateTodo extends HookConsumerWidget {
-  const DateTodo({Key? key, required this.todo}) : super(key: key);
+  const DateTodo({super.key, required this.todo});
 
   final Todo? todo;
 
@@ -262,8 +261,7 @@ class DateTodo extends HookConsumerWidget {
 }
 
 class CategoryTodo extends StatelessWidget {
-  const CategoryTodo({cupertino.Key? key, required this.category})
-      : super(key: key);
+  const CategoryTodo({super.key, required this.category});
 
   final Category category;
 
@@ -299,11 +297,11 @@ class CategoryTodo extends StatelessWidget {
 
 class SubmitTodo extends HookConsumerWidget {
   const SubmitTodo({
-    Key? key,
+    super.key,
     required this.categoryId,
     this.todoId,
     this.onSubmit,
-  }) : super(key: key);
+  });
 
   final String categoryId;
   final String? todoId;

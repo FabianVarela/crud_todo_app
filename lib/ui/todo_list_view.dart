@@ -14,10 +14,10 @@ typedef NavigatorToTodo = void Function(String, String?);
 
 class TodoListView extends HookConsumerWidget {
   const TodoListView({
-    Key? key,
+    super.key,
     required this.categoryId,
     required this.onGoToTodo,
-  }) : super(key: key);
+  });
 
   final String categoryId;
   final NavigatorToTodo onGoToTodo;
@@ -127,7 +127,7 @@ class TodoListView extends HookConsumerWidget {
                     flex: 2,
                     child: todoData.when(
                       data: (data) {
-                        return Container(
+                        return DecoratedBox(
                           decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
@@ -215,8 +215,7 @@ class TodoListView extends HookConsumerWidget {
 }
 
 class TodoList extends ConsumerWidget {
-  const TodoList({Key? key, required this.todoList, required this.onEditItem})
-      : super(key: key);
+  const TodoList({super.key, required this.todoList, required this.onEditItem});
 
   final List<Todo> todoList;
   final ValueSetter<Todo> onEditItem;
