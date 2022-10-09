@@ -50,6 +50,19 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    flavorDimensions "default"
+    productFlavors {
+        develop {
+            dimension "default"
+            applicationIdSuffix ".dev"
+            resValue "string", "name_app", "To-Do List App - Dev"
+        }
+        production {
+            dimension "default"
+            resValue "string", "name_app", "To-Do List App"
+        }
+    }
 }
 
 flutter {
