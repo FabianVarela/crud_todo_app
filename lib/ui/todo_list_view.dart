@@ -1,8 +1,8 @@
 import 'package:context_menus/context_menus.dart';
 import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
 import 'package:crud_todo_app/common/extension.dart';
+import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
-import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';

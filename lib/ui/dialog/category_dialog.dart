@@ -1,6 +1,6 @@
 import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
 import 'package:crud_todo_app/common/extension.dart';
-import 'package:crud_todo_app/provider_dependency.dart';
+import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/category/category_state.dart';
@@ -140,7 +140,7 @@ class SubmitCategory extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(primary: const Color(0xFF4A78FA)),
+      style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF4A78FA)),
       onPressed: onSubmit,
       child: Container(
         width: double.infinity,

@@ -1,8 +1,8 @@
 import 'package:crud_todo_app/common/extension.dart';
+import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
-import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
@@ -310,7 +310,7 @@ class SubmitTodo extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ElevatedButton(
-      style: ElevatedButton.styleFrom(primary: const Color(0xFF4A78FA)),
+      style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF4A78FA)),
       onPressed: onSubmit,
       child: Container(
         width: double.infinity,

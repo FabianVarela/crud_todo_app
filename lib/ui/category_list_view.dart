@@ -1,6 +1,6 @@
 import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
 import 'package:crud_todo_app/common/extension.dart';
-import 'package:crud_todo_app/provider_dependency.dart';
+import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/ui/dialog/category_dialog.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';

@@ -1,7 +1,7 @@
 import 'package:crud_todo_app/common/extension.dart';
+import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
-import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final categoryListPod = StreamProvider.autoDispose<List<Category>>(

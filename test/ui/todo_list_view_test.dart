@@ -1,6 +1,6 @@
+import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
-import 'package:crud_todo_app/provider_dependency.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
 import 'package:crud_todo_app/ui/category_list_view.dart';

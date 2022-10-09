@@ -11,17 +11,17 @@ import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-//region Firebase Firestore
-final firestorePod = Provider((_) => FirebaseFirestore.instance);
+//region Firebase
+final firebasePod = Provider((_) => FirebaseFirestore.instance);
 //endregion
 
 //region Service layer
 final categoryServicePod = Provider<CategoryService>((ref) {
-  return CategoryService(ref.read(firestorePod));
+  return CategoryService(ref.read(firebasePod));
 });
 
 final todoServicePod = Provider<TodoService>((ref) {
-  return TodoService(ref.read(firestorePod));
+  return TodoService(ref.read(firebasePod));
 });
 //endregion
 
@@ -47,7 +47,6 @@ final todoViewModelPod = StateNotifierProvider<TodoViewModel, TodoState>(
 //endregion
 
 //region Navigator 2.0
-
 final crudTodoRouterDelegateProvider = ChangeNotifierProvider(
   (_) => CrudTodoRouterDelegate(),
 );
@@ -55,5 +54,4 @@ final crudTodoRouterDelegateProvider = ChangeNotifierProvider(
 final crudTodoInformationParserProvider = Provider(
   (ref) => CrudTodoInformationParser(),
 );
-
 //endregion

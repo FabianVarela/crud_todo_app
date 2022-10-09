@@ -1,5 +1,5 @@
 import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
-import 'package:crud_todo_app/provider_dependency.dart';
+import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -16,12 +16,9 @@ class TodoApp extends ConsumerWidget {
     final _todoInfoParser = ref.watch(crudTodoInformationParserProvider);
 
     return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        textTheme: GoogleFonts.latoTextTheme(
-          Theme.of(context).textTheme,
-        ),
+        textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
       ),
       onGenerateTitle: (ctx) {
         if (getDevice() == DeviceSegment.desktop) setWindowTitle(title);
