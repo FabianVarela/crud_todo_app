@@ -10,6 +10,6 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   await bootstrap(
-    () => const TodoApp(title: 'To-Do List App'),
+    () => const TodoApp(title: 'To-Do List App - Dev'),
   );
 }
