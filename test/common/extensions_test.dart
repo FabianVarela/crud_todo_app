@@ -1,4 +1,4 @@
-import 'package:crud_todo_app/common/utils.dart';
+import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -9,7 +9,7 @@ void main() {
       const textEmpty = '';
 
       // act
-      final textValidation = Utils.validateEmpty(textEmpty);
+      final textValidation = textEmpty.validateEmpty();
 
       // assert
       expect(
@@ -24,7 +24,7 @@ void main() {
       const textEmpty = 'Este es mi nombre';
 
       // act
-      final textValidation = Utils.validateEmpty(textEmpty);
+      final textValidation = textEmpty.validateEmpty();
 
       // assert
       expect(
@@ -39,7 +39,7 @@ void main() {
       const textEmoji = '';
 
       // act
-      final textValidation = Utils.validateEmoji(textEmoji);
+      final textValidation = textEmoji.validateEmoji();
 
       // assert
       expect(
@@ -54,7 +54,7 @@ void main() {
       const textEmoji = '😀';
 
       // act
-      final textValidation = Utils.validateEmoji(textEmoji);
+      final textValidation = textEmoji.validateEmoji();
 
       // assert
       expect(
@@ -69,7 +69,7 @@ void main() {
       const textEmoji = ':happy';
 
       // act
-      final textValidation = Utils.validateEmoji(textEmoji);
+      final textValidation = textEmoji.validateEmoji();
 
       // assert
       expect(
@@ -84,10 +84,7 @@ void main() {
       const initialTextValidation = ValidationText(text: '');
 
       // act
-      final newTextValidation = Utils.validateEmpty(
-        initialTextValidation.text!,
-      );
-
+      final newTextValidation = initialTextValidation.text!.validateEmpty();
       final cloneTextValidation = initialTextValidation.copyWith(
         message: newTextValidation.message,
       );
@@ -103,10 +100,7 @@ void main() {
       const initialTextValidation = ValidationText(text: '', message: '');
 
       // act
-      final newTextValidation = Utils.validateEmpty(
-        initialTextValidation.text!,
-      );
-
+      final newTextValidation = initialTextValidation.text!.validateEmpty();
       final cloneTextValidation = initialTextValidation.copyWith(
         text: newTextValidation.text,
       );

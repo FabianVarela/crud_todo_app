@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:dart_emoji/dart_emoji.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -29,6 +30,14 @@ extension StringUtilsX on String {
 
     return false;
   }
+
+  ValidationText validateEmpty() => isNotEmpty
+      ? ValidationText(text: this)
+      : const ValidationText(message: 'Field is empty');
+
+  ValidationText validateEmoji() => (length == 1 || length == 2) && verifyEmoji
+      ? ValidationText(text: this)
+      : const ValidationText(message: 'Invalid emoji');
 }
 
 extension WidgetUtilsX on Widget {
