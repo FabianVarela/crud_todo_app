@@ -1,4 +1,4 @@
-import 'package:crud_todo_app/common/utils.dart';
+import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
@@ -10,7 +10,7 @@ class TodoViewModel extends StateNotifier<TodoState> {
 
   late final ITodoRepository _repository;
 
-  ValidationText onChangeSubject(String value) => Utils.validateEmpty(value);
+  ValidationText onChangeSubject(String value) => value.validateEmpty();
 
   Future<void> saveTodo(
     String catId,

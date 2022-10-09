@@ -1,4 +1,4 @@
-import 'package:crud_todo_app/common/utils.dart';
+import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
@@ -11,9 +11,9 @@ class CategoryViewModel extends StateNotifier<CategoryState> {
 
   late final ICategoryRepository _repository;
 
-  ValidationText onChangeName(String value) => Utils.validateEmpty(value);
+  ValidationText onChangeName(String value) => value.validateEmpty();
 
-  ValidationText onChangeEmoji(String value) => Utils.validateEmoji(value);
+  ValidationText onChangeEmoji(String value) => value.validateEmoji();
 
   Future<void> saveCategory(String name, String emoji) async {
     try {
