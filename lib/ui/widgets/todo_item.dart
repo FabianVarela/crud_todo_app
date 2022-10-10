@@ -121,7 +121,7 @@ class TodoItem extends StatelessWidget {
                         onEdit != null && !todo.finalDate.isDurationNegative
                             ? () {
                                 onEdit?.call();
-                                context.contextMenuOverlay.close();
+                                context.contextMenuOverlay.hide();
                               }
                             : null,
                     icon: const Icon(Icons.edit, color: Color(0xFF4D4E50)),
@@ -131,7 +131,7 @@ class TodoItem extends StatelessWidget {
                   TextButton.icon(
                     onPressed: () {
                       onRemove?.call();
-                      context.contextMenuOverlay.close();
+                      context.contextMenuOverlay.hide();
                     },
                     icon: const Icon(Icons.delete, color: Colors.red),
                     label: const Text('Remove'),
