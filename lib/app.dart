@@ -12,8 +12,8 @@ class TodoApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _todoRouterDelegate = ref.watch(crudTodoRouterDelegateProvider);
-    final _todoInfoParser = ref.watch(crudTodoInformationParserProvider);
+    final todoRouterDelegate = ref.watch(crudTodoRouterDelegateProvider);
+    final todoInfoParser = ref.watch(crudTodoInformationParserProvider);
 
     return MaterialApp.router(
       theme: ThemeData(
@@ -24,8 +24,8 @@ class TodoApp extends ConsumerWidget {
         if (getDevice() == DeviceSegment.desktop) setWindowTitle(title);
         return title;
       },
-      routerDelegate: _todoRouterDelegate,
-      routeInformationParser: _todoInfoParser,
+      routerDelegate: todoRouterDelegate,
+      routeInformationParser: todoInfoParser,
       backButtonDispatcher: RootBackButtonDispatcher(),
     );
   }

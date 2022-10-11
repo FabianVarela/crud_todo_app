@@ -12,7 +12,7 @@ class CategoryPage extends Page<void> {
   final NavigatorToDetail onGoToDetail;
 
   @override
-  Route createRoute(BuildContext context) {
+  Route<dynamic> createRoute(BuildContext context) {
     return MaterialPageRoute<void>(
       settings: this,
       builder: (_) => CategoryListView(onGoToDetail: onGoToDetail),

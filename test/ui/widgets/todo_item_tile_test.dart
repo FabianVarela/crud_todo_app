@@ -77,15 +77,14 @@ void expectTile(
   bool isChecked = false,
   bool isLineThrough = false,
 }) {
-  final _isChecked = tester.widget<CustomCheckbox>(finder).value;
-  expect(_isChecked, equals(isChecked));
+  final isChecked = tester.widget<CustomCheckbox>(finder).value;
+  expect(isChecked, equals(isChecked));
 
   final findText = find.text('title');
   expect(findText, findsOneWidget);
 
-  final _text = tester.widget<Text>(findText).style?.decoration;
   expect(
-    _text,
+    tester.widget<Text>(findText).style?.decoration,
     equals(isLineThrough ? TextDecoration.lineThrough : null),
   );
 }

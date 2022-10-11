@@ -12,7 +12,7 @@ void main() {
     mockNavigator = MockNavigator();
   });
 
-  Future<void> _pumpMainScreen(WidgetTester tester, Widget child) async {
+  Future<void> pumpMainScreen(WidgetTester tester, Widget child) async {
     await tester.pumpWidget(
       ProviderScope(
         child: MaterialApp(home: child, navigatorObservers: [mockNavigator]),
@@ -22,7 +22,7 @@ void main() {
 
   group('$UnknownView UI screen', () {
     testWidgets('Show $UnknownView screen', (tester) async {
-      await _pumpMainScreen(tester, const UnknownView());
+      await pumpMainScreen(tester, const UnknownView());
 
       expect(find.text('Not found'), findsOneWidget);
       expect(find.byType(Image), findsOneWidget);

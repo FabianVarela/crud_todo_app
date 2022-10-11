@@ -27,7 +27,7 @@ void main() {
       registerFallbackValue(MyRouteFake());
     });
 
-    Future<void> _pumpDialog(WidgetTester tester, Widget child) async {
+    Future<void> pumpDialog(WidgetTester tester, Widget child) async {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
@@ -44,7 +44,7 @@ void main() {
     testWidgets(
         'Check $Dialog close button and verify if close it '
         'when set tap in $GestureDetector', (tester) async {
-      await _pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
+      await pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
 
       await tester.tap(find.byIcon(Icons.close));
       await tester.pumpAndSettle();
@@ -55,7 +55,7 @@ void main() {
     testWidgets(
         '$CategoryFormDialog show $SubmitCategory disabled when $NameCategory '
         'or $EmojiCategory TextField are empty', (tester) async {
-      await _pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
+      await pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
 
       final foundSubmitButton = find.byType(SubmitCategory);
 
@@ -69,7 +69,7 @@ void main() {
     testWidgets(
         '$CategoryFormDialog show $SubmitCategory enabled when $NameCategory '
         'or $EmojiCategory TextField are not empty', (tester) async {
-      await _pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
+      await pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
 
       final foundSubmitButton = find.byType(SubmitCategory);
 
@@ -88,7 +88,7 @@ void main() {
       when(() => mockCategoryService.saveCategory(any()))
           .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
-      await _pumpDialog(
+      await pumpDialog(
         tester,
         Consumer(
           builder: (_, ref, child) {
@@ -124,7 +124,7 @@ void main() {
       when(() => mockCategoryService.saveCategory(any()))
           .thenThrow(Exception('Error'));
 
-      await _pumpDialog(
+      await pumpDialog(
         tester,
         Consumer(
           builder: (_, ref, child) {
