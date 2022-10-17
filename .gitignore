@@ -81,3 +81,9 @@ app.*.symbols
 
 # Obfuscation related
 app.*.map.json
+
+# FlutterFire CLI files (Repo public only)
+lib/firebase_options**.dart
+**/android/**/google-services.json
+**/ios/**/GoogleService-Info.plist
+**/ios/firebase_app_id_file.json
