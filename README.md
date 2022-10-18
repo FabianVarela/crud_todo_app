@@ -5,42 +5,20 @@
 Create a To-do List Flutter app managing CRUD with Firebase, using RiverPod as state management and dependency
 injection.
 
-### Getting Started (Firebase)
+## Features
 
-* To execute the app, you have to Firebase Project already created.
-* Create an app in Firebase for Android iOS, Web and Desktop (Mac) with the existing project.
-    * For Android you must rename the bundle Id on ```app/build.gradle```.
-    * For iOS in XCode IDE, you select ```Runner``` and change the 'Bundle Identifier' text.
-    * For Web, you must follow this [link](https://firebase.flutter.dev/docs/manual-installation/web#add-firebase-sdks)
-    * For Desktop for Mac in XCode IDE, you select ```Runner``` and change the 'Bundle Identifier' text.
+### Responsive and Adaptive
 
-### Getting Started (Flutter)
+This To-do app project uses responsive and adaptive principles to use it on different screen sizes and any devices, like mobile phones, tablets, computers, notebooks, etc.
 
-* Clone this project.
-* In Android, set ```google-services.json``` file in ```app``` folder.
-* In iOS, set ```GoogleServices-Info.plist``` file in ```Runner``` folder.
-* In Web, you must follow this [link](https://firebase.flutter.dev/docs/manual-installation/web#initializing-firebase)
-* In Desktop for Mac, set ```GoogleServices-Info.plist``` file in ```Runner``` folder.
-* Run project and enjoy :smile:
+### Flavors
 
-### Firebase Scheme
-
-    ├── categories
-      ├── id (generated)
-        ├── emoji (String)
-        ├── name (String)
-        ├── todoSize (Number)
-
-    ├── todos
-      ├── id (generated)
-        ├── categoryId (String)
-        ├── finalDate (Number)
-        ├── isCompleted (Boolean)
-        ├── subject (String)
+This app has been enabled with Android, iOS, and Web flavors with the below environments (develop and production). For macOS, flavors are not already supported
+this is an [open issue related](https://github.com/flutter/flutter/issues/64088)
 
 ### Navigator 2.0
 
-Actually the project has been implemented with **Navigator 2.0** or **Route API**.
+Actually the project has been implemented with **Navigator 2.0** or **Route API** from scratch (It doesn't use any packages).
 
 #### Deep linking
 
@@ -59,10 +37,45 @@ Run deep links in **Android**, use the command below:
 ~/Library/Android/sdk/platform-tools/adb shell am start -a android.intent.action.VIEW \ -c android.intent.category.BROWSABLE \ -d crudtodoapp://crudtodoexample.com/categories/{categoryId}/todo/{todoId}
 ```
 
-### Responsive and Adaptive
+## Getting Started
 
-This To-do app project uses responsive and adaptive principles to use it on different screen sizes and any devices, like
-mobile phones, tablets, computers, notebooks, etc.
+### Firebase
+
+* You must have a Firebase Project already created.
+* You must install ```firebase tools``` and ```FlutterFire CLI``` on your local machine.
+  * To install ```firebase tools```, could you guide [here](https://firebase.google.com/docs/cli?authuser=0&hl=es#install_the_firebase_cli)
+  * After install ```firebase tools```, you must log in with your Google account.
+  * To install ```FlutterFire CLI```, you must run the command below.
+    ```bash
+    dart pub global activate flutterfire_cli
+    ```
+
+### Flutter
+
+* Clone this project.
+* If you want to rename the bundles for each platform, you must do the steps below.
+  * For Android, you must rename the bundle id on ```app/build.gradle```.
+  * For iOS in XCode IDE, you select ```Runner``` and change the 'Bundle Identifier' text.
+* You must run the ```FlutterFire CLI``` command
+  ```bash
+  flutterfire configure --project=<YOUR_PROJECT_ID>
+  ```
+* Run project and enjoy :smile:
+
+### Firebase Scheme
+
+    ├── categories
+      ├── id (generated)
+        ├── emoji (String)
+        ├── name (String)
+        ├── todoSize (Number)
+
+    ├── todos
+      ├── id (generated)
+        ├── categoryId (String)
+        ├── finalDate (Number)
+        ├── isCompleted (Boolean)
+        ├── subject (String)
 
 ### Used packages
 
