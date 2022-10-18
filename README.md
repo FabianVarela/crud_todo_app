@@ -5,20 +5,25 @@
 Create a To-do List Flutter app managing CRUD with Firebase, using RiverPod as state management and dependency
 injection.
 
+------
+
 ## Features
 
 ### Responsive and Adaptive
 
-This To-do app project uses responsive and adaptive principles to use it on different screen sizes and any devices, like mobile phones, tablets, computers, notebooks, etc.
+This To-do app project uses responsive and adaptive principles to use it on different screen sizes and any devices, like
+mobile phones, tablets, computers, notebooks, etc.
 
 ### Flavors
 
-This app has been enabled with Android, iOS, and Web flavors with the below environments (develop and production). For macOS, flavors are not already supported
+This app has been enabled with Android, iOS, and Web flavors with the below environments (develop and production). For
+macOS, flavors are not already supported
 this is an [open issue related](https://github.com/flutter/flutter/issues/64088)
 
 ### Navigator 2.0
 
-Actually the project has been implemented with **Navigator 2.0** or **Route API** from scratch (It doesn't use any packages).
+Actually the project has been implemented with **Navigator 2.0** or **Route API** from scratch (It doesn't use any
+packages).
 
 #### Deep linking
 
@@ -37,30 +42,7 @@ Run deep links in **Android**, use the command below:
 ~/Library/Android/sdk/platform-tools/adb shell am start -a android.intent.action.VIEW \ -c android.intent.category.BROWSABLE \ -d crudtodoapp://crudtodoexample.com/categories/{categoryId}/todo/{todoId}
 ```
 
-## Getting Started
-
-### Firebase
-
-* You must have a Firebase Project already created.
-* You must install ```firebase tools``` and ```FlutterFire CLI``` on your local machine.
-  * To install ```firebase tools```, could you guide [here](https://firebase.google.com/docs/cli?authuser=0&hl=es#install_the_firebase_cli)
-  * After install ```firebase tools```, you must log in with your Google account.
-  * To install ```FlutterFire CLI```, you must run the command below.
-    ```bash
-    dart pub global activate flutterfire_cli
-    ```
-
-### Flutter
-
-* Clone this project.
-* If you want to rename the bundles for each platform, you must do the steps below.
-  * For Android, you must rename the bundle id on ```app/build.gradle```.
-  * For iOS in XCode IDE, you select ```Runner``` and change the 'Bundle Identifier' text.
-* You must run the ```FlutterFire CLI``` command
-  ```bash
-  flutterfire configure --project=<YOUR_PROJECT_ID>
-  ```
-* Run project and enjoy :smile:
+------
 
 ### Firebase Scheme
 
@@ -77,9 +59,37 @@ Run deep links in **Android**, use the command below:
         ├── isCompleted (Boolean)
         ├── subject (String)
 
-### Used packages
+------
+
+## Getting Started
+
+### Firebase
+
+* You must have a Firebase Project already created.
+* You must install ```firebase tools``` and ```FlutterFire CLI``` on your local machine.
+    * To install ```firebase tools```, could you
+      guide [here](https://firebase.google.com/docs/cli?authuser=0&hl=es#install_the_firebase_cli)
+    * After install ```firebase tools```, you must log in with your Google account.
+    * To install ```FlutterFire CLI```, you must run the command below.
+      ```bash
+      dart pub global activate flutterfire_cli
+      ```
+
+### Flutter
+
+* Clone this project.
+* If you want to rename the bundles for each platform, you must do the steps below.
+    * For Android, you must rename the bundle id on ```app/build.gradle```.
+    * For iOS in XCode IDE, you select ```Runner``` and change the 'Bundle Identifier' text.
+* You must run the ```FlutterFire CLI``` command
+  ```bash
+  flutterfire configure --project=<YOUR_PROJECT_ID>
+  ```
+* Run project and enjoy :smile:
 
 ------
+
+### Used packages
 
 #### Dependencies
 
@@ -107,9 +117,3 @@ Run deep links in **Android**, use the command below:
 - Mockito ([mockito](https://pub.dev/packages/mockito))
 - Remove from coverage ([remove_from_coverage](https://pub.dev/packages/remove_from_coverage))
 - Very Good Analysis ([very_good_analysis](https://pub.dev/packages/very_good_analysis))
-
-------
-
-#### Help mockito reference
-
-Mockito Null Safety recipe [link](https://github.com/dart-lang/mockito/blob/master/NULL_SAFETY_README.md)
