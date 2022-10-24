@@ -18,6 +18,8 @@ import '../test_utils/params_factory.dart';
 
 void main() {
   group('$FormTodoView UI screen', () {
+    late MockFirestore mockFirestoreInstance;
+
     late MockCategoryService mockCategoryService;
     late MockTodoService mockTodoService;
 
@@ -27,6 +29,8 @@ void main() {
     late MockNavigator mockNavigator;
 
     setUpAll(() {
+      mockFirestoreInstance = MockFirestore();
+
       mockCategoryService = MockCategoryService();
       mockTodoService = MockTodoService();
 
@@ -43,6 +47,9 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
+            firebasePod.overrideWithValue(mockFirestoreInstance),
+            categoryServicePod.overrideWithValue(mockCategoryService),
+            todoServicePod.overrideWithValue(mockTodoService),
             categoryRepositoryPod.overrideWithValue(categoryRepository),
             todoRepositoryPod.overrideWithValue(todoRepository),
           ],

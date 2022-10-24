@@ -23,6 +23,8 @@ import '../test_utils/params_factory.dart';
 
 void main() {
   group('$TodoListView UI screen', () {
+    late MockFirestore mockFirestoreInstance;
+
     late MockCategoryService mockCategoryService;
     late ICategoryRepository categoryRepository;
 
@@ -32,6 +34,8 @@ void main() {
     late MockNavigator mockNavigator;
 
     setUpAll(() {
+      mockFirestoreInstance = MockFirestore();
+
       mockCategoryService = MockCategoryService();
       categoryRepository = CategoryRepository(mockCategoryService);
 
@@ -47,6 +51,9 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
+            firebasePod.overrideWithValue(mockFirestoreInstance),
+            categoryServicePod.overrideWithValue(mockCategoryService),
+            todoServicePod.overrideWithValue(mockTodoService),
             categoryRepositoryPod.overrideWithValue(categoryRepository),
             todoRepositoryPod.overrideWithValue(todoRepository),
           ],
@@ -191,7 +198,7 @@ void main() {
       verify(() => mockCategoryService.deleteCategory(any())).called(1);
 
       expect(viewModel.debugState.isLoading, true);
-      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pump(const Duration(milliseconds: 1000));
       await tester.pumpAndSettle();
 
       expect(viewModel.debugState.isSuccess, true);
