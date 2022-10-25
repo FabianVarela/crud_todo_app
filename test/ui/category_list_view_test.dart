@@ -5,6 +5,8 @@ import 'package:crud_todo_app/ui/category_list_view.dart';
 import 'package:crud_todo_app/ui/dialog/category_dialog.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
+import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -145,7 +147,7 @@ void main() {
       await tester.pumpAndSettle();
 
       verify(() => mockNavigator.didPush(any(), any()));
-      // TODO(FabianV): expect(find.byType(TodoListView), findsOneWidget);
+      // expect(find.byType(TodoListView), findsOneWidget);
     });
 
     testWidgets(
@@ -159,5 +161,48 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsNothing);
       expect(find.text('Exception: Category not found'), findsOneWidget);
     });
+
+    testWidgets(
+      'Show in $CategoryItem a tooltip with $CustomMouseRegion',
+      (tester) async {
+        when(categoryRepository.getCategories)
+            .thenAnswer((_) => Stream.value([category]));
+
+        await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
+
+        expect(find.byType(CircularProgressIndicator), findsOneWidget);
+        await tester.pump(const Duration(seconds: 1));
+
+        expect(find.byType(CircularProgressIndicator), findsNothing);
+        expect(find.byType(GridView), findsOneWidget);
+
+        final foundMouseRegion = find.descendant(
+          of: find.descendant(
+            of: find.byType(GridView),
+            matching: find.byType(CustomMouseRegion),
+          ),
+          matching: find.byType(MouseRegion),
+        );
+        expect(foundMouseRegion, findsOneWidget);
+
+        final foundTooltip = find.descendant(
+          of: foundMouseRegion,
+          matching: find.byType(Tooltip),
+        );
+        expect(foundTooltip, findsOneWidget);
+
+        final gesture = await tester.createGesture(
+          kind: PointerDeviceKind.mouse,
+        );
+        await gesture.addPointer(location: Offset.zero);
+        addTearDown(gesture.removePointer);
+
+        await gesture.moveTo(tester.getCenter(foundMouseRegion));
+        await tester.pumpAndSettle();
+
+        expect(foundTooltip.hitTestable(), findsOneWidget);
+      },
+      variant: TargetPlatformVariant.desktop(),
+    );
   });
 }

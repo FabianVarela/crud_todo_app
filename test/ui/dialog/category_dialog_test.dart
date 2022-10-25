@@ -2,6 +2,7 @@ import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/ui/dialog/category_dialog.dart';
+import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';
 import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,28 @@ void main() {
 
       verify(() => mockNavigator.didPop(any(), any())).called(1);
     });
+
+    testWidgets(
+      'Check $Dialog close button and verify if close it '
+      'when set tap in $GestureDetector in desktop',
+      (tester) async {
+        await pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
+
+        expect(find.byType(CustomMouseRegion), findsOneWidget);
+
+        final foundMouseRegion = find.descendant(
+          of: find.byType(CustomMouseRegion),
+          matching: find.byType(MouseRegion),
+        );
+        expect(foundMouseRegion, findsOneWidget);
+
+        await tester.tap(foundMouseRegion);
+        await tester.pumpAndSettle();
+
+        verify(() => mockNavigator.didPop(any(), any())).called(1);
+      },
+      variant: TargetPlatformVariant.desktop(),
+    );
 
     testWidgets(
         '$CategoryFormDialog show $SubmitCategory disabled when $NameCategory '
