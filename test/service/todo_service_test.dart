@@ -59,6 +59,7 @@ void main() {
       // assert
       expect(result, isA<Stream<List<Todo>>>());
       expect(finalResult, isA<List<Todo>>());
+      expect(finalResult, [existingTodo]);
       verify(
         () => mockFirestoreInstance
             .collection(any())
@@ -89,6 +90,7 @@ void main() {
       // assert
       expect(result, isA<Future<Todo>>());
       expect(finalResult, isA<Todo>());
+      expect(finalResult, existingTodo);
       verify(() => mockFirestoreInstance.collection(any()).doc(any()))
           .called(1);
     });
