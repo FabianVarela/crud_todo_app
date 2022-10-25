@@ -28,6 +28,8 @@ class CategoryListView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final scrollController = ScrollController();
+
     final categoriesData = ref.watch(categoryListPod);
 
     ref.listen(
@@ -77,9 +79,11 @@ class CategoryListView extends ConsumerWidget {
                 Expanded(
                   child: categoriesData.when(
                     data: (data) => Scrollbar(
+                      controller: scrollController,
                       thumbVisibility: device == DeviceSegment.desktop,
                       child: data.isNotEmpty
                           ? GridView.count(
+                              controller: scrollController,
                               crossAxisCount: isPortrait(context) ? 2 : 3,
                               children: <Widget>[
                                 for (final item in data)
