@@ -19,34 +19,47 @@ Category get category => Category(
 
 const todoId = 'TODO-456';
 const todoSubject = 'Test TODO';
-final todoInitialDate = DateTime.now();
-final todoFinalDate = DateTime.now().add(const Duration(days: 10));
-final todoExpiredDate = DateTime.now().add(const Duration(days: -1));
-final todoTodayDate = DateTime.now().add(const Duration(minutes: 30));
+
+final now = DateTime.now();
+
+/// Exclude microseconds because lose precision by json deserialization
+final todoInitialDate = DateTime(
+  now.year,
+  now.month,
+  now.day,
+  now.hour,
+  now.minute,
+  now.second,
+  now.millisecond,
+);
+
+final todoFinalDate = todoInitialDate.add(const Duration(days: 10));
+final todoExpiredDate = todoInitialDate.add(const Duration(days: -1));
+final todoTodayDate = todoInitialDate.add(const Duration(minutes: 30));
 
 Todo get initialTodo => Todo(
-      categoryId: categoryId,
-      finalDate: todoInitialDate,
       subject: todoSubject,
+      finalDate: todoInitialDate,
+      categoryId: categoryId,
     );
 
 Todo get existingTodo => Todo(
-      categoryId: categoryId,
       id: todoId,
-      finalDate: todoFinalDate,
       subject: todoSubject,
+      finalDate: todoFinalDate,
+      categoryId: categoryId,
     );
 
 Todo get expiredTodo => Todo(
-      categoryId: categoryId,
       id: todoId,
-      finalDate: todoExpiredDate,
       subject: todoSubject,
+      finalDate: todoExpiredDate,
+      categoryId: categoryId,
     );
 
 Todo get todayTodo => Todo(
-      categoryId: categoryId,
       id: todoId,
-      finalDate: todoTodayDate,
       subject: todoSubject,
+      finalDate: todoTodayDate,
+      categoryId: categoryId,
     );
