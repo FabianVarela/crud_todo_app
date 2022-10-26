@@ -98,46 +98,28 @@ class TodoItem extends StatelessWidget {
           )
         : ContextMenuRegion(
             isEnabled: !todo.isCompleted,
-            contextMenu: Container(
-              width: 150,
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: const Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  TextButton.icon(
-                    onPressed:
-                        onEdit != null && !todo.finalDate.isDurationNegative
-                            ? () {
-                                onEdit?.call();
-                                context.contextMenuOverlay.hide();
-                              }
-                            : null,
-                    icon: const Icon(Icons.edit, color: Color(0xFF4D4E50)),
-                    label: const Text('Edit'),
-                  ),
-                  const Divider(),
-                  TextButton.icon(
-                    onPressed: () {
-                      onRemove?.call();
-                      context.contextMenuOverlay.hide();
-                    },
-                    icon: const Icon(Icons.delete, color: Colors.red),
-                    label: const Text('Remove'),
-                  ),
-                ],
-              ),
+            contextMenu: GenericContextMenu(
+              buttonConfigs: <ContextMenuButtonConfig>[
+                ContextMenuButtonConfig(
+                  'Edit',
+                  icon: const Icon(Icons.edit, color: Color(0xFF4D4E50)),
+                  onPressed:
+                      onEdit != null && !todo.finalDate.isDurationNegative
+                          ? () {
+                              onEdit?.call();
+                              context.contextMenuOverlay.hide();
+                            }
+                          : null,
+                ),
+                ContextMenuButtonConfig(
+                  'Remove',
+                  icon: const Icon(Icons.delete, color: Colors.red),
+                  onPressed: () {
+                    onRemove?.call();
+                    context.contextMenuOverlay.hide();
+                  },
+                ),
+              ],
             ),
             child: itemTile,
           );
