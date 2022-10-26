@@ -14,12 +14,16 @@ import '../../test_utils/mocks.dart';
 
 void main() {
   group('$CategoryFormDialog UI section', () {
+    late MockFirestore mockFirestoreInstance;
+
     late MockCategoryService mockCategoryService;
     late ICategoryRepository categoryRepository;
 
     late MockNavigator mockNavigator;
 
     setUpAll(() {
+      mockFirestoreInstance = MockFirestore();
+
       mockCategoryService = MockCategoryService();
       categoryRepository = CategoryRepository(mockCategoryService);
       registerFallbackValue(MyCategoryFake());
@@ -32,6 +36,8 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
+            firebasePod.overrideWithValue(mockFirestoreInstance),
+            categoryServicePod.overrideWithValue(mockCategoryService),
             categoryRepositoryPod.overrideWithValue(categoryRepository),
           ],
           child: MaterialApp(
