@@ -1,3 +1,4 @@
+import 'package:context_menus/context_menus.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
@@ -12,6 +13,7 @@ import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -556,5 +558,90 @@ void main() {
 
       expect(viewModel.debugState.isError, true);
     });
+
+    testWidgets(
+      'Show contextual menu and edit $TodoItem',
+      (tester) async {
+        setWhenMethodsToGetData(isExistsTodo: true);
+
+        await pumpMainScreen(
+          tester,
+          TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {}),
+        );
+        await showHideProgress(tester);
+        await tester.pumpAndSettle();
+
+        final foundItemList = find.descendant(
+          of: find.byType(ListView),
+          matching: find.byType(TodoItem),
+        );
+        expect(foundItemList, findsOneWidget);
+
+        expect(find.byType(SlidableAction), findsNothing);
+        expect(find.byType(ContextMenuRegion), findsOneWidget);
+
+        await tester.tap(foundItemList, buttons: kSecondaryMouseButton);
+        await tester.pumpAndSettle();
+
+        final foundEditOption = find.byIcon(Icons.edit);
+        expect(foundEditOption, findsOneWidget);
+
+        await tester.tap(foundEditOption);
+      },
+      variant: TargetPlatformVariant.desktop(),
+    );
+
+    testWidgets(
+      'Show contextual menu and delete $TodoItem',
+      (tester) async {
+        late TodoViewModel viewModel;
+
+        setWhenMethodsToGetData(isExistsTodo: true);
+        when(() => mockTodoService.deleteTodo(any(), any())).thenAnswer((_) {
+          return Future<void>.delayed(const Duration(milliseconds: 100));
+        });
+
+        await pumpMainScreen(
+          tester,
+          Consumer(
+            builder: (_, ref, child) {
+              viewModel = ref.read(todoViewModelPod.notifier);
+              return TodoListView(
+                categoryId: category.id!,
+                onGoToTodo: (_, __) {},
+              );
+            },
+          ),
+        );
+        await showHideProgress(tester);
+        await tester.pumpAndSettle();
+
+        final foundItemList = find.descendant(
+          of: find.byType(ListView),
+          matching: find.byType(TodoItem),
+        );
+        expect(foundItemList, findsOneWidget);
+
+        expect(find.byType(SlidableAction), findsNothing);
+        expect(find.byType(ContextMenuRegion), findsOneWidget);
+
+        await tester.tap(foundItemList, buttons: kSecondaryMouseButton);
+        await tester.pumpAndSettle();
+
+        final foundRemoveOption = find.byIcon(Icons.delete);
+        expect(foundRemoveOption, findsOneWidget);
+
+        await tester.tap(foundRemoveOption);
+
+        verify(() => mockTodoService.deleteTodo(any(), any())).called(1);
+
+        expect(viewModel.debugState.isLoading, true);
+        await tester.pumpAndSettle();
+
+        expect(viewModel.debugState.isSuccess, true);
+        expect(foundRemoveOption, findsNothing);
+      },
+      variant: TargetPlatformVariant.desktop(),
+    );
   });
 }
