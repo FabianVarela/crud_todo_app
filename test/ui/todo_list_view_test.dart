@@ -123,7 +123,6 @@ void main() {
         );
         await showHideProgress(tester);
 
-        expect(find.byIcon(Icons.arrow_back_ios), findsOneWidget);
         expect(find.byIcon(Icons.delete_forever), findsOneWidget);
         expect(find.byType(FloatingActionButton), findsOneWidget);
       },
@@ -141,7 +140,6 @@ void main() {
           TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {}),
         );
 
-        expect(find.byIcon(Icons.arrow_back_ios), findsOneWidget);
         expect(find.byIcon(Icons.delete_forever), findsNothing);
         expect(find.byType(FloatingActionButton), findsNothing);
         expect(find.text('Exception: Category not found'), findsOneWidget);
@@ -165,22 +163,6 @@ void main() {
 
         verify(() => mockNavigator.didPush(any(), any()));
         // expect(find.byType(FormTodoView), findsOneWidget);
-      },
-      variant: TargetPlatformVariant.all(),
-    );
-
-    testWidgets(
-      'Check back button in $TodoListView screen and return',
-      (tester) async {
-        await pumpMainScreen(
-          tester,
-          TodoListView(categoryId: category.id!, onGoToTodo: (_, __) {}),
-        );
-
-        await tester.tap(find.byIcon(Icons.arrow_back_ios));
-        await tester.pumpAndSettle();
-
-        verify(() => mockNavigator.didPop(any(), any())).called(1);
       },
       variant: TargetPlatformVariant.all(),
     );
@@ -285,7 +267,6 @@ void main() {
         );
         await showHideProgress(tester);
 
-        expect(find.byIcon(Icons.arrow_back_ios), findsOneWidget);
         expect(find.byIcon(Icons.delete_forever), findsOneWidget);
         expect(find.byType(FloatingActionButton), findsOneWidget);
         expect(find.text('Exception: Todo not found'), findsOneWidget);
