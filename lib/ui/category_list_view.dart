@@ -29,19 +29,12 @@ class CategoryListView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scrollController = ScrollController();
-
     final categoriesData = ref.watch(categoryListPod);
 
-    ref.listen(
+    ref.listen<CategoryState>(
       categoryViewModelPod,
-      (_, CategoryState state) => _onChangeState(context, state),
+      (_, state) => _onChangeState(context, state),
     );
-
-    final device = getDevice();
-    final isDesktop = [
-      DeviceSegment.desktop,
-      DeviceSegment.desktopWeb,
-    ].contains(device);
 
     return Scaffold(
       appBar: AppBar(
@@ -76,7 +69,7 @@ class CategoryListView extends ConsumerWidget {
                   child: categoriesData.when(
                     data: (data) => Scrollbar(
                       controller: scrollController,
-                      thumbVisibility: device == DeviceSegment.desktop,
+                      thumbVisibility: getDevice() == DeviceSegment.desktop,
                       child: data.isNotEmpty
                           ? GridView.count(
                               controller: scrollController,
@@ -84,7 +77,9 @@ class CategoryListView extends ConsumerWidget {
                               children: <Widget>[
                                 for (final item in data)
                                   CustomMouseRegion(
-                                    isForDesktop: isDesktop,
+                                    isForDesktop: desktopSegments.contains(
+                                      getDevice(),
+                                    ),
                                     cursor: SystemMouseCursors.click,
                                     tooltipMessage: item.name,
                                     child: CategoryItem(
@@ -172,9 +167,7 @@ class CategoryListView extends ConsumerWidget {
   }
 
   void _showMessage(BuildContext context, String message) {
-    final device = getDevice();
-
-    if ([DeviceSegment.desktop, DeviceSegment.desktopWeb].contains(device)) {
+    if (desktopSegments.contains(getDevice())) {
       showDialog<void>(
         context: context,
         builder: (dialogContext) {
