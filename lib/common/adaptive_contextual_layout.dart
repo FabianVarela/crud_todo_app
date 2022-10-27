@@ -21,6 +21,11 @@ ScreenType getFormFactor(BuildContext context) {
 
 enum DeviceSegment { mobile, desktop, mobileWeb, desktopWeb, other }
 
+List<DeviceSegment> desktopSegments = [
+  DeviceSegment.desktop,
+  DeviceSegment.desktopWeb,
+];
+
 DeviceSegment getDevice() {
   final isAndroid = defaultTargetPlatform == TargetPlatform.android;
   final isIOS = defaultTargetPlatform == TargetPlatform.iOS;
