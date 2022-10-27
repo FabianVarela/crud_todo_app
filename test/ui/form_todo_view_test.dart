@@ -149,6 +149,7 @@ void main() {
           tester,
           FormTodoView(categoryId: category.id!, todoId: existingTodo.id),
         );
+        await showHideProgress(tester);
 
         await tester.tap(find.byIcon(Icons.close));
         await tester.pumpAndSettle();
