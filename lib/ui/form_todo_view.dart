@@ -205,13 +205,6 @@ class DateTodo extends HookConsumerWidget {
           : date.state.add(const Duration(minutes: 2)),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365)),
-      builder: (_, child) {
-        if (foundation.kIsWeb) {
-          return Center(child: SizedBox(width: 500, height: 500, child: child));
-        }
-
-        return child!;
-      },
     );
 
     if (pickedDate != null) {

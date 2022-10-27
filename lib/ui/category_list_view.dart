@@ -43,18 +43,14 @@ class CategoryListView extends ConsumerWidget {
       DeviceSegment.desktopWeb,
     ].contains(device);
 
-    const appBarIcon = MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: Icon(Icons.menu_rounded, color: Colors.black, size: 30),
-    );
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.transparent,
-        leading: isPortrait(context)
-            ? appBarIcon.paddingSymmetric(h: 25)
-            : appBarIcon,
+        leading: const MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: Icon(Icons.menu_rounded, color: Colors.black, size: 30),
+        ),
       ),
       body: Shortcuts(
         shortcuts: _getShortcutsByOS(),
