@@ -16,11 +16,6 @@ class CategoryFormDialog extends ConsumerWidget {
     final categoryState = ref.watch(categoryViewModelPod);
     final isValidForm = ref.watch(validationCategoryPod);
 
-    final isDeviceDesktop = [
-      DeviceSegment.desktop,
-      DeviceSegment.desktopWeb,
-    ].contains(getDevice());
-
     final isDesktopOrTablet = [ScreenType.desktop, ScreenType.tablet]
         .contains(getFormFactor(context));
 
@@ -40,7 +35,7 @@ class CategoryFormDialog extends ConsumerWidget {
         children: <Widget>[
           CustomMouseRegion(
             cursor: SystemMouseCursors.click,
-            isForDesktop: isDeviceDesktop,
+            isForDesktop: desktopSegments.contains(getDevice()),
             child: GestureDetector(
               onTap: () => Navigator.pop(context),
               child: const Icon(Icons.close, color: Colors.white),
@@ -65,14 +60,7 @@ class CategoryFormDialog extends ConsumerWidget {
                 ),
                 if (!categoryState.isLoading)
                   SubmitCategory(
-                    onSubmit: isValidForm
-                        ? () => ref
-                            .read(categoryViewModelPod.notifier)
-                            .saveCategory(
-                              ref.read(nameCategoryPod.notifier).state.text!,
-                              ref.read(emojiCategoryPod.notifier).state.text!,
-                            )
-                        : null,
+                    onSubmit: isValidForm ? () => _saveCategory(ref) : null,
                   )
                 else
                   const CircularProgressIndicator()
@@ -82,6 +70,13 @@ class CategoryFormDialog extends ConsumerWidget {
         ],
       ),
     );
+  }
+
+  void _saveCategory(WidgetRef ref) {
+    ref.read(categoryViewModelPod.notifier).saveCategory(
+          ref.read(nameCategoryPod.notifier).state.text!,
+          ref.read(emojiCategoryPod.notifier).state.text!,
+        );
   }
 
   void _onChangeState(BuildContext context, CategoryState state) {
