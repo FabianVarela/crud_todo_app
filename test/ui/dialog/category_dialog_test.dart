@@ -49,15 +49,17 @@ void main() {
     }
 
     testWidgets(
-        'Check $Dialog close button and verify if close it '
-        'when set tap in $GestureDetector', (tester) async {
-      await pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
+      'Check $Dialog close button and verify if close it when set tap',
+      (tester) async {
+        await pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
 
-      await tester.tap(find.byIcon(Icons.close));
-      await tester.pumpAndSettle();
+        await tester.tap(find.byIcon(Icons.close));
+        await tester.pumpAndSettle();
 
-      verify(() => mockNavigator.didPop(any(), any())).called(1);
-    });
+        verify(() => mockNavigator.didPop(any(), any())).called(1);
+      },
+      variant: TargetPlatformVariant.all(),
+    );
 
     testWidgets(
       'Check $Dialog close button and verify if close it '
@@ -82,95 +84,113 @@ void main() {
     );
 
     testWidgets(
-        '$CategoryFormDialog show $SubmitCategory disabled when $NameCategory '
-        'or $EmojiCategory TextField are empty', (tester) async {
-      await pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
+      'Show $SubmitCategory disabled when $NameCategory '
+      'or $EmojiCategory TextField are empty',
+      (tester) async {
+        await pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
 
-      final foundSubmitButton = find.byType(SubmitCategory);
+        final foundSubmitButton = find.byType(SubmitCategory);
 
-      await tester.enterText(find.byType(NameCategory), 'Test Category');
-      await tester.pumpAndSettle();
+        await tester.enterText(find.byType(NameCategory), 'Test Category');
+        await tester.pumpAndSettle();
 
-      final enabled = tester.widget<SubmitCategory>(foundSubmitButton).onSubmit;
-      expect(enabled == null, isTrue);
-    });
+        final enabled =
+            tester.widget<SubmitCategory>(foundSubmitButton).onSubmit;
+        expect(enabled == null, isTrue);
+      },
+      variant: TargetPlatformVariant.all(),
+    );
 
     testWidgets(
-        '$CategoryFormDialog show $SubmitCategory enabled when $NameCategory '
-        'or $EmojiCategory TextField are not empty', (tester) async {
-      await pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
+      'Show $SubmitCategory enabled when $NameCategory '
+      'or $EmojiCategory TextField are not empty',
+      (tester) async {
+        await pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
 
-      final foundSubmitButton = find.byType(SubmitCategory);
+        final foundSubmitButton = find.byType(SubmitCategory);
 
-      await tester.enterText(find.byType(NameCategory), 'Test Category');
-      await tester.enterText(find.byType(EmojiCategory), '😀');
+        await tester.enterText(find.byType(NameCategory), 'Test Category');
+        await tester.enterText(find.byType(EmojiCategory), '😀');
 
-      await tester.pumpAndSettle();
+        await tester.pumpAndSettle();
 
-      final enabled = tester.widget<SubmitCategory>(foundSubmitButton).onSubmit;
-      expect(enabled != null, isTrue);
-    });
+        expect(
+          tester.widget<SubmitCategory>(foundSubmitButton).onSubmit != null,
+          isTrue,
+        );
+      },
+      variant: TargetPlatformVariant.all(),
+    );
 
-    testWidgets('Add $Category model from $CategoryFormDialog', (tester) async {
-      late final CategoryViewModel viewModel;
+    testWidgets(
+      'Add $Category model from $CategoryFormDialog',
+      (tester) async {
+        late final CategoryViewModel viewModel;
 
-      when(() => mockCategoryService.saveCategory(any()))
-          .thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
+        when(() => mockCategoryService.saveCategory(any())).thenAnswer(
+          (_) => Future<void>.delayed(const Duration(seconds: 1)),
+        );
 
-      await pumpDialog(
-        tester,
-        Consumer(
-          builder: (_, ref, child) {
-            viewModel = ref.read(categoryViewModelPod.notifier);
-            return const Scaffold(body: CategoryFormDialog());
-          },
-        ),
-      );
+        await pumpDialog(
+          tester,
+          Consumer(
+            builder: (_, ref, child) {
+              viewModel = ref.read(categoryViewModelPod.notifier);
+              return const Scaffold(body: CategoryFormDialog());
+            },
+          ),
+        );
 
-      await tester.enterText(find.byType(NameCategory), 'Test Category');
-      await tester.enterText(find.byType(EmojiCategory), '😀');
+        await tester.enterText(find.byType(NameCategory), 'Test Category');
+        await tester.enterText(find.byType(EmojiCategory), '😀');
 
-      await tester.pumpAndSettle();
-      await tester.tap(find.byType(SubmitCategory));
+        await tester.pumpAndSettle();
+        await tester.tap(find.byType(SubmitCategory));
 
-      verify(() => mockCategoryService.saveCategory(any())).called(1);
+        verify(() => mockCategoryService.saveCategory(any())).called(1);
 
-      expect(viewModel.debugState.isLoading, true);
-      await tester.pump(const Duration(milliseconds: 500));
+        expect(viewModel.debugState.isLoading, true);
+        await tester.pump(const Duration(milliseconds: 500));
 
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      await tester.pumpAndSettle();
+        expect(find.byType(CircularProgressIndicator), findsOneWidget);
+        await tester.pumpAndSettle();
 
-      expect(viewModel.debugState.isSuccess, true);
-      expect(find.byType(CircularProgressIndicator), findsNothing);
+        expect(viewModel.debugState.isSuccess, true);
+        expect(find.byType(CircularProgressIndicator), findsNothing);
 
-      verify(() => mockNavigator.didPop(any(), any())).called(1);
-    });
+        verify(() => mockNavigator.didPop(any(), any())).called(1);
+      },
+      variant: TargetPlatformVariant.all(),
+    );
 
-    testWidgets('When Add $Category model set an $Exception', (tester) async {
-      late final CategoryViewModel viewModel;
+    testWidgets(
+      'When Add $Category model set an $Exception',
+      (tester) async {
+        late final CategoryViewModel viewModel;
 
-      when(() => mockCategoryService.saveCategory(any()))
-          .thenThrow(Exception('Error'));
+        when(() => mockCategoryService.saveCategory(any()))
+            .thenThrow(Exception('Error'));
 
-      await pumpDialog(
-        tester,
-        Consumer(
-          builder: (_, ref, child) {
-            viewModel = ref.read(categoryViewModelPod.notifier);
-            return const Scaffold(body: CategoryFormDialog());
-          },
-        ),
-      );
+        await pumpDialog(
+          tester,
+          Consumer(
+            builder: (_, ref, child) {
+              viewModel = ref.read(categoryViewModelPod.notifier);
+              return const Scaffold(body: CategoryFormDialog());
+            },
+          ),
+        );
 
-      await tester.enterText(find.byType(NameCategory), 'Test Category');
-      await tester.enterText(find.byType(EmojiCategory), '😀');
+        await tester.enterText(find.byType(NameCategory), 'Test Category');
+        await tester.enterText(find.byType(EmojiCategory), '😀');
 
-      await tester.pumpAndSettle();
-      await tester.tap(find.byType(SubmitCategory));
+        await tester.pumpAndSettle();
+        await tester.tap(find.byType(SubmitCategory));
 
-      verify(() => mockCategoryService.saveCategory(any())).called(1);
-      expect(viewModel.debugState.isError, true);
-    });
+        verify(() => mockCategoryService.saveCategory(any())).called(1);
+        expect(viewModel.debugState.isError, true);
+      },
+      variant: TargetPlatformVariant.all(),
+    );
   });
 }

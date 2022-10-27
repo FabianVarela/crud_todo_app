@@ -59,108 +59,125 @@ void main() {
       );
     }
 
-    testWidgets('Show $CategoryListView screen', (tester) async {
-      await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
+    testWidgets(
+      'Show $CategoryListView screen',
+      (tester) async {
+        await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
 
-      expect(find.byIcon(Icons.menu_rounded), findsOneWidget);
-      expect(find.text('Lists'), findsOneWidget);
-      expect(find.byType(FloatingActionButton), findsOneWidget);
-    });
+        expect(find.byIcon(Icons.menu_rounded), findsOneWidget);
+        expect(find.text('Lists'), findsOneWidget);
+        expect(find.byType(FloatingActionButton), findsOneWidget);
+      },
+      variant: TargetPlatformVariant.all(),
+    );
 
     testWidgets(
-        'Show $Dialog section in $CategoryListView screen '
-        'when set tap in $FloatingActionButton', (tester) async {
-      await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
+      'Show $Dialog section in $CategoryListView screen '
+      'when set tap in $FloatingActionButton',
+      (tester) async {
+        await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
 
-      final finderFloatingButton = find.byType(FloatingActionButton);
+        final finderFloatingButton = find.byType(FloatingActionButton);
 
-      await tester.tap(finderFloatingButton);
-      await tester.pumpAndSettle(const Duration(seconds: 1));
+        await tester.tap(finderFloatingButton);
+        await tester.pumpAndSettle(const Duration(seconds: 1));
 
-      expect(find.byType(Dialog), findsOneWidget);
-      expect(find.byType(CategoryFormDialog), findsOneWidget);
+        expect(find.byType(Dialog), findsOneWidget);
+        expect(find.byType(CategoryFormDialog), findsOneWidget);
 
-      expect(find.byIcon(Icons.close), findsOneWidget);
-      expect(find.text('Add category'), findsOneWidget);
-      expect(find.byType(NameCategory), findsOneWidget);
-      expect(find.byType(EmojiCategory), findsOneWidget);
-      expect(find.byType(SubmitCategory), findsOneWidget);
-    });
-
-    testWidgets(
-        'Show empty data in '
-        '$CategoryListView screen', (tester) async {
-      when(mockCategoryService.getCategories)
-          .thenAnswer((_) => Stream.value([]));
-
-      await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
-
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      await tester.pump(const Duration(seconds: 1));
-
-      expect(find.byType(CircularProgressIndicator), findsNothing);
-      expect(find.text('Empty data, add a category'), findsOneWidget);
-    });
-
-    testWidgets('Show data $CategoryListView in screen', (tester) async {
-      when(categoryRepository.getCategories)
-          .thenAnswer((_) => Stream.value([category]));
-
-      await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
-
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      await tester.pump(const Duration(seconds: 1));
-
-      expect(find.byType(CircularProgressIndicator), findsNothing);
-      expect(find.byType(GridView), findsOneWidget);
-
-      expect(tester.widgetList(find.byType(CategoryItem)), [
-        isA<CategoryItem>()
-            .having((w) => w.item.id, 'id', categoryId)
-            .having((w) => w.item.name, 'name', categoryName)
-            .having((w) => w.item.emoji, 'emoji', categoryEmoji)
-            .having((w) => w.item.todoSize, 'todoSize', 0),
-      ]);
-    });
+        expect(find.byIcon(Icons.close), findsOneWidget);
+        expect(find.text('Add category'), findsOneWidget);
+        expect(find.byType(NameCategory), findsOneWidget);
+        expect(find.byType(EmojiCategory), findsOneWidget);
+        expect(find.byType(SubmitCategory), findsOneWidget);
+      },
+      variant: TargetPlatformVariant.all(),
+    );
 
     testWidgets(
-        'Make redirection when tap '
-        'selected $Category to $TodoListView screen', (tester) async {
-      when(categoryRepository.getCategories)
-          .thenAnswer((_) => Stream.value([category]));
+      'Show empty data in $CategoryListView screen',
+      (tester) async {
+        when(mockCategoryService.getCategories)
+            .thenAnswer((_) => Stream.value([]));
 
-      await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
+        await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
 
-      expect(find.byType(CircularProgressIndicator), findsOneWidget);
-      await tester.pump(const Duration(seconds: 1));
+        expect(find.byType(CircularProgressIndicator), findsOneWidget);
+        await tester.pump(const Duration(seconds: 1));
 
-      expect(find.byType(CircularProgressIndicator), findsNothing);
-      expect(find.byType(GridView), findsOneWidget);
-
-      final foundCatItem = find.descendant(
-        of: find.byType(GridView),
-        matching: find.byType(CategoryItem),
-      );
-      expect(foundCatItem, findsOneWidget);
-
-      await tester.tap(foundCatItem);
-      await tester.pumpAndSettle();
-
-      verify(() => mockNavigator.didPush(any(), any()));
-      // expect(find.byType(TodoListView), findsOneWidget);
-    });
+        expect(find.byType(CircularProgressIndicator), findsNothing);
+        expect(find.text('Empty data, add a category'), findsOneWidget);
+      },
+      variant: TargetPlatformVariant.mobile(),
+    );
 
     testWidgets(
-        'Show $Exception in screen when '
-        'get $Category list data', (tester) async {
-      when(categoryRepository.getCategories)
-          .thenThrow(Exception('Category not found'));
+      'Show data $CategoryListView in screen',
+      (tester) async {
+        when(categoryRepository.getCategories)
+            .thenAnswer((_) => Stream.value([category]));
 
-      await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
+        await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
 
-      expect(find.byType(CircularProgressIndicator), findsNothing);
-      expect(find.text('Exception: Category not found'), findsOneWidget);
-    });
+        expect(find.byType(CircularProgressIndicator), findsOneWidget);
+        await tester.pump(const Duration(seconds: 1));
+
+        expect(find.byType(CircularProgressIndicator), findsNothing);
+        expect(find.byType(GridView), findsOneWidget);
+
+        expect(tester.widgetList(find.byType(CategoryItem)), [
+          isA<CategoryItem>()
+              .having((w) => w.item.id, 'id', categoryId)
+              .having((w) => w.item.name, 'name', categoryName)
+              .having((w) => w.item.emoji, 'emoji', categoryEmoji)
+              .having((w) => w.item.todoSize, 'todoSize', 0),
+        ]);
+      },
+      variant: TargetPlatformVariant.mobile(),
+    );
+
+    testWidgets(
+      'Make redirection when tap selected $Category to $TodoListView screen',
+      (tester) async {
+        when(categoryRepository.getCategories)
+            .thenAnswer((_) => Stream.value([category]));
+
+        await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
+
+        expect(find.byType(CircularProgressIndicator), findsOneWidget);
+        await tester.pump(const Duration(seconds: 1));
+
+        expect(find.byType(CircularProgressIndicator), findsNothing);
+        expect(find.byType(GridView), findsOneWidget);
+
+        final foundCatItem = find.descendant(
+          of: find.byType(GridView),
+          matching: find.byType(CategoryItem),
+        );
+        expect(foundCatItem, findsOneWidget);
+
+        await tester.tap(foundCatItem);
+        await tester.pumpAndSettle();
+
+        verify(() => mockNavigator.didPush(any(), any()));
+        // expect(find.byType(TodoListView), findsOneWidget);
+      },
+      variant: TargetPlatformVariant.mobile(),
+    );
+
+    testWidgets(
+      'Show $Exception in screen when get $Category list data',
+      (tester) async {
+        when(categoryRepository.getCategories)
+            .thenThrow(Exception('Category not found'));
+
+        await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
+
+        expect(find.byType(CircularProgressIndicator), findsNothing);
+        expect(find.text('Exception: Category not found'), findsOneWidget);
+      },
+      variant: TargetPlatformVariant.all(),
+    );
 
     testWidgets(
       'Show in $CategoryItem a tooltip with $CustomMouseRegion',
