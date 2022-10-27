@@ -53,7 +53,7 @@ class FormTodoView extends HookConsumerWidget {
         ],
       ),
       body: categoryData.when(
-        data: (category) => todoData.when(
+        data: (category) => todoData.whenOrNull(
           data: (todo) => SingleChildScrollView(
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Column(
@@ -64,21 +64,11 @@ class FormTodoView extends HookConsumerWidget {
                 SubmitTodo(
                   categoryId: categoryId,
                   todoId: todo?.id,
-                  onSubmit: isValid
-                      ? () {
-                          ref.read(todoViewModelPod.notifier).saveTodo(
-                                categoryId,
-                                ref.read(subjectTodoPod.notifier).state.text!,
-                                ref.read(dateTodoPod.notifier).state,
-                                todoId: todoId,
-                              );
-                        }
-                      : null,
+                  onSubmit: isValid ? () => _saveTodo(ref) : null,
                 ),
               ],
             ),
           ),
-          loading: () => const Center(child: CircularProgressIndicator()),
           error: (e, _) => Center(
             child: Text(
               e.toString(),
@@ -98,6 +88,13 @@ class FormTodoView extends HookConsumerWidget {
       ),
     );
   }
+
+  void _saveTodo(WidgetRef ref) => ref.read(todoViewModelPod.notifier).saveTodo(
+        categoryId,
+        ref.read(subjectTodoPod.notifier).state.text!,
+        ref.read(dateTodoPod.notifier).state,
+        todoId: todoId,
+      );
 
   void _onChangeState(BuildContext context, TodoState state) {
     final action = state.maybeWhen(success: (a) => a, orElse: () => null);
