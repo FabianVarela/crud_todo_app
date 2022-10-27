@@ -2,6 +2,7 @@ import 'package:context_menus/context_menus.dart';
 import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
+import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
@@ -27,14 +28,8 @@ class TodoListView extends HookConsumerWidget {
     final categoryData = ref.watch(categoryDetailPod(categoryId));
     final todoData = ref.watch(todoListPod(categoryId));
 
-    final dataCategory = categoryData.maybeWhen(
-      data: (data) => data,
-      orElse: () => null,
-    );
-
-    final errorCategory = categoryData.maybeWhen(
-      error: (e, _) => e.toString(),
-      orElse: () => null,
+    final existsCategory = ref.watch(
+      categoryDetailPod(categoryId).select((value) => value.hasValue),
     );
 
     ref.listen(
@@ -48,132 +43,49 @@ class TodoListView extends HookConsumerWidget {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          actions: dataCategory != null
-              ? <Widget>[
-                  Tooltip(
-                    message: 'Delete category',
-                    child: IconButton(
-                      icon: const Icon(Icons.delete_forever),
-                      onPressed: () {
-                        ref
-                            .read(categoryViewModelPod.notifier)
-                            .deleteCategory(categoryId);
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ),
-                ]
-              : null,
+          actions: <Widget>[
+            if (existsCategory)
+              Tooltip(
+                message: 'Delete category',
+                child: IconButton(
+                  icon: const Icon(Icons.delete_forever),
+                  onPressed: () {
+                    ref
+                        .read(categoryViewModelPod.notifier)
+                        .deleteCategory(categoryId);
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+          ],
         ),
-        body: dataCategory != null
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(
-                    flex: isPortrait(context) ? 1 : 2,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Container(
-                          height: 60,
-                          width: 60,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          child: Hero(
-                            tag: '${categoryId}_${dataCategory.emoji.name}',
-                            child: Material(
-                              color: Colors.transparent,
-                              child: Text(
-                                dataCategory.emoji.code,
-                                textAlign: TextAlign.center,
-                                style: const TextStyle(fontSize: 30),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              dataCategory.name,
-                              style: const TextStyle(
-                                fontSize: 35,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white,
-                              ),
-                            ).paddingOnly(b: 5),
-                            Text(
-                              '${dataCategory.todoSize} Tasks',
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w300,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ).paddingOnly(l: 35),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: todoData.when(
-                      data: (data) {
-                        return DecoratedBox(
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
-                            ),
-                          ),
-                          child: data.isNotEmpty
-                              ? TodoList(
-                                  todoList: data,
-                                  onEditItem: (todo) =>
-                                      onGoToTodo(categoryId, todo.id),
-                                ).paddingSymmetric(h: 24, v: 20)
-                              : const Center(
-                                  child: Text(
-                                    'Empty data, add a task',
-                                    style: TextStyle(fontSize: 25),
-                                  ),
-                                ),
-                        );
-                      },
-                      loading: () => const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                      error: (e, _) => Center(
-                        child: Text(
-                          e.toString(),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              )
-            : errorCategory != null
-                ? Center(
-                    child: Text(
-                      errorCategory,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 20, color: Colors.white),
-                    ),
-                  )
-                : const Center(
-                    child: CircularProgressIndicator(color: Colors.white),
-                  ),
-        floatingActionButton: dataCategory != null
+        body: categoryData.when(
+          data: (category) => todoData.whenOrNull(
+            data: (todos) => CategorySection(
+              category: category,
+              todos: todos,
+              onEdit: (todoId) => onGoToTodo(categoryId, todoId),
+            ),
+            error: (e, _) => Center(
+              child: Text(
+                e.toString(),
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 20, color: Colors.white),
+              ),
+            ),
+          ),
+          loading: () => const Center(
+            child: CircularProgressIndicator(color: Colors.white),
+          ),
+          error: (e, s) => Center(
+            child: Text(
+              e.toString(),
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 20, color: Colors.white),
+            ),
+          ),
+        ),
+        floatingActionButton: existsCategory
             ? FloatingActionButton(
                 backgroundColor: const Color(0xFF4A78FA),
                 onPressed: () => onGoToTodo(categoryId, null),
@@ -210,6 +122,101 @@ class TodoListView extends HookConsumerWidget {
   }
 }
 
+class CategorySection extends ConsumerWidget {
+  const CategorySection({
+    super.key,
+    required this.category,
+    required this.todos,
+    required this.onEdit,
+  });
+
+  final Category category;
+  final List<Todo> todos;
+  final ValueSetter<String?> onEdit;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Expanded(
+          flex: isPortrait(context) ? 1 : 2,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Container(
+                height: 60,
+                width: 60,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Hero(
+                  tag: '${category.id}_${category.emoji.name}',
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Text(
+                      category.emoji.code,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 30),
+                    ),
+                  ),
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    category.name,
+                    style: const TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                    ),
+                  ).paddingOnly(b: 5),
+                  Text(
+                    '${category.todoSize} Tasks',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ).paddingOnly(l: 35),
+        ),
+        Expanded(
+          flex: 2,
+          child: DecoratedBox(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(30),
+                topRight: Radius.circular(30),
+              ),
+            ),
+            child: todos.isNotEmpty
+                ? TodoList(
+                    todoList: todos,
+                    onEditItem: (todo) => onEdit(todo.id),
+                  ).paddingSymmetric(h: 24, v: 20)
+                : const Center(
+                    child: Text(
+                      'Empty data, add a task',
+                      style: TextStyle(fontSize: 25),
+                    ),
+                  ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class TodoList extends ConsumerWidget {
   const TodoList({super.key, required this.todoList, required this.onEditItem});
 
@@ -220,15 +227,10 @@ class TodoList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final viewModel = ref.watch(todoViewModelPod.notifier);
 
-    final isDesktop = [
-      DeviceSegment.desktop,
-      DeviceSegment.desktopWeb,
-    ].contains(getDevice());
-
     return ListView(
       children: <Widget>[
         for (final item in todoList)
-          if (isDesktop)
+          if (desktopSegments.contains(getDevice()))
             TodoItem.contextual(
               todo: item,
               onEdit: () => onEditItem(item),
