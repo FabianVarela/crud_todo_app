@@ -295,44 +295,47 @@ void main() {
       }),
     );
 
-    testWidgets('Show $CupertinoDatePicker in $FormTodoView', (tester) async {
-      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+    testWidgets(
+      'Show $CupertinoDatePicker in $FormTodoView',
+      (tester) async {
+        setWhenWithGetData();
 
-      setWhenWithGetData();
+        await pumpMainScreen(
+          tester,
+          Consumer(
+            builder: (_, __, child) {
+              return FormTodoView(categoryId: category.id!);
+            },
+          ),
+        );
+        await showHideProgress(tester);
 
-      await pumpMainScreen(
-        tester,
-        Consumer(
-          builder: (_, __, child) {
-            return FormTodoView(categoryId: category.id!);
-          },
-        ),
-      );
-      await showHideProgress(tester);
+        await tester.tap(find.byType(DateTodo));
+        await tester.pumpAndSettle();
 
-      await tester.tap(find.byType(DateTodo));
-      await tester.pumpAndSettle();
+        final findDatePicker = find.byType(CupertinoDatePicker);
+        expect(findDatePicker, findsOneWidget);
 
-      final findDatePicker = find.byType(CupertinoDatePicker);
-      expect(findDatePicker, findsOneWidget);
+        await tester.drag(
+          find.text('Today'),
+          const Offset(0, -128),
+          touchSlopY: 0,
+          warnIfMissed: false,
+        );
 
-      await tester.drag(
-        find.text('Today'),
-        const Offset(0, -128),
-        touchSlopY: 0,
-        warnIfMissed: false,
-      );
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 500));
 
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 500));
+        await tester.tapAt(const Offset(20, 20));
 
-      await tester.tapAt(const Offset(20, 20));
-
-      await tester.pumpAndSettle();
-      expect(findDatePicker, findsNothing);
-
-      debugDefaultTargetPlatformOverride = null;
-    });
+        await tester.pumpAndSettle();
+        expect(findDatePicker, findsNothing);
+      },
+      variant: const TargetPlatformVariant(<TargetPlatform>{
+        TargetPlatform.iOS,
+        TargetPlatform.macOS,
+      }),
+    );
 
     testWidgets(
       'Update a $Todo model from $FormTodoView',
