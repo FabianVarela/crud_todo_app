@@ -3,11 +3,10 @@ import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
+import 'package:crud_todo_app/ui/widgets/custom_date_picker.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
-import 'package:flutter/cupertino.dart' as cupertino;
-import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -65,7 +64,7 @@ class FormTodoView extends HookConsumerWidget {
                   categoryId: categoryId,
                   todoId: todo?.id,
                   onSubmit: isValid ? () => _saveTodo(ref) : null,
-                ),
+                ).paddingSymmetric(h: 16),
               ],
             ),
           ),
@@ -151,12 +150,7 @@ class DateTodo extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final finalDate = ref.watch(dateTodoPod.notifier);
-
-    final platform = foundation.defaultTargetPlatform;
-
-    final isIOS = platform == foundation.TargetPlatform.iOS;
-    final isMacOS = platform == foundation.TargetPlatform.macOS;
+    final finalDate = ref.watch(dateTodoPod);
 
     useEffect(
       () {
@@ -171,11 +165,15 @@ class DateTodo extends HookConsumerWidget {
     );
 
     return InkWell(
-      onTap: () {
-        !foundation.kIsWeb && (isIOS || isMacOS)
-            ? _dateIOS(context, finalDate)
-            : _dateAndroid(context, finalDate);
-      },
+      onTap: () => CustomDatePicker.show(
+        context,
+        initialDate: finalDate.isDurationNegative
+            ? DateTime.now().add(const Duration(minutes: 2))
+            : finalDate.add(const Duration(minutes: 2)),
+        firstDate: DateTime.now(),
+        lastDate: DateTime.now().add(const Duration(days: 365)),
+        onChangeDate: (date) => ref.read(dateTodoPod.notifier).state = date,
+      ),
       child: Row(
         children: <Widget>[
           const Icon(
@@ -183,69 +181,11 @@ class DateTodo extends HookConsumerWidget {
             color: Color(0xFF4A78FA),
           ).paddingOnly(r: 12),
           Text(
-            finalDate.state.dateTimeToFormattedString,
+            finalDate.dateTimeToFormattedString,
             style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
         ],
       ),
-    );
-  }
-
-  Future<void> _dateAndroid(
-    BuildContext context,
-    StateController<DateTime> date,
-  ) async {
-    final pickedDate = await showDatePicker(
-      context: context,
-      initialDate: date.state.isDurationNegative
-          ? DateTime.now().add(const Duration(minutes: 2))
-          : date.state.add(const Duration(minutes: 2)),
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(days: 365)),
-    );
-
-    if (pickedDate != null) {
-      final pickedTime = await showTimePicker(
-        context: context,
-        initialTime: TimeOfDay.fromDateTime(date.state),
-      );
-
-      if (pickedTime != null) {
-        date.state = DateTime(
-          pickedDate.year,
-          pickedDate.month,
-          pickedDate.day,
-          pickedTime.hour,
-          pickedTime.minute,
-        );
-      }
-    }
-  }
-
-  void _dateIOS(BuildContext context, StateController<DateTime> date) {
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (_) {
-        return Container(
-          height: MediaQuery.of(context).size.height / 3,
-          width: MediaQuery.of(context).size.width,
-          color: Colors.white,
-          child: cupertino.SizedBox(
-            height: MediaQuery.of(context).size.height / 4.5,
-            child: cupertino.DefaultTextStyle(
-              style: const TextStyle(fontSize: 22),
-              child: cupertino.CupertinoDatePicker(
-                initialDateTime: date.state.isDurationNegative
-                    ? DateTime.now().add(const Duration(minutes: 2))
-                    : date.state.add(const Duration(minutes: 2)),
-                minimumDate: DateTime.now(),
-                maximumDate: DateTime.now().add(const Duration(days: 365)),
-                onDateTimeChanged: (pickedDate) => date.state = pickedDate,
-              ),
-            ),
-          ),
-        ).paddingAll(10);
-      },
     );
   }
 }
