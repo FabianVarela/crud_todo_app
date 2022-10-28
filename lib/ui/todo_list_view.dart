@@ -4,6 +4,7 @@ import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
+import 'package:crud_todo_app/ui/widgets/custom_message.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
@@ -102,23 +103,17 @@ class TodoListView extends HookConsumerWidget {
 
     if (action != null) {
       if (action == TodoAction.add) {
-        _showMessage(context, 'Todo created successfully');
+        showCustomMessage(context, 'Todo created successfully');
       } else if (action == TodoAction.update) {
-        _showMessage(context, 'Todo updated successfully');
+        showCustomMessage(context, 'Todo updated successfully');
       } else if (action == TodoAction.remove) {
-        _showMessage(context, 'Todo removed successfully');
+        showCustomMessage(context, 'Todo removed successfully');
       } else if (action == TodoAction.check) {
-        _showMessage(context, 'Todo finished successfully');
+        showCustomMessage(context, 'Todo finished successfully');
       }
     }
 
-    if (error != null) _showMessage(context, error);
-  }
-
-  void _showMessage(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    if (error != null) showCustomMessage(context, error);
   }
 }
 

@@ -3,6 +3,7 @@ import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/ui/dialog/category_dialog.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
+import 'package:crud_todo_app/ui/widgets/custom_message.dart';
 import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/category/category_state.dart';
@@ -154,38 +155,15 @@ class CategoryListView extends ConsumerWidget {
   }
 
   void _onChangeState(BuildContext context, CategoryState state) {
-    final action = state.maybeWhen(success: (a) => a, orElse: () => null);
-    final error = state.maybeWhen(error: (m) => m, orElse: () => null);
+    final action = state.whenOrNull(success: (action) => action);
+    final error = state.whenOrNull(error: (error) => error);
 
     if (action == CategoryAction.add) {
-      _showMessage(context, 'Category created successfully');
+      showCustomMessage(context, 'Category created successfully');
     } else if (action == CategoryAction.remove) {
-      _showMessage(context, 'Category removed successfully');
+      showCustomMessage(context, 'Category removed successfully');
     }
 
-    if (error != null) _showMessage(context, error);
-  }
-
-  void _showMessage(BuildContext context, String message) {
-    if (desktopSegments.contains(getDevice())) {
-      showDialog<void>(
-        context: context,
-        builder: (dialogContext) {
-          return AlertDialog(
-            title: Text(message),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.pop(dialogContext),
-                child: const Text('OK'),
-              )
-            ],
-          );
-        },
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
-      );
-    }
+    if (error != null) showCustomMessage(context, error);
   }
 }
