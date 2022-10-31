@@ -1,7 +1,9 @@
 import 'package:crud_todo_app/common/extension.dart';
+import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/service/todo_service.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../test_utils/mocks.dart';
@@ -27,7 +29,11 @@ void main() {
     mockQueryDocumentSnapshot = MockQueryDocumentSnapshot(existingTodo.id!);
     mockQuery = MockQuery();
 
-    todoService = TodoService(mockFirestoreInstance);
+    // Using simple Riverpod to test dependencies
+    final container = ProviderContainer(
+      overrides: [firebasePod.overrideWithValue(mockFirestoreInstance)],
+    );
+    todoService = container.read(todoServicePod);
   });
 
   group('$TodoService', () {

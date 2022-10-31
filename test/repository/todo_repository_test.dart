@@ -1,7 +1,9 @@
+import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../test_utils/mocks.dart';
@@ -13,8 +15,13 @@ void main() {
 
   setUpAll(() {
     mockTodoService = MockTodoService();
-    todoRepository = TodoRepository(mockTodoService);
     registerFallbackValue(MyTodoFake());
+
+    // Using simple Riverpod to test dependencies
+    final container = ProviderContainer(
+      overrides: [todoServicePod.overrideWithValue(mockTodoService)],
+    );
+    todoRepository = container.read(todoRepositoryPod);
   });
 
   group('$TodoRepository', () {
