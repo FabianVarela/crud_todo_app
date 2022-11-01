@@ -1,11 +1,14 @@
 import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/model/category_model.dart';
+import 'package:crud_todo_app/navigator/crud_todo_information_parser.dart';
+import 'package:crud_todo_app/navigator/crud_todo_router_delegate.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/ui/category_list_view.dart';
 import 'package:crud_todo_app/ui/dialog/category_dialog.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,12 +20,13 @@ import '../test_utils/params_factory.dart';
 
 void main() {
   group('$CategoryListView UI screen', () {
-    late MockFirestore mockFirestoreInstance;
+    late final MockFirestore mockFirestoreInstance;
 
-    late MockCategoryService mockCategoryService;
-    late ICategoryRepository categoryRepository;
+    late final MockCategoryService mockCategoryService;
+    late final ICategoryRepository categoryRepository;
 
-    late MockNavigator mockNavigator;
+    late final CrudTodoRouterDelegate todoRouterDelegate;
+    late final CrudTodoInformationParser todoInfoParser;
 
     setUpAll(() {
       mockFirestoreInstance = MockFirestore();
@@ -31,11 +35,14 @@ void main() {
       categoryRepository = CategoryRepository(mockCategoryService);
       registerFallbackValue(MyCategoryFake());
 
-      mockNavigator = MockNavigator();
-      registerFallbackValue(MyRouteFake());
+      // Using simple Riverpod to test dependencies
+      final container = ProviderContainer();
+
+      todoRouterDelegate = container.read(crudTodoRouterDelegateProvider);
+      todoInfoParser = container.read(crudTodoInformationParserProvider);
     });
 
-    Future<void> pumpMainScreen(WidgetTester tester, Widget child) async {
+    Future<void> pumpMainScreen(WidgetTester tester) async {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
@@ -43,17 +50,10 @@ void main() {
             categoryServicePod.overrideWithValue(mockCategoryService),
             categoryRepositoryPod.overrideWithValue(categoryRepository),
           ],
-          child: MaterialApp(
-            home: child,
-            navigatorObservers: [mockNavigator],
-            // TODO(FabianV): Review unit test for Navigator 2.0
-            // Navigator(
-            //   observers: [mockNavigator],
-            //   pages: <Page<dynamic>>[
-            //     MaterialPage<dynamic>(child: child),
-            //   ],
-            //   onPopPage: (route, dynamic result) => route.didPop(result),
-            // ),
+          child: MaterialApp.router(
+            routerDelegate: todoRouterDelegate,
+            routeInformationParser: todoInfoParser,
+            backButtonDispatcher: RootBackButtonDispatcher(),
           ),
         ),
       );
@@ -62,7 +62,7 @@ void main() {
     testWidgets(
       'Show $CategoryListView screen',
       (tester) async {
-        await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
+        await pumpMainScreen(tester);
 
         expect(find.byIcon(Icons.menu_rounded), findsOneWidget);
         expect(find.text('Lists'), findsOneWidget);
@@ -72,14 +72,11 @@ void main() {
     );
 
     testWidgets(
-      'Show $Dialog section in $CategoryListView screen '
-      'when set tap in $FloatingActionButton',
+      'Show $Dialog in when set tap in $FloatingActionButton',
       (tester) async {
-        await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
+        await pumpMainScreen(tester);
 
-        final finderFloatingButton = find.byType(FloatingActionButton);
-
-        await tester.tap(finderFloatingButton);
+        await tester.tap(find.byType(FloatingActionButton));
         await tester.pumpAndSettle(const Duration(seconds: 1));
 
         expect(find.byType(Dialog), findsOneWidget);
@@ -97,10 +94,11 @@ void main() {
     testWidgets(
       'Show empty data in $CategoryListView screen',
       (tester) async {
-        when(mockCategoryService.getCategories)
-            .thenAnswer((_) => Stream.value([]));
+        when(mockCategoryService.getCategories).thenAnswer(
+          (_) => Stream.value([]),
+        );
 
-        await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
+        await pumpMainScreen(tester);
 
         expect(find.byType(CircularProgressIndicator), findsOneWidget);
         await tester.pump(const Duration(seconds: 1));
@@ -112,12 +110,13 @@ void main() {
     );
 
     testWidgets(
-      'Show data $CategoryListView in screen',
+      'Show data in $CategoryListView screen',
       (tester) async {
-        when(categoryRepository.getCategories)
-            .thenAnswer((_) => Stream.value([category]));
+        when(categoryRepository.getCategories).thenAnswer(
+          (_) => Stream.value([category]),
+        );
 
-        await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
+        await pumpMainScreen(tester);
 
         expect(find.byType(CircularProgressIndicator), findsOneWidget);
         await tester.pump(const Duration(seconds: 1));
@@ -137,14 +136,18 @@ void main() {
     );
 
     testWidgets(
-      'Make redirection when tap selected $Category to $TodoListView screen',
+      'Redirect when select a $Category to $TodoListView screen',
       (tester) async {
-        when(categoryRepository.getCategories)
-            .thenAnswer((_) => Stream.value([category]));
+        when(categoryRepository.getCategories).thenAnswer(
+          (_) => Stream.value([category]),
+        );
 
-        await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
+        await pumpMainScreen(tester);
 
-        expect(find.byType(CircularProgressIndicator), findsOneWidget);
+        final platforms = [TargetPlatform.iOS, TargetPlatform.fuchsia];
+        if (!platforms.contains(foundation.defaultTargetPlatform)) {
+          expect(find.byType(CircularProgressIndicator), findsOneWidget);
+        }
         await tester.pump(const Duration(seconds: 1));
 
         expect(find.byType(CircularProgressIndicator), findsNothing);
@@ -159,33 +162,35 @@ void main() {
         await tester.tap(foundCatItem);
         await tester.pumpAndSettle();
 
-        verify(() => mockNavigator.didPush(any(), any()));
-        // expect(find.byType(TodoListView), findsOneWidget);
+        expect(find.byType(TodoListView), findsOneWidget);
       },
       variant: TargetPlatformVariant.mobile(),
     );
 
     testWidgets(
-      'Show $Exception in screen when get $Category list data',
+      'Show $Exception in $CategoryListView screen',
       (tester) async {
-        when(categoryRepository.getCategories)
-            .thenThrow(Exception('Category not found'));
+        when(categoryRepository.getCategories).thenThrow(
+          Exception('Category not found'),
+        );
 
-        await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
+        await pumpMainScreen(tester);
 
         expect(find.byType(CircularProgressIndicator), findsNothing);
+        await tester.pumpAndSettle();
         expect(find.text('Exception: Category not found'), findsOneWidget);
       },
       variant: TargetPlatformVariant.all(),
     );
 
     testWidgets(
-      'Show in $CategoryItem a tooltip with $CustomMouseRegion',
+      'Show tooltip in $CategoryItem using the $CustomMouseRegion widget',
       (tester) async {
-        when(categoryRepository.getCategories)
-            .thenAnswer((_) => Stream.value([category]));
+        when(categoryRepository.getCategories).thenAnswer(
+          (_) => Stream.value([category]),
+        );
 
-        await pumpMainScreen(tester, CategoryListView(onGoToDetail: (_) {}));
+        await pumpMainScreen(tester);
 
         expect(find.byType(CircularProgressIndicator), findsOneWidget);
         await tester.pump(const Duration(seconds: 1));

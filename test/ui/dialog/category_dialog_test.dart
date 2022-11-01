@@ -13,13 +13,11 @@ import 'package:mocktail/mocktail.dart';
 import '../../test_utils/mocks.dart';
 
 void main() {
-  group('$CategoryFormDialog UI section', () {
-    late MockFirestore mockFirestoreInstance;
+  group('$CategoryFormDialog UI dialog', () {
+    late final MockFirestore mockFirestoreInstance;
 
-    late MockCategoryService mockCategoryService;
-    late ICategoryRepository categoryRepository;
-
-    late MockNavigator mockNavigator;
+    late final MockCategoryService mockCategoryService;
+    late final ICategoryRepository categoryRepository;
 
     setUpAll(() {
       mockFirestoreInstance = MockFirestore();
@@ -27,9 +25,6 @@ void main() {
       mockCategoryService = MockCategoryService();
       categoryRepository = CategoryRepository(mockCategoryService);
       registerFallbackValue(MyCategoryFake());
-
-      mockNavigator = MockNavigator();
-      registerFallbackValue(MyRouteFake());
     });
 
     Future<void> pumpDialog(WidgetTester tester, Widget child) async {
@@ -40,30 +35,13 @@ void main() {
             categoryServicePod.overrideWithValue(mockCategoryService),
             categoryRepositoryPod.overrideWithValue(categoryRepository),
           ],
-          child: MaterialApp(
-            home: child,
-            navigatorObservers: [mockNavigator],
-          ),
+          child: MaterialApp(home: child),
         ),
       );
     }
 
     testWidgets(
-      'Check $Dialog close button and verify if close it when set tap',
-      (tester) async {
-        await pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
-
-        await tester.tap(find.byIcon(Icons.close));
-        await tester.pumpAndSettle();
-
-        verify(() => mockNavigator.didPop(any(), any())).called(1);
-      },
-      variant: TargetPlatformVariant.all(),
-    );
-
-    testWidgets(
-      'Check $Dialog close button and verify if close it '
-      'when set tap in $GestureDetector in desktop',
+      'Click on close button and verify if close it ',
       (tester) async {
         await pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
 
@@ -77,33 +55,28 @@ void main() {
 
         await tester.tap(foundMouseRegion);
         await tester.pumpAndSettle();
-
-        verify(() => mockNavigator.didPop(any(), any())).called(1);
       },
       variant: TargetPlatformVariant.desktop(),
     );
 
     testWidgets(
-      'Show $SubmitCategory disabled when $NameCategory '
-      'or $EmojiCategory TextField are empty',
+      'Show $SubmitCategory disabled when text fields forms are empty',
       (tester) async {
         await pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
 
-        final foundSubmitButton = find.byType(SubmitCategory);
+        final foundButton = find.byType(SubmitCategory);
 
         await tester.enterText(find.byType(NameCategory), 'Test Category');
         await tester.pumpAndSettle();
 
-        final enabled =
-            tester.widget<SubmitCategory>(foundSubmitButton).onSubmit;
+        final enabled = tester.widget<SubmitCategory>(foundButton).onSubmit;
         expect(enabled == null, isTrue);
       },
       variant: TargetPlatformVariant.all(),
     );
 
     testWidgets(
-      'Show $SubmitCategory enabled when $NameCategory '
-      'or $EmojiCategory TextField are not empty',
+      'Show $SubmitCategory enabled when text field forms are not empty',
       (tester) async {
         await pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
 
@@ -123,7 +96,7 @@ void main() {
     );
 
     testWidgets(
-      'Add $Category model from $CategoryFormDialog',
+      'Add $Category data from $CategoryFormDialog form fields',
       (tester) async {
         late final CategoryViewModel viewModel;
 
@@ -157,19 +130,18 @@ void main() {
 
         expect(viewModel.debugState.isSuccess, true);
         expect(find.byType(CircularProgressIndicator), findsNothing);
-
-        verify(() => mockNavigator.didPop(any(), any())).called(1);
       },
       variant: TargetPlatformVariant.all(),
     );
 
     testWidgets(
-      'When Add $Category model set an $Exception',
+      'When try to add a $Category data set an $Exception',
       (tester) async {
         late final CategoryViewModel viewModel;
 
-        when(() => mockCategoryService.saveCategory(any()))
-            .thenThrow(Exception('Error'));
+        when(() => mockCategoryService.saveCategory(any())).thenThrow(
+          Exception('Error'),
+        );
 
         await pumpDialog(
           tester,
