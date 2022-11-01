@@ -6,8 +6,6 @@ class ScaleTransitionRoute extends PageRouteBuilder<void> {
     required this.child,
   }) : super(
           settings: settings,
-          // reverseTransitionDuration: const Duration(milliseconds: 1000),
-          // transitionDuration: const Duration(milliseconds: 1000),
           pageBuilder: (_, anim, __) => ScaleTransition(
             scale: anim,
             child: child,
