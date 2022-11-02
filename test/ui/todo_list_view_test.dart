@@ -12,6 +12,10 @@ import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:crud_todo_app/ui/widgets/custom_checkbox.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
+import 'package:crud_todo_app/viewmodel/category/category_state.dart';
+import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
+import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
+import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -34,6 +38,9 @@ void main() {
 
     late final CrudTodoRouterDelegate todoRouterDelegate;
     late final CrudTodoInformationParser todoInfoParser;
+
+    late CategoryViewModel categoryViewModel;
+    late TodoViewModel todoViewModel;
 
     setUpAll(() {
       mockFirestoreInstance = MockFirestore();
@@ -67,6 +74,14 @@ void main() {
             routerDelegate: todoRouterDelegate,
             routeInformationParser: todoInfoParser,
             backButtonDispatcher: RootBackButtonDispatcher(),
+            builder: (_, child) => Consumer(
+              builder: (_, ref, __) {
+                categoryViewModel = ref.read(categoryViewModelPod.notifier);
+                todoViewModel = ref.read(todoViewModelPod.notifier);
+
+                return child!;
+              },
+            ),
           ),
         ),
       );
@@ -248,6 +263,11 @@ void main() {
 
         verify(() => mockCategoryService.deleteCategory(any())).called(1);
 
+        expect(categoryViewModel.debugState.isLoading, isTrue);
+        await tester.pump(const Duration(seconds: 1));
+        await tester.pumpAndSettle();
+
+        expect(categoryViewModel.debugState.isSuccess, isTrue);
         await tester.pumpAndSettle();
 
         expect(find.byType(CategoryListView), findsOneWidget);
@@ -269,6 +289,8 @@ void main() {
         await tester.tap(find.byIcon(Icons.delete_forever));
 
         verify(() => mockCategoryService.deleteCategory(any())).called(1);
+
+        expect(categoryViewModel.debugState.isError, isTrue);
         expect(find.byType(CategoryListView), findsNothing);
       },
       variant: TargetPlatformVariant.all(),
@@ -300,9 +322,13 @@ void main() {
         expect(foundItemCheck, findsOneWidget);
 
         await tester.tap(foundItemCheck);
-        await tester.pumpAndSettle();
-
         verify(() => mockTodoService.saveTodo(any())).called(1);
+
+        await tester.pump();
+        expect(todoViewModel.debugState.isLoading, isTrue);
+
+        await tester.pumpAndSettle();
+        expect(todoViewModel.debugState.isSuccess, isTrue);
       },
       variant: TargetPlatformVariant.all(),
     );
@@ -333,9 +359,10 @@ void main() {
         expect(foundItemCheck, findsOneWidget);
 
         await tester.tap(foundItemCheck);
-        await tester.pumpAndSettle();
-
         verify(() => mockTodoService.saveTodo(any())).called(1);
+
+        await tester.pumpAndSettle();
+        expect(todoViewModel.debugState.isError, isTrue);
       },
       variant: TargetPlatformVariant.all(),
     );
@@ -403,9 +430,12 @@ void main() {
         expect(find.byIcon(Icons.delete), findsOneWidget);
 
         await tester.tap(foundSlideAction);
+        verify(() => mockTodoService.deleteTodo(any(), any())).called(1);
+
+        expect(todoViewModel.debugState.isLoading, isTrue);
         await tester.pumpAndSettle();
 
-        verify(() => mockTodoService.deleteTodo(any(), any())).called(1);
+        expect(todoViewModel.debugState.isSuccess, isTrue);
       },
       variant: TargetPlatformVariant.mobile(),
     );
@@ -436,9 +466,9 @@ void main() {
         expect(foundSlideAction, findsOneWidget);
 
         await tester.tap(foundSlideAction);
-        await tester.pumpAndSettle();
-
         verify(() => mockTodoService.deleteTodo(any(), any())).called(1);
+
+        expect(todoViewModel.debugState.isError, isTrue);
       },
       variant: TargetPlatformVariant.mobile(),
     );
@@ -506,9 +536,12 @@ void main() {
         expect(foundRemoveOption, findsOneWidget);
 
         await tester.tap(foundRemoveOption);
+        verify(() => mockTodoService.deleteTodo(any(), any())).called(1);
+
+        expect(todoViewModel.debugState.isLoading, isTrue);
         await tester.pumpAndSettle();
 
-        verify(() => mockTodoService.deleteTodo(any(), any())).called(1);
+        expect(todoViewModel.debugState.isSuccess, isTrue);
         expect(foundRemoveOption, findsNothing);
       },
       variant: TargetPlatformVariant.desktop(),

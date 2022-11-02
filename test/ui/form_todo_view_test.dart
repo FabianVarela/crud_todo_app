@@ -8,6 +8,8 @@ import 'package:crud_todo_app/ui/form_todo_view.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
+import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
+import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/gestures.dart';
@@ -32,6 +34,8 @@ void main() {
 
     late final CrudTodoRouterDelegate todoRouterDelegate;
     late final CrudTodoInformationParser todoInfoParser;
+
+    late TodoViewModel todoViewModel;
 
     setUpAll(() {
       mockFirestoreInstance = MockFirestore();
@@ -65,6 +69,12 @@ void main() {
             routerDelegate: todoRouterDelegate,
             routeInformationParser: todoInfoParser,
             backButtonDispatcher: RootBackButtonDispatcher(),
+            builder: (_, child) => Consumer(
+              builder: (_, ref, __) {
+                todoViewModel = ref.read(todoViewModelPod.notifier);
+                return child!;
+              },
+            ),
           ),
         ),
       );
@@ -280,7 +290,7 @@ void main() {
           (_) => Future<void>.delayed(const Duration(seconds: 1)),
         );
 
-        await initScreensAndRedirect(tester);
+        await initScreensAndRedirect(tester, isNew: true);
 
         await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
         await tester.pump();
@@ -318,10 +328,15 @@ void main() {
 
         final todoSubmit = find.byType(SubmitTodo);
         expect(tester.widget<SubmitTodo>(todoSubmit).onSubmit != null, isTrue);
-        await tester.tap(todoSubmit);
 
+        await tester.tap(todoSubmit);
         verify(() => mockTodoService.saveTodo(any())).called(1);
+
+        await tester.pump();
+        expect(todoViewModel.debugState.isLoading, isTrue);
+
         await tester.pumpAndSettle(const Duration(seconds: 1));
+        expect(todoViewModel.debugState.isSuccess, isTrue);
 
         await tester.pump();
         expect(find.byType(TodoListView), findsOneWidget);
@@ -383,9 +398,13 @@ void main() {
         await tester.pumpAndSettle();
 
         await tester.tap(find.byType(SubmitTodo));
-
         verify(() => mockTodoService.saveTodo(any())).called(1);
+
+        await tester.pump();
+        expect(todoViewModel.debugState.isLoading, isTrue);
+
         await tester.pumpAndSettle(const Duration(seconds: 1));
+        expect(todoViewModel.debugState.isSuccess, isTrue);
 
         await tester.pump();
         expect(find.byType(TodoListView), findsOneWidget);
@@ -414,6 +433,8 @@ void main() {
         await tester.tap(find.byType(SubmitTodo));
 
         verify(() => mockTodoService.saveTodo(any())).called(1);
+        expect(todoViewModel.debugState.isError, isTrue);
+
         expect(find.byType(TodoListView), findsNothing);
       },
       variant: TargetPlatformVariant.all(),
