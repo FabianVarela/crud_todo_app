@@ -152,24 +152,6 @@ void main() {
       expect(find.byType(FormTodoView), findsOneWidget);
     }
 
-    /*testWidgets(
-      'Show $Exception when get $Category detail',
-      (tester) async {
-        await initScreensAndRedirect(tester, isNew: true);
-
-        when(() => mockCategoryService.getCategoryById(any())).thenThrow(
-          Exception('Category not found'),
-        );
-
-        expect(find.text('New Task'), findsOneWidget);
-        expect(find.byIcon(Icons.close), findsOneWidget);
-
-        await tester.pumpAndSettle();
-        expect(find.text('Exception: Category not found'), findsOneWidget);
-      },
-      variant: TargetPlatformVariant.all(),
-    );*/
-
     testWidgets(
       'Show $FormTodoView screen',
       (tester) async {
