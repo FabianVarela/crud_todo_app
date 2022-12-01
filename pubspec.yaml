@@ -9,12 +9,12 @@ environment:
   sdk: ">=2.18.0 <3.0.0"
 
 dependencies:
-  cloud_firestore: ^4.0.3
+  cloud_firestore: ^4.1.0
   context_menus: ^1.0.2
   cupertino_icons: ^1.0.5
   dart_emoji: ^0.2.0+2
   equatable: ^2.0.5
-  firebase_core: ^2.1.1
+  firebase_core: ^2.3.0
   flutter:
     sdk: flutter
   flutter_hooks: ^0.18.5+1
@@ -24,7 +24,7 @@ dependencies:
   hooks_riverpod: ^2.1.1
   intl: ^0.17.0
   json_annotation: ^4.7.0
-  uuid: ^3.0.6
+  uuid: ^3.0.7
   window_size:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git
