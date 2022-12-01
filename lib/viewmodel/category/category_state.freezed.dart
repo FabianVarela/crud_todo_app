@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'category_state.dart';
@@ -11,35 +12,7 @@ part of 'category_state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$CategoryStateTearOff {
-  const _$CategoryStateTearOff();
-
-  _CategoryStateInitial initial() {
-    return const _CategoryStateInitial();
-  }
-
-  _CategoryStateLoading loading() {
-    return const _CategoryStateLoading();
-  }
-
-  _CategoryStateSuccess success(CategoryAction action) {
-    return _CategoryStateSuccess(
-      action,
-    );
-  }
-
-  _CategoryStateError error([String? message]) {
-    return _CategoryStateError(
-      message,
-    );
-  }
-}
-
-/// @nodoc
-const $CategoryState = _$CategoryStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$CategoryState {
@@ -53,10 +26,10 @@ mixin _$CategoryState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(CategoryAction action)? success,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(CategoryAction action)? success,
+    TResult? Function(String? message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -78,10 +51,10 @@ mixin _$CategoryState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_CategoryStateInitial value)? initial,
-    TResult Function(_CategoryStateLoading value)? loading,
-    TResult Function(_CategoryStateSuccess value)? success,
-    TResult Function(_CategoryStateError value)? error,
+    TResult? Function(_CategoryStateInitial value)? initial,
+    TResult? Function(_CategoryStateLoading value)? loading,
+    TResult? Function(_CategoryStateSuccess value)? success,
+    TResult? Function(_CategoryStateError value)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -99,36 +72,34 @@ mixin _$CategoryState {
 abstract class $CategoryStateCopyWith<$Res> {
   factory $CategoryStateCopyWith(
           CategoryState value, $Res Function(CategoryState) then) =
-      _$CategoryStateCopyWithImpl<$Res>;
+      _$CategoryStateCopyWithImpl<$Res, CategoryState>;
 }
 
 /// @nodoc
-class _$CategoryStateCopyWithImpl<$Res>
+class _$CategoryStateCopyWithImpl<$Res, $Val extends CategoryState>
     implements $CategoryStateCopyWith<$Res> {
   _$CategoryStateCopyWithImpl(this._value, this._then);
 
-  final CategoryState _value;
   // ignore: unused_field
-  final $Res Function(CategoryState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$CategoryStateInitialCopyWith<$Res> {
-  factory _$CategoryStateInitialCopyWith(_CategoryStateInitial value,
-          $Res Function(_CategoryStateInitial) then) =
-      __$CategoryStateInitialCopyWithImpl<$Res>;
+abstract class _$$_CategoryStateInitialCopyWith<$Res> {
+  factory _$$_CategoryStateInitialCopyWith(_$_CategoryStateInitial value,
+          $Res Function(_$_CategoryStateInitial) then) =
+      __$$_CategoryStateInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$CategoryStateInitialCopyWithImpl<$Res>
-    extends _$CategoryStateCopyWithImpl<$Res>
-    implements _$CategoryStateInitialCopyWith<$Res> {
-  __$CategoryStateInitialCopyWithImpl(
-      _CategoryStateInitial _value, $Res Function(_CategoryStateInitial) _then)
-      : super(_value, (v) => _then(v as _CategoryStateInitial));
-
-  @override
-  _CategoryStateInitial get _value => super._value as _CategoryStateInitial;
+class __$$_CategoryStateInitialCopyWithImpl<$Res>
+    extends _$CategoryStateCopyWithImpl<$Res, _$_CategoryStateInitial>
+    implements _$$_CategoryStateInitialCopyWith<$Res> {
+  __$$_CategoryStateInitialCopyWithImpl(_$_CategoryStateInitial _value,
+      $Res Function(_$_CategoryStateInitial) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -143,7 +114,8 @@ class _$_CategoryStateInitial implements _CategoryStateInitial {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _CategoryStateInitial);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_CategoryStateInitial);
   }
 
   @override
@@ -163,10 +135,10 @@ class _$_CategoryStateInitial implements _CategoryStateInitial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(CategoryAction action)? success,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(CategoryAction action)? success,
+    TResult? Function(String? message)? error,
   }) {
     return initial?.call();
   }
@@ -200,10 +172,10 @@ class _$_CategoryStateInitial implements _CategoryStateInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_CategoryStateInitial value)? initial,
-    TResult Function(_CategoryStateLoading value)? loading,
-    TResult Function(_CategoryStateSuccess value)? success,
-    TResult Function(_CategoryStateError value)? error,
+    TResult? Function(_CategoryStateInitial value)? initial,
+    TResult? Function(_CategoryStateLoading value)? loading,
+    TResult? Function(_CategoryStateSuccess value)? success,
+    TResult? Function(_CategoryStateError value)? error,
   }) {
     return initial?.call(this);
   }
@@ -229,22 +201,19 @@ abstract class _CategoryStateInitial implements CategoryState {
 }
 
 /// @nodoc
-abstract class _$CategoryStateLoadingCopyWith<$Res> {
-  factory _$CategoryStateLoadingCopyWith(_CategoryStateLoading value,
-          $Res Function(_CategoryStateLoading) then) =
-      __$CategoryStateLoadingCopyWithImpl<$Res>;
+abstract class _$$_CategoryStateLoadingCopyWith<$Res> {
+  factory _$$_CategoryStateLoadingCopyWith(_$_CategoryStateLoading value,
+          $Res Function(_$_CategoryStateLoading) then) =
+      __$$_CategoryStateLoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$CategoryStateLoadingCopyWithImpl<$Res>
-    extends _$CategoryStateCopyWithImpl<$Res>
-    implements _$CategoryStateLoadingCopyWith<$Res> {
-  __$CategoryStateLoadingCopyWithImpl(
-      _CategoryStateLoading _value, $Res Function(_CategoryStateLoading) _then)
-      : super(_value, (v) => _then(v as _CategoryStateLoading));
-
-  @override
-  _CategoryStateLoading get _value => super._value as _CategoryStateLoading;
+class __$$_CategoryStateLoadingCopyWithImpl<$Res>
+    extends _$CategoryStateCopyWithImpl<$Res, _$_CategoryStateLoading>
+    implements _$$_CategoryStateLoadingCopyWith<$Res> {
+  __$$_CategoryStateLoadingCopyWithImpl(_$_CategoryStateLoading _value,
+      $Res Function(_$_CategoryStateLoading) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -259,7 +228,8 @@ class _$_CategoryStateLoading implements _CategoryStateLoading {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _CategoryStateLoading);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_CategoryStateLoading);
   }
 
   @override
@@ -279,10 +249,10 @@ class _$_CategoryStateLoading implements _CategoryStateLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(CategoryAction action)? success,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(CategoryAction action)? success,
+    TResult? Function(String? message)? error,
   }) {
     return loading?.call();
   }
@@ -316,10 +286,10 @@ class _$_CategoryStateLoading implements _CategoryStateLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_CategoryStateInitial value)? initial,
-    TResult Function(_CategoryStateLoading value)? loading,
-    TResult Function(_CategoryStateSuccess value)? success,
-    TResult Function(_CategoryStateError value)? error,
+    TResult? Function(_CategoryStateInitial value)? initial,
+    TResult? Function(_CategoryStateLoading value)? loading,
+    TResult? Function(_CategoryStateSuccess value)? success,
+    TResult? Function(_CategoryStateError value)? error,
   }) {
     return loading?.call(this);
   }
@@ -345,30 +315,29 @@ abstract class _CategoryStateLoading implements CategoryState {
 }
 
 /// @nodoc
-abstract class _$CategoryStateSuccessCopyWith<$Res> {
-  factory _$CategoryStateSuccessCopyWith(_CategoryStateSuccess value,
-          $Res Function(_CategoryStateSuccess) then) =
-      __$CategoryStateSuccessCopyWithImpl<$Res>;
+abstract class _$$_CategoryStateSuccessCopyWith<$Res> {
+  factory _$$_CategoryStateSuccessCopyWith(_$_CategoryStateSuccess value,
+          $Res Function(_$_CategoryStateSuccess) then) =
+      __$$_CategoryStateSuccessCopyWithImpl<$Res>;
+  @useResult
   $Res call({CategoryAction action});
 }
 
 /// @nodoc
-class __$CategoryStateSuccessCopyWithImpl<$Res>
-    extends _$CategoryStateCopyWithImpl<$Res>
-    implements _$CategoryStateSuccessCopyWith<$Res> {
-  __$CategoryStateSuccessCopyWithImpl(
-      _CategoryStateSuccess _value, $Res Function(_CategoryStateSuccess) _then)
-      : super(_value, (v) => _then(v as _CategoryStateSuccess));
+class __$$_CategoryStateSuccessCopyWithImpl<$Res>
+    extends _$CategoryStateCopyWithImpl<$Res, _$_CategoryStateSuccess>
+    implements _$$_CategoryStateSuccessCopyWith<$Res> {
+  __$$_CategoryStateSuccessCopyWithImpl(_$_CategoryStateSuccess _value,
+      $Res Function(_$_CategoryStateSuccess) _then)
+      : super(_value, _then);
 
-  @override
-  _CategoryStateSuccess get _value => super._value as _CategoryStateSuccess;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? action = freezed,
+    Object? action = null,
   }) {
-    return _then(_CategoryStateSuccess(
-      action == freezed
+    return _then(_$_CategoryStateSuccess(
+      null == action
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
               as CategoryAction,
@@ -392,19 +361,19 @@ class _$_CategoryStateSuccess implements _CategoryStateSuccess {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _CategoryStateSuccess &&
-            (identical(other.action, action) ||
-                const DeepCollectionEquality().equals(other.action, action)));
+        (other.runtimeType == runtimeType &&
+            other is _$_CategoryStateSuccess &&
+            (identical(other.action, action) || other.action == action));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(action);
+  int get hashCode => Object.hash(runtimeType, action);
 
   @JsonKey(ignore: true)
   @override
-  _$CategoryStateSuccessCopyWith<_CategoryStateSuccess> get copyWith =>
-      __$CategoryStateSuccessCopyWithImpl<_CategoryStateSuccess>(
+  @pragma('vm:prefer-inline')
+  _$$_CategoryStateSuccessCopyWith<_$_CategoryStateSuccess> get copyWith =>
+      __$$_CategoryStateSuccessCopyWithImpl<_$_CategoryStateSuccess>(
           this, _$identity);
 
   @override
@@ -421,10 +390,10 @@ class _$_CategoryStateSuccess implements _CategoryStateSuccess {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(CategoryAction action)? success,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(CategoryAction action)? success,
+    TResult? Function(String? message)? error,
   }) {
     return success?.call(action);
   }
@@ -458,10 +427,10 @@ class _$_CategoryStateSuccess implements _CategoryStateSuccess {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_CategoryStateInitial value)? initial,
-    TResult Function(_CategoryStateLoading value)? loading,
-    TResult Function(_CategoryStateSuccess value)? success,
-    TResult Function(_CategoryStateError value)? error,
+    TResult? Function(_CategoryStateInitial value)? initial,
+    TResult? Function(_CategoryStateLoading value)? loading,
+    TResult? Function(_CategoryStateSuccess value)? success,
+    TResult? Function(_CategoryStateError value)? error,
   }) {
     return success?.call(this);
   }
@@ -483,40 +452,39 @@ class _$_CategoryStateSuccess implements _CategoryStateSuccess {
 }
 
 abstract class _CategoryStateSuccess implements CategoryState {
-  const factory _CategoryStateSuccess(CategoryAction action) =
+  const factory _CategoryStateSuccess(final CategoryAction action) =
       _$_CategoryStateSuccess;
 
-  CategoryAction get action => throw _privateConstructorUsedError;
+  CategoryAction get action;
   @JsonKey(ignore: true)
-  _$CategoryStateSuccessCopyWith<_CategoryStateSuccess> get copyWith =>
+  _$$_CategoryStateSuccessCopyWith<_$_CategoryStateSuccess> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$CategoryStateErrorCopyWith<$Res> {
-  factory _$CategoryStateErrorCopyWith(
-          _CategoryStateError value, $Res Function(_CategoryStateError) then) =
-      __$CategoryStateErrorCopyWithImpl<$Res>;
+abstract class _$$_CategoryStateErrorCopyWith<$Res> {
+  factory _$$_CategoryStateErrorCopyWith(_$_CategoryStateError value,
+          $Res Function(_$_CategoryStateError) then) =
+      __$$_CategoryStateErrorCopyWithImpl<$Res>;
+  @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$CategoryStateErrorCopyWithImpl<$Res>
-    extends _$CategoryStateCopyWithImpl<$Res>
-    implements _$CategoryStateErrorCopyWith<$Res> {
-  __$CategoryStateErrorCopyWithImpl(
-      _CategoryStateError _value, $Res Function(_CategoryStateError) _then)
-      : super(_value, (v) => _then(v as _CategoryStateError));
+class __$$_CategoryStateErrorCopyWithImpl<$Res>
+    extends _$CategoryStateCopyWithImpl<$Res, _$_CategoryStateError>
+    implements _$$_CategoryStateErrorCopyWith<$Res> {
+  __$$_CategoryStateErrorCopyWithImpl(
+      _$_CategoryStateError _value, $Res Function(_$_CategoryStateError) _then)
+      : super(_value, _then);
 
-  @override
-  _CategoryStateError get _value => super._value as _CategoryStateError;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_CategoryStateError(
-      message == freezed
+    return _then(_$_CategoryStateError(
+      freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -540,19 +508,20 @@ class _$_CategoryStateError implements _CategoryStateError {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _CategoryStateError &&
-            (identical(other.message, message) ||
-                const DeepCollectionEquality().equals(other.message, message)));
+        (other.runtimeType == runtimeType &&
+            other is _$_CategoryStateError &&
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
+  int get hashCode => Object.hash(runtimeType, message);
 
   @JsonKey(ignore: true)
   @override
-  _$CategoryStateErrorCopyWith<_CategoryStateError> get copyWith =>
-      __$CategoryStateErrorCopyWithImpl<_CategoryStateError>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_CategoryStateErrorCopyWith<_$_CategoryStateError> get copyWith =>
+      __$$_CategoryStateErrorCopyWithImpl<_$_CategoryStateError>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -568,10 +537,10 @@ class _$_CategoryStateError implements _CategoryStateError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(CategoryAction action)? success,
-    TResult Function(String? message)? error,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function(CategoryAction action)? success,
+    TResult? Function(String? message)? error,
   }) {
     return error?.call(message);
   }
@@ -605,10 +574,10 @@ class _$_CategoryStateError implements _CategoryStateError {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_CategoryStateInitial value)? initial,
-    TResult Function(_CategoryStateLoading value)? loading,
-    TResult Function(_CategoryStateSuccess value)? success,
-    TResult Function(_CategoryStateError value)? error,
+    TResult? Function(_CategoryStateInitial value)? initial,
+    TResult? Function(_CategoryStateLoading value)? loading,
+    TResult? Function(_CategoryStateSuccess value)? success,
+    TResult? Function(_CategoryStateError value)? error,
   }) {
     return error?.call(this);
   }
@@ -630,10 +599,11 @@ class _$_CategoryStateError implements _CategoryStateError {
 }
 
 abstract class _CategoryStateError implements CategoryState {
-  const factory _CategoryStateError([String? message]) = _$_CategoryStateError;
+  const factory _CategoryStateError([final String? message]) =
+      _$_CategoryStateError;
 
-  String? get message => throw _privateConstructorUsedError;
+  String? get message;
   @JsonKey(ignore: true)
-  _$CategoryStateErrorCopyWith<_CategoryStateError> get copyWith =>
+  _$$_CategoryStateErrorCopyWith<_$_CategoryStateError> get copyWith =>
       throw _privateConstructorUsedError;
 }
