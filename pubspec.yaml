@@ -9,12 +9,12 @@ environment:
   sdk: ">=2.18.0 <3.0.0"
 
 dependencies:
-  cloud_firestore: ^4.1.0
+  cloud_firestore: ^4.2.0
   context_menus: ^1.0.2
   cupertino_icons: ^1.0.5
   dart_emoji: ^0.2.0+2
   equatable: ^2.0.5
-  firebase_core: ^2.3.0
+  firebase_core: ^2.4.0
   flutter:
     sdk: flutter
   flutter_hooks: ^0.18.5+1
