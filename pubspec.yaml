@@ -12,7 +12,6 @@ environment:
 dependencies:
   cloud_firestore: ^4.3.1
   context_menus: ^1.0.2
-  cupertino_icons: ^1.0.5
   dart_emoji: ^0.2.0+2
   equatable: ^2.0.5
   firebase_core: ^2.4.1
@@ -41,13 +40,11 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   json_serializable: ^6.5.4
-  ## mockito: ^5.3.2
   mocktail: ^0.3.0
   remove_from_coverage: ^2.0.0
   very_good_analysis: ^3.1.0
 
 flutter:
   uses-material-design: true
-
   assets:
     - assets/images/
