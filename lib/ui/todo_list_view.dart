@@ -16,9 +16,9 @@ typedef NavigatorToTodo = void Function(String, String?);
 
 class TodoListView extends HookConsumerWidget {
   const TodoListView({
-    super.key,
     required this.categoryId,
     required this.onGoToTodo,
+    super.key,
   });
 
   final String categoryId;
@@ -119,10 +119,10 @@ class TodoListView extends HookConsumerWidget {
 
 class CategorySection extends ConsumerWidget {
   const CategorySection({
-    super.key,
     required this.category,
     required this.todos,
     required this.onEdit,
+    super.key,
   });
 
   final Category category;
@@ -213,7 +213,7 @@ class CategorySection extends ConsumerWidget {
 }
 
 class TodoList extends ConsumerWidget {
-  const TodoList({super.key, required this.todoList, required this.onEditItem});
+  const TodoList({required this.todoList, required this.onEditItem, super.key});
 
   final List<Todo> todoList;
   final ValueSetter<Todo> onEditItem;

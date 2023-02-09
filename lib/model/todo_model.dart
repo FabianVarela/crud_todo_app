@@ -7,10 +7,10 @@ part 'todo_model.g.dart';
 @JsonSerializable()
 class Todo extends Equatable {
   const Todo({
-    this.id,
     required this.subject,
     required this.finalDate,
     required this.categoryId,
+    this.id,
     this.isCompleted = false,
   });
 

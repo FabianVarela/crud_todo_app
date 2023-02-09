@@ -7,8 +7,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 class TodoItem extends StatelessWidget {
   const TodoItem({
-    Key? key,
     required Todo todo,
+    Key? key,
     VoidCallback? onEdit,
     VoidCallback? onRemove,
     ValueSetter<bool>? onCheck,
@@ -21,8 +21,8 @@ class TodoItem extends StatelessWidget {
         );
 
   const TodoItem.contextual({
-    Key? key,
     required Todo todo,
+    Key? key,
     VoidCallback? onEdit,
     VoidCallback? onRemove,
     ValueSetter<bool>? onCheck,
@@ -36,8 +36,8 @@ class TodoItem extends StatelessWidget {
         );
 
   const TodoItem._({
-    super.key,
     required this.todo,
+    super.key,
     this.onEdit,
     this.onRemove,
     this.onCheck,

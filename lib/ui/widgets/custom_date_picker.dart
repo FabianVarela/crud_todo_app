@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 
 class CustomDatePicker extends StatelessWidget {
   const CustomDatePicker({
-    super.key,
     required this.initialDate,
     required this.firstDate,
     required this.lastDate,
     required this.onChangeDate,
+    super.key,
   });
 
   final DateTime initialDate;

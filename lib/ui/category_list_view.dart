@@ -23,7 +23,7 @@ class RefreshListIntent extends Intent {
 }
 
 class CategoryListView extends ConsumerWidget {
-  const CategoryListView({super.key, required this.onGoToDetail});
+  const CategoryListView({required this.onGoToDetail, super.key});
 
   final NavigatorToDetail onGoToDetail;
 
