@@ -10,14 +10,14 @@ environment:
   flutter: 3.7.0
 
 dependencies:
-  cloud_firestore: ^4.3.2
+  cloud_firestore: ^4.4.3
   context_menus: ^1.0.2
   dart_emoji: ^0.2.0+2
   equatable: ^2.0.5
-  firebase_core: ^2.5.0
+  firebase_core: ^2.7.0
   flutter:
     sdk: flutter
-  flutter_hooks: ^0.18.5+1
+  flutter_hooks: ^0.18.6
   flutter_slidable: ^2.0.0
   freezed_annotation: ^2.2.0
   google_fonts: ^4.0.3
