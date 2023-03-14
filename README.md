@@ -81,10 +81,18 @@ Run deep links in **Android**, use the command below:
 * If you want to rename the bundles for each platform, you must do the steps below.
     * For Android, you must rename the bundle id on ```app/build.gradle```.
     * For iOS in XCode IDE, you select ```Runner``` and change the 'Bundle Identifier' text.
-* You must run the ```FlutterFire CLI``` command
-  ```bash
-  flutterfire configure --project=<YOUR_PROJECT_ID>
-  ```
+    * You must run the ```FlutterFire CLI``` command to configure your Firebase project. The project has 2
+      environments `dev` and `production`.
+        * If the project is `production`, you must run this command. Automatically, it creates a file with the
+          name `lib/firebase_options.dart`
+          ```bash
+          flutterfire configure --project=<YOUR_PROJECT_ID>
+          ```
+        * If the project is `dev`, you must run this command. However, you must set the out file in this
+          case `lib/firebase_options_dev.dart`
+          ```bash
+          flutterfire configure --project=<YOUR_PROJECT_ID> --out=lib/firebase_options_dev.dart
+          ```
 * Run project and enjoy :smile:
 
 ------
