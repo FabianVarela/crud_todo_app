@@ -7,10 +7,10 @@ part of 'todo_model.dart';
 // **************************************************************************
 
 Todo _$TodoFromJson(Map<String, dynamic> json) => Todo(
-      id: json['id'] as String?,
       subject: json['subject'] as String,
       finalDate: Todo._intFromJson(json['finalDate'] as int),
       categoryId: json['categoryId'] as String,
+      id: json['id'] as String?,
       isCompleted: json['isCompleted'] as bool? ?? false,
     );
 

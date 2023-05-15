@@ -7,9 +7,9 @@ part of 'category_model.dart';
 // **************************************************************************
 
 Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
-      id: json['id'] as String?,
       name: json['name'] as String,
       emoji: Category._emojiFromJson(json['emoji'] as String),
+      id: json['id'] as String?,
       todoSize: json['todoSize'] as int? ?? 0,
     );
 
