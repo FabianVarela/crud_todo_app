@@ -1,10 +1,14 @@
 import 'package:crud_todo_app/navigator/config/crud_todo_config.dart';
 import 'package:flutter/material.dart';
 
-class CrudTodoPath {
-  static const category = 'categories';
-  static const todo = 'todo';
-  static const unknown = '404';
+enum TodoPath {
+  category('categories'),
+  todo('todo'),
+  unknown('404');
+
+  const TodoPath(this.name);
+
+  final String name;
 }
 
 class CrudTodoInformationParser extends RouteInformationParser<CrudTodoConfig> {
@@ -13,55 +17,38 @@ class CrudTodoInformationParser extends RouteInformationParser<CrudTodoConfig> {
     RouteInformation routeInformation,
   ) async {
     final uri = Uri.parse(routeInformation.location ?? '');
+    final newPaths = uri.pathSegments.map((seg) => seg.toLowerCase()).toList();
 
-    if (uri.pathSegments.isEmpty) {
-      // Home '/'
-      return const CrudTodoConfigCategoryList();
-    } else if (uri.pathSegments.length == 1) {
-      // Home '/categories'
-      final firstSegment = uri.pathSegments[0].toLowerCase();
-      if (firstSegment == CrudTodoPath.category) {
+    switch (newPaths.length) {
+      case 0:
         return const CrudTodoConfigCategoryList();
-      }
-    } else if (uri.pathSegments.length == 2) {
-      // Category detail '/categories/{id}'
-      final firstSegment = uri.pathSegments[0].toLowerCase();
-      final secondSegment = uri.pathSegments[1];
-
-      if (firstSegment == CrudTodoPath.category) {
-        if (secondSegment.isNotEmpty) {
-          return CrudTodoConfigTodoList(secondSegment);
+      case 1:
+        if (newPaths[0] == TodoPath.category.name) {
+          return const CrudTodoConfigCategoryList();
         }
-      }
-    } else if (uri.pathSegments.length == 3) {
-      // Todos new '/categories/{id}/todos/
-      final firstSegment = uri.pathSegments[0].toLowerCase();
-      final secondSegment = uri.pathSegments[1];
-      final thirdSegment = uri.pathSegments[2].toLowerCase();
-
-      if (firstSegment == CrudTodoPath.category) {
-        if (secondSegment.isNotEmpty) {
-          if (thirdSegment == CrudTodoPath.todo) {
-            return CrudTodoConfigAddTodo(secondSegment);
+        break;
+      case 2:
+        final segments = (newPaths[0], newPaths[1]);
+        if (segments.$1 == TodoPath.category.name && segments.$2.isNotEmpty) {
+          return CrudTodoConfigTodoList(segments.$2);
+        }
+        break;
+      case 3:
+        final segments = (newPaths[0], newPaths[1], newPaths[2]);
+        if (segments.$1 == TodoPath.category.name) {
+          if (segments.$2.isNotEmpty && segments.$3 == TodoPath.todo.name) {
+            return CrudTodoConfigAddTodo(segments.$2);
           }
         }
-      }
-    } else if (uri.pathSegments.length == 4) {
-      // Todos update '/categories/{catId}/todos/{todoId}
-      final firstSegment = uri.pathSegments[0].toLowerCase();
-      final secondSegment = uri.pathSegments[1];
-      final thirdSegment = uri.pathSegments[2].toLowerCase();
-      final lastSegment = uri.pathSegments[3];
-
-      if (firstSegment == CrudTodoPath.category) {
-        if (secondSegment.isNotEmpty) {
-          if (thirdSegment == CrudTodoPath.todo) {
-            if (lastSegment.isNotEmpty) {
-              return CrudTodoConfigUpdateTodo(secondSegment, lastSegment);
-            }
+        break;
+      case 4:
+        final segments = (newPaths[0], newPaths[1], newPaths[2], newPaths[3]);
+        if (segments.$1 == TodoPath.category.name && segments.$2.isNotEmpty) {
+          if (segments.$3 == TodoPath.todo.name && segments.$4.isNotEmpty) {
+            return CrudTodoConfigUpdateTodo(segments.$2, segments.$4);
           }
         }
-      }
+        break;
     }
 
     return const CrudTodoConfig.unknown();
@@ -70,26 +57,19 @@ class CrudTodoInformationParser extends RouteInformationParser<CrudTodoConfig> {
   @override
   RouteInformation? restoreRouteInformation(CrudTodoConfig configuration) {
     return configuration.when(
-      categoryList: () {
-        return const RouteInformation(location: '/${CrudTodoPath.category}');
-      },
-      todoList: (categoryId) {
-        const categoryPath = CrudTodoPath.category;
-        return RouteInformation(location: '/$categoryPath/$categoryId');
-      },
-      addTodo: (categoryId) {
-        const catPath = CrudTodoPath.category;
-        const todoPath = CrudTodoPath.todo;
-        return RouteInformation(location: '/$catPath/$categoryId/$todoPath/');
-      },
-      updateTodo: (id, todoId) {
-        const catPath = CrudTodoPath.category;
-        const todoPath = CrudTodoPath.todo;
-        return RouteInformation(location: '/$catPath/$id/$todoPath/$todoId');
-      },
-      unknown: () {
-        return const RouteInformation(location: '/${CrudTodoPath.unknown}');
-      },
+      categoryList: () => RouteInformation(
+        location: '/${TodoPath.category.name}',
+      ),
+      todoList: (categoryId) => RouteInformation(
+        location: '/${TodoPath.category.name}/$categoryId',
+      ),
+      addTodo: (id) => RouteInformation(
+        location: '/${TodoPath.category.name}/$id/${TodoPath.todo.name}/',
+      ),
+      updateTodo: (id, tId) => RouteInformation(
+        location: '/${TodoPath.category.name}/$id/${TodoPath.todo.name}/$tId',
+      ),
+      unknown: () => RouteInformation(location: '/${TodoPath.unknown.name}'),
     );
   }
 }
