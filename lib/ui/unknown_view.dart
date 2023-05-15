@@ -9,11 +9,6 @@ class UnknownView extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    final isWeb = [
-      DeviceSegment.mobileWeb,
-      DeviceSegment.desktopWeb,
-    ].contains(getDevice());
-
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -39,7 +34,9 @@ class UnknownView extends StatelessWidget {
               width: size.width * .4,
             ),
             Text(
-              isWeb ? 'Oops!!! Page not found' : 'Oops!!! Screen not found',
+              webSegments.contains(getDevice())
+                  ? 'Oops!!! Page not found'
+                  : 'Oops!!! Screen not found',
               style: const TextStyle(fontSize: 30),
             ).paddingOnly(t: 50),
           ],
