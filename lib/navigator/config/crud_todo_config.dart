@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'crud_todo_config.freezed.dart';
 
 @freezed
-class CrudTodoConfig with _$CrudTodoConfig {
+sealed class CrudTodoConfig with _$CrudTodoConfig {
   const factory CrudTodoConfig.categoryList() = CrudTodoConfigCategoryList;
 
   const factory CrudTodoConfig.todoList(String categoryId) =
