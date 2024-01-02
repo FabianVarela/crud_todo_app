@@ -16,9 +16,8 @@ mobile phones, tablets, computers, notebooks, etc.
 
 ### Flavors
 
-This app has been enabled with Android, iOS, and Web flavors with the below environments (develop and production). For
-macOS, flavors are not already supported
-this is an [open issue related](https://github.com/flutter/flutter/issues/64088)
+This app has been enabled with Android, iOS, Web, and macOS flavors with the below environments (develop and
+production). For Windows (coming soon).
 
 ### Navigator 2.0
 
@@ -80,7 +79,7 @@ Run deep links in **Android**, use the command below:
 * Clone this project.
 * If you want to rename the bundles for each platform, you must do the steps below.
     * For Android, you must rename the bundle id on ```app/build.gradle```.
-    * For iOS in XCode IDE, you select ```Runner``` and change the 'Bundle Identifier' text.
+    * For iOS and macOS in XCode IDE, you select ```Runner``` and change the 'Bundle Identifier' text.
     * You must run the ```FlutterFire CLI``` command to configure your Firebase project. The project has 2
       environments `dev` and `production`.
         * If the project is `production`, you must run this command. Automatically, it creates a file with the
