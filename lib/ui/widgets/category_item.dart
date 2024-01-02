@@ -14,6 +14,7 @@ class CategoryItem extends StatelessWidget {
       onTap: onClick,
       child: Card(
         elevation: 5,
+        surfaceTintColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Column(
