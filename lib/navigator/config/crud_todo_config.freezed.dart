@@ -93,27 +93,27 @@ class _$CrudTodoConfigCopyWithImpl<$Res, $Val extends CrudTodoConfig>
 }
 
 /// @nodoc
-abstract class _$$CrudTodoConfigCategoryListCopyWith<$Res> {
-  factory _$$CrudTodoConfigCategoryListCopyWith(
-          _$CrudTodoConfigCategoryList value,
-          $Res Function(_$CrudTodoConfigCategoryList) then) =
-      __$$CrudTodoConfigCategoryListCopyWithImpl<$Res>;
+abstract class _$$CrudTodoConfigCategoryListImplCopyWith<$Res> {
+  factory _$$CrudTodoConfigCategoryListImplCopyWith(
+          _$CrudTodoConfigCategoryListImpl value,
+          $Res Function(_$CrudTodoConfigCategoryListImpl) then) =
+      __$$CrudTodoConfigCategoryListImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$CrudTodoConfigCategoryListCopyWithImpl<$Res>
-    extends _$CrudTodoConfigCopyWithImpl<$Res, _$CrudTodoConfigCategoryList>
-    implements _$$CrudTodoConfigCategoryListCopyWith<$Res> {
-  __$$CrudTodoConfigCategoryListCopyWithImpl(
-      _$CrudTodoConfigCategoryList _value,
-      $Res Function(_$CrudTodoConfigCategoryList) _then)
+class __$$CrudTodoConfigCategoryListImplCopyWithImpl<$Res>
+    extends _$CrudTodoConfigCopyWithImpl<$Res, _$CrudTodoConfigCategoryListImpl>
+    implements _$$CrudTodoConfigCategoryListImplCopyWith<$Res> {
+  __$$CrudTodoConfigCategoryListImplCopyWithImpl(
+      _$CrudTodoConfigCategoryListImpl _value,
+      $Res Function(_$CrudTodoConfigCategoryListImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$CrudTodoConfigCategoryList implements CrudTodoConfigCategoryList {
-  const _$CrudTodoConfigCategoryList();
+class _$CrudTodoConfigCategoryListImpl implements CrudTodoConfigCategoryList {
+  const _$CrudTodoConfigCategoryListImpl();
 
   @override
   String toString() {
@@ -121,10 +121,10 @@ class _$CrudTodoConfigCategoryList implements CrudTodoConfigCategoryList {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CrudTodoConfigCategoryList);
+            other is _$CrudTodoConfigCategoryListImpl);
   }
 
   @override
@@ -212,24 +212,26 @@ class _$CrudTodoConfigCategoryList implements CrudTodoConfigCategoryList {
 }
 
 abstract class CrudTodoConfigCategoryList implements CrudTodoConfig {
-  const factory CrudTodoConfigCategoryList() = _$CrudTodoConfigCategoryList;
+  const factory CrudTodoConfigCategoryList() = _$CrudTodoConfigCategoryListImpl;
 }
 
 /// @nodoc
-abstract class _$$CrudTodoConfigTodoListCopyWith<$Res> {
-  factory _$$CrudTodoConfigTodoListCopyWith(_$CrudTodoConfigTodoList value,
-          $Res Function(_$CrudTodoConfigTodoList) then) =
-      __$$CrudTodoConfigTodoListCopyWithImpl<$Res>;
+abstract class _$$CrudTodoConfigTodoListImplCopyWith<$Res> {
+  factory _$$CrudTodoConfigTodoListImplCopyWith(
+          _$CrudTodoConfigTodoListImpl value,
+          $Res Function(_$CrudTodoConfigTodoListImpl) then) =
+      __$$CrudTodoConfigTodoListImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String categoryId});
 }
 
 /// @nodoc
-class __$$CrudTodoConfigTodoListCopyWithImpl<$Res>
-    extends _$CrudTodoConfigCopyWithImpl<$Res, _$CrudTodoConfigTodoList>
-    implements _$$CrudTodoConfigTodoListCopyWith<$Res> {
-  __$$CrudTodoConfigTodoListCopyWithImpl(_$CrudTodoConfigTodoList _value,
-      $Res Function(_$CrudTodoConfigTodoList) _then)
+class __$$CrudTodoConfigTodoListImplCopyWithImpl<$Res>
+    extends _$CrudTodoConfigCopyWithImpl<$Res, _$CrudTodoConfigTodoListImpl>
+    implements _$$CrudTodoConfigTodoListImplCopyWith<$Res> {
+  __$$CrudTodoConfigTodoListImplCopyWithImpl(
+      _$CrudTodoConfigTodoListImpl _value,
+      $Res Function(_$CrudTodoConfigTodoListImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -237,7 +239,7 @@ class __$$CrudTodoConfigTodoListCopyWithImpl<$Res>
   $Res call({
     Object? categoryId = null,
   }) {
-    return _then(_$CrudTodoConfigTodoList(
+    return _then(_$CrudTodoConfigTodoListImpl(
       null == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
@@ -248,8 +250,8 @@ class __$$CrudTodoConfigTodoListCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CrudTodoConfigTodoList implements CrudTodoConfigTodoList {
-  const _$CrudTodoConfigTodoList(this.categoryId);
+class _$CrudTodoConfigTodoListImpl implements CrudTodoConfigTodoList {
+  const _$CrudTodoConfigTodoListImpl(this.categoryId);
 
   @override
   final String categoryId;
@@ -260,10 +262,10 @@ class _$CrudTodoConfigTodoList implements CrudTodoConfigTodoList {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CrudTodoConfigTodoList &&
+            other is _$CrudTodoConfigTodoListImpl &&
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId));
   }
@@ -274,9 +276,9 @@ class _$CrudTodoConfigTodoList implements CrudTodoConfigTodoList {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CrudTodoConfigTodoListCopyWith<_$CrudTodoConfigTodoList> get copyWith =>
-      __$$CrudTodoConfigTodoListCopyWithImpl<_$CrudTodoConfigTodoList>(
-          this, _$identity);
+  _$$CrudTodoConfigTodoListImplCopyWith<_$CrudTodoConfigTodoListImpl>
+      get copyWith => __$$CrudTodoConfigTodoListImplCopyWithImpl<
+          _$CrudTodoConfigTodoListImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -361,29 +363,30 @@ class _$CrudTodoConfigTodoList implements CrudTodoConfigTodoList {
 
 abstract class CrudTodoConfigTodoList implements CrudTodoConfig {
   const factory CrudTodoConfigTodoList(final String categoryId) =
-      _$CrudTodoConfigTodoList;
+      _$CrudTodoConfigTodoListImpl;
 
   String get categoryId;
   @JsonKey(ignore: true)
-  _$$CrudTodoConfigTodoListCopyWith<_$CrudTodoConfigTodoList> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CrudTodoConfigTodoListImplCopyWith<_$CrudTodoConfigTodoListImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$CrudTodoConfigAddTodoCopyWith<$Res> {
-  factory _$$CrudTodoConfigAddTodoCopyWith(_$CrudTodoConfigAddTodo value,
-          $Res Function(_$CrudTodoConfigAddTodo) then) =
-      __$$CrudTodoConfigAddTodoCopyWithImpl<$Res>;
+abstract class _$$CrudTodoConfigAddTodoImplCopyWith<$Res> {
+  factory _$$CrudTodoConfigAddTodoImplCopyWith(
+          _$CrudTodoConfigAddTodoImpl value,
+          $Res Function(_$CrudTodoConfigAddTodoImpl) then) =
+      __$$CrudTodoConfigAddTodoImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String categoryId});
 }
 
 /// @nodoc
-class __$$CrudTodoConfigAddTodoCopyWithImpl<$Res>
-    extends _$CrudTodoConfigCopyWithImpl<$Res, _$CrudTodoConfigAddTodo>
-    implements _$$CrudTodoConfigAddTodoCopyWith<$Res> {
-  __$$CrudTodoConfigAddTodoCopyWithImpl(_$CrudTodoConfigAddTodo _value,
-      $Res Function(_$CrudTodoConfigAddTodo) _then)
+class __$$CrudTodoConfigAddTodoImplCopyWithImpl<$Res>
+    extends _$CrudTodoConfigCopyWithImpl<$Res, _$CrudTodoConfigAddTodoImpl>
+    implements _$$CrudTodoConfigAddTodoImplCopyWith<$Res> {
+  __$$CrudTodoConfigAddTodoImplCopyWithImpl(_$CrudTodoConfigAddTodoImpl _value,
+      $Res Function(_$CrudTodoConfigAddTodoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -391,7 +394,7 @@ class __$$CrudTodoConfigAddTodoCopyWithImpl<$Res>
   $Res call({
     Object? categoryId = null,
   }) {
-    return _then(_$CrudTodoConfigAddTodo(
+    return _then(_$CrudTodoConfigAddTodoImpl(
       null == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
@@ -402,8 +405,8 @@ class __$$CrudTodoConfigAddTodoCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CrudTodoConfigAddTodo implements CrudTodoConfigAddTodo {
-  const _$CrudTodoConfigAddTodo(this.categoryId);
+class _$CrudTodoConfigAddTodoImpl implements CrudTodoConfigAddTodo {
+  const _$CrudTodoConfigAddTodoImpl(this.categoryId);
 
   @override
   final String categoryId;
@@ -414,10 +417,10 @@ class _$CrudTodoConfigAddTodo implements CrudTodoConfigAddTodo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CrudTodoConfigAddTodo &&
+            other is _$CrudTodoConfigAddTodoImpl &&
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId));
   }
@@ -428,9 +431,9 @@ class _$CrudTodoConfigAddTodo implements CrudTodoConfigAddTodo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CrudTodoConfigAddTodoCopyWith<_$CrudTodoConfigAddTodo> get copyWith =>
-      __$$CrudTodoConfigAddTodoCopyWithImpl<_$CrudTodoConfigAddTodo>(
-          this, _$identity);
+  _$$CrudTodoConfigAddTodoImplCopyWith<_$CrudTodoConfigAddTodoImpl>
+      get copyWith => __$$CrudTodoConfigAddTodoImplCopyWithImpl<
+          _$CrudTodoConfigAddTodoImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -515,29 +518,31 @@ class _$CrudTodoConfigAddTodo implements CrudTodoConfigAddTodo {
 
 abstract class CrudTodoConfigAddTodo implements CrudTodoConfig {
   const factory CrudTodoConfigAddTodo(final String categoryId) =
-      _$CrudTodoConfigAddTodo;
+      _$CrudTodoConfigAddTodoImpl;
 
   String get categoryId;
   @JsonKey(ignore: true)
-  _$$CrudTodoConfigAddTodoCopyWith<_$CrudTodoConfigAddTodo> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$CrudTodoConfigAddTodoImplCopyWith<_$CrudTodoConfigAddTodoImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$CrudTodoConfigUpdateTodoCopyWith<$Res> {
-  factory _$$CrudTodoConfigUpdateTodoCopyWith(_$CrudTodoConfigUpdateTodo value,
-          $Res Function(_$CrudTodoConfigUpdateTodo) then) =
-      __$$CrudTodoConfigUpdateTodoCopyWithImpl<$Res>;
+abstract class _$$CrudTodoConfigUpdateTodoImplCopyWith<$Res> {
+  factory _$$CrudTodoConfigUpdateTodoImplCopyWith(
+          _$CrudTodoConfigUpdateTodoImpl value,
+          $Res Function(_$CrudTodoConfigUpdateTodoImpl) then) =
+      __$$CrudTodoConfigUpdateTodoImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String categoryId, String todoId});
 }
 
 /// @nodoc
-class __$$CrudTodoConfigUpdateTodoCopyWithImpl<$Res>
-    extends _$CrudTodoConfigCopyWithImpl<$Res, _$CrudTodoConfigUpdateTodo>
-    implements _$$CrudTodoConfigUpdateTodoCopyWith<$Res> {
-  __$$CrudTodoConfigUpdateTodoCopyWithImpl(_$CrudTodoConfigUpdateTodo _value,
-      $Res Function(_$CrudTodoConfigUpdateTodo) _then)
+class __$$CrudTodoConfigUpdateTodoImplCopyWithImpl<$Res>
+    extends _$CrudTodoConfigCopyWithImpl<$Res, _$CrudTodoConfigUpdateTodoImpl>
+    implements _$$CrudTodoConfigUpdateTodoImplCopyWith<$Res> {
+  __$$CrudTodoConfigUpdateTodoImplCopyWithImpl(
+      _$CrudTodoConfigUpdateTodoImpl _value,
+      $Res Function(_$CrudTodoConfigUpdateTodoImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -546,7 +551,7 @@ class __$$CrudTodoConfigUpdateTodoCopyWithImpl<$Res>
     Object? categoryId = null,
     Object? todoId = null,
   }) {
-    return _then(_$CrudTodoConfigUpdateTodo(
+    return _then(_$CrudTodoConfigUpdateTodoImpl(
       null == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
@@ -561,8 +566,8 @@ class __$$CrudTodoConfigUpdateTodoCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CrudTodoConfigUpdateTodo implements CrudTodoConfigUpdateTodo {
-  const _$CrudTodoConfigUpdateTodo(this.categoryId, this.todoId);
+class _$CrudTodoConfigUpdateTodoImpl implements CrudTodoConfigUpdateTodo {
+  const _$CrudTodoConfigUpdateTodoImpl(this.categoryId, this.todoId);
 
   @override
   final String categoryId;
@@ -575,10 +580,10 @@ class _$CrudTodoConfigUpdateTodo implements CrudTodoConfigUpdateTodo {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CrudTodoConfigUpdateTodo &&
+            other is _$CrudTodoConfigUpdateTodoImpl &&
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId) &&
             (identical(other.todoId, todoId) || other.todoId == todoId));
@@ -590,10 +595,9 @@ class _$CrudTodoConfigUpdateTodo implements CrudTodoConfigUpdateTodo {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CrudTodoConfigUpdateTodoCopyWith<_$CrudTodoConfigUpdateTodo>
-      get copyWith =>
-          __$$CrudTodoConfigUpdateTodoCopyWithImpl<_$CrudTodoConfigUpdateTodo>(
-              this, _$identity);
+  _$$CrudTodoConfigUpdateTodoImplCopyWith<_$CrudTodoConfigUpdateTodoImpl>
+      get copyWith => __$$CrudTodoConfigUpdateTodoImplCopyWithImpl<
+          _$CrudTodoConfigUpdateTodoImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -679,35 +683,36 @@ class _$CrudTodoConfigUpdateTodo implements CrudTodoConfigUpdateTodo {
 abstract class CrudTodoConfigUpdateTodo implements CrudTodoConfig {
   const factory CrudTodoConfigUpdateTodo(
           final String categoryId, final String todoId) =
-      _$CrudTodoConfigUpdateTodo;
+      _$CrudTodoConfigUpdateTodoImpl;
 
   String get categoryId;
   String get todoId;
   @JsonKey(ignore: true)
-  _$$CrudTodoConfigUpdateTodoCopyWith<_$CrudTodoConfigUpdateTodo>
+  _$$CrudTodoConfigUpdateTodoImplCopyWith<_$CrudTodoConfigUpdateTodoImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$CrudTodoConfigUnknownCopyWith<$Res> {
-  factory _$$CrudTodoConfigUnknownCopyWith(_$CrudTodoConfigUnknown value,
-          $Res Function(_$CrudTodoConfigUnknown) then) =
-      __$$CrudTodoConfigUnknownCopyWithImpl<$Res>;
+abstract class _$$CrudTodoConfigUnknownImplCopyWith<$Res> {
+  factory _$$CrudTodoConfigUnknownImplCopyWith(
+          _$CrudTodoConfigUnknownImpl value,
+          $Res Function(_$CrudTodoConfigUnknownImpl) then) =
+      __$$CrudTodoConfigUnknownImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$CrudTodoConfigUnknownCopyWithImpl<$Res>
-    extends _$CrudTodoConfigCopyWithImpl<$Res, _$CrudTodoConfigUnknown>
-    implements _$$CrudTodoConfigUnknownCopyWith<$Res> {
-  __$$CrudTodoConfigUnknownCopyWithImpl(_$CrudTodoConfigUnknown _value,
-      $Res Function(_$CrudTodoConfigUnknown) _then)
+class __$$CrudTodoConfigUnknownImplCopyWithImpl<$Res>
+    extends _$CrudTodoConfigCopyWithImpl<$Res, _$CrudTodoConfigUnknownImpl>
+    implements _$$CrudTodoConfigUnknownImplCopyWith<$Res> {
+  __$$CrudTodoConfigUnknownImplCopyWithImpl(_$CrudTodoConfigUnknownImpl _value,
+      $Res Function(_$CrudTodoConfigUnknownImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$CrudTodoConfigUnknown implements CrudTodoConfigUnknown {
-  const _$CrudTodoConfigUnknown();
+class _$CrudTodoConfigUnknownImpl implements CrudTodoConfigUnknown {
+  const _$CrudTodoConfigUnknownImpl();
 
   @override
   String toString() {
@@ -715,9 +720,10 @@ class _$CrudTodoConfigUnknown implements CrudTodoConfigUnknown {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$CrudTodoConfigUnknown);
+        (other.runtimeType == runtimeType &&
+            other is _$CrudTodoConfigUnknownImpl);
   }
 
   @override
@@ -805,5 +811,5 @@ class _$CrudTodoConfigUnknown implements CrudTodoConfigUnknown {
 }
 
 abstract class CrudTodoConfigUnknown implements CrudTodoConfig {
-  const factory CrudTodoConfigUnknown() = _$CrudTodoConfigUnknown;
+  const factory CrudTodoConfigUnknown() = _$CrudTodoConfigUnknownImpl;
 }

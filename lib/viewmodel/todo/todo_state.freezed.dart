@@ -86,25 +86,25 @@ class _$TodoStateCopyWithImpl<$Res, $Val extends TodoState>
 }
 
 /// @nodoc
-abstract class _$$_TodoStateInitialCopyWith<$Res> {
-  factory _$$_TodoStateInitialCopyWith(
-          _$_TodoStateInitial value, $Res Function(_$_TodoStateInitial) then) =
-      __$$_TodoStateInitialCopyWithImpl<$Res>;
+abstract class _$$TodoStateInitialImplCopyWith<$Res> {
+  factory _$$TodoStateInitialImplCopyWith(_$TodoStateInitialImpl value,
+          $Res Function(_$TodoStateInitialImpl) then) =
+      __$$TodoStateInitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_TodoStateInitialCopyWithImpl<$Res>
-    extends _$TodoStateCopyWithImpl<$Res, _$_TodoStateInitial>
-    implements _$$_TodoStateInitialCopyWith<$Res> {
-  __$$_TodoStateInitialCopyWithImpl(
-      _$_TodoStateInitial _value, $Res Function(_$_TodoStateInitial) _then)
+class __$$TodoStateInitialImplCopyWithImpl<$Res>
+    extends _$TodoStateCopyWithImpl<$Res, _$TodoStateInitialImpl>
+    implements _$$TodoStateInitialImplCopyWith<$Res> {
+  __$$TodoStateInitialImplCopyWithImpl(_$TodoStateInitialImpl _value,
+      $Res Function(_$TodoStateInitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_TodoStateInitial implements _TodoStateInitial {
-  const _$_TodoStateInitial();
+class _$TodoStateInitialImpl implements _TodoStateInitial {
+  const _$TodoStateInitialImpl();
 
   @override
   String toString() {
@@ -112,9 +112,9 @@ class _$_TodoStateInitial implements _TodoStateInitial {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_TodoStateInitial);
+        (other.runtimeType == runtimeType && other is _$TodoStateInitialImpl);
   }
 
   @override
@@ -196,29 +196,29 @@ class _$_TodoStateInitial implements _TodoStateInitial {
 }
 
 abstract class _TodoStateInitial implements TodoState {
-  const factory _TodoStateInitial() = _$_TodoStateInitial;
+  const factory _TodoStateInitial() = _$TodoStateInitialImpl;
 }
 
 /// @nodoc
-abstract class _$$_TodoStateLoadingCopyWith<$Res> {
-  factory _$$_TodoStateLoadingCopyWith(
-          _$_TodoStateLoading value, $Res Function(_$_TodoStateLoading) then) =
-      __$$_TodoStateLoadingCopyWithImpl<$Res>;
+abstract class _$$TodoStateLoadingImplCopyWith<$Res> {
+  factory _$$TodoStateLoadingImplCopyWith(_$TodoStateLoadingImpl value,
+          $Res Function(_$TodoStateLoadingImpl) then) =
+      __$$TodoStateLoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_TodoStateLoadingCopyWithImpl<$Res>
-    extends _$TodoStateCopyWithImpl<$Res, _$_TodoStateLoading>
-    implements _$$_TodoStateLoadingCopyWith<$Res> {
-  __$$_TodoStateLoadingCopyWithImpl(
-      _$_TodoStateLoading _value, $Res Function(_$_TodoStateLoading) _then)
+class __$$TodoStateLoadingImplCopyWithImpl<$Res>
+    extends _$TodoStateCopyWithImpl<$Res, _$TodoStateLoadingImpl>
+    implements _$$TodoStateLoadingImplCopyWith<$Res> {
+  __$$TodoStateLoadingImplCopyWithImpl(_$TodoStateLoadingImpl _value,
+      $Res Function(_$TodoStateLoadingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_TodoStateLoading implements _TodoStateLoading {
-  const _$_TodoStateLoading();
+class _$TodoStateLoadingImpl implements _TodoStateLoading {
+  const _$TodoStateLoadingImpl();
 
   @override
   String toString() {
@@ -226,9 +226,9 @@ class _$_TodoStateLoading implements _TodoStateLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_TodoStateLoading);
+        (other.runtimeType == runtimeType && other is _$TodoStateLoadingImpl);
   }
 
   @override
@@ -310,24 +310,24 @@ class _$_TodoStateLoading implements _TodoStateLoading {
 }
 
 abstract class _TodoStateLoading implements TodoState {
-  const factory _TodoStateLoading() = _$_TodoStateLoading;
+  const factory _TodoStateLoading() = _$TodoStateLoadingImpl;
 }
 
 /// @nodoc
-abstract class _$$_TodoStateSuccessCopyWith<$Res> {
-  factory _$$_TodoStateSuccessCopyWith(
-          _$_TodoStateSuccess value, $Res Function(_$_TodoStateSuccess) then) =
-      __$$_TodoStateSuccessCopyWithImpl<$Res>;
+abstract class _$$TodoStateSuccessImplCopyWith<$Res> {
+  factory _$$TodoStateSuccessImplCopyWith(_$TodoStateSuccessImpl value,
+          $Res Function(_$TodoStateSuccessImpl) then) =
+      __$$TodoStateSuccessImplCopyWithImpl<$Res>;
   @useResult
   $Res call({TodoAction action});
 }
 
 /// @nodoc
-class __$$_TodoStateSuccessCopyWithImpl<$Res>
-    extends _$TodoStateCopyWithImpl<$Res, _$_TodoStateSuccess>
-    implements _$$_TodoStateSuccessCopyWith<$Res> {
-  __$$_TodoStateSuccessCopyWithImpl(
-      _$_TodoStateSuccess _value, $Res Function(_$_TodoStateSuccess) _then)
+class __$$TodoStateSuccessImplCopyWithImpl<$Res>
+    extends _$TodoStateCopyWithImpl<$Res, _$TodoStateSuccessImpl>
+    implements _$$TodoStateSuccessImplCopyWith<$Res> {
+  __$$TodoStateSuccessImplCopyWithImpl(_$TodoStateSuccessImpl _value,
+      $Res Function(_$TodoStateSuccessImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -335,7 +335,7 @@ class __$$_TodoStateSuccessCopyWithImpl<$Res>
   $Res call({
     Object? action = null,
   }) {
-    return _then(_$_TodoStateSuccess(
+    return _then(_$TodoStateSuccessImpl(
       null == action
           ? _value.action
           : action // ignore: cast_nullable_to_non_nullable
@@ -346,8 +346,8 @@ class __$$_TodoStateSuccessCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TodoStateSuccess implements _TodoStateSuccess {
-  const _$_TodoStateSuccess(this.action);
+class _$TodoStateSuccessImpl implements _TodoStateSuccess {
+  const _$TodoStateSuccessImpl(this.action);
 
   @override
   final TodoAction action;
@@ -358,10 +358,10 @@ class _$_TodoStateSuccess implements _TodoStateSuccess {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TodoStateSuccess &&
+            other is _$TodoStateSuccessImpl &&
             (identical(other.action, action) || other.action == action));
   }
 
@@ -371,8 +371,9 @@ class _$_TodoStateSuccess implements _TodoStateSuccess {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TodoStateSuccessCopyWith<_$_TodoStateSuccess> get copyWith =>
-      __$$_TodoStateSuccessCopyWithImpl<_$_TodoStateSuccess>(this, _$identity);
+  _$$TodoStateSuccessImplCopyWith<_$TodoStateSuccessImpl> get copyWith =>
+      __$$TodoStateSuccessImplCopyWithImpl<_$TodoStateSuccessImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -451,29 +452,29 @@ class _$_TodoStateSuccess implements _TodoStateSuccess {
 
 abstract class _TodoStateSuccess implements TodoState {
   const factory _TodoStateSuccess(final TodoAction action) =
-      _$_TodoStateSuccess;
+      _$TodoStateSuccessImpl;
 
   TodoAction get action;
   @JsonKey(ignore: true)
-  _$$_TodoStateSuccessCopyWith<_$_TodoStateSuccess> get copyWith =>
+  _$$TodoStateSuccessImplCopyWith<_$TodoStateSuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_TodoStateErrorCopyWith<$Res> {
-  factory _$$_TodoStateErrorCopyWith(
-          _$_TodoStateError value, $Res Function(_$_TodoStateError) then) =
-      __$$_TodoStateErrorCopyWithImpl<$Res>;
+abstract class _$$TodoStateErrorImplCopyWith<$Res> {
+  factory _$$TodoStateErrorImplCopyWith(_$TodoStateErrorImpl value,
+          $Res Function(_$TodoStateErrorImpl) then) =
+      __$$TodoStateErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String? message});
 }
 
 /// @nodoc
-class __$$_TodoStateErrorCopyWithImpl<$Res>
-    extends _$TodoStateCopyWithImpl<$Res, _$_TodoStateError>
-    implements _$$_TodoStateErrorCopyWith<$Res> {
-  __$$_TodoStateErrorCopyWithImpl(
-      _$_TodoStateError _value, $Res Function(_$_TodoStateError) _then)
+class __$$TodoStateErrorImplCopyWithImpl<$Res>
+    extends _$TodoStateCopyWithImpl<$Res, _$TodoStateErrorImpl>
+    implements _$$TodoStateErrorImplCopyWith<$Res> {
+  __$$TodoStateErrorImplCopyWithImpl(
+      _$TodoStateErrorImpl _value, $Res Function(_$TodoStateErrorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -481,7 +482,7 @@ class __$$_TodoStateErrorCopyWithImpl<$Res>
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(_$_TodoStateError(
+    return _then(_$TodoStateErrorImpl(
       freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -492,8 +493,8 @@ class __$$_TodoStateErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_TodoStateError implements _TodoStateError {
-  const _$_TodoStateError([this.message]);
+class _$TodoStateErrorImpl implements _TodoStateError {
+  const _$TodoStateErrorImpl([this.message]);
 
   @override
   final String? message;
@@ -504,10 +505,10 @@ class _$_TodoStateError implements _TodoStateError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TodoStateError &&
+            other is _$TodoStateErrorImpl &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -517,8 +518,9 @@ class _$_TodoStateError implements _TodoStateError {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TodoStateErrorCopyWith<_$_TodoStateError> get copyWith =>
-      __$$_TodoStateErrorCopyWithImpl<_$_TodoStateError>(this, _$identity);
+  _$$TodoStateErrorImplCopyWith<_$TodoStateErrorImpl> get copyWith =>
+      __$$TodoStateErrorImplCopyWithImpl<_$TodoStateErrorImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -596,10 +598,10 @@ class _$_TodoStateError implements _TodoStateError {
 }
 
 abstract class _TodoStateError implements TodoState {
-  const factory _TodoStateError([final String? message]) = _$_TodoStateError;
+  const factory _TodoStateError([final String? message]) = _$TodoStateErrorImpl;
 
   String? get message;
   @JsonKey(ignore: true)
-  _$$_TodoStateErrorCopyWith<_$_TodoStateError> get copyWith =>
+  _$$TodoStateErrorImplCopyWith<_$TodoStateErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
