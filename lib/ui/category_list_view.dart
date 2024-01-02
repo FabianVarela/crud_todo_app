@@ -10,6 +10,7 @@ import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 typedef NavigatorToDetail = void Function(String);
@@ -22,14 +23,14 @@ class RefreshListIntent extends Intent {
   const RefreshListIntent();
 }
 
-class CategoryListView extends ConsumerWidget {
+class CategoryListView extends HookConsumerWidget {
   const CategoryListView({required this.onGoToDetail, super.key});
 
   final NavigatorToDetail onGoToDetail;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final scrollController = ScrollController();
+    final scrollController = useScrollController();
     final categoriesData = ref.watch(categoryListPod);
 
     ref.listen<CategoryState>(
@@ -68,35 +69,39 @@ class CategoryListView extends ConsumerWidget {
                 ).paddingSymmetric(h: 12, v: 20),
                 Expanded(
                   child: categoriesData.when(
-                    data: (data) => Scrollbar(
-                      controller: scrollController,
-                      thumbVisibility: getDevice() == DeviceSegment.desktop,
-                      child: data.isNotEmpty
-                          ? GridView.count(
-                              controller: scrollController,
-                              crossAxisCount: isPortrait(context) ? 2 : 3,
-                              children: <Widget>[
-                                for (final item in data)
-                                  CustomMouseRegion(
-                                    isForDesktop: desktopSegments.contains(
-                                      getDevice(),
-                                    ),
-                                    cursor: SystemMouseCursors.click,
-                                    tooltipMessage: item.name,
-                                    child: CategoryItem(
-                                      item: item,
-                                      onClick: () => onGoToDetail(item.id!),
-                                    ),
-                                  ),
-                              ],
-                            )
-                          : const Center(
-                              child: Text(
-                                'Empty data, add a category',
-                                style: TextStyle(fontSize: 25),
+                    data: (data) {
+                      if (data.isEmpty) {
+                        return const Center(
+                          child: Text(
+                            'Empty data, add a category',
+                            style: TextStyle(fontSize: 25),
+                          ),
+                        );
+                      }
+
+                      return Scrollbar(
+                        controller: scrollController,
+                        thumbVisibility: getDevice() == DeviceSegment.desktop,
+                        child: GridView.count(
+                          controller: scrollController,
+                          crossAxisCount: isPortrait(context) ? 2 : 3,
+                          children: <Widget>[
+                            for (final item in data)
+                              CustomMouseRegion(
+                                isForDesktop: desktopSegments.contains(
+                                  getDevice(),
+                                ),
+                                cursor: SystemMouseCursors.click,
+                                tooltipMessage: item.name,
+                                child: CategoryItem(
+                                  item: item,
+                                  onClick: () => onGoToDetail(item.id!),
+                                ),
                               ),
-                            ),
-                    ),
+                          ],
+                        ),
+                      );
+                    },
                     loading: () => const Center(
                       child: CircularProgressIndicator(),
                     ),
