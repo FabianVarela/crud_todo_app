@@ -27,22 +27,19 @@ class CrudTodoInformationParser extends RouteInformationParser<CrudTodoConfig> {
           return const CrudTodoConfigCategoryList();
         }
       case 2:
-        final segments = (newPaths[0], newPaths[1]);
-        if (segments.$1 == TodoPath.category.name && segments.$2.isNotEmpty) {
-          return CrudTodoConfigTodoList(segments.$2);
+        if (newPaths[0] == TodoPath.category.name && newPaths[1].isNotEmpty) {
+          return CrudTodoConfigTodoList(newPaths[1]);
         }
       case 3:
-        final segments = (newPaths[0], newPaths[1], newPaths[2]);
-        if (segments.$1 == TodoPath.category.name) {
-          if (segments.$2.isNotEmpty && segments.$3 == TodoPath.todo.name) {
-            return CrudTodoConfigAddTodo(segments.$2);
+        if (newPaths[0] == TodoPath.category.name) {
+          if (newPaths[1].isNotEmpty && newPaths[2] == TodoPath.todo.name) {
+            return CrudTodoConfigAddTodo(newPaths[1]);
           }
         }
       case 4:
-        final segments = (newPaths[0], newPaths[1], newPaths[2], newPaths[3]);
-        if (segments.$1 == TodoPath.category.name && segments.$2.isNotEmpty) {
-          if (segments.$3 == TodoPath.todo.name && segments.$4.isNotEmpty) {
-            return CrudTodoConfigUpdateTodo(segments.$2, segments.$4);
+        if (newPaths[0] == TodoPath.category.name && newPaths[1].isNotEmpty) {
+          if (newPaths[2] == TodoPath.todo.name && newPaths[3].isNotEmpty) {
+            return CrudTodoConfigUpdateTodo(newPaths[1], newPaths[3]);
           }
         }
     }
