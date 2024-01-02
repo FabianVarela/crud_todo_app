@@ -12,7 +12,7 @@ void showCustomMessage(BuildContext context, String message) {
           TextButton(
             onPressed: () => Navigator.pop(dialogContext),
             child: const Text('OK'),
-          )
+          ),
         ];
 
         return defaultTargetPlatform == TargetPlatform.macOS

@@ -63,7 +63,7 @@ class CategoryFormDialog extends ConsumerWidget {
                     onSubmit: isValidForm ? () => _saveCategory(ref) : null,
                   )
                 else
-                  const CircularProgressIndicator()
+                  const CircularProgressIndicator(),
               ],
             ).paddingSymmetric(h: 16, v: 10),
           ),

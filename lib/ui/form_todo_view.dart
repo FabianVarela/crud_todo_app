@@ -48,7 +48,7 @@ class FormTodoView extends HookConsumerWidget {
           IconButton(
             icon: const Icon(Icons.close, color: Colors.black),
             onPressed: () => Navigator.pop(context),
-          )
+          ),
         ],
       ),
       body: categoryData.when(

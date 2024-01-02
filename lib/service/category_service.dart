@@ -14,7 +14,9 @@ class CategoryService {
     final querySnapshot = _database.collection(_categoryCollection).snapshots();
 
     return querySnapshot.map(
-      (query) => [for (var item in query.docs) Category.fromJson(item.toMap())],
+      (query) => [
+        for (final item in query.docs) Category.fromJson(item.toMap()),
+      ],
     );
   }
 

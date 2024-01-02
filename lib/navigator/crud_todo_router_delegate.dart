@@ -92,8 +92,8 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
               ),
             ),
           if (categoryId != null && isTodoSelected)
-            FormTodoPage(categoryId: categoryId!, todoId: todoId)
-        ]
+            FormTodoPage(categoryId: categoryId!, todoId: todoId),
+        ],
       ],
       onPopPage: (route, dynamic result) {
         if (!route.didPop(result)) return false;
