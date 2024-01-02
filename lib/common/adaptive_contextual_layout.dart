@@ -25,14 +25,16 @@ List<DeviceSegment> webSegments = [
 ];
 
 DeviceSegment getDevice() {
-  switch (defaultTargetPlatform) {
-    case TargetPlatform.android || TargetPlatform.iOS:
-      return kIsWeb ? DeviceSegment.mobileWeb : DeviceSegment.mobile;
-    case TargetPlatform.windows || TargetPlatform.linux || TargetPlatform.macOS:
-      return kIsWeb ? DeviceSegment.desktopWeb : DeviceSegment.desktop;
-    default:
-      return DeviceSegment.other;
-  }
+  return switch (defaultTargetPlatform) {
+    TargetPlatform.android ||
+    TargetPlatform.iOS =>
+      kIsWeb ? DeviceSegment.mobileWeb : DeviceSegment.mobile,
+    TargetPlatform.windows ||
+    TargetPlatform.linux ||
+    TargetPlatform.macOS =>
+      kIsWeb ? DeviceSegment.desktopWeb : DeviceSegment.desktop,
+    _ => DeviceSegment.other,
+  };
 }
 
 bool isPortrait(BuildContext context) =>
