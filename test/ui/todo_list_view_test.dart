@@ -263,11 +263,11 @@ void main() {
 
         verify(() => mockCategoryService.deleteCategory(any())).called(1);
 
-        expect(categoryViewModel.debugState.isLoading, isTrue);
+        expect(categoryViewModel.state.isLoading, isTrue);
         await tester.pump(const Duration(seconds: 1));
         await tester.pumpAndSettle();
 
-        expect(categoryViewModel.debugState.isSuccess, isTrue);
+        expect(categoryViewModel.state.isSuccess, isTrue);
         await tester.pumpAndSettle();
 
         expect(find.byType(CategoryListView), findsOneWidget);
@@ -290,7 +290,7 @@ void main() {
 
         verify(() => mockCategoryService.deleteCategory(any())).called(1);
 
-        expect(categoryViewModel.debugState.isError, isTrue);
+        expect(categoryViewModel.state.isError, isTrue);
         expect(find.byType(CategoryListView), findsNothing);
       },
       variant: TargetPlatformVariant.all(),
@@ -325,10 +325,10 @@ void main() {
         verify(() => mockTodoService.saveTodo(any())).called(1);
 
         await tester.pump();
-        expect(todoViewModel.debugState.isLoading, isTrue);
+        expect(todoViewModel.state.isLoading, isTrue);
 
         await tester.pumpAndSettle();
-        expect(todoViewModel.debugState.isSuccess, isTrue);
+        expect(todoViewModel.state.isSuccess, isTrue);
       },
       variant: TargetPlatformVariant.all(),
     );
@@ -362,7 +362,7 @@ void main() {
         verify(() => mockTodoService.saveTodo(any())).called(1);
 
         await tester.pumpAndSettle();
-        expect(todoViewModel.debugState.isError, isTrue);
+        expect(todoViewModel.state.isError, isTrue);
       },
       variant: TargetPlatformVariant.all(),
     );
@@ -432,10 +432,10 @@ void main() {
         await tester.tap(foundSlideAction);
         verify(() => mockTodoService.deleteTodo(any(), any())).called(1);
 
-        expect(todoViewModel.debugState.isLoading, isTrue);
+        expect(todoViewModel.state.isLoading, isTrue);
         await tester.pumpAndSettle();
 
-        expect(todoViewModel.debugState.isSuccess, isTrue);
+        expect(todoViewModel.state.isSuccess, isTrue);
       },
       variant: TargetPlatformVariant.mobile(),
     );
@@ -468,7 +468,7 @@ void main() {
         await tester.tap(foundSlideAction);
         verify(() => mockTodoService.deleteTodo(any(), any())).called(1);
 
-        expect(todoViewModel.debugState.isError, isTrue);
+        expect(todoViewModel.state.isError, isTrue);
       },
       variant: TargetPlatformVariant.mobile(),
     );
@@ -538,10 +538,10 @@ void main() {
         await tester.tap(foundRemoveOption);
         verify(() => mockTodoService.deleteTodo(any(), any())).called(1);
 
-        expect(todoViewModel.debugState.isLoading, isTrue);
+        expect(todoViewModel.state.isLoading, isTrue);
         await tester.pumpAndSettle();
 
-        expect(todoViewModel.debugState.isSuccess, isTrue);
+        expect(todoViewModel.state.isSuccess, isTrue);
         expect(foundRemoveOption, findsNothing);
       },
       variant: TargetPlatformVariant.desktop(),

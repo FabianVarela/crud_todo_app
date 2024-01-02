@@ -122,13 +122,13 @@ void main() {
 
         verify(() => mockCategoryService.saveCategory(any())).called(1);
 
-        expect(viewModel.debugState.isLoading, true);
+        expect(viewModel.state.isLoading, true);
         await tester.pump(const Duration(milliseconds: 500));
 
         expect(find.byType(CircularProgressIndicator), findsOneWidget);
         await tester.pumpAndSettle();
 
-        expect(viewModel.debugState.isSuccess, true);
+        expect(viewModel.state.isSuccess, true);
         expect(find.byType(CircularProgressIndicator), findsNothing);
       },
       variant: TargetPlatformVariant.all(),
@@ -160,7 +160,7 @@ void main() {
         await tester.tap(find.byType(SubmitCategory));
 
         verify(() => mockCategoryService.saveCategory(any())).called(1);
-        expect(viewModel.debugState.isError, true);
+        expect(viewModel.state.isError, true);
       },
       variant: TargetPlatformVariant.all(),
     );

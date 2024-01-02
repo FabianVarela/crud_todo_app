@@ -315,10 +315,10 @@ void main() {
         verify(() => mockTodoService.saveTodo(any())).called(1);
 
         await tester.pump();
-        expect(todoViewModel.debugState.isLoading, isTrue);
+        expect(todoViewModel.state.isLoading, isTrue);
 
         await tester.pumpAndSettle(const Duration(seconds: 1));
-        expect(todoViewModel.debugState.isSuccess, isTrue);
+        expect(todoViewModel.state.isSuccess, isTrue);
 
         await tester.pump();
         expect(find.byType(TodoListView), findsOneWidget);
@@ -383,10 +383,10 @@ void main() {
         verify(() => mockTodoService.saveTodo(any())).called(1);
 
         await tester.pump();
-        expect(todoViewModel.debugState.isLoading, isTrue);
+        expect(todoViewModel.state.isLoading, isTrue);
 
         await tester.pumpAndSettle(const Duration(seconds: 1));
-        expect(todoViewModel.debugState.isSuccess, isTrue);
+        expect(todoViewModel.state.isSuccess, isTrue);
 
         await tester.pump();
         expect(find.byType(TodoListView), findsOneWidget);
@@ -415,7 +415,7 @@ void main() {
         await tester.tap(find.byType(SubmitTodo));
 
         verify(() => mockTodoService.saveTodo(any())).called(1);
-        expect(todoViewModel.debugState.isError, isTrue);
+        expect(todoViewModel.state.isError, isTrue);
 
         expect(find.byType(TodoListView), findsNothing);
       },
