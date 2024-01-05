@@ -10,7 +10,7 @@ environment:
   flutter: 3.16.0
 
 dependencies:
-  cloud_firestore: ^4.13.6
+  cloud_firestore: ^4.14.0
   context_menus: ^1.0.2
   dart_emoji: ^0.2.0+2
   equatable: ^2.0.5
