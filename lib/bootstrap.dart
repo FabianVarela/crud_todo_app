@@ -10,6 +10,7 @@ import 'package:window_size/window_size.dart';
 Future<void> bootstrap(
   FutureOr<Widget> Function() builder,
   FirebaseOptions options,
+  String appName,
 ) async {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
@@ -18,7 +19,7 @@ Future<void> bootstrap(
   await runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
-      await Firebase.initializeApp(options: options);
+      await Firebase.initializeApp(options: options, name: appName);
 
       if (getDevice() == DeviceSegment.desktop) {
         setWindowMinSize(const Size(300, 500));

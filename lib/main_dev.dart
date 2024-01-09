@@ -6,5 +6,6 @@ void main() {
   bootstrap(
     () async => const TodoApp(title: 'To-Do List App - Dev'),
     DefaultFirebaseOptions.currentPlatform,
+    'to-do-app_dev',
   );
 }
