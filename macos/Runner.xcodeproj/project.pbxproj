@@ -27,7 +27,7 @@
 		33CC10F62044A3C60003C045 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33CC10F42044A3C60003C045 /* MainMenu.xib */; };
 		33CC11132044BFA00003C045 /* MainFlutterWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33CC11122044BFA00003C045 /* MainFlutterWindow.swift */; };
 		CB2ADE6F6672235596F7DA18 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3383E74F4349E4C62FD15D4 /* Pods_Runner.framework */; };
-		F932D6292B52F41F00B36E62 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F932D6282B52F41F00B36E62 /* GoogleService-Info.plist */; };
+		F932D62F2B531A6900B36E62 /* config in Resources */ = {isa = PBXBuildFile; fileRef = F932D62E2B531A6900B36E62 /* config */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,8 +80,7 @@
 		B245BAAD1BAF780BE6BA66B0 /* Pods-Runner.release-production.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-production.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-production.xcconfig"; sourceTree = "<group>"; };
 		C61E53D6D1C639C824DD2764 /* Pods-Runner.profile-develop.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-develop.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-develop.xcconfig"; sourceTree = "<group>"; };
 		E3383E74F4349E4C62FD15D4 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F932D6282B52F41F00B36E62 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "config/develop/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		F932D62A2B52F42600B36E62 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "config/production/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F932D62E2B531A6900B36E62 /* config */ = {isa = PBXFileReference; lastKnownFileType = folder; path = config; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,8 +109,7 @@
 		33CC10E42044A3C60003C045 = {
 			isa = PBXGroup;
 			children = (
-				F932D6282B52F41F00B36E62 /* GoogleService-Info.plist */,
-				F932D62A2B52F42600B36E62 /* GoogleService-Info.plist */,
+				F932D62E2B531A6900B36E62 /* config */,
 				33FAB671232836740065AC1E /* Runner */,
 				33CEB47122A05771004F2AC0 /* Flutter */,
 				33CC10EE2044A3C60003C045 /* Products */,
@@ -197,8 +195,8 @@
 				EE3DD1AD5A48748E0BF48E33 /* [CP] Check Pods Manifest.lock */,
 				33CC10E92044A3C60003C045 /* Sources */,
 				33CC10EA2044A3C60003C045 /* Frameworks */,
+				F932D62D2B530EE100B36E62 /* Copy GoogleService-Info.plist to the correct location */,
 				33CC10EB2044A3C60003C045 /* Resources */,
-				F932D62D2B530EE100B36E62 /* Copy bundle service file */,
 				33CC110E2044A8840003C045 /* Bundle Framework */,
 				3399D490228B24CF009A79C7 /* ShellScript */,
 				E6AB1B9DC7E75BBC578F1995 /* [CP] Embed Pods Frameworks */,
@@ -265,8 +263,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				33CC10F32044A3C60003C045 /* Assets.xcassets in Resources */,
+				F932D62F2B531A6900B36E62 /* config in Resources */,
 				33CC10F62044A3C60003C045 /* MainMenu.xib in Resources */,
-				F932D6292B52F41F00B36E62 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,7 +365,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F932D62D2B530EE100B36E62 /* Copy bundle service file */ = {
+		F932D62D2B530EE100B36E62 /* Copy GoogleService-Info.plist to the correct location */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -377,7 +375,7 @@
 			);
 			inputPaths = (
 			);
-			name = "Copy bundle service file";
+			name = "Copy GoogleService-Info.plist to the correct location";
 			outputFileListPaths = (
 			);
 			outputPaths = (
