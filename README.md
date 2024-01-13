@@ -96,6 +96,18 @@ Run deep links in **Android**, use the command below:
 
 ------
 
+### Screenshots
+
+| Platform | Preview                                               |
+|----------|-------------------------------------------------------|
+| Android  | ![android.gif](./assets/github_resources/android.gif) |
+| iOS      | ![ios.gif](./assets/github_resources/ios.gif)         |
+| macOS    | ![macos.gif](./assets/github_resources/macos.gif)     |
+| Web      | ![web.gif](./assets/github_resources/web.gif)         |
+| Windows  | Coming soon                                           |
+
+------
+
 ### Used packages
 
 #### Dependencies
