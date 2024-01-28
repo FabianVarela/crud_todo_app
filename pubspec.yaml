@@ -40,7 +40,7 @@ dev_dependencies:
   integration_test:
     sdk: flutter
   json_serializable: ^6.7.1
-  mocktail: ^1.0.2
+  mocktail: ^1.0.3
   remove_from_coverage: ^2.0.0
   very_good_analysis: ^5.1.0
 
