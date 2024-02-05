@@ -10,18 +10,18 @@ environment:
   flutter: 3.16.0
 
 dependencies:
-  cloud_firestore: ^4.14.0
+  cloud_firestore: ^4.15.3
   context_menus: ^1.0.2
   dart_emoji: ^0.2.0+2
   equatable: ^2.0.5
-  firebase_core: ^2.24.2
+  firebase_core: ^2.25.3
   flutter:
     sdk: flutter
   flutter_hooks: ^0.20.4
   flutter_slidable: ^3.0.1
   freezed_annotation: ^2.4.1
   google_fonts: ^6.1.0
-  hooks_riverpod: ^2.4.9
+  hooks_riverpod: ^2.4.10
   intl: ^0.19.0
   json_annotation: ^4.8.1
   uuid: ^4.3.3
@@ -36,7 +36,7 @@ dev_dependencies:
     sdk: flutter
   flutter_test:
     sdk: flutter
-  freezed: ^2.4.6
+  freezed: ^2.4.7
   integration_test:
     sdk: flutter
   json_serializable: ^6.7.1
