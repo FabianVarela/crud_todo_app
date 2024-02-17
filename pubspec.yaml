@@ -7,17 +7,17 @@ publish_to: none
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
-  flutter: 3.16.0
+  flutter: 3.19.0
 
 dependencies:
-  cloud_firestore: ^4.15.3
+  cloud_firestore: ^4.15.4
   context_menus: ^1.0.2
   dart_emoji: ^0.2.0+2
   equatable: ^2.0.5
-  firebase_core: ^2.25.3
+  firebase_core: ^2.25.4
   flutter:
     sdk: flutter
-  flutter_hooks: ^0.20.4
+  flutter_hooks: ^0.20.5
   flutter_slidable: ^3.0.1
   freezed_annotation: ^2.4.1
   google_fonts: ^6.1.0
