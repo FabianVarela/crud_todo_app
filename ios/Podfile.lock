@@ -1,5 +1,5 @@
 PODS:
-  - cloud_firestore (4.15.3):
+  - cloud_firestore (4.15.4):
     - Firebase/Firestore (= 10.20.0)
     - firebase_core
     - Flutter
@@ -9,7 +9,7 @@ PODS:
   - Firebase/Firestore (10.20.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 10.20.0)
-  - firebase_core (2.25.3):
+  - firebase_core (2.25.4):
     - Firebase/CoreOnly (= 10.20.0)
     - Flutter
   - FirebaseCore (10.20.0):
@@ -18,7 +18,7 @@ PODS:
     - GoogleUtilities/Logger (~> 7.12)
   - FirebaseCoreExtension (10.20.0):
     - FirebaseCore (~> 10.0)
-  - FirebaseCoreInternal (10.20.0):
+  - FirebaseCoreInternal (10.21.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
   - FirebaseFirestore (10.20.0):
     - FirebaseFirestoreBinary (= 9.20.1)
@@ -50,7 +50,7 @@ PODS:
   - "GoogleUtilities/NSData+zlib (7.12.0)"
   - integration_test (0.0.1):
     - Flutter
-  - leveldb-library (1.22.2)
+  - leveldb-library (1.22.3)
   - nanopb (2.30909.1):
     - nanopb/decode (= 2.30909.1)
     - nanopb/encode (= 2.30909.1)
@@ -113,12 +113,12 @@ CHECKOUT OPTIONS:
     :tag: 10.20.0
 
 SPEC CHECKSUMS:
-  cloud_firestore: c956777ddc3fba2d5f633e307db2db6337ebb81c
+  cloud_firestore: ba576bee785a05ff952e4da7fa4e23c196917436
   Firebase: 10c8cb12fb7ad2ae0c09ffc86cd9c1ab392a0031
-  firebase_core: 96a734ae596de989b81a66f8a205f54485263555
+  firebase_core: a46c312d8bae4defa3d009b2aa7b5b413aeb394e
   FirebaseCore: 28045c1560a2600d284b9c45a904fe322dc890b6
   FirebaseCoreExtension: 0659f035b88c5a7a15a9763c48c2e6ca8c0a2977
-  FirebaseCoreInternal: efeeb171ac02d623bdaefe121539939821e10811
+  FirebaseCoreInternal: 43c1788eaeee9d1b97caaa751af567ce11010d00
   FirebaseFirestore: 979ccf1f44df221a762841e9fa10c653151e941d
   FirebaseFirestoreAbseilBinary: fc2004a2da6b5978e974ca49c2e463f5e542a78f
   FirebaseFirestoreBinary: 2c0e90804b11110efbac1338408a144c7928b347
@@ -130,7 +130,7 @@ SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
   integration_test: 13825b8a9334a850581300559b8839134b124670
-  leveldb-library: f03246171cce0484482ec291f88b6d563699ee06
+  leveldb-library: e74c27d8fbd22854db7cb467968a0b8aa1db7126
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
