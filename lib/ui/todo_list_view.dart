@@ -33,10 +33,22 @@ class TodoListView extends HookConsumerWidget {
       categoryDetailPod(categoryId).select((value) => value.hasValue),
     );
 
-    ref.listen(
-      todoViewModelPod,
-      (_, TodoState state) => _onChangeState(context, state),
-    );
+    ref.listen(todoViewModelPod, (_, state) {
+      state.whenOrNull(
+        success: (action) {
+          final message = switch (action) {
+            TodoAction.add => 'Todo created successfully',
+            TodoAction.update => 'Todo updated successfully',
+            TodoAction.remove => 'Todo removed successfully',
+            TodoAction.check => 'Todo finished successfully',
+          };
+          showCustomMessage(context, message);
+        },
+        error: (error) {
+          if (error != null) showCustomMessage(context, error);
+        },
+      );
+    });
 
     return ContextMenuOverlay(
       child: Scaffold(
@@ -95,25 +107,6 @@ class TodoListView extends HookConsumerWidget {
             : null,
       ),
     );
-  }
-
-  void _onChangeState(BuildContext context, TodoState state) {
-    final action = state.maybeWhen(success: (a) => a, orElse: () => null);
-    final error = state.maybeWhen(error: (m) => m, orElse: () => null);
-
-    if (action != null) {
-      if (action == TodoAction.add) {
-        showCustomMessage(context, 'Todo created successfully');
-      } else if (action == TodoAction.update) {
-        showCustomMessage(context, 'Todo updated successfully');
-      } else if (action == TodoAction.remove) {
-        showCustomMessage(context, 'Todo removed successfully');
-      } else if (action == TodoAction.check) {
-        showCustomMessage(context, 'Todo finished successfully');
-      }
-    }
-
-    if (error != null) showCustomMessage(context, error);
   }
 }
 

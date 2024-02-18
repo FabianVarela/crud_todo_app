@@ -24,10 +24,15 @@ class FormTodoView extends HookConsumerWidget {
 
     final isValid = ref.watch(validationTodoProvider);
 
-    ref.listen(
-      todoViewModelPod,
-      (_, TodoState state) => _onChangeState(context, state),
-    );
+    ref.listen(todoViewModelPod, (_, state) {
+      state.whenOrNull(
+        success: (action) {
+          if (action == TodoAction.add || action == TodoAction.update) {
+            Navigator.pop(context);
+          }
+        },
+      );
+    });
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -88,18 +93,13 @@ class FormTodoView extends HookConsumerWidget {
     );
   }
 
-  void _saveTodo(WidgetRef ref) => ref.read(todoViewModelPod.notifier).saveTodo(
-        categoryId,
-        ref.read(subjectTodoPod.notifier).state.text!,
-        ref.read(dateTodoPod.notifier).state,
-        todoId: todoId,
-      );
-
-  void _onChangeState(BuildContext context, TodoState state) {
-    final action = state.whenOrNull(success: (action) => action);
-    if (action == TodoAction.add || action == TodoAction.update) {
-      Navigator.pop(context);
-    }
+  void _saveTodo(WidgetRef ref) {
+    ref.read(todoViewModelPod.notifier).saveTodo(
+          categoryId,
+          ref.read(subjectTodoPod.notifier).state.text!,
+          ref.read(dateTodoPod.notifier).state,
+          todoId: todoId,
+        );
   }
 }
 

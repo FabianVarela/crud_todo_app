@@ -33,10 +33,20 @@ class CategoryListView extends HookConsumerWidget {
     final scrollController = useScrollController();
     final categoriesData = ref.watch(categoryListPod);
 
-    ref.listen<CategoryState>(
-      categoryViewModelPod,
-      (_, state) => _onChangeState(context, state),
-    );
+    ref.listen<CategoryState>(categoryViewModelPod, (_, state) {
+      state.whenOrNull(
+        success: (action) {
+          final message = switch (action) {
+            CategoryAction.add => 'Category created successfully',
+            CategoryAction.remove => 'Category removed successfully',
+          };
+          showCustomMessage(context, message);
+        },
+        error: (error) {
+          if (error != null) showCustomMessage(context, error);
+        },
+      );
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -150,25 +160,10 @@ class CategoryListView extends HookConsumerWidget {
     await showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (_) => const Center(
-        child: Dialog(
-          backgroundColor: Colors.transparent,
-          child: CategoryFormDialog(),
-        ),
+      builder: (_) => const Dialog(
+        backgroundColor: Colors.transparent,
+        child: CategoryFormDialog(),
       ),
     );
-  }
-
-  void _onChangeState(BuildContext context, CategoryState state) {
-    final action = state.whenOrNull(success: (action) => action);
-    final error = state.whenOrNull(error: (error) => error);
-
-    if (action == CategoryAction.add) {
-      showCustomMessage(context, 'Category created successfully');
-    } else if (action == CategoryAction.remove) {
-      showCustomMessage(context, 'Category removed successfully');
-    }
-
-    if (error != null) showCustomMessage(context, error);
   }
 }
