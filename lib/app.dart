@@ -20,7 +20,7 @@ class TodoApp extends ConsumerWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
       ),
-      onGenerateTitle: (ctx) {
+      onGenerateTitle: (_) {
         if (getDevice() == DeviceSegment.desktop) setWindowTitle(title);
         return title;
       },
