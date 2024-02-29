@@ -10,11 +10,11 @@ environment:
   flutter: 3.19.0
 
 dependencies:
-  cloud_firestore: ^4.15.4
+  cloud_firestore: ^4.15.6
   context_menus: ^1.0.2
   dart_emoji: ^0.2.0+2
   equatable: ^2.0.5
-  firebase_core: ^2.25.4
+  firebase_core: ^2.25.5
   flutter:
     sdk: flutter
   flutter_hooks: ^0.20.5
