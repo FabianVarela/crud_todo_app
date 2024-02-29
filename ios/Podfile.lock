@@ -1,5 +1,5 @@
 PODS:
-  - cloud_firestore (4.15.4):
+  - cloud_firestore (4.15.6):
     - Firebase/Firestore (= 10.20.0)
     - firebase_core
     - Flutter
@@ -9,7 +9,7 @@ PODS:
   - Firebase/Firestore (10.20.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 10.20.0)
-  - firebase_core (2.25.4):
+  - firebase_core (2.25.5):
     - Firebase/CoreOnly (= 10.20.0)
     - Flutter
   - FirebaseCore (10.20.0):
@@ -113,9 +113,9 @@ CHECKOUT OPTIONS:
     :tag: 10.20.0
 
 SPEC CHECKSUMS:
-  cloud_firestore: ba576bee785a05ff952e4da7fa4e23c196917436
+  cloud_firestore: 0f0bca4953963272e2d8cf6f15e7adce3c10b7f7
   Firebase: 10c8cb12fb7ad2ae0c09ffc86cd9c1ab392a0031
-  firebase_core: a46c312d8bae4defa3d009b2aa7b5b413aeb394e
+  firebase_core: c8628c7ce80f79439149549052bff22f6784fbf5
   FirebaseCore: 28045c1560a2600d284b9c45a904fe322dc890b6
   FirebaseCoreExtension: 0659f035b88c5a7a15a9763c48c2e6ca8c0a2977
   FirebaseCoreInternal: 43c1788eaeee9d1b97caaa751af567ce11010d00
@@ -134,7 +134,7 @@ SPEC CHECKSUMS:
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
-  url_launcher_ios: bbd758c6e7f9fd7b5b1d4cde34d2b95fcce5e812
+  url_launcher_ios: 6116280ddcfe98ab8820085d8d76ae7449447586
 
 PODFILE CHECKSUM: 3743ace67b1a187a3da2ed1c175389a89b6215ae
 
