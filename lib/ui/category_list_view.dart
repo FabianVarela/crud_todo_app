@@ -58,7 +58,7 @@ class CategoryListView extends HookConsumerWidget {
         ),
       ),
       body: Shortcuts(
-        shortcuts: _getShortcutsByOS(),
+        shortcuts: _shortcutsByOS,
         child: Actions(
           actions: <Type, Action<Intent>>{
             CreateCategoryIntent: CallbackAction<CreateCategoryIntent>(
@@ -140,7 +140,7 @@ class CategoryListView extends HookConsumerWidget {
     );
   }
 
-  Map<ShortcutActivator, Intent> _getShortcutsByOS() {
+  Map<ShortcutActivator, Intent> get _shortcutsByOS {
     return defaultTargetPlatform == TargetPlatform.macOS
         ? <ShortcutActivator, Intent>{
             LogicalKeySet(LogicalKeyboardKey.meta, LogicalKeyboardKey.keyN):
