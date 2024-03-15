@@ -16,6 +16,8 @@ import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -271,6 +273,13 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(find.byType(CategoryListView), findsOneWidget);
+        if (foundation.defaultTargetPlatform == TargetPlatform.macOS) {
+          expect(find.byType(CupertinoAlertDialog), findsOneWidget);
+          await tester.tap(find.byType(TextButton));
+
+          await tester.pumpAndSettle();
+          expect(find.byType(CupertinoAlertDialog), findsNothing);
+        }
       },
       variant: TargetPlatformVariant.all(),
     );
