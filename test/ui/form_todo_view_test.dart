@@ -391,7 +391,7 @@ void main() {
         await tester.pump();
         expect(find.byType(TodoListView), findsOneWidget);
       },
-      // TODO(FV): Review linux macOS, and windows
+      // TODO(FV): Review linux and windows
       variant: const TargetPlatformVariant(
         {TargetPlatform.android, TargetPlatform.iOS, TargetPlatform.fuchsia},
       ),
