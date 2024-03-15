@@ -56,7 +56,7 @@ class FormTodoView extends HookConsumerWidget {
           ),
         ],
       ),
-      body: categoryData.when(
+      body: categoryData.maybeWhen(
         data: (category) => todoData.whenOrNull(
           data: (todo) => SingleChildScrollView(
             padding: const EdgeInsets.symmetric(vertical: 20),
@@ -82,13 +82,7 @@ class FormTodoView extends HookConsumerWidget {
           ),
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(
-          child: Text(
-            e.toString(),
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 20),
-          ),
-        ),
+        orElse: Offstage.new,
       ),
     );
   }
