@@ -12,8 +12,6 @@ import 'package:mocktail/mocktail.dart';
 
 class MockNavigator extends Mock implements NavigatorObserver {}
 
-class MyRouteFake extends Fake implements Route<dynamic> {}
-
 /// Firestore
 
 class MockFirestore extends Mock implements FirebaseFirestore {}
