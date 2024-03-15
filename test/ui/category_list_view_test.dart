@@ -11,6 +11,7 @@ import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
@@ -225,6 +226,53 @@ void main() {
         expect(foundTooltip.hitTestable(), findsOneWidget);
       },
       variant: TargetPlatformVariant.desktop(),
+    );
+
+    testWidgets(
+      'In $CategoryListView, refresh with the command keys',
+      (tester) async {
+        when(categoryRepository.getCategories).thenAnswer(
+          (_) => Stream.value([category]),
+        );
+
+        await pumpMainScreen(tester);
+
+        expect(find.byType(CircularProgressIndicator), findsOneWidget);
+        await tester.pump(const Duration(seconds: 1));
+
+        expect(find.byType(CircularProgressIndicator), findsNothing);
+        expect(find.byType(GridView), findsOneWidget);
+
+        await simulateKeyDownEvent(LogicalKeyboardKey.meta);
+        await simulateKeyDownEvent(LogicalKeyboardKey.keyR);
+
+        expect(find.byType(GridView), findsOneWidget);
+      },
+      variant: TargetPlatformVariant.only(TargetPlatform.macOS),
+    );
+
+    testWidgets(
+      'In $CategoryListView, open dialog with the command keys',
+      (tester) async {
+        when(categoryRepository.getCategories).thenAnswer(
+          (_) => Stream.value([category]),
+        );
+
+        await pumpMainScreen(tester);
+
+        expect(find.byType(CircularProgressIndicator), findsOneWidget);
+        await tester.pump(const Duration(seconds: 1));
+
+        expect(find.byType(CircularProgressIndicator), findsNothing);
+        expect(find.byType(GridView), findsOneWidget);
+
+        await simulateKeyDownEvent(LogicalKeyboardKey.meta);
+        await simulateKeyDownEvent(LogicalKeyboardKey.keyN);
+
+        await tester.pumpAndSettle(const Duration(seconds: 1));
+        expect(find.byType(Dialog), findsOneWidget);
+      },
+      variant: TargetPlatformVariant.only(TargetPlatform.macOS),
     );
   });
 }
