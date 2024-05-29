@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 enum ScreenType { desktop, tablet, handset, watch }
 
 ScreenType getFormFactor(BuildContext context) {
-  return switch (MediaQuery.of(context).size.shortestSide) {
+  return switch (MediaQuery.sizeOf(context).shortestSide) {
     > 900 => ScreenType.desktop,
     > 600 => ScreenType.tablet,
     > 300 => ScreenType.handset,

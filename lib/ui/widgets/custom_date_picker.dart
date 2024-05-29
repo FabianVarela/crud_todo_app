@@ -19,12 +19,13 @@ class CustomDatePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
     return Container(
-      height: MediaQuery.of(context).size.height / 3,
-      width: MediaQuery.of(context).size.width,
+      height: size.height / 3,
+      width: size.width,
       color: Colors.white,
       child: cupertino.SizedBox(
-        height: MediaQuery.of(context).size.height / 4.5,
+        height: size.height / 4.5,
         child: cupertino.DefaultTextStyle(
           style: const TextStyle(fontSize: 22),
           child: cupertino.CupertinoDatePicker(
