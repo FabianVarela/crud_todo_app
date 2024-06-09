@@ -10,11 +10,11 @@ environment:
   flutter: 3.19.0
 
 dependencies:
-  cloud_firestore: ^4.17.4
+  cloud_firestore: ^5.0.0
   context_menus: ^2.0.0+1
   dart_emoji: ^0.2.0+2
   equatable: ^2.0.5
-  firebase_core: ^2.31.1
+  firebase_core: ^3.0.0
   flutter:
     sdk: flutter
   flutter_hooks: ^0.20.5
@@ -31,7 +31,7 @@ dependencies:
       path: plugins/window_size
 
 dev_dependencies:
-  build_runner: ^2.4.10
+  build_runner: ^2.4.11
   flutter_driver:
     sdk: flutter
   flutter_test:
