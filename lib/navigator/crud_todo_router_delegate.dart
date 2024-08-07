@@ -75,33 +75,36 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
 
   @override
   Widget build(BuildContext context) {
+    var pages = <Page<dynamic>>[
+      if (is404)
+        const UnknownPage()
+      else ...[
+        CategoryPage(onGoToDetail: (catId) => categoryId = catId),
+        if (categoryId != null)
+          TodoPage(
+            categoryId: categoryId!,
+            onGoToTodo: (catId, todoId) => selectCurrentTodo(
+              todoId,
+              isSelected: true,
+            ),
+          ),
+        if (categoryId != null && isTodoSelected)
+          FormTodoPage(categoryId: categoryId!, todoId: todoId),
+      ],
+    ];
+
     return Navigator(
       key: navigatorKey,
       observers: [_heroController],
-      pages: <Page<void>>[
-        if (is404)
-          const UnknownPage()
-        else ...[
-          CategoryPage(onGoToDetail: (catId) => categoryId = catId),
-          if (categoryId != null)
-            TodoPage(
-              categoryId: categoryId!,
-              onGoToTodo: (catId, todoId) => selectCurrentTodo(
-                todoId,
-                isSelected: true,
-              ),
-            ),
-          if (categoryId != null && isTodoSelected)
-            FormTodoPage(categoryId: categoryId!, todoId: todoId),
-        ],
-      ],
-      onPopPage: (route, dynamic result) {
-        if (!route.didPop(result)) return false;
-
-        if (!isTodoSelected) categoryId = null;
-        selectCurrentTodo(null, isSelected: false);
-
-        return true;
+      pages: pages,
+      onDidRemovePage: (page) {
+        if (categoryId == null) {
+          pages.remove(page);
+          pages = pages.toList();
+        } else {
+          if (!isTodoSelected) categoryId = null;
+          selectCurrentTodo(null, isSelected: false);
+        }
       },
     );
   }
