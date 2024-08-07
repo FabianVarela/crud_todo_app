@@ -156,14 +156,16 @@ class CategorySection extends ConsumerWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    category.name,
-                    style: const TextStyle(
-                      fontSize: 35,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
-                  ).paddingOnly(b: 5),
+                  FittedBox(
+                    child: Text(
+                      category.name,
+                      style: const TextStyle(
+                        fontSize: 36,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white,
+                      ),
+                    ).paddingOnly(b: 5),
+                  ),
                   Text(
                     '${category.todoSize} Tasks',
                     style: const TextStyle(
@@ -175,7 +177,7 @@ class CategorySection extends ConsumerWidget {
                 ],
               ),
             ],
-          ).paddingOnly(l: 35),
+          ).paddingSymmetric(h: 24),
         ),
         Expanded(
           flex: 2,
