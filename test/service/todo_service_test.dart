@@ -55,7 +55,7 @@ void main() {
       when(() => mockQuerySnapshot.docs)
           .thenReturn([mockQueryDocumentSnapshot]);
 
-      when(() => mockQueryDocumentSnapshot.toMap())
+      when(() => mockQueryDocumentSnapshot.toMap)
           .thenReturn(existingTodo.toJson());
 
       // act
@@ -86,8 +86,7 @@ void main() {
 
       when(() => mockDocumentSnapshot.exists).thenReturn(true);
 
-      when(() => mockDocumentSnapshot.toMap())
-          .thenReturn(existingTodo.toJson());
+      when(() => mockDocumentSnapshot.toMap).thenReturn(existingTodo.toJson());
 
       // act
       final result = todoService.getTodoById(categoryId, existingTodo.id!);
@@ -114,7 +113,7 @@ void main() {
 
       when(() => mockDocumentSnapshot.exists).thenReturn(false);
 
-      when(() => mockDocumentSnapshot.toMap()).thenThrow(
+      when(() => mockDocumentSnapshot.toMap).thenThrow(
         Exception('Oops!!! Todo not found'),
       );
 

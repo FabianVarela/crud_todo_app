@@ -48,7 +48,7 @@ void main() {
       when(() => mockQuerySnapshot.docs)
           .thenReturn([mockQueryDocumentSnapshot]);
 
-      when(() => mockQueryDocumentSnapshot.toMap())
+      when(() => mockQueryDocumentSnapshot.toMap)
           .thenReturn(category.toJson());
 
       // act
@@ -75,7 +75,7 @@ void main() {
 
       when(() => mockDocumentSnapshot.exists).thenReturn(true);
 
-      when(() => mockDocumentSnapshot.toMap()).thenReturn(category.toJson());
+      when(() => mockDocumentSnapshot.toMap).thenReturn(category.toJson());
 
       // act
       final result = categoryService.getCategoryById(category.id!);
@@ -102,7 +102,7 @@ void main() {
 
       when(() => mockDocumentSnapshot.exists).thenReturn(false);
 
-      when(() => mockDocumentSnapshot.toMap()).thenThrow(
+      when(() => mockDocumentSnapshot.toMap).thenThrow(
         Exception('Oops!!! Category not found'),
       );
 
