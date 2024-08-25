@@ -26,11 +26,11 @@ class TodoListView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final categoryData = ref.watch(categoryDetailPod(categoryId));
-    final todoData = ref.watch(todoListPod(categoryId));
+    final categoryData = ref.watch(categoryDetailProvider(categoryId));
+    final todoData = ref.watch(todoListProvider(categoryId));
 
     final existsCategory = ref.watch(
-      categoryDetailPod(categoryId).select((value) => value.hasValue),
+      categoryDetailProvider(categoryId).select((value) => value.hasValue),
     );
 
     ref.listen(todoViewModelPod, (_, state) {

@@ -1,27 +1,26 @@
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
-import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final categoryListPod = StreamProvider.autoDispose<List<Category>>(
-  (ref) => ref.watch(categoryRepositoryPod).getCategories(),
+final categoryListProvider = StreamProvider.autoDispose(
+  (ref) => ref.watch(categoryRepositoryProvider).getCategories(),
 );
 
-final categoryDetailPod = FutureProvider.family.autoDispose<Category, String>(
-  (ref, id) => ref.watch(categoryRepositoryPod).getCategoryById(id),
+final categoryDetailProvider = FutureProvider.family.autoDispose(
+  (ref, String id) => ref.watch(categoryRepositoryProvider).getCategoryById(id),
 );
 
-final nameCategoryPod = StateProvider.autoDispose(
+final nameCategoryProvider = StateProvider.autoDispose(
   (_) => const ValidationText(),
 );
-final emojiCategoryPod = StateProvider.autoDispose(
+final emojiCategoryProvider = StateProvider.autoDispose(
   (_) => const ValidationText(),
 );
 
-final validationCategoryPod = StateProvider.autoDispose((ref) {
-  final name = ref.watch(nameCategoryPod).text;
-  final emoji = ref.watch(emojiCategoryPod).text;
+final validationCategoryProvider = StateProvider.autoDispose((ref) {
+  final name = ref.watch(nameCategoryProvider).text;
+  final emoji = ref.watch(emojiCategoryProvider).text;
 
   final isValidEmoji = (emoji ?? '').isNotEmpty && (emoji ?? '').isEmoji;
   return (name ?? '').isNotEmpty && isValidEmoji;

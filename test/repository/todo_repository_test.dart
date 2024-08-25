@@ -19,9 +19,9 @@ void main() {
 
     // Using simple Riverpod to test dependencies
     final container = ProviderContainer(
-      overrides: [todoServicePod.overrideWithValue(mockTodoService)],
+      overrides: [todoServiceProvider.overrideWithValue(mockTodoService)],
     );
-    todoRepository = container.read(todoRepositoryPod);
+    todoRepository = container.read(todoRepositoryProvider);
   });
 
   group('$TodoRepository', () {

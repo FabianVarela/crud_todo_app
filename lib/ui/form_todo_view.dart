@@ -19,8 +19,10 @@ class FormTodoView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final categoryData = ref.watch(categoryDetailPod(categoryId));
-    final todoData = ref.watch(todoDetailPod('$categoryId,${todoId ?? ''}'));
+    final categoryData = ref.watch(categoryDetailProvider(categoryId));
+    final todoData = ref.watch(
+      todoDetailProvider((catId: categoryId, todoId: todoId ?? '')),
+    );
 
     final isValid = ref.watch(validationTodoProvider);
 
@@ -90,8 +92,8 @@ class FormTodoView extends HookConsumerWidget {
   void _saveTodo(WidgetRef ref) {
     ref.read(todoViewModelPod.notifier).saveTodo(
           categoryId,
-          ref.read(subjectTodoPod.notifier).state.text!,
-          ref.read(dateTodoPod.notifier).state,
+          ref.read(subjectTodoProvider.notifier).state.text!,
+          ref.read(dateTodoProvider.notifier).state,
           todoId: todoId,
         );
   }
@@ -104,14 +106,14 @@ class SubjectTodo extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final subject = ref.watch(subjectTodoPod.notifier);
+    final subject = ref.watch(subjectTodoProvider.notifier);
     final subjectTextController = useTextEditingController();
 
     useEffect(
       () {
         if (todo != null) {
           Future.microtask(() {
-            ref.read(subjectTodoPod.notifier).state =
+            ref.read(subjectTodoProvider.notifier).state =
                 ValidationText(text: todo!.subject);
             subjectTextController.text = todo!.subject;
           });
@@ -144,13 +146,13 @@ class DateTodo extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final finalDate = ref.watch(dateTodoPod);
+    final finalDate = ref.watch(dateTodoProvider);
 
     useEffect(
       () {
         if (todo != null) {
           Future.microtask(
-            () => ref.read(dateTodoPod.notifier).state = todo!.finalDate,
+            () => ref.read(dateTodoProvider.notifier).state = todo!.finalDate,
           );
         }
         return null;
@@ -166,7 +168,7 @@ class DateTodo extends HookConsumerWidget {
             : finalDate.add(const Duration(minutes: 2)),
         firstDate: DateTime.now(),
         lastDate: DateTime.now().add(const Duration(days: 365)),
-        onChangeDate: (date) => ref.read(dateTodoPod.notifier).state = date,
+        onChangeDate: (d) => ref.read(dateTodoProvider.notifier).state = d,
       ),
       child: Row(
         children: <Widget>[

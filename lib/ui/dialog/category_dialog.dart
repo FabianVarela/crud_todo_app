@@ -14,7 +14,7 @@ class CategoryFormDialog extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final categoryState = ref.watch(categoryViewModelPod);
-    final isValidForm = ref.watch(validationCategoryPod);
+    final isValidForm = ref.watch(validationCategoryProvider);
 
     final isDesktopOrTablet = [ScreenType.desktop, ScreenType.tablet]
         .contains(getFormFactor(context));
@@ -74,8 +74,8 @@ class CategoryFormDialog extends ConsumerWidget {
 
   void _saveCategory(WidgetRef ref) {
     ref.read(categoryViewModelPod.notifier).saveCategory(
-          ref.read(nameCategoryPod.notifier).state.text!,
-          ref.read(emojiCategoryPod.notifier).state.text!,
+          ref.read(nameCategoryProvider.notifier).state.text!,
+          ref.read(emojiCategoryProvider.notifier).state.text!,
         );
   }
 
@@ -90,7 +90,7 @@ class NameCategory extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final nameText = ref.watch(nameCategoryPod.notifier);
+    final nameText = ref.watch(nameCategoryProvider.notifier);
     final textController = useTextEditingController();
 
     return TextField(
@@ -111,7 +111,7 @@ class EmojiCategory extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final emoji = ref.watch(emojiCategoryPod.notifier);
+    final emoji = ref.watch(emojiCategoryProvider.notifier);
     final textController = useTextEditingController();
 
     return TextField(

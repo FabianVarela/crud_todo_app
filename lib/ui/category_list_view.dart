@@ -31,7 +31,7 @@ class CategoryListView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scrollController = useScrollController();
-    final categoriesData = ref.watch(categoryListPod);
+    final categoriesData = ref.watch(categoryListProvider);
 
     ref.listen<CategoryState>(categoryViewModelPod, (_, state) {
       state.whenOrNull(
@@ -65,7 +65,7 @@ class CategoryListView extends HookConsumerWidget {
               onInvoke: (_) => _showCategoryDialog(context),
             ),
             RefreshListIntent: CallbackAction<RefreshListIntent>(
-              onInvoke: (_) => ref.refresh(categoryListPod),
+              onInvoke: (_) => ref.refresh(categoryListProvider),
             ),
           },
           child: Focus(

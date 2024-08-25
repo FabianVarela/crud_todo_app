@@ -18,9 +18,11 @@ void main() {
 
     // Using simple Riverpod to test dependencies
     final container = ProviderContainer(
-      overrides: [categoryServicePod.overrideWithValue(mockCategoryService)],
+      overrides: [
+        categoryServiceProvider.overrideWithValue(mockCategoryService),
+      ],
     );
-    categoryRepository = container.read(categoryRepositoryPod);
+    categoryRepository = container.read(categoryRepositoryProvider);
   });
 
   group('$CategoryRepository', () {

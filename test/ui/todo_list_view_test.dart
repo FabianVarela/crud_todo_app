@@ -66,11 +66,11 @@ void main() {
       await tester.pumpWidget(
         ProviderScope(
           overrides: [
-            firebasePod.overrideWithValue(mockFirestoreInstance),
-            categoryServicePod.overrideWithValue(mockCategoryService),
-            todoServicePod.overrideWithValue(mockTodoService),
-            categoryRepositoryPod.overrideWithValue(categoryRepository),
-            todoRepositoryPod.overrideWithValue(todoRepository),
+            firebaseProvider.overrideWithValue(mockFirestoreInstance),
+            categoryServiceProvider.overrideWithValue(mockCategoryService),
+            todoServiceProvider.overrideWithValue(mockTodoService),
+            categoryRepositoryProvider.overrideWithValue(categoryRepository),
+            todoRepositoryProvider.overrideWithValue(todoRepository),
           ],
           child: MaterialApp.router(
             routerDelegate: todoRouterDelegate,

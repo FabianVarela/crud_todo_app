@@ -31,9 +31,9 @@ void main() {
 
     // Using simple Riverpod to test dependencies
     final container = ProviderContainer(
-      overrides: [firebasePod.overrideWithValue(mockFirestoreInstance)],
+      overrides: [firebaseProvider.overrideWithValue(mockFirestoreInstance)],
     );
-    categoryService = container.read(categoryServicePod);
+    categoryService = container.read(categoryServiceProvider);
   });
 
   group('$CategoryService', () {
