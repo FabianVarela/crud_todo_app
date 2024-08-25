@@ -1,7 +1,7 @@
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/service/todo_service.dart';
 
-abstract class ITodoRepository {
+abstract interface class ITodoRepository {
   Stream<List<Todo>> getTodosByCategory(String categoryId);
 
   Future<Todo> getTodoById(String categoryId, String todoId);

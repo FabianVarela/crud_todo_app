@@ -1,7 +1,7 @@
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/service/category_service.dart';
 
-abstract class ICategoryRepository {
+abstract interface class ICategoryRepository {
   Stream<List<Category>> getCategories();
 
   Future<Category> getCategoryById(String categoryId);
