@@ -23,7 +23,7 @@ extension IntUtilsX on int {
 }
 
 extension StringUtilsX on String {
-  bool get verifyEmoji {
+  bool get isEmoji {
     for (final s in EmojiParser().unemojify(this).split(' ')) {
       return s.startsWith(':') || s.endsWith(':');
     }
@@ -31,11 +31,11 @@ extension StringUtilsX on String {
     return false;
   }
 
-  ValidationText validateEmpty() => isNotEmpty
+  ValidationText get validateEmpty => isNotEmpty
       ? ValidationText(text: this)
       : const ValidationText(message: 'Field is empty');
 
-  ValidationText validateEmoji() => (length == 1 || length == 2) && verifyEmoji
+  ValidationText get validateEmoji => (length == 1 || length == 2) && isEmoji
       ? ValidationText(text: this)
       : const ValidationText(message: 'Invalid emoji');
 }
@@ -60,7 +60,7 @@ extension WidgetUtilsX on Widget {
 }
 
 extension ToMapX on DocumentSnapshot {
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> get toMap {
     final map = data() as Map<String, dynamic>?;
     return <String, dynamic>{
       'id': id,
