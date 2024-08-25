@@ -17,7 +17,7 @@ class TodoService {
         .snapshots();
 
     return querySnapshot.map(
-      (query) => [for (final item in query.docs) Todo.fromJson(item.toMap())],
+      (query) => [for (final item in query.docs) Todo.fromJson(item.toMap)],
     );
   }
 
@@ -26,7 +26,7 @@ class TodoService {
     final todoDocument = await todoCollection.doc(todoId).get();
 
     if (todoDocument.exists) {
-      final todoMap = todoDocument.toMap();
+      final todoMap = todoDocument.toMap;
       if (todoMap.containsValue(categoryId)) return Todo.fromJson(todoMap);
     }
 

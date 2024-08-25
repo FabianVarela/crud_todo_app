@@ -11,9 +11,9 @@ class CategoryViewModel extends StateNotifier<CategoryState> {
 
   late final ICategoryRepository _repository;
 
-  ValidationText onChangeName(String value) => value.validateEmpty();
+  ValidationText onChangeName(String value) => value.validateEmpty;
 
-  ValidationText onChangeEmoji(String value) => value.validateEmoji();
+  ValidationText onChangeEmoji(String value) => value.validateEmoji;
 
   Future<void> saveCategory(String name, String emoji) async {
     try {

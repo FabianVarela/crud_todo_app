@@ -15,7 +15,7 @@ class CategoryService {
 
     return querySnapshot.map(
       (query) => [
-        for (final item in query.docs) Category.fromJson(item.toMap()),
+        for (final item in query.docs) Category.fromJson(item.toMap),
       ],
     );
   }
@@ -25,7 +25,7 @@ class CategoryService {
     final categoryDocument = await categoryCollection.doc(categoryId).get();
 
     if (categoryDocument.exists) {
-      return Category.fromJson(categoryDocument.toMap());
+      return Category.fromJson(categoryDocument.toMap);
     }
 
     throw Exception('Oops!!! Category not found');

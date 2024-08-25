@@ -23,6 +23,6 @@ final validationCategoryPod = StateProvider.autoDispose((ref) {
   final name = ref.watch(nameCategoryPod).text;
   final emoji = ref.watch(emojiCategoryPod).text;
 
-  final isValidEmoji = (emoji ?? '').isNotEmpty && (emoji ?? '').verifyEmoji;
+  final isValidEmoji = (emoji ?? '').isNotEmpty && (emoji ?? '').isEmoji;
   return (name ?? '').isNotEmpty && isValidEmoji;
 });

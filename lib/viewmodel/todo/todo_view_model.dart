@@ -10,7 +10,7 @@ class TodoViewModel extends StateNotifier<TodoState> {
 
   late final ITodoRepository _repository;
 
-  ValidationText onChangeSubject(String value) => value.validateEmpty();
+  ValidationText onChangeSubject(String value) => value.validateEmpty;
 
   Future<void> saveTodo(
     String catId,
