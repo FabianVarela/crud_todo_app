@@ -7,42 +7,20 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 class TodoItem extends StatelessWidget {
   const TodoItem({
-    required Todo todo,
-    Key? key,
-    VoidCallback? onEdit,
-    VoidCallback? onRemove,
-    ValueSetter<bool>? onCheck,
-  }) : this._(
-          key: key,
-          todo: todo,
-          onEdit: onEdit,
-          onRemove: onRemove,
-          onCheck: onCheck,
-        );
-
-  const TodoItem.contextual({
-    required Todo todo,
-    Key? key,
-    VoidCallback? onEdit,
-    VoidCallback? onRemove,
-    ValueSetter<bool>? onCheck,
-  }) : this._(
-          key: key,
-          todo: todo,
-          onEdit: onEdit,
-          onRemove: onRemove,
-          onCheck: onCheck,
-          isSlidable: false,
-        );
-
-  const TodoItem._({
     required this.todo,
-    super.key,
     this.onEdit,
     this.onRemove,
     this.onCheck,
-    this.isSlidable = true,
-  });
+    super.key,
+  }) : isSlidable = true;
+
+  const TodoItem.contextual({
+    required this.todo,
+    this.onEdit,
+    this.onRemove,
+    this.onCheck,
+    super.key,
+  }) : isSlidable = false;
 
   final Todo todo;
   final VoidCallback? onEdit;
