@@ -19,6 +19,7 @@ mixin _$CrudTodoConfig {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() categoryList,
+    required TResult Function() addCategory,
     required TResult Function(String categoryId) todoList,
     required TResult Function(String categoryId) addTodo,
     required TResult Function(String categoryId, String todoId) updateTodo,
@@ -28,6 +29,7 @@ mixin _$CrudTodoConfig {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? categoryList,
+    TResult? Function()? addCategory,
     TResult? Function(String categoryId)? todoList,
     TResult? Function(String categoryId)? addTodo,
     TResult? Function(String categoryId, String todoId)? updateTodo,
@@ -37,6 +39,7 @@ mixin _$CrudTodoConfig {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? categoryList,
+    TResult Function()? addCategory,
     TResult Function(String categoryId)? todoList,
     TResult Function(String categoryId)? addTodo,
     TResult Function(String categoryId, String todoId)? updateTodo,
@@ -47,6 +50,7 @@ mixin _$CrudTodoConfig {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(CrudTodoConfigCategoryList value) categoryList,
+    required TResult Function(CrudTodoConfigAddCategory value) addCategory,
     required TResult Function(CrudTodoConfigTodoList value) todoList,
     required TResult Function(CrudTodoConfigAddTodo value) addTodo,
     required TResult Function(CrudTodoConfigUpdateTodo value) updateTodo,
@@ -56,6 +60,7 @@ mixin _$CrudTodoConfig {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(CrudTodoConfigCategoryList value)? categoryList,
+    TResult? Function(CrudTodoConfigAddCategory value)? addCategory,
     TResult? Function(CrudTodoConfigTodoList value)? todoList,
     TResult? Function(CrudTodoConfigAddTodo value)? addTodo,
     TResult? Function(CrudTodoConfigUpdateTodo value)? updateTodo,
@@ -65,6 +70,7 @@ mixin _$CrudTodoConfig {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(CrudTodoConfigCategoryList value)? categoryList,
+    TResult Function(CrudTodoConfigAddCategory value)? addCategory,
     TResult Function(CrudTodoConfigTodoList value)? todoList,
     TResult Function(CrudTodoConfigAddTodo value)? addTodo,
     TResult Function(CrudTodoConfigUpdateTodo value)? updateTodo,
@@ -90,6 +96,9 @@ class _$CrudTodoConfigCopyWithImpl<$Res, $Val extends CrudTodoConfig>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of CrudTodoConfig
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -108,6 +117,9 @@ class __$$CrudTodoConfigCategoryListImplCopyWithImpl<$Res>
       _$CrudTodoConfigCategoryListImpl _value,
       $Res Function(_$CrudTodoConfigCategoryListImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of CrudTodoConfig
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -134,6 +146,7 @@ class _$CrudTodoConfigCategoryListImpl implements CrudTodoConfigCategoryList {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() categoryList,
+    required TResult Function() addCategory,
     required TResult Function(String categoryId) todoList,
     required TResult Function(String categoryId) addTodo,
     required TResult Function(String categoryId, String todoId) updateTodo,
@@ -146,6 +159,7 @@ class _$CrudTodoConfigCategoryListImpl implements CrudTodoConfigCategoryList {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? categoryList,
+    TResult? Function()? addCategory,
     TResult? Function(String categoryId)? todoList,
     TResult? Function(String categoryId)? addTodo,
     TResult? Function(String categoryId, String todoId)? updateTodo,
@@ -158,6 +172,7 @@ class _$CrudTodoConfigCategoryListImpl implements CrudTodoConfigCategoryList {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? categoryList,
+    TResult Function()? addCategory,
     TResult Function(String categoryId)? todoList,
     TResult Function(String categoryId)? addTodo,
     TResult Function(String categoryId, String todoId)? updateTodo,
@@ -174,6 +189,7 @@ class _$CrudTodoConfigCategoryListImpl implements CrudTodoConfigCategoryList {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(CrudTodoConfigCategoryList value) categoryList,
+    required TResult Function(CrudTodoConfigAddCategory value) addCategory,
     required TResult Function(CrudTodoConfigTodoList value) todoList,
     required TResult Function(CrudTodoConfigAddTodo value) addTodo,
     required TResult Function(CrudTodoConfigUpdateTodo value) updateTodo,
@@ -186,6 +202,7 @@ class _$CrudTodoConfigCategoryListImpl implements CrudTodoConfigCategoryList {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(CrudTodoConfigCategoryList value)? categoryList,
+    TResult? Function(CrudTodoConfigAddCategory value)? addCategory,
     TResult? Function(CrudTodoConfigTodoList value)? todoList,
     TResult? Function(CrudTodoConfigAddTodo value)? addTodo,
     TResult? Function(CrudTodoConfigUpdateTodo value)? updateTodo,
@@ -198,6 +215,7 @@ class _$CrudTodoConfigCategoryListImpl implements CrudTodoConfigCategoryList {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(CrudTodoConfigCategoryList value)? categoryList,
+    TResult Function(CrudTodoConfigAddCategory value)? addCategory,
     TResult Function(CrudTodoConfigTodoList value)? todoList,
     TResult Function(CrudTodoConfigAddTodo value)? addTodo,
     TResult Function(CrudTodoConfigUpdateTodo value)? updateTodo,
@@ -213,6 +231,138 @@ class _$CrudTodoConfigCategoryListImpl implements CrudTodoConfigCategoryList {
 
 abstract class CrudTodoConfigCategoryList implements CrudTodoConfig {
   const factory CrudTodoConfigCategoryList() = _$CrudTodoConfigCategoryListImpl;
+}
+
+/// @nodoc
+abstract class _$$CrudTodoConfigAddCategoryImplCopyWith<$Res> {
+  factory _$$CrudTodoConfigAddCategoryImplCopyWith(
+          _$CrudTodoConfigAddCategoryImpl value,
+          $Res Function(_$CrudTodoConfigAddCategoryImpl) then) =
+      __$$CrudTodoConfigAddCategoryImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$CrudTodoConfigAddCategoryImplCopyWithImpl<$Res>
+    extends _$CrudTodoConfigCopyWithImpl<$Res, _$CrudTodoConfigAddCategoryImpl>
+    implements _$$CrudTodoConfigAddCategoryImplCopyWith<$Res> {
+  __$$CrudTodoConfigAddCategoryImplCopyWithImpl(
+      _$CrudTodoConfigAddCategoryImpl _value,
+      $Res Function(_$CrudTodoConfigAddCategoryImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CrudTodoConfig
+  /// with the given fields replaced by the non-null parameter values.
+}
+
+/// @nodoc
+
+class _$CrudTodoConfigAddCategoryImpl implements CrudTodoConfigAddCategory {
+  const _$CrudTodoConfigAddCategoryImpl();
+
+  @override
+  String toString() {
+    return 'CrudTodoConfig.addCategory()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CrudTodoConfigAddCategoryImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() categoryList,
+    required TResult Function() addCategory,
+    required TResult Function(String categoryId) todoList,
+    required TResult Function(String categoryId) addTodo,
+    required TResult Function(String categoryId, String todoId) updateTodo,
+    required TResult Function() unknown,
+  }) {
+    return addCategory();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? categoryList,
+    TResult? Function()? addCategory,
+    TResult? Function(String categoryId)? todoList,
+    TResult? Function(String categoryId)? addTodo,
+    TResult? Function(String categoryId, String todoId)? updateTodo,
+    TResult? Function()? unknown,
+  }) {
+    return addCategory?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? categoryList,
+    TResult Function()? addCategory,
+    TResult Function(String categoryId)? todoList,
+    TResult Function(String categoryId)? addTodo,
+    TResult Function(String categoryId, String todoId)? updateTodo,
+    TResult Function()? unknown,
+    required TResult orElse(),
+  }) {
+    if (addCategory != null) {
+      return addCategory();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(CrudTodoConfigCategoryList value) categoryList,
+    required TResult Function(CrudTodoConfigAddCategory value) addCategory,
+    required TResult Function(CrudTodoConfigTodoList value) todoList,
+    required TResult Function(CrudTodoConfigAddTodo value) addTodo,
+    required TResult Function(CrudTodoConfigUpdateTodo value) updateTodo,
+    required TResult Function(CrudTodoConfigUnknown value) unknown,
+  }) {
+    return addCategory(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(CrudTodoConfigCategoryList value)? categoryList,
+    TResult? Function(CrudTodoConfigAddCategory value)? addCategory,
+    TResult? Function(CrudTodoConfigTodoList value)? todoList,
+    TResult? Function(CrudTodoConfigAddTodo value)? addTodo,
+    TResult? Function(CrudTodoConfigUpdateTodo value)? updateTodo,
+    TResult? Function(CrudTodoConfigUnknown value)? unknown,
+  }) {
+    return addCategory?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(CrudTodoConfigCategoryList value)? categoryList,
+    TResult Function(CrudTodoConfigAddCategory value)? addCategory,
+    TResult Function(CrudTodoConfigTodoList value)? todoList,
+    TResult Function(CrudTodoConfigAddTodo value)? addTodo,
+    TResult Function(CrudTodoConfigUpdateTodo value)? updateTodo,
+    TResult Function(CrudTodoConfigUnknown value)? unknown,
+    required TResult orElse(),
+  }) {
+    if (addCategory != null) {
+      return addCategory(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class CrudTodoConfigAddCategory implements CrudTodoConfig {
+  const factory CrudTodoConfigAddCategory() = _$CrudTodoConfigAddCategoryImpl;
 }
 
 /// @nodoc
@@ -234,6 +384,8 @@ class __$$CrudTodoConfigTodoListImplCopyWithImpl<$Res>
       $Res Function(_$CrudTodoConfigTodoListImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CrudTodoConfig
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -273,7 +425,9 @@ class _$CrudTodoConfigTodoListImpl implements CrudTodoConfigTodoList {
   @override
   int get hashCode => Object.hash(runtimeType, categoryId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CrudTodoConfig
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CrudTodoConfigTodoListImplCopyWith<_$CrudTodoConfigTodoListImpl>
@@ -284,6 +438,7 @@ class _$CrudTodoConfigTodoListImpl implements CrudTodoConfigTodoList {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() categoryList,
+    required TResult Function() addCategory,
     required TResult Function(String categoryId) todoList,
     required TResult Function(String categoryId) addTodo,
     required TResult Function(String categoryId, String todoId) updateTodo,
@@ -296,6 +451,7 @@ class _$CrudTodoConfigTodoListImpl implements CrudTodoConfigTodoList {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? categoryList,
+    TResult? Function()? addCategory,
     TResult? Function(String categoryId)? todoList,
     TResult? Function(String categoryId)? addTodo,
     TResult? Function(String categoryId, String todoId)? updateTodo,
@@ -308,6 +464,7 @@ class _$CrudTodoConfigTodoListImpl implements CrudTodoConfigTodoList {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? categoryList,
+    TResult Function()? addCategory,
     TResult Function(String categoryId)? todoList,
     TResult Function(String categoryId)? addTodo,
     TResult Function(String categoryId, String todoId)? updateTodo,
@@ -324,6 +481,7 @@ class _$CrudTodoConfigTodoListImpl implements CrudTodoConfigTodoList {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(CrudTodoConfigCategoryList value) categoryList,
+    required TResult Function(CrudTodoConfigAddCategory value) addCategory,
     required TResult Function(CrudTodoConfigTodoList value) todoList,
     required TResult Function(CrudTodoConfigAddTodo value) addTodo,
     required TResult Function(CrudTodoConfigUpdateTodo value) updateTodo,
@@ -336,6 +494,7 @@ class _$CrudTodoConfigTodoListImpl implements CrudTodoConfigTodoList {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(CrudTodoConfigCategoryList value)? categoryList,
+    TResult? Function(CrudTodoConfigAddCategory value)? addCategory,
     TResult? Function(CrudTodoConfigTodoList value)? todoList,
     TResult? Function(CrudTodoConfigAddTodo value)? addTodo,
     TResult? Function(CrudTodoConfigUpdateTodo value)? updateTodo,
@@ -348,6 +507,7 @@ class _$CrudTodoConfigTodoListImpl implements CrudTodoConfigTodoList {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(CrudTodoConfigCategoryList value)? categoryList,
+    TResult Function(CrudTodoConfigAddCategory value)? addCategory,
     TResult Function(CrudTodoConfigTodoList value)? todoList,
     TResult Function(CrudTodoConfigAddTodo value)? addTodo,
     TResult Function(CrudTodoConfigUpdateTodo value)? updateTodo,
@@ -366,7 +526,10 @@ abstract class CrudTodoConfigTodoList implements CrudTodoConfig {
       _$CrudTodoConfigTodoListImpl;
 
   String get categoryId;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CrudTodoConfig
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CrudTodoConfigTodoListImplCopyWith<_$CrudTodoConfigTodoListImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -389,6 +552,8 @@ class __$$CrudTodoConfigAddTodoImplCopyWithImpl<$Res>
       $Res Function(_$CrudTodoConfigAddTodoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CrudTodoConfig
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -428,7 +593,9 @@ class _$CrudTodoConfigAddTodoImpl implements CrudTodoConfigAddTodo {
   @override
   int get hashCode => Object.hash(runtimeType, categoryId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CrudTodoConfig
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CrudTodoConfigAddTodoImplCopyWith<_$CrudTodoConfigAddTodoImpl>
@@ -439,6 +606,7 @@ class _$CrudTodoConfigAddTodoImpl implements CrudTodoConfigAddTodo {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() categoryList,
+    required TResult Function() addCategory,
     required TResult Function(String categoryId) todoList,
     required TResult Function(String categoryId) addTodo,
     required TResult Function(String categoryId, String todoId) updateTodo,
@@ -451,6 +619,7 @@ class _$CrudTodoConfigAddTodoImpl implements CrudTodoConfigAddTodo {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? categoryList,
+    TResult? Function()? addCategory,
     TResult? Function(String categoryId)? todoList,
     TResult? Function(String categoryId)? addTodo,
     TResult? Function(String categoryId, String todoId)? updateTodo,
@@ -463,6 +632,7 @@ class _$CrudTodoConfigAddTodoImpl implements CrudTodoConfigAddTodo {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? categoryList,
+    TResult Function()? addCategory,
     TResult Function(String categoryId)? todoList,
     TResult Function(String categoryId)? addTodo,
     TResult Function(String categoryId, String todoId)? updateTodo,
@@ -479,6 +649,7 @@ class _$CrudTodoConfigAddTodoImpl implements CrudTodoConfigAddTodo {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(CrudTodoConfigCategoryList value) categoryList,
+    required TResult Function(CrudTodoConfigAddCategory value) addCategory,
     required TResult Function(CrudTodoConfigTodoList value) todoList,
     required TResult Function(CrudTodoConfigAddTodo value) addTodo,
     required TResult Function(CrudTodoConfigUpdateTodo value) updateTodo,
@@ -491,6 +662,7 @@ class _$CrudTodoConfigAddTodoImpl implements CrudTodoConfigAddTodo {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(CrudTodoConfigCategoryList value)? categoryList,
+    TResult? Function(CrudTodoConfigAddCategory value)? addCategory,
     TResult? Function(CrudTodoConfigTodoList value)? todoList,
     TResult? Function(CrudTodoConfigAddTodo value)? addTodo,
     TResult? Function(CrudTodoConfigUpdateTodo value)? updateTodo,
@@ -503,6 +675,7 @@ class _$CrudTodoConfigAddTodoImpl implements CrudTodoConfigAddTodo {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(CrudTodoConfigCategoryList value)? categoryList,
+    TResult Function(CrudTodoConfigAddCategory value)? addCategory,
     TResult Function(CrudTodoConfigTodoList value)? todoList,
     TResult Function(CrudTodoConfigAddTodo value)? addTodo,
     TResult Function(CrudTodoConfigUpdateTodo value)? updateTodo,
@@ -521,7 +694,10 @@ abstract class CrudTodoConfigAddTodo implements CrudTodoConfig {
       _$CrudTodoConfigAddTodoImpl;
 
   String get categoryId;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CrudTodoConfig
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CrudTodoConfigAddTodoImplCopyWith<_$CrudTodoConfigAddTodoImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -545,6 +721,8 @@ class __$$CrudTodoConfigUpdateTodoImplCopyWithImpl<$Res>
       $Res Function(_$CrudTodoConfigUpdateTodoImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of CrudTodoConfig
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -592,7 +770,9 @@ class _$CrudTodoConfigUpdateTodoImpl implements CrudTodoConfigUpdateTodo {
   @override
   int get hashCode => Object.hash(runtimeType, categoryId, todoId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of CrudTodoConfig
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$CrudTodoConfigUpdateTodoImplCopyWith<_$CrudTodoConfigUpdateTodoImpl>
@@ -603,6 +783,7 @@ class _$CrudTodoConfigUpdateTodoImpl implements CrudTodoConfigUpdateTodo {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() categoryList,
+    required TResult Function() addCategory,
     required TResult Function(String categoryId) todoList,
     required TResult Function(String categoryId) addTodo,
     required TResult Function(String categoryId, String todoId) updateTodo,
@@ -615,6 +796,7 @@ class _$CrudTodoConfigUpdateTodoImpl implements CrudTodoConfigUpdateTodo {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? categoryList,
+    TResult? Function()? addCategory,
     TResult? Function(String categoryId)? todoList,
     TResult? Function(String categoryId)? addTodo,
     TResult? Function(String categoryId, String todoId)? updateTodo,
@@ -627,6 +809,7 @@ class _$CrudTodoConfigUpdateTodoImpl implements CrudTodoConfigUpdateTodo {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? categoryList,
+    TResult Function()? addCategory,
     TResult Function(String categoryId)? todoList,
     TResult Function(String categoryId)? addTodo,
     TResult Function(String categoryId, String todoId)? updateTodo,
@@ -643,6 +826,7 @@ class _$CrudTodoConfigUpdateTodoImpl implements CrudTodoConfigUpdateTodo {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(CrudTodoConfigCategoryList value) categoryList,
+    required TResult Function(CrudTodoConfigAddCategory value) addCategory,
     required TResult Function(CrudTodoConfigTodoList value) todoList,
     required TResult Function(CrudTodoConfigAddTodo value) addTodo,
     required TResult Function(CrudTodoConfigUpdateTodo value) updateTodo,
@@ -655,6 +839,7 @@ class _$CrudTodoConfigUpdateTodoImpl implements CrudTodoConfigUpdateTodo {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(CrudTodoConfigCategoryList value)? categoryList,
+    TResult? Function(CrudTodoConfigAddCategory value)? addCategory,
     TResult? Function(CrudTodoConfigTodoList value)? todoList,
     TResult? Function(CrudTodoConfigAddTodo value)? addTodo,
     TResult? Function(CrudTodoConfigUpdateTodo value)? updateTodo,
@@ -667,6 +852,7 @@ class _$CrudTodoConfigUpdateTodoImpl implements CrudTodoConfigUpdateTodo {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(CrudTodoConfigCategoryList value)? categoryList,
+    TResult Function(CrudTodoConfigAddCategory value)? addCategory,
     TResult Function(CrudTodoConfigTodoList value)? todoList,
     TResult Function(CrudTodoConfigAddTodo value)? addTodo,
     TResult Function(CrudTodoConfigUpdateTodo value)? updateTodo,
@@ -687,7 +873,10 @@ abstract class CrudTodoConfigUpdateTodo implements CrudTodoConfig {
 
   String get categoryId;
   String get todoId;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of CrudTodoConfig
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CrudTodoConfigUpdateTodoImplCopyWith<_$CrudTodoConfigUpdateTodoImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -707,6 +896,9 @@ class __$$CrudTodoConfigUnknownImplCopyWithImpl<$Res>
   __$$CrudTodoConfigUnknownImplCopyWithImpl(_$CrudTodoConfigUnknownImpl _value,
       $Res Function(_$CrudTodoConfigUnknownImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of CrudTodoConfig
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -733,6 +925,7 @@ class _$CrudTodoConfigUnknownImpl implements CrudTodoConfigUnknown {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() categoryList,
+    required TResult Function() addCategory,
     required TResult Function(String categoryId) todoList,
     required TResult Function(String categoryId) addTodo,
     required TResult Function(String categoryId, String todoId) updateTodo,
@@ -745,6 +938,7 @@ class _$CrudTodoConfigUnknownImpl implements CrudTodoConfigUnknown {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? categoryList,
+    TResult? Function()? addCategory,
     TResult? Function(String categoryId)? todoList,
     TResult? Function(String categoryId)? addTodo,
     TResult? Function(String categoryId, String todoId)? updateTodo,
@@ -757,6 +951,7 @@ class _$CrudTodoConfigUnknownImpl implements CrudTodoConfigUnknown {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? categoryList,
+    TResult Function()? addCategory,
     TResult Function(String categoryId)? todoList,
     TResult Function(String categoryId)? addTodo,
     TResult Function(String categoryId, String todoId)? updateTodo,
@@ -773,6 +968,7 @@ class _$CrudTodoConfigUnknownImpl implements CrudTodoConfigUnknown {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(CrudTodoConfigCategoryList value) categoryList,
+    required TResult Function(CrudTodoConfigAddCategory value) addCategory,
     required TResult Function(CrudTodoConfigTodoList value) todoList,
     required TResult Function(CrudTodoConfigAddTodo value) addTodo,
     required TResult Function(CrudTodoConfigUpdateTodo value) updateTodo,
@@ -785,6 +981,7 @@ class _$CrudTodoConfigUnknownImpl implements CrudTodoConfigUnknown {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(CrudTodoConfigCategoryList value)? categoryList,
+    TResult? Function(CrudTodoConfigAddCategory value)? addCategory,
     TResult? Function(CrudTodoConfigTodoList value)? todoList,
     TResult? Function(CrudTodoConfigAddTodo value)? addTodo,
     TResult? Function(CrudTodoConfigUpdateTodo value)? updateTodo,
@@ -797,6 +994,7 @@ class _$CrudTodoConfigUnknownImpl implements CrudTodoConfigUnknown {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(CrudTodoConfigCategoryList value)? categoryList,
+    TResult Function(CrudTodoConfigAddCategory value)? addCategory,
     TResult Function(CrudTodoConfigTodoList value)? todoList,
     TResult Function(CrudTodoConfigAddTodo value)? addTodo,
     TResult Function(CrudTodoConfigUpdateTodo value)? updateTodo,

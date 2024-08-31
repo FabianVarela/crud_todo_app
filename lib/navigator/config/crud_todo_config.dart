@@ -6,6 +6,8 @@ part 'crud_todo_config.freezed.dart';
 sealed class CrudTodoConfig with _$CrudTodoConfig {
   const factory CrudTodoConfig.categoryList() = CrudTodoConfigCategoryList;
 
+  const factory CrudTodoConfig.addCategory() = CrudTodoConfigAddCategory;
+
   const factory CrudTodoConfig.todoList(String categoryId) =
       CrudTodoConfigTodoList;
 
