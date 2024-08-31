@@ -66,15 +66,15 @@ class CrudTodoInformationParser extends RouteInformationParser<CrudTodoConfig> {
           '/${TodoPath.category.name}/${TodoPath.addCategory.name}',
         ),
       ),
-      todoList: (categoryId) => RouteInformation(
-        uri: Uri.parse('/${TodoPath.category.name}/$categoryId'),
+      todoList: (id) => RouteInformation(
+        uri: Uri.parse('/${TodoPath.category.name}/$id'),
       ),
       addTodo: (id) => RouteInformation(
         uri: Uri.parse('/${TodoPath.category.name}/$id/${TodoPath.todo.name}/'),
       ),
-      updateTodo: (id, tId) => RouteInformation(
+      updateTodo: (id, todoId) => RouteInformation(
         uri: Uri.parse(
-          '/${TodoPath.category.name}/$id/${TodoPath.todo.name}/$tId',
+          '/${TodoPath.category.name}/$id/${TodoPath.todo.name}/$todoId',
         ),
       ),
       unknown: () => RouteInformation(
