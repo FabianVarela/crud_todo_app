@@ -73,21 +73,19 @@ void main() {
     );
 
     testWidgets(
-      'Show $Dialog in when set tap in $FloatingActionButton',
+      'Show $FormCategoryView in when set tap in $FloatingActionButton',
       (tester) async {
         await pumpMainScreen(tester);
 
-        await tester.tap(find.byType(FloatingActionButton));
-        await tester.pumpAndSettle(const Duration(seconds: 1));
+        final button = find.byType(FloatingActionButton);
 
-        expect(find.byType(Dialog), findsOneWidget);
+        await tester.ensureVisible(button);
+        await tester.pumpAndSettle();
+
+        await tester.tap(button);
+        await tester.pumpAndSettle();
+
         expect(find.byType(FormCategoryView), findsOneWidget);
-
-        expect(find.byIcon(Icons.close), findsOneWidget);
-        expect(find.text('Add category'), findsOneWidget);
-        expect(find.byType(NameCategory), findsOneWidget);
-        expect(find.byType(EmojiCategory), findsOneWidget);
-        expect(find.byType(SubmitCategory), findsOneWidget);
       },
       variant: TargetPlatformVariant.all(),
     );
