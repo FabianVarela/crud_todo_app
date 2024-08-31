@@ -10,7 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../test_utils/mocks.dart';
+import '../test_utils/mocks.dart';
 
 void main() {
   group('$FormCategoryView UI dialog', () {
