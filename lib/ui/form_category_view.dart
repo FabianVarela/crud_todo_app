@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class CategoryFormDialog extends ConsumerWidget {
-  const CategoryFormDialog({super.key});
+class FormCategoryView extends ConsumerWidget {
+  const FormCategoryView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,47 +27,50 @@ class CategoryFormDialog extends ConsumerWidget {
       (_, CategoryState state) => _onChangeState(context, state),
     );
 
-    return SizedBox(
-      width: desktopWidth ?? mobileWidth,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          CustomMouseRegion(
-            cursor: SystemMouseCursors.click,
-            isForDesktop: desktopSegments.contains(getDevice()),
-            child: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: const Icon(Icons.close, color: Colors.white),
-            ).paddingSymmetric(v: 5),
-          ),
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      child: SizedBox(
+        width: desktopWidth ?? mobileWidth,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            CustomMouseRegion(
+              cursor: SystemMouseCursors.click,
+              isForDesktop: desktopSegments.contains(getDevice()),
+              child: GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: const Icon(Icons.close, color: Colors.white),
+              ).paddingSymmetric(v: 5),
             ),
-            child: Column(
-              children: <Widget>[
-                const Text(
-                  'Add category',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                ).paddingOnly(b: 15),
-                Column(
-                  children: <Widget>[
-                    const NameCategory().paddingOnly(b: 5),
-                    const EmojiCategory().paddingOnly(b: 25),
-                  ],
-                ),
-                if (!categoryState.isLoading)
-                  SubmitCategory(
-                    onSubmit: isValidForm ? () => _saveCategory(ref) : null,
-                  )
-                else
-                  const CircularProgressIndicator(),
-              ],
-            ).paddingSymmetric(h: 16, v: 10),
-          ),
-        ],
+            DecoratedBox(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                children: <Widget>[
+                  const Text(
+                    'Add category',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                  ).paddingOnly(b: 15),
+                  Column(
+                    children: <Widget>[
+                      const NameCategory().paddingOnly(b: 5),
+                      const EmojiCategory().paddingOnly(b: 25),
+                    ],
+                  ),
+                  if (!categoryState.isLoading)
+                    SubmitCategory(
+                      onSubmit: isValidForm ? () => _saveCategory(ref) : null,
+                    )
+                  else
+                    const CircularProgressIndicator(),
+                ],
+              ).paddingSymmetric(h: 16, v: 10),
+            ),
+          ],
+        ),
       ),
     );
   }
