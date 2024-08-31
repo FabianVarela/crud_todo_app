@@ -15,6 +15,17 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
   @override
   GlobalKey<NavigatorState>? get navigatorKey => _navigatorKey;
 
+  // Add category form
+
+  bool _isShowingCategoryForm = false;
+
+  bool get isShowingCategoryForm => _isShowingCategoryForm;
+
+  set isShowingCategoryForm(bool value) {
+    _isShowingCategoryForm = value;
+    notifyListeners();
+  }
+
   // Current category selected
 
   String? _categoryId;
@@ -62,16 +73,39 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
   }
 
   bool get isCategoryList =>
-      categoryId == null && todoId == null && !isTodoSelected && !is404;
+      categoryId == null &&
+      !isShowingCategoryForm &&
+      todoId == null &&
+      !isTodoSelected &&
+      !is404;
+
+  bool get isShowCategoryForm =>
+      categoryId == null &&
+      isShowingCategoryForm &&
+      todoId == null &&
+      !isTodoSelected &&
+      !is404;
 
   bool get isTodoList =>
-      categoryId != null && todoId == null && !isTodoSelected && !is404;
+      categoryId != null &&
+      !isShowingCategoryForm &&
+      todoId == null &&
+      !isTodoSelected &&
+      !is404;
 
   bool get isTodoNew =>
-      categoryId != null && todoId == null && isTodoSelected && !is404;
+      categoryId != null &&
+      !isShowingCategoryForm &&
+      todoId == null &&
+      isTodoSelected &&
+      !is404;
 
   bool get isTodoUpdate =>
-      categoryId != null && todoId != null && isTodoSelected && !is404;
+      categoryId != null &&
+      !isShowingCategoryForm &&
+      todoId != null &&
+      isTodoSelected &&
+      !is404;
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +113,11 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
       if (is404)
         const UnknownPage()
       else ...[
-        CategoryPage(onGoToDetail: (catId) => categoryId = catId),
+        CategoryPage(
+          onAddCategory: () => isShowingCategoryForm = true,
+          onGoToDetail: (catId) => categoryId = catId,
+        ),
+        if (isShowingCategoryForm) const AddCategoryPage(),
         if (categoryId != null)
           TodoPage(
             categoryId: categoryId!,
@@ -99,8 +137,12 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
       pages: pages,
       onDidRemovePage: (page) {
         if (categoryId == null) {
-          pages.remove(page);
-          pages = pages.toList();
+          if (isShowingCategoryForm) {
+            isShowingCategoryForm = false;
+          } else {
+            pages.remove(page);
+            pages = pages.toList();
+          }
         } else {
           if (!isTodoSelected) categoryId = null;
           selectCurrentTodo(null, isSelected: false);
@@ -113,6 +155,8 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
   CrudTodoConfig? get currentConfiguration {
     if (isCategoryList) {
       return const CrudTodoConfigCategoryList();
+    } else if (isShowCategoryForm) {
+      return const CrudTodoConfigAddCategory();
     } else if (isTodoList) {
       return CrudTodoConfigTodoList(categoryId!);
     } else if (isTodoNew) {
@@ -130,6 +174,7 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
   Future<void> setNewRoutePath(CrudTodoConfig configuration) async {
     configuration.when(
       categoryList: _values,
+      addCategory: () => _values(addCat: true),
       todoList: (id) => _values(catId: id),
       addTodo: (id) => _values(catId: id, selected: true),
       updateTodo: (categoryId, todoId) => _values(
@@ -141,7 +186,14 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
     );
   }
 
-  void _values({String? catId, String? todoId, bool? selected, bool? noFound}) {
+  void _values({
+    bool? addCat,
+    String? catId,
+    String? todoId,
+    bool? selected,
+    bool? noFound,
+  }) {
+    isShowingCategoryForm = addCat ?? false;
     categoryId = catId;
     selectCurrentTodo(todoId, isSelected: selected ?? false);
     is404 = noFound ?? false;

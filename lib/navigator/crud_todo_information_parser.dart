@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 enum TodoPath {
   category('categories'),
+  addCategory('add-category'),
   todo('todo'),
   unknown('404');
 
@@ -28,18 +29,25 @@ class CrudTodoInformationParser extends RouteInformationParser<CrudTodoConfig> {
         }
       case 2:
         if (newPaths[0] == TodoPath.category.name && newPaths[1].isNotEmpty) {
+          if (newPaths[1] == TodoPath.addCategory.name) {
+            return const CrudTodoConfigAddCategory();
+          }
           return CrudTodoConfigTodoList(newPaths[1]);
         }
       case 3:
         if (newPaths[0] == TodoPath.category.name) {
           if (newPaths[1].isNotEmpty && newPaths[2] == TodoPath.todo.name) {
-            return CrudTodoConfigAddTodo(newPaths[1]);
+            if (newPaths[1] != TodoPath.addCategory.name) {
+              return CrudTodoConfigAddTodo(newPaths[1]);
+            }
           }
         }
       case 4:
         if (newPaths[0] == TodoPath.category.name && newPaths[1].isNotEmpty) {
-          if (newPaths[2] == TodoPath.todo.name && newPaths[3].isNotEmpty) {
-            return CrudTodoConfigUpdateTodo(newPaths[1], newPaths[3]);
+          if (newPaths[1] != TodoPath.addCategory.name) {
+            if (newPaths[2] == TodoPath.todo.name && newPaths[3].isNotEmpty) {
+              return CrudTodoConfigUpdateTodo(newPaths[1], newPaths[3]);
+            }
           }
         }
     }
@@ -52,6 +60,11 @@ class CrudTodoInformationParser extends RouteInformationParser<CrudTodoConfig> {
     return configuration.when(
       categoryList: () => RouteInformation(
         uri: Uri.parse('/${TodoPath.category.name}'),
+      ),
+      addCategory: () => RouteInformation(
+        uri: Uri.parse(
+          '/${TodoPath.category.name}/${TodoPath.addCategory.name}',
+        ),
       ),
       todoList: (categoryId) => RouteInformation(
         uri: Uri.parse('/${TodoPath.category.name}/$categoryId'),
