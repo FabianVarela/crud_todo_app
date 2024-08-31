@@ -15,9 +15,9 @@ class CategoryPage<T> extends Page<T> {
 
   @override
   Route<T> createRoute(BuildContext context) {
-    return MaterialPageRoute<T>(
+    return SimpleRoute<T>(
       settings: this,
-      builder: (_) => CategoryListView(
+      child: CategoryListView(
         onAddCategory: onAddCategory,
         onGoToDetail: onGoToDetail,
       ),
@@ -30,11 +30,9 @@ class AddCategoryPage<T> extends Page<T> {
 
   @override
   Route<T> createRoute(BuildContext context) {
-    return DialogRoute<T>(
+    return DialogFadeTransitionRoute<T>(
       settings: this,
-      context: context,
-      barrierDismissible: false,
-      builder: (_) => const FormCategoryView(),
+      child: const FormCategoryView(),
     );
   }
 }
