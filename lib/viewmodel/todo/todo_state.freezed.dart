@@ -83,6 +83,9 @@ class _$TodoStateCopyWithImpl<$Res, $Val extends TodoState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of TodoState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -99,6 +102,9 @@ class __$$TodoStateInitialImplCopyWithImpl<$Res>
   __$$TodoStateInitialImplCopyWithImpl(_$TodoStateInitialImpl _value,
       $Res Function(_$TodoStateInitialImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of TodoState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -213,6 +219,9 @@ class __$$TodoStateLoadingImplCopyWithImpl<$Res>
   __$$TodoStateLoadingImplCopyWithImpl(_$TodoStateLoadingImpl _value,
       $Res Function(_$TodoStateLoadingImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of TodoState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -330,6 +339,8 @@ class __$$TodoStateSuccessImplCopyWithImpl<$Res>
       $Res Function(_$TodoStateSuccessImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TodoState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -368,7 +379,9 @@ class _$TodoStateSuccessImpl implements _TodoStateSuccess {
   @override
   int get hashCode => Object.hash(runtimeType, action);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TodoState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TodoStateSuccessImplCopyWith<_$TodoStateSuccessImpl> get copyWith =>
@@ -455,7 +468,10 @@ abstract class _TodoStateSuccess implements TodoState {
       _$TodoStateSuccessImpl;
 
   TodoAction get action;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TodoState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TodoStateSuccessImplCopyWith<_$TodoStateSuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -477,6 +493,8 @@ class __$$TodoStateErrorImplCopyWithImpl<$Res>
       _$TodoStateErrorImpl _value, $Res Function(_$TodoStateErrorImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of TodoState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -515,7 +533,9 @@ class _$TodoStateErrorImpl implements _TodoStateError {
   @override
   int get hashCode => Object.hash(runtimeType, message);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of TodoState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$TodoStateErrorImplCopyWith<_$TodoStateErrorImpl> get copyWith =>
@@ -601,7 +621,10 @@ abstract class _TodoStateError implements TodoState {
   const factory _TodoStateError([final String? message]) = _$TodoStateErrorImpl;
 
   String? get message;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of TodoState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TodoStateErrorImplCopyWith<_$TodoStateErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

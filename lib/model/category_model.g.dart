@@ -10,7 +10,7 @@ Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
       name: json['name'] as String,
       emoji: Category._emojiFromJson(json['emoji'] as String),
       id: json['id'] as String?,
-      todoSize: json['todoSize'] as int? ?? 0,
+      todoSize: (json['todoSize'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$CategoryToJson(Category instance) {
