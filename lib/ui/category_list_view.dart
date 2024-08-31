@@ -1,7 +1,6 @@
 import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
-import 'package:crud_todo_app/ui/dialog/category_dialog.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:crud_todo_app/ui/widgets/custom_message.dart';
 import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';
@@ -24,8 +23,13 @@ class RefreshListIntent extends Intent {
 }
 
 class CategoryListView extends HookConsumerWidget {
-  const CategoryListView({required this.onGoToDetail, super.key});
+  const CategoryListView({
+    required this.onAddCategory,
+    required this.onGoToDetail,
+    super.key,
+  });
 
+  final VoidCallback onAddCategory;
   final NavigatorToDetail onGoToDetail;
 
   @override
@@ -62,7 +66,7 @@ class CategoryListView extends HookConsumerWidget {
         child: Actions(
           actions: <Type, Action<Intent>>{
             CreateCategoryIntent: CallbackAction<CreateCategoryIntent>(
-              onInvoke: (_) => _showCategoryDialog(context),
+              onInvoke: (_) => onAddCategory(),
             ),
             RefreshListIntent: CallbackAction<RefreshListIntent>(
               onInvoke: (_) => ref.refresh(categoryListProvider),
@@ -133,7 +137,7 @@ class CategoryListView extends HookConsumerWidget {
         message: 'Add category',
         child: FloatingActionButton(
           backgroundColor: const Color(0xFF4A78FA),
-          onPressed: () => _showCategoryDialog(context),
+          onPressed: onAddCategory,
           child: const Icon(Icons.add),
         ),
       ),
@@ -154,16 +158,5 @@ class CategoryListView extends HookConsumerWidget {
             const SingleActivator(LogicalKeyboardKey.keyR, control: true):
                 const RefreshListIntent(),
           };
-  }
-
-  Future<void> _showCategoryDialog(BuildContext context) async {
-    await showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) => const Dialog(
-        backgroundColor: Colors.transparent,
-        child: CategoryFormDialog(),
-      ),
-    );
   }
 }
