@@ -1,7 +1,7 @@
 import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
-import 'package:crud_todo_app/ui/dialog/category_dialog.dart';
+import 'package:crud_todo_app/ui/form_category_view.dart';
 import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';
 import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
@@ -13,7 +13,7 @@ import 'package:mocktail/mocktail.dart';
 import '../../test_utils/mocks.dart';
 
 void main() {
-  group('$CategoryFormDialog UI dialog', () {
+  group('$FormCategoryView UI dialog', () {
     late final MockFirestore mockFirestoreInstance;
 
     late final MockCategoryService mockCategoryService;
@@ -43,7 +43,7 @@ void main() {
     testWidgets(
       'Click on close button and verify if close it ',
       (tester) async {
-        await pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
+        await pumpDialog(tester, const Scaffold(body: FormCategoryView()));
 
         expect(find.byType(CustomMouseRegion), findsOneWidget);
 
@@ -62,7 +62,7 @@ void main() {
     testWidgets(
       'Show $SubmitCategory disabled when text fields forms are empty',
       (tester) async {
-        await pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
+        await pumpDialog(tester, const Scaffold(body: FormCategoryView()));
 
         final foundButton = find.byType(SubmitCategory);
 
@@ -78,7 +78,7 @@ void main() {
     testWidgets(
       'Show $SubmitCategory enabled when text field forms are not empty',
       (tester) async {
-        await pumpDialog(tester, const Scaffold(body: CategoryFormDialog()));
+        await pumpDialog(tester, const Scaffold(body: FormCategoryView()));
 
         final foundSubmitButton = find.byType(SubmitCategory);
 
@@ -96,7 +96,7 @@ void main() {
     );
 
     testWidgets(
-      'Add $Category data from $CategoryFormDialog form fields',
+      'Add $Category data from $FormCategoryView form fields',
       (tester) async {
         late final CategoryViewModel viewModel;
 
@@ -109,7 +109,7 @@ void main() {
           Consumer(
             builder: (_, ref, child) {
               viewModel = ref.read(categoryViewModelPod.notifier);
-              return const Scaffold(body: CategoryFormDialog());
+              return const Scaffold(body: FormCategoryView());
             },
           ),
         );
@@ -148,7 +148,7 @@ void main() {
           Consumer(
             builder: (_, ref, child) {
               viewModel = ref.read(categoryViewModelPod.notifier);
-              return const Scaffold(body: CategoryFormDialog());
+              return const Scaffold(body: FormCategoryView());
             },
           ),
         );

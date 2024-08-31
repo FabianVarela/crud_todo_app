@@ -4,7 +4,7 @@ import 'package:crud_todo_app/navigator/crud_todo_information_parser.dart';
 import 'package:crud_todo_app/navigator/crud_todo_router_delegate.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/ui/category_list_view.dart';
-import 'package:crud_todo_app/ui/dialog/category_dialog.dart';
+import 'package:crud_todo_app/ui/form_category_view.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';
@@ -81,7 +81,7 @@ void main() {
         await tester.pumpAndSettle(const Duration(seconds: 1));
 
         expect(find.byType(Dialog), findsOneWidget);
-        expect(find.byType(CategoryFormDialog), findsOneWidget);
+        expect(find.byType(FormCategoryView), findsOneWidget);
 
         expect(find.byIcon(Icons.close), findsOneWidget);
         expect(find.text('Add category'), findsOneWidget);
