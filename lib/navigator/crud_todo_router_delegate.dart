@@ -115,52 +115,17 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
     );
   }
 
-  bool get isCategoryList =>
-      categoryId == null &&
-      !isShowingCategoryForm &&
-      todoId == null &&
-      !isTodoSelected &&
-      !is404;
-
-  bool get isShowCategoryForm =>
-      categoryId == null &&
-      isShowingCategoryForm &&
-      todoId == null &&
-      !isTodoSelected &&
-      !is404;
-
-  bool get isTodoList =>
-      categoryId != null &&
-      !isShowingCategoryForm &&
-      todoId == null &&
-      !isTodoSelected &&
-      !is404;
-
-  bool get isTodoNew =>
-      categoryId != null &&
-      !isShowingCategoryForm &&
-      todoId == null &&
-      isTodoSelected &&
-      !is404;
-
-  bool get isTodoUpdate =>
-      categoryId != null &&
-      !isShowingCategoryForm &&
-      todoId != null &&
-      isTodoSelected &&
-      !is404;
-
   @override
   CrudTodoConfig? get currentConfiguration {
-    if (isCategoryList) {
+    if (categoryId == null && !isShowingCategoryForm) {
       return const CrudTodoConfigCategoryList();
-    } else if (isShowCategoryForm) {
+    } else if (isShowingCategoryForm) {
       return const CrudTodoConfigAddCategory();
-    } else if (isTodoList) {
+    } else if (categoryId != null) {
       return CrudTodoConfigTodoList(categoryId!);
-    } else if (isTodoNew) {
+    } else if (categoryId != null && isTodoSelected) {
       return CrudTodoConfigAddTodo(categoryId!);
-    } else if (isTodoUpdate) {
+    } else if (categoryId != null && todoId != null) {
       return CrudTodoConfigUpdateTodo(categoryId!, todoId!);
     } else if (is404) {
       return const CrudTodoConfigUnknown();
