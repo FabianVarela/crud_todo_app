@@ -47,10 +47,9 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
 
   bool get isTodoSelected => _isTodoSelected;
 
-  void selectCurrentTodo(String? value, {required bool isSelected}) {
+  void setTodo(String? value, {required bool isSelected}) {
     _todoId = value;
     _isTodoSelected = isSelected;
-
     notifyListeners();
   }
 
@@ -117,17 +116,17 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
           onAddCategory: () => isShowingCategoryForm = true,
           onGoToDetail: (catId) => categoryId = catId,
         ),
-        if (isShowingCategoryForm) const AddCategoryPage(),
-        if (categoryId != null)
-          TodoPage(
-            categoryId: categoryId!,
-            onGoToTodo: (catId, todoId) => selectCurrentTodo(
-              todoId,
-              isSelected: true,
+        if (isShowingCategoryForm)
+          const AddCategoryPage()
+        else ...[
+          if (categoryId != null)
+            TodoPage(
+              categoryId: categoryId!,
+              onGoToTodo: (catId, todoId) => setTodo(todoId, isSelected: true),
             ),
-          ),
-        if (categoryId != null && isTodoSelected)
-          FormTodoPage(categoryId: categoryId!, todoId: todoId),
+          if (categoryId != null && isTodoSelected)
+            FormTodoPage(categoryId: categoryId!, todoId: todoId),
+        ],
       ],
     ];
 
@@ -145,7 +144,7 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
           }
         } else {
           if (!isTodoSelected) categoryId = null;
-          selectCurrentTodo(null, isSelected: false);
+          setTodo(null, isSelected: false);
         }
       },
     );
@@ -195,7 +194,7 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
   }) {
     isShowingCategoryForm = addCat ?? false;
     categoryId = catId;
-    selectCurrentTodo(todoId, isSelected: selected ?? false);
+    setTodo(todoId, isSelected: selected ?? false);
     is404 = noFound ?? false;
   }
 }
