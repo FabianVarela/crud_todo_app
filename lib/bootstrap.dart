@@ -5,6 +5,7 @@ import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:window_size/window_size.dart';
 
@@ -19,6 +20,8 @@ Future<void> bootstrap(
 
   await runZonedGuarded(
     () async {
+      if (kIsWeb) setUrlStrategy(PathUrlStrategy());
+
       WidgetsFlutterBinding.ensureInitialized();
       await Firebase.initializeApp(
         options: options,
