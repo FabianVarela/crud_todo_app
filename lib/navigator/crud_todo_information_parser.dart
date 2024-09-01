@@ -17,39 +17,42 @@ class CrudTodoInformationParser extends RouteInformationParser<CrudTodoConfig> {
   Future<CrudTodoConfig> parseRouteInformation(
     RouteInformation routeInformation,
   ) async {
-    final uri = routeInformation.uri;
-    final newPaths = uri.pathSegments.map((seg) => seg.toLowerCase()).toList();
+    final newPaths = routeInformation.uri.pathSegments.map((pathSegment) {
+      final path = TodoPath.values.where((value) => value.name == pathSegment);
+      return path.isEmpty ? pathSegment : pathSegment.toLowerCase();
+    }).toList();
 
-    switch (newPaths.length) {
-      case 0:
+    if (newPaths.isEmpty) return const CrudTodoConfigCategoryList();
+
+    if (newPaths.length == 1) {
+      if (newPaths.first == TodoPath.category.name) {
         return const CrudTodoConfigCategoryList();
-      case 1:
-        if (newPaths[0] == TodoPath.category.name) {
-          return const CrudTodoConfigCategoryList();
+      } else if (newPaths.first == TodoPath.addCategory.name) {
+        return const CrudTodoConfigAddCategory();
+      }
+    }
+
+    if (newPaths.length == 2) {
+      if (newPaths.first == TodoPath.category.name) {
+        if (newPaths.last == TodoPath.addCategory.name) {
+          return const CrudTodoConfigAddCategory();
         }
-      case 2:
-        if (newPaths[0] == TodoPath.category.name && newPaths[1].isNotEmpty) {
-          if (newPaths[1] == TodoPath.addCategory.name) {
-            return const CrudTodoConfigAddCategory();
-          }
-          return CrudTodoConfigTodoList(newPaths[1]);
-        }
-      case 3:
-        if (newPaths[0] == TodoPath.category.name) {
-          if (newPaths[1].isNotEmpty && newPaths[2] == TodoPath.todo.name) {
-            if (newPaths[1] != TodoPath.addCategory.name) {
+        return CrudTodoConfigTodoList(newPaths.last);
+      }
+    }
+
+    if (newPaths.length == 3 || newPaths.length == 4) {
+      if (newPaths.first == TodoPath.category.name) {
+        if (newPaths[1] != TodoPath.addCategory.name) {
+          if (newPaths[2] == TodoPath.todo.name) {
+            if (newPaths.length == 3) {
               return CrudTodoConfigAddTodo(newPaths[1]);
+            } else {
+              return CrudTodoConfigUpdateTodo(newPaths[1], newPaths.last);
             }
           }
         }
-      case 4:
-        if (newPaths[0] == TodoPath.category.name && newPaths[1].isNotEmpty) {
-          if (newPaths[1] != TodoPath.addCategory.name) {
-            if (newPaths[2] == TodoPath.todo.name && newPaths[3].isNotEmpty) {
-              return CrudTodoConfigUpdateTodo(newPaths[1], newPaths[3]);
-            }
-          }
-        }
+      }
     }
 
     return const CrudTodoConfig.unknown();
