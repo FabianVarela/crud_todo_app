@@ -71,41 +71,6 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
     notifyListeners();
   }
 
-  bool get isCategoryList =>
-      categoryId == null &&
-      !isShowingCategoryForm &&
-      todoId == null &&
-      !isTodoSelected &&
-      !is404;
-
-  bool get isShowCategoryForm =>
-      categoryId == null &&
-      isShowingCategoryForm &&
-      todoId == null &&
-      !isTodoSelected &&
-      !is404;
-
-  bool get isTodoList =>
-      categoryId != null &&
-      !isShowingCategoryForm &&
-      todoId == null &&
-      !isTodoSelected &&
-      !is404;
-
-  bool get isTodoNew =>
-      categoryId != null &&
-      !isShowingCategoryForm &&
-      todoId == null &&
-      isTodoSelected &&
-      !is404;
-
-  bool get isTodoUpdate =>
-      categoryId != null &&
-      !isShowingCategoryForm &&
-      todoId != null &&
-      isTodoSelected &&
-      !is404;
-
   @override
   Widget build(BuildContext context) {
     var pages = <Page<dynamic>>[
@@ -150,6 +115,41 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
     );
   }
 
+  bool get isCategoryList =>
+      categoryId == null &&
+      !isShowingCategoryForm &&
+      todoId == null &&
+      !isTodoSelected &&
+      !is404;
+
+  bool get isShowCategoryForm =>
+      categoryId == null &&
+      isShowingCategoryForm &&
+      todoId == null &&
+      !isTodoSelected &&
+      !is404;
+
+  bool get isTodoList =>
+      categoryId != null &&
+      !isShowingCategoryForm &&
+      todoId == null &&
+      !isTodoSelected &&
+      !is404;
+
+  bool get isTodoNew =>
+      categoryId != null &&
+      !isShowingCategoryForm &&
+      todoId == null &&
+      isTodoSelected &&
+      !is404;
+
+  bool get isTodoUpdate =>
+      categoryId != null &&
+      !isShowingCategoryForm &&
+      todoId != null &&
+      isTodoSelected &&
+      !is404;
+
   @override
   CrudTodoConfig? get currentConfiguration {
     if (isCategoryList) {
@@ -172,29 +172,35 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
   @override
   Future<void> setNewRoutePath(CrudTodoConfig configuration) async {
     configuration.when(
-      categoryList: _values,
-      addCategory: () => _values(addCat: true),
-      todoList: (id) => _values(catId: id),
-      addTodo: (id) => _values(catId: id, selected: true),
-      updateTodo: (categoryId, todoId) => _values(
-        catId: categoryId,
-        todoId: todoId,
-        selected: true,
-      ),
-      unknown: () => _values(noFound: true),
+      categoryList: () {
+        categoryId = null;
+        isShowingCategoryForm = false;
+        setTodo(null, isSelected: false);
+        is404 = false;
+      },
+      addCategory: () {
+        isShowingCategoryForm = true;
+        categoryId = null;
+        setTodo(null, isSelected: false);
+        is404 = false;
+      },
+      todoList: (id) {
+        categoryId = id;
+        isShowingCategoryForm = false;
+        setTodo(null, isSelected: false);
+        is404 = false;
+      },
+      addTodo: (_) {
+        setTodo(null, isSelected: true);
+        isShowingCategoryForm = false;
+        is404 = false;
+      },
+      updateTodo: (_, todoId) {
+        setTodo(todoId, isSelected: true);
+        isShowingCategoryForm = false;
+        is404 = false;
+      },
+      unknown: () => is404 = true,
     );
-  }
-
-  void _values({
-    bool? addCat,
-    String? catId,
-    String? todoId,
-    bool? selected,
-    bool? noFound,
-  }) {
-    isShowingCategoryForm = addCat ?? false;
-    categoryId = catId;
-    setTodo(todoId, isSelected: selected ?? false);
-    is404 = noFound ?? false;
   }
 }
