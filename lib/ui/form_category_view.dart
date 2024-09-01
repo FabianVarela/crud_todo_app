@@ -16,11 +16,13 @@ class FormCategoryView extends ConsumerWidget {
     final categoryState = ref.watch(categoryViewModelPod);
     final isValidForm = ref.watch(validationCategoryProvider);
 
-    final isDesktopOrTablet = [ScreenType.desktop, ScreenType.tablet]
-        .contains(getFormFactor(context));
+    final isDesktopOrTablet = [
+      ScreenType.desktop,
+      ScreenType.tablet,
+    ].contains(context.formFactor);
 
     final desktopWidth = isDesktopOrTablet ? 600.0 : null;
-    final mobileWidth = !isPortrait(context) ? 400.0 : null;
+    final mobileWidth = !context.isPortrait ? 400.0 : null;
 
     ref.listen(
       categoryViewModelPod,

@@ -3,15 +3,6 @@ import 'package:flutter/material.dart';
 
 enum ScreenType { desktop, tablet, handset, watch }
 
-ScreenType getFormFactor(BuildContext context) {
-  return switch (MediaQuery.sizeOf(context).shortestSide) {
-    > 900 => ScreenType.desktop,
-    > 600 => ScreenType.tablet,
-    > 300 => ScreenType.handset,
-    _ => ScreenType.watch
-  };
-}
-
 enum DeviceSegment { mobile, desktop, mobileWeb, desktopWeb, other }
 
 List<DeviceSegment> desktopSegments = [
@@ -37,5 +28,17 @@ DeviceSegment get currentDevice {
   };
 }
 
-bool isPortrait(BuildContext context) =>
-    MediaQuery.of(context).orientation == Orientation.portrait;
+extension AdaptiveLayoutContext on BuildContext {
+  bool get isPortrait {
+    return MediaQuery.of(this).orientation == Orientation.portrait;
+  }
+
+  ScreenType get formFactor {
+    return switch (MediaQuery.sizeOf(this).shortestSide) {
+      > 900 => ScreenType.desktop,
+      > 600 => ScreenType.tablet,
+      > 300 => ScreenType.handset,
+      _ => ScreenType.watch
+    };
+  }
+}

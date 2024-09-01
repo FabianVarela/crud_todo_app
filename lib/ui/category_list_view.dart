@@ -98,7 +98,7 @@ class CategoryListView extends HookConsumerWidget {
                         thumbVisibility: currentDevice == DeviceSegment.desktop,
                         child: GridView.count(
                           controller: scrollController,
-                          crossAxisCount: isPortrait(context) ? 2 : 3,
+                          crossAxisCount: context.isPortrait ? 2 : 3,
                           children: <Widget>[
                             for (final item in data)
                               CustomMouseRegion(

@@ -128,7 +128,7 @@ class CategorySection extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Expanded(
-          flex: isPortrait(context) ? 1 : 2,
+          flex: context.isPortrait ? 1 : 2,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
