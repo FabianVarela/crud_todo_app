@@ -34,7 +34,7 @@ class UnknownView extends StatelessWidget {
               width: size.width * .4,
             ),
             Text(
-              webSegments.contains(getDevice())
+              webSegments.contains(currentDevice)
                   ? 'Oops!!! Page not found'
                   : 'Oops!!! Screen not found',
               style: const TextStyle(fontSize: 30),

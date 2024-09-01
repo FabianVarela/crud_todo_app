@@ -220,7 +220,7 @@ class TodoList extends ConsumerWidget {
     return ListView(
       children: <Widget>[
         for (final item in todoList)
-          if (desktopSegments.contains(getDevice()))
+          if (desktopSegments.contains(currentDevice))
             TodoItem.contextual(
               todo: item,
               onEdit: () => onEditItem(item),

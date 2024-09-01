@@ -95,7 +95,7 @@ class CategoryListView extends HookConsumerWidget {
 
                       return Scrollbar(
                         controller: scrollController,
-                        thumbVisibility: getDevice() == DeviceSegment.desktop,
+                        thumbVisibility: currentDevice == DeviceSegment.desktop,
                         child: GridView.count(
                           controller: scrollController,
                           crossAxisCount: isPortrait(context) ? 2 : 3,
@@ -103,7 +103,7 @@ class CategoryListView extends HookConsumerWidget {
                             for (final item in data)
                               CustomMouseRegion(
                                 isForDesktop: desktopSegments.contains(
-                                  getDevice(),
+                                  currentDevice,
                                 ),
                                 cursor: SystemMouseCursors.click,
                                 tooltipMessage: item.name,

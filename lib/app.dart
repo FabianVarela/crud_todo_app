@@ -21,7 +21,7 @@ class TodoApp extends ConsumerWidget {
         textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
       ),
       onGenerateTitle: (_) {
-        if (getDevice() == DeviceSegment.desktop) setWindowTitle(title);
+        if (currentDevice == DeviceSegment.desktop) setWindowTitle(title);
         return title;
       },
       routerDelegate: todoRouterDelegate,

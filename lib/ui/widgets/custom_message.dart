@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void showCustomMessage(BuildContext context, String message) {
-  if (desktopSegments.contains(getDevice())) {
+  if (desktopSegments.contains(currentDevice)) {
     showDialog<void>(
       context: context,
       builder: (dialogContext) {

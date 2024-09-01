@@ -25,7 +25,7 @@ Future<void> bootstrap(
         name: !kIsWeb ? appName : null,
       );
 
-      if (getDevice() == DeviceSegment.desktop) {
+      if (currentDevice == DeviceSegment.desktop) {
         setWindowMinSize(const Size(300, 500));
         setWindowMaxSize(const Size(1500, 900));
       }

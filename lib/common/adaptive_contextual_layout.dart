@@ -24,7 +24,7 @@ List<DeviceSegment> webSegments = [
   DeviceSegment.desktopWeb,
 ];
 
-DeviceSegment getDevice() {
+DeviceSegment get currentDevice {
   return switch (defaultTargetPlatform) {
     TargetPlatform.android ||
     TargetPlatform.iOS =>

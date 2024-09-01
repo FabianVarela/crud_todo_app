@@ -37,7 +37,7 @@ class FormCategoryView extends ConsumerWidget {
           children: <Widget>[
             CustomMouseRegion(
               cursor: SystemMouseCursors.click,
-              isForDesktop: desktopSegments.contains(getDevice()),
+              isForDesktop: desktopSegments.contains(currentDevice),
               child: GestureDetector(
                 onTap: () => Navigator.pop(context),
                 child: const Icon(Icons.close, color: Colors.white),
