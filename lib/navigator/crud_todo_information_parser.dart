@@ -30,18 +30,14 @@ class CrudTodoInformationParser extends RouteInformationParser<CrudTodoConfig> {
       } else if (newPaths.first == TodoPath.addCategory.name) {
         return const CrudTodoConfigAddCategory();
       }
-    }
-
-    if (newPaths.length == 2) {
+    } else if (newPaths.length == 2) {
       if (newPaths.first == TodoPath.category.name) {
         if (newPaths.last == TodoPath.addCategory.name) {
           return const CrudTodoConfigAddCategory();
         }
         return CrudTodoConfigTodoList(newPaths.last);
       }
-    }
-
-    if (newPaths.length == 3 || newPaths.length == 4) {
+    } else if (newPaths.length == 3 || newPaths.length == 4) {
       if (newPaths.first == TodoPath.category.name) {
         if (newPaths[1] != TodoPath.addCategory.name) {
           if (newPaths[2] == TodoPath.todo.name) {
