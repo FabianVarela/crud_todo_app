@@ -1,5 +1,5 @@
 PODS:
-  - cloud_firestore (5.3.0):
+  - cloud_firestore (5.4.0):
     - Firebase/CoreOnly (~> 11.0.0)
     - Firebase/Firestore (~> 11.0.0)
     - firebase_core
@@ -114,7 +114,7 @@ CHECKOUT OPTIONS:
     :tag: 11.0.0
 
 SPEC CHECKSUMS:
-  cloud_firestore: bc68350c32732fd722e7da1aeacefdbb9f0f30da
+  cloud_firestore: 1027275a809aca4e63a6365fcdb2b00302f1fc00
   Firebase: 9f574c08c2396885b5e7e100ed4293d956218af9
   firebase_core: ca9bcfb9835e1bcd5ff205e24a541f6bc04e7a35
   FirebaseCore: 3cf438f431f18c12cdf2aaf64434648b63f7e383
