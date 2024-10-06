@@ -3,7 +3,7 @@ import 'package:crud_todo_app/model/category_model.dart';
 import 'package:flutter/material.dart';
 
 class CategoryItem extends StatelessWidget {
-  const CategoryItem({required this.item, super.key, this.onClick});
+  const CategoryItem({required this.item, this.onClick, super.key});
 
   final Category item;
   final VoidCallback? onClick;

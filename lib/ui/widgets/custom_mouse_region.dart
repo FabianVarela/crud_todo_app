@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 class CustomMouseRegion extends StatelessWidget {
   const CustomMouseRegion({
     required this.child,
-    super.key,
     this.cursor = SystemMouseCursors.none,
     this.isForDesktop = false,
     this.tooltipMessage,
+    super.key,
   });
 
   final Widget child;
