@@ -13,8 +13,7 @@ class FormCategoryView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final categoryState = ref.watch(categoryViewModelPod);
-    final isValidForm = ref.watch(validationCategoryProvider);
+    final categoryState = ref.watch(categoryViewModelProvider);
 
     final isDesktopOrTablet = [
       ScreenType.desktop,
@@ -24,10 +23,9 @@ class FormCategoryView extends ConsumerWidget {
     final desktopWidth = isDesktopOrTablet ? 600.0 : null;
     final mobileWidth = !context.isPortrait ? 400.0 : null;
 
-    ref.listen(
-      categoryViewModelPod,
-      (_, CategoryState state) => _onChangeState(context, state),
-    );
+    ref.listen(categoryViewModelProvider, (_, state) {
+      _onChangeState(context, state);
+    });
 
     return Dialog(
       backgroundColor: Colors.transparent,
@@ -63,9 +61,7 @@ class FormCategoryView extends ConsumerWidget {
                     ],
                   ),
                   if (!categoryState.isLoading)
-                    SubmitCategory(
-                      onSubmit: isValidForm ? () => _saveCategory(ref) : null,
-                    )
+                    const SubmitCategory()
                   else
                     const CircularProgressIndicator(),
                 ],
@@ -75,13 +71,6 @@ class FormCategoryView extends ConsumerWidget {
         ),
       ),
     );
-  }
-
-  void _saveCategory(WidgetRef ref) {
-    ref.read(categoryViewModelPod.notifier).saveCategory(
-          ref.read(nameCategoryProvider.notifier).state.text!,
-          ref.read(emojiCategoryProvider.notifier).state.text!,
-        );
   }
 
   void _onChangeState(BuildContext context, CategoryState state) {
@@ -105,8 +94,8 @@ class NameCategory extends HookConsumerWidget {
         hintText: 'Name',
         errorText: nameText.state.message,
       ),
-      onChanged: (value) => nameText.state =
-          ref.read(categoryViewModelPod.notifier).onChangeName(value),
+      onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
+      onChanged: (value) => nameText.update((_) => value.validateEmpty),
     );
   }
 }
@@ -126,22 +115,22 @@ class EmojiCategory extends HookConsumerWidget {
         hintText: 'Emoji',
         errorText: emoji.state.message,
       ),
-      onChanged: (value) => emoji.state =
-          ref.read(categoryViewModelPod.notifier).onChangeEmoji(value),
+      onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
+      onChanged: (value) => emoji.update((_) => value.validateEmoji),
     );
   }
 }
 
 class SubmitCategory extends ConsumerWidget {
-  const SubmitCategory({super.key, this.onSubmit});
-
-  final VoidCallback? onSubmit;
+  const SubmitCategory({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isValidForm = ref.watch(validationCategoryProvider);
+
     return ElevatedButton(
       style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF4A78FA)),
-      onPressed: onSubmit,
+      onPressed: isValidForm ? () => _saveCategory(ref) : null,
       child: Container(
         width: double.infinity,
         alignment: Alignment.center,
@@ -151,5 +140,12 @@ class SubmitCategory extends ConsumerWidget {
         ),
       ).paddingSymmetric(v: 12),
     );
+  }
+
+  void _saveCategory(WidgetRef ref) {
+    final name = ref.read(nameCategoryProvider.notifier).state.text!;
+    final emoji = ref.read(emojiCategoryProvider.notifier).state.text!;
+
+    ref.read(categoryViewModelProvider.notifier).saveCategory(name, emoji);
   }
 }

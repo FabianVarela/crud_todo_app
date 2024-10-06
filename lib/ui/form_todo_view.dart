@@ -12,7 +12,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class FormTodoView extends HookConsumerWidget {
-  const FormTodoView({required this.categoryId, super.key, this.todoId});
+  const FormTodoView({required this.categoryId, this.todoId, super.key});
 
   final String categoryId;
   final String? todoId;
@@ -24,9 +24,7 @@ class FormTodoView extends HookConsumerWidget {
       todoDetailProvider((catId: categoryId, todoId: todoId ?? '')),
     );
 
-    final isValid = ref.watch(validationTodoProvider);
-
-    ref.listen(todoViewModelPod, (_, state) {
+    ref.listen(todoViewModelProvider, (_, state) {
       state.whenOrNull(
         success: (action) {
           if (action == TodoAction.add || action == TodoAction.update) {
@@ -70,7 +68,6 @@ class FormTodoView extends HookConsumerWidget {
                 SubmitTodo(
                   categoryId: categoryId,
                   todoId: todo?.id,
-                  onSubmit: isValid ? () => _saveTodo(ref) : null,
                 ).paddingSymmetric(h: 16),
               ],
             ),
@@ -88,15 +85,6 @@ class FormTodoView extends HookConsumerWidget {
       ),
     );
   }
-
-  void _saveTodo(WidgetRef ref) {
-    ref.read(todoViewModelPod.notifier).saveTodo(
-          categoryId,
-          ref.read(subjectTodoProvider.notifier).state.text!,
-          ref.read(dateTodoProvider.notifier).state,
-          todoId: todoId,
-        );
-  }
 }
 
 class SubjectTodo extends HookConsumerWidget {
@@ -113,8 +101,9 @@ class SubjectTodo extends HookConsumerWidget {
       () {
         if (todo != null) {
           Future.microtask(() {
-            ref.read(subjectTodoProvider.notifier).state =
-                ValidationText(text: todo!.subject);
+            ref.read(subjectTodoProvider.notifier).update((_) {
+              return ValidationText(text: todo!.subject);
+            });
             subjectTextController.text = todo!.subject;
           });
         }
@@ -133,8 +122,8 @@ class SubjectTodo extends HookConsumerWidget {
         errorText: subject.state.message,
       ),
       style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
-      onChanged: (val) => subject.state =
-          ref.read(todoViewModelPod.notifier).onChangeSubject(val),
+      onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
+      onChanged: (value) => subject.update((_) => value.validateEmpty),
     );
   }
 }
@@ -224,20 +213,20 @@ class CategoryTodo extends StatelessWidget {
 class SubmitTodo extends HookConsumerWidget {
   const SubmitTodo({
     required this.categoryId,
-    super.key,
     this.todoId,
-    this.onSubmit,
+    super.key,
   });
 
   final String categoryId;
   final String? todoId;
-  final VoidCallback? onSubmit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isValidForm = ref.watch(validationTodoProvider);
+
     return ElevatedButton(
       style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF4A78FA)),
-      onPressed: onSubmit,
+      onPressed: isValidForm ? () => _saveTodo(ref) : null,
       child: Container(
         width: double.infinity,
         alignment: Alignment.center,
@@ -247,5 +236,14 @@ class SubmitTodo extends HookConsumerWidget {
         ),
       ).paddingSymmetric(v: 16),
     );
+  }
+
+  void _saveTodo(WidgetRef ref) {
+    final subject = ref.read(subjectTodoProvider.notifier).state.text!;
+    final date = ref.read(dateTodoProvider.notifier).state;
+
+    ref
+        .read(todoViewModelProvider.notifier)
+        .saveTodo(categoryId, subject, date, todoId: todoId);
   }
 }
