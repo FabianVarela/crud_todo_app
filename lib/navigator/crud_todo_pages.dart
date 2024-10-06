@@ -11,7 +11,7 @@ class CategoryPage<T> extends Page<T> {
       : super(key: const ValueKey('CategoryPage'));
 
   final VoidCallback onAddCategory;
-  final NavigatorToDetail onGoToDetail;
+  final ValueSetter<String> onGoToDetail;
 
   @override
   Route<T> createRoute(BuildContext context) {
