@@ -12,8 +12,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-typedef NavigatorToDetail = void Function(String);
-
 class CreateCategoryIntent extends Intent {
   const CreateCategoryIntent();
 }
@@ -30,14 +28,14 @@ class CategoryListView extends HookConsumerWidget {
   });
 
   final VoidCallback onAddCategory;
-  final NavigatorToDetail onGoToDetail;
+  final ValueSetter<String> onGoToDetail;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scrollController = useScrollController();
     final categoriesData = ref.watch(categoryListProvider);
 
-    ref.listen<CategoryState>(categoryViewModelPod, (_, state) {
+    ref.listen<CategoryState>(categoryViewModelProvider, (_, state) {
       state.whenOrNull(
         success: (action) {
           final message = switch (action) {
@@ -119,7 +117,7 @@ class CategoryListView extends HookConsumerWidget {
                     loading: () => const Center(
                       child: CircularProgressIndicator(),
                     ),
-                    error: (e, s) => Center(
+                    error: (e, _) => Center(
                       child: Text(
                         e.toString(),
                         textAlign: TextAlign.center,

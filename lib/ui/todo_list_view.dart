@@ -33,7 +33,7 @@ class TodoListView extends HookConsumerWidget {
       categoryDetailProvider(categoryId).select((value) => value.hasValue),
     );
 
-    ref.listen(todoViewModelPod, (_, state) {
+    ref.listen(todoViewModelProvider, (_, state) {
       state.whenOrNull(
         success: (action) {
           final message = switch (action) {
@@ -64,7 +64,7 @@ class TodoListView extends HookConsumerWidget {
                   icon: const Icon(Icons.delete_forever),
                   onPressed: () {
                     ref
-                        .read(categoryViewModelPod.notifier)
+                        .read(categoryViewModelProvider.notifier)
                         .deleteCategory(categoryId);
                     Navigator.pop(context);
                   },
@@ -215,7 +215,7 @@ class TodoList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(todoViewModelPod.notifier);
+    final viewModel = ref.watch(todoViewModelProvider.notifier);
 
     return ListView(
       children: <Widget>[
