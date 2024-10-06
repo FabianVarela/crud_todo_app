@@ -24,7 +24,7 @@ void main() {
     late final CrudTodoRouterDelegate todoRouterDelegate;
     late final CrudTodoInformationParser todoInfoParser;
 
-    late CategoryViewModel categoryViewModel;
+    late CategoryViewModel viewModel;
 
     setUpAll(() {
       mockFirestoreInstance = MockFirestore();
@@ -54,7 +54,7 @@ void main() {
             backButtonDispatcher: RootBackButtonDispatcher(),
             builder: (_, child) => Consumer(
               builder: (_, ref, __) {
-                categoryViewModel = ref.read(categoryViewModelPod.notifier);
+                viewModel = ref.read(categoryViewModelProvider.notifier);
                 return child!;
               },
             ),
@@ -103,11 +103,15 @@ void main() {
         await initScreensAndRedirect(tester);
 
         final foundButton = find.byType(SubmitCategory);
+        final submitButton = find.descendant(
+          of: foundButton,
+          matching: find.byType(ElevatedButton),
+        );
 
         await tester.enterText(find.byType(NameCategory), 'Test Category');
         await tester.pumpAndSettle();
 
-        final enabled = tester.widget<SubmitCategory>(foundButton).onSubmit;
+        final enabled = tester.widget<ElevatedButton>(submitButton).onPressed;
         expect(enabled == null, isTrue);
       },
       variant: TargetPlatformVariant.all(),
@@ -118,7 +122,11 @@ void main() {
       (tester) async {
         await initScreensAndRedirect(tester);
 
-        final foundSubmitButton = find.byType(SubmitCategory);
+        final foundButton = find.byType(SubmitCategory);
+        final submitButton = find.descendant(
+          of: foundButton,
+          matching: find.byType(ElevatedButton),
+        );
 
         await tester.enterText(find.byType(NameCategory), 'Test Category');
         await tester.enterText(find.byType(EmojiCategory), '😀');
@@ -126,7 +134,7 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(
-          tester.widget<SubmitCategory>(foundSubmitButton).onSubmit != null,
+          tester.widget<ElevatedButton>(submitButton).onPressed != null,
           isTrue,
         );
       },
@@ -145,18 +153,24 @@ void main() {
         await tester.enterText(find.byType(NameCategory), 'Test Category');
         await tester.enterText(find.byType(EmojiCategory), '😀');
 
+        final foundButton = find.byType(SubmitCategory);
+        final submitButton = find.descendant(
+          of: foundButton,
+          matching: find.byType(ElevatedButton),
+        );
+
         await tester.pumpAndSettle();
-        await tester.tap(find.byType(SubmitCategory));
+        await tester.tap(submitButton);
 
         verify(() => mockCategoryService.saveCategory(any())).called(1);
 
-        expect(categoryViewModel.state.isLoading, true);
+        expect(viewModel.state.isLoading, true);
         await tester.pump(const Duration(milliseconds: 500));
 
         expect(find.byType(CircularProgressIndicator), findsOneWidget);
         await tester.pumpAndSettle();
 
-        expect(categoryViewModel.state.isSuccess, true);
+        expect(viewModel.state.isSuccess, true);
         expect(find.byType(CircularProgressIndicator), findsNothing);
       },
       variant: TargetPlatformVariant.all(),
@@ -178,7 +192,7 @@ void main() {
         await tester.tap(find.byType(SubmitCategory));
 
         verify(() => mockCategoryService.saveCategory(any())).called(1);
-        expect(categoryViewModel.state.isError, true);
+        expect(viewModel.state.isError, true);
       },
       variant: TargetPlatformVariant.all(),
     );

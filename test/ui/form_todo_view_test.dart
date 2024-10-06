@@ -71,7 +71,7 @@ void main() {
             backButtonDispatcher: RootBackButtonDispatcher(),
             builder: (_, child) => Consumer(
               builder: (_, ref, __) {
-                todoViewModel = ref.read(todoViewModelPod.notifier);
+                todoViewModel = ref.read(todoViewModelProvider.notifier);
                 return child!;
               },
             ),
@@ -234,12 +234,16 @@ void main() {
 
         await initScreensAndRedirect(tester);
 
-        final foundSubmitButton = find.byType(SubmitTodo);
+        final foundButton = find.byType(SubmitTodo);
+        final submitButton = find.descendant(
+          of: foundButton,
+          matching: find.byType(ElevatedButton),
+        );
 
         await tester.enterText(find.byType(SubjectTodo), '');
         await tester.pumpAndSettle();
 
-        final enabled = tester.widget<SubmitTodo>(foundSubmitButton).onSubmit;
+        final enabled = tester.widget<ElevatedButton>(submitButton).onPressed;
         expect(enabled == null, isTrue);
       },
       variant: TargetPlatformVariant.all(),
@@ -254,12 +258,16 @@ void main() {
 
         await initScreensAndRedirect(tester);
 
-        final foundSubmitButton = find.byType(SubmitTodo);
+        final foundButton = find.byType(SubmitTodo);
+        final submitButton = find.descendant(
+          of: foundButton,
+          matching: find.byType(ElevatedButton),
+        );
 
         await tester.enterText(find.byType(SubjectTodo), 'Test TODO');
         await tester.pumpAndSettle();
 
-        final enabled = tester.widget<SubmitTodo>(foundSubmitButton).onSubmit;
+        final enabled = tester.widget<ElevatedButton>(submitButton).onPressed;
         expect(enabled != null, isTrue);
       },
       variant: TargetPlatformVariant.all(),
@@ -308,10 +316,18 @@ void main() {
         await tester.pumpAndSettle();
         expect(findTimePicker, findsNothing);
 
-        final todoSubmit = find.byType(SubmitTodo);
-        expect(tester.widget<SubmitTodo>(todoSubmit).onSubmit != null, isTrue);
+        final foundButton = find.byType(SubmitTodo);
+        final submitButton = find.descendant(
+          of: foundButton,
+          matching: find.byType(ElevatedButton),
+        );
 
-        await tester.tap(todoSubmit);
+        expect(
+          tester.widget<ElevatedButton>(submitButton).onPressed != null,
+          isTrue,
+        );
+
+        await tester.tap(submitButton);
         verify(() => mockTodoService.saveTodo(any())).called(1);
 
         await tester.pump();

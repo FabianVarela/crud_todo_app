@@ -41,7 +41,7 @@ void main() {
     late final CrudTodoRouterDelegate todoRouterDelegate;
     late final CrudTodoInformationParser todoInfoParser;
 
-    late CategoryViewModel categoryViewModel;
+    late CategoryViewModel viewModel;
     late TodoViewModel todoViewModel;
 
     setUpAll(() {
@@ -78,8 +78,8 @@ void main() {
             backButtonDispatcher: RootBackButtonDispatcher(),
             builder: (_, child) => Consumer(
               builder: (_, ref, __) {
-                categoryViewModel = ref.read(categoryViewModelPod.notifier);
-                todoViewModel = ref.read(todoViewModelPod.notifier);
+                viewModel = ref.read(categoryViewModelProvider.notifier);
+                todoViewModel = ref.read(todoViewModelProvider.notifier);
 
                 return child!;
               },
@@ -265,11 +265,11 @@ void main() {
 
         verify(() => mockCategoryService.deleteCategory(any())).called(1);
 
-        expect(categoryViewModel.state.isLoading, isTrue);
+        expect(viewModel.state.isLoading, isTrue);
         await tester.pump(const Duration(seconds: 1));
         await tester.pumpAndSettle();
 
-        expect(categoryViewModel.state.isSuccess, isTrue);
+        expect(viewModel.state.isSuccess, isTrue);
         await tester.pumpAndSettle();
 
         expect(find.byType(CategoryListView), findsOneWidget);
@@ -299,7 +299,7 @@ void main() {
 
         verify(() => mockCategoryService.deleteCategory(any())).called(1);
 
-        expect(categoryViewModel.state.isError, isTrue);
+        expect(viewModel.state.isError, isTrue);
         expect(find.byType(CategoryListView), findsNothing);
       },
       variant: TargetPlatformVariant.all(),
