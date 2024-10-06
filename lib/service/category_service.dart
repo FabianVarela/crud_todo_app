@@ -12,7 +12,6 @@ class CategoryService {
 
   Stream<List<Category>> getCategories() {
     final querySnapshot = _database.collection(_categoryCollection).snapshots();
-
     return querySnapshot.map(
       (query) => [
         for (final item in query.docs) Category.fromJson(item.toMap),
