@@ -29,9 +29,7 @@ DeviceSegment get currentDevice {
 }
 
 extension AdaptiveLayoutContext on BuildContext {
-  bool get isPortrait {
-    return MediaQuery.of(this).orientation == Orientation.portrait;
-  }
+  bool get isPortrait => MediaQuery.orientationOf(this) == Orientation.portrait;
 
   ScreenType get formFactor {
     return switch (MediaQuery.sizeOf(this).shortestSide) {
