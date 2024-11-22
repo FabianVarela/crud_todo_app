@@ -10,21 +10,22 @@ environment:
   flutter: 3.24.0
 
 dependencies:
-  cloud_firestore: ^5.4.4
+  cloud_firestore: ^5.5.0
   context_menus: ^2.0.0+1
   dart_emoji: ^0.2.0+2
-  equatable: ^2.0.5
-  firebase_core: ^3.6.0
+  equatable: ^2.0.7
+  firebase_core: ^3.8.0
   flutter:
     sdk: flutter
   flutter_hooks: ^0.20.5
   flutter_slidable: ^3.1.1
+  flutter_web_plugins:
+    sdk: flutter
   freezed_annotation: ^2.4.4
   google_fonts: ^6.2.1
-  hooks_riverpod: ^2.5.4
+  hooks_riverpod: ^2.6.1
   intl: ^0.19.0
   json_annotation: ^4.9.0
-  url_strategy: ^0.3.0
   uuid: ^4.5.1
   window_size:
     git:
@@ -40,7 +41,7 @@ dev_dependencies:
   freezed: ^2.5.7
   integration_test:
     sdk: flutter
-  json_serializable: ^6.8.0
+  json_serializable: ^6.9.0
   mocktail: ^1.0.4
   remove_from_coverage: ^2.0.0
   very_good_analysis: ^6.0.0
