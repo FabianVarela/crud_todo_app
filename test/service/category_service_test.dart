@@ -48,8 +48,7 @@ void main() {
       when(() => mockQuerySnapshot.docs)
           .thenReturn([mockQueryDocumentSnapshot]);
 
-      when(() => mockQueryDocumentSnapshot.toMap)
-          .thenReturn(category.toJson());
+      when(() => mockQueryDocumentSnapshot.toMap).thenReturn(category.toJson());
 
       // act
       final result = categoryService.getCategories();
