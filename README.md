@@ -105,34 +105,3 @@ Run deep links in **Android**, use the command below:
 | macOS    | ![macos.gif](./assets/github_resources/macos.gif)     |
 | Web      | ![web.gif](./assets/github_resources/web.gif)         |
 | Windows  | Coming soon                                           |
-
-------
-
-### Used packages
-
-#### Dependencies
-
-- Firebase ([firebase_core](https://pub.dev/packages/firebase_core)
-  , [cloud_firestore](https://pub.dev/packages/cloud_firestore))
-- Riverpod ([hooks_riverpod](https://pub.dev/packages/hooks_riverpod))
-- Hooks ([flutter_hooks](https://pub.dev/packages/flutter_hooks))
-- Json annotation ([json_annotation](https://pub.dev/packages/json_annotation))
-- Freezed annotation ([freezed_annotation](https://pub.dev/packages/freezed_annotation))
-- Equatable ([equatable](https://pub.dev/packages/equatable))
-- Intl ([intl](https://pub.dev/packages/intl))
-- Google fonts ([google_fonts](https://pub.dev/packages/google_fonts))
-- Flutter slidable ([flutter_slidable](https://pub.dev/packages/flutter_slidable))
-- Context menus ([context_menus](https://pub.dev/packages/context_menus))
-- Window size ([window_size](https://github.com/google/flutter-desktop-embedding/tree/master/plugins/window_size))
-- Dart emoji ([dart_emoji](https://pub.dev/packages/dart_emoji))
-- UUID ([uuid](https://pub.dev/packages/uuid))
-
-#### Dev dependencies
-
-- Build runner ([build_runner](https://pub.dev/packages/build_runner))
-- Freezed ([freezed](https://pub.dev/packages/freezed))
-- Json serializable ([json_serializable](https://pub.dev/packages/json_serializable))
-- Mocktail ([mocktail](https://pub.dev/packages/mocktail))
-- Mockito ([mockito](https://pub.dev/packages/mockito))
-- Remove from coverage ([remove_from_coverage](https://pub.dev/packages/remove_from_coverage))
-- Very Good Analysis ([very_good_analysis](https://pub.dev/packages/very_good_analysis))
