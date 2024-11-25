@@ -39,14 +39,17 @@ void main() {
   group('$CategoryService', () {
     test('Get $Category list from Firestore mock', () async {
       // arrange
-      when(() => mockFirestoreInstance.collection(any()))
-          .thenReturn(mockCollectionReference);
+      when(
+        () => mockFirestoreInstance.collection(categoryCollection),
+      ).thenReturn(mockCollectionReference);
 
-      when(() => mockCollectionReference.snapshots())
-          .thenAnswer((_) => Stream.value(mockQuerySnapshot));
+      when(
+        () => mockCollectionReference.snapshots(),
+      ).thenAnswer((_) => Stream.value(mockQuerySnapshot));
 
-      when(() => mockQuerySnapshot.docs)
-          .thenReturn([mockQueryDocumentSnapshot]);
+      when(() => mockQuerySnapshot.docs).thenReturn(
+        [mockQueryDocumentSnapshot],
+      );
 
       when(() => mockQueryDocumentSnapshot.toMap).thenReturn(category.toJson());
 
@@ -58,22 +61,29 @@ void main() {
       expect(result, isA<Stream<List<Category>>>());
       expect(finalResult, isA<List<Category>>());
       expect(finalResult, [category]);
-      verify(() => mockFirestoreInstance.collection(any())).called(1);
+
+      verify(
+        () => mockFirestoreInstance.collection(categoryCollection),
+      ).called(1);
     });
 
     test('Get $Category data by id from Firestore mock', () async {
       // arrange
-      when(() => mockFirestoreInstance.collection(any()))
-          .thenReturn(mockCollectionReference);
+      const path = categoryId;
 
-      when(() => mockCollectionReference.doc(any()))
-          .thenReturn(mockDocumentReference);
+      when(
+        () => mockFirestoreInstance.collection(categoryCollection),
+      ).thenReturn(mockCollectionReference);
 
-      when(() => mockDocumentReference.get())
-          .thenAnswer((_) => Future.value(mockDocumentSnapshot));
+      when(
+        () => mockCollectionReference.doc(path),
+      ).thenReturn(mockDocumentReference);
+
+      when(
+        () => mockDocumentReference.get(),
+      ).thenAnswer((_) => Future.value(mockDocumentSnapshot));
 
       when(() => mockDocumentSnapshot.exists).thenReturn(true);
-
       when(() => mockDocumentSnapshot.toMap).thenReturn(category.toJson());
 
       // act
@@ -84,23 +94,29 @@ void main() {
       expect(result, isA<Future<Category>>());
       expect(finalResult, isA<Category>());
       expect(finalResult, category);
-      verify(() => mockFirestoreInstance.collection(any()).doc(any()))
-          .called(1);
+
+      verify(
+        () => mockFirestoreInstance.collection(categoryCollection).doc(path),
+      ).called(1);
     });
 
     test("Get $Exception if category by id doesn't exists", () async {
       // arrange
-      when(() => mockFirestoreInstance.collection(any()))
-          .thenReturn(mockCollectionReference);
+      const path = categoryId;
 
-      when(() => mockCollectionReference.doc(any()))
-          .thenReturn(mockDocumentReference);
+      when(
+        () => mockFirestoreInstance.collection(categoryCollection),
+      ).thenReturn(mockCollectionReference);
 
-      when(() => mockDocumentReference.get())
-          .thenAnswer((_) => Future.value(mockDocumentSnapshot));
+      when(
+        () => mockCollectionReference.doc(path),
+      ).thenReturn(mockDocumentReference);
+
+      when(
+        () => mockDocumentReference.get(),
+      ).thenAnswer((_) => Future.value(mockDocumentSnapshot));
 
       when(() => mockDocumentSnapshot.exists).thenReturn(false);
-
       when(() => mockDocumentSnapshot.toMap).thenThrow(
         Exception('Oops!!! Category not found'),
       );
@@ -109,38 +125,50 @@ void main() {
       final result = categoryService.getCategoryById(category.id!);
 
       // assert
-      expect(result, throwsA(isA<Exception>()));
-      verify(() => mockFirestoreInstance.collection(any()).doc(any()))
-          .called(1);
+      await expectLater(result, throwsA(isA<Exception>()));
+      verify(
+        () => mockFirestoreInstance.collection(categoryCollection).doc(path),
+      ).called(1);
     });
 
     test('Save $Category from Firebase mock', () async {
       // arrange
-      when(() => mockFirestoreInstance.collection(any()))
-          .thenReturn(mockCollectionReference);
+      final data = initialCategory.toJson();
 
-      when(() => mockCollectionReference.add(any()))
-          .thenAnswer((_) async => mockDocumentReference);
+      when(
+        () => mockFirestoreInstance.collection(categoryCollection),
+      ).thenReturn(mockCollectionReference);
+
+      when(
+        () => mockCollectionReference.add(data),
+      ).thenAnswer((_) async => mockDocumentReference);
 
       // act
       final result = categoryService.saveCategory(initialCategory);
 
       // assert
       expect(result, isA<Future<void>>());
-      verify(() => mockFirestoreInstance.collection(any()).add(any()))
-          .called(1);
+      verify(
+        () => mockFirestoreInstance.collection(categoryCollection).add(data),
+      ).called(1);
     });
 
     test('Update $Category from Firebase mock', () {
       // arrange
-      when(() => mockFirestoreInstance.collection(any()))
-          .thenReturn(mockCollectionReference);
+      const path = categoryId;
+      final data = category.toJson();
 
-      when(() => mockCollectionReference.doc(any()))
-          .thenReturn(mockDocumentReference);
+      when(
+        () => mockFirestoreInstance.collection(categoryCollection),
+      ).thenReturn(mockCollectionReference);
 
-      when(() => mockDocumentReference.update(any()))
-          .thenAnswer((_) => Future.value());
+      when(
+        () => mockCollectionReference.doc(path),
+      ).thenReturn(mockDocumentReference);
+
+      when(
+        () => mockDocumentReference.update(data),
+      ).thenAnswer((_) => Future.value());
 
       // act
       final result = categoryService.saveCategory(category);
@@ -148,20 +176,26 @@ void main() {
       // assert
       expect(result, isA<Future<void>>());
       verify(
-        () => mockFirestoreInstance.collection(any()).doc(any()).update(any()),
+        () => mockFirestoreInstance
+            .collection(categoryCollection)
+            .doc(path)
+            .update(data),
       ).called(1);
     });
 
     test('Remove $Category from Firebase mock', () {
       // arrange
-      when(() => mockFirestoreInstance.collection(any()))
-          .thenReturn(mockCollectionReference);
+      when(
+        () => mockFirestoreInstance.collection(any()),
+      ).thenReturn(mockCollectionReference);
 
-      when(() => mockCollectionReference.doc(any()))
-          .thenReturn(mockDocumentReference);
+      when(
+        () => mockCollectionReference.doc(any()),
+      ).thenReturn(mockDocumentReference);
 
-      when(() => mockDocumentReference.delete())
-          .thenAnswer((_) => Future.value());
+      when(
+        () => mockDocumentReference.delete(),
+      ).thenAnswer((_) => Future.value());
 
       when(
         () => mockCollectionReference.where(
@@ -178,16 +212,19 @@ void main() {
       when(() => mockQueryDocumentSnapshot.reference)
           .thenReturn(mockDocumentReference);
 
-      when(() => mockDocumentReference.delete())
-          .thenAnswer((_) => Future.value());
+      when(
+        () => mockDocumentReference.delete(),
+      ).thenAnswer((_) => Future.value());
 
       // act
       final result = categoryService.deleteCategory(category.id!);
 
       // assert
       expect(result, isA<Future<void>>());
-      verify(() => mockFirestoreInstance.collection(any()).doc(any()).delete())
-          .called(1);
+
+      verify(
+        () => mockFirestoreInstance.collection(any()).doc(any()).delete(),
+      ).called(1);
     });
   });
 }
