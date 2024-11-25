@@ -2,6 +2,9 @@ import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:dart_emoji/dart_emoji.dart';
 
+const categoryCollection = 'categories';
+const todoCollection = 'todos';
+
 const categoryId = 'ABC123';
 const categoryName = 'Test Category';
 final categoryEmoji = EmojiParser().get('😀');
@@ -63,3 +66,9 @@ Todo get todayTodo => Todo(
       finalDate: todoTodayDate,
       categoryId: categoryId,
     );
+
+Map<String, dynamic> updateCategorySchema(int value) {
+  return <String, dynamic>{
+    'todoSize': value,
+  };
+}
