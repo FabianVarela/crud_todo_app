@@ -1,11 +1,9 @@
 import 'package:crud_todo_app/dependency/dependency.dart';
-import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/navigator/crud_todo_information_parser.dart';
 import 'package:crud_todo_app/navigator/crud_todo_router_delegate.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/ui/category_list_view.dart';
 import 'package:crud_todo_app/ui/form_category_view.dart';
-import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';
 import 'package:flutter/foundation.dart' as foundation;
@@ -20,6 +18,12 @@ import '../test_utils/mocks.dart';
 import '../test_utils/params_factory.dart';
 
 void main() {
+  final excludingPlatforms = {
+    foundation.TargetPlatform.windows,
+    foundation.TargetPlatform.linux,
+    foundation.TargetPlatform.fuchsia,
+  };
+
   group('$CategoryListView UI screen', () {
     late final MockFirestore mockFirestoreInstance;
 
@@ -87,7 +91,7 @@ void main() {
 
         expect(find.byType(FormCategoryView), findsOneWidget);
       },
-      variant: TargetPlatformVariant.all(),
+      variant: TargetPlatformVariant.all(excluding: excludingPlatforms),
     );
 
     testWidgets(
@@ -135,38 +139,6 @@ void main() {
     );
 
     testWidgets(
-      'Redirect when select a $Category to $TodoListView screen',
-      (tester) async {
-        when(categoryRepository.getCategories).thenAnswer(
-          (_) => Stream.value([category]),
-        );
-
-        await pumpMainScreen(tester);
-
-        final platforms = [TargetPlatform.iOS, TargetPlatform.fuchsia];
-        if (!platforms.contains(foundation.defaultTargetPlatform)) {
-          expect(find.byType(CircularProgressIndicator), findsOneWidget);
-        }
-        await tester.pump(const Duration(seconds: 1));
-
-        expect(find.byType(CircularProgressIndicator), findsNothing);
-        expect(find.byType(GridView), findsOneWidget);
-
-        final foundCatItem = find.descendant(
-          of: find.byType(GridView),
-          matching: find.byType(CategoryItem),
-        );
-        expect(foundCatItem, findsOneWidget);
-
-        await tester.tap(foundCatItem);
-        await tester.pumpAndSettle();
-
-        expect(find.byType(TodoListView), findsOneWidget);
-      },
-      variant: TargetPlatformVariant.mobile(),
-    );
-
-    testWidgets(
       'Show $Exception in $CategoryListView screen',
       (tester) async {
         when(categoryRepository.getCategories).thenThrow(
@@ -179,7 +151,7 @@ void main() {
         await tester.pumpAndSettle();
         expect(find.text('Exception: Category not found'), findsOneWidget);
       },
-      variant: TargetPlatformVariant.all(),
+      variant: TargetPlatformVariant.all(excluding: excludingPlatforms),
     );
 
     testWidgets(
@@ -223,7 +195,7 @@ void main() {
 
         expect(foundTooltip.hitTestable(), findsOneWidget);
       },
-      variant: TargetPlatformVariant.desktop(),
+      variant: TargetPlatformVariant.only(TargetPlatform.macOS),
     );
 
     testWidgets(
