@@ -41,18 +41,19 @@ class TodoService {
           .update(todo.toJson());
     } else {
       await _database.collection(_todoCollection).add(todo.toJson());
-      await _database
-          .collection(_categoryCollection)
-          .doc(todo.categoryId)
-          .update({'todoSize': FieldValue.increment(1)});
+      await _updateCategorySize(todo.categoryId, 1);
     }
   }
 
   Future<void> deleteTodo(String todoId, String categoryId) async {
     await _database.collection(_todoCollection).doc(todoId).delete();
+    await _updateCategorySize(categoryId, -1);
+  }
+
+  Future<void> _updateCategorySize(String categoryId, int size) async {
     await _database
         .collection(_categoryCollection)
         .doc(categoryId)
-        .update({'todoSize': FieldValue.increment(-1)});
+        .update({'todoSize': FieldValue.increment(size)});
   }
 }
