@@ -1,4 +1,4 @@
-flutter test --coverage --test-randomize-ordering-seed random
+flutter test --concurrency 4 --coverage --test-randomize-ordering-seed random
 dart run remove_from_coverage -f coverage/lcov.info -r '\.g\.dart$'
 dart run remove_from_coverage -f coverage/lcov.info -r '\.freezed\.dart$'
 genhtml coverage/lcov.info -o coverage/html -q
