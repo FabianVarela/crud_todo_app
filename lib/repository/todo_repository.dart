@@ -2,13 +2,16 @@ import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/service/todo_service.dart';
 
 abstract interface class ITodoRepository {
-  Stream<List<Todo>> getTodosByCategory(String categoryId);
+  Stream<List<Todo>> getTodosByCategory({required String categoryId});
 
-  Future<Todo> getTodoById(String categoryId, String todoId);
+  Future<Todo> getTodoById({
+    required String categoryId,
+    required String todoId,
+  });
 
-  Future<void> saveTodo(Todo todo);
+  Future<void> saveTodo({required Todo todo});
 
-  Future<void> deleteTodo(String todoId, String catId);
+  Future<void> deleteTodo({required String todoId, required String categoryId});
 }
 
 class TodoRepository implements ITodoRepository {
@@ -17,17 +20,24 @@ class TodoRepository implements ITodoRepository {
   final TodoService _todoService;
 
   @override
-  Stream<List<Todo>> getTodosByCategory(String categoryId) =>
-      _todoService.getTodosByCategory(categoryId);
+  Stream<List<Todo>> getTodosByCategory({required String categoryId}) =>
+      _todoService.getTodosByCategory(categoryId: categoryId);
 
   @override
-  Future<Todo> getTodoById(String categoryId, String todoId) =>
-      _todoService.getTodoById(categoryId, todoId);
+  Future<Todo> getTodoById({
+    required String categoryId,
+    required String todoId,
+  }) =>
+      _todoService.getTodoById(categoryId: categoryId, todoId: todoId);
 
   @override
-  Future<void> saveTodo(Todo todo) async => _todoService.saveTodo(todo);
+  Future<void> saveTodo({required Todo todo}) async =>
+      _todoService.saveTodo(todo: todo);
 
   @override
-  Future<void> deleteTodo(String todoId, String categoryId) async =>
-      _todoService.deleteTodo(todoId, categoryId);
+  Future<void> deleteTodo({
+    required String todoId,
+    required String categoryId,
+  }) async =>
+      _todoService.deleteTodo(todoId: todoId, categoryId: categoryId);
 }

@@ -19,7 +19,7 @@ class CategoryService {
     );
   }
 
-  Future<Category> getCategoryById(String categoryId) async {
+  Future<Category> getCategoryById({required String categoryId}) async {
     final categoryCollection = _database.collection(_categoryCollection);
     final categoryDocument = await categoryCollection.doc(categoryId).get();
 
@@ -30,19 +30,23 @@ class CategoryService {
     throw Exception('Oops!!! Category not found');
   }
 
-  Future<void> saveCategory(Category category) async => category.id != null
-      ? await _database
-          .collection(_categoryCollection)
-          .doc(category.id)
-          .update(category.toJson())
-      : await _database.collection(_categoryCollection).add(category.toJson());
+  Future<void> saveCategory({required Category category}) async {
+    category.id != null
+        ? await _database
+            .collection(_categoryCollection)
+            .doc(category.id)
+            .update(category.toJson())
+        : await _database
+            .collection(_categoryCollection)
+            .add(category.toJson());
+  }
 
-  Future<void> deleteCategory(String catId) async {
-    await _database.collection(_categoryCollection).doc(catId).delete();
+  Future<void> deleteCategory({required String categoryId}) async {
+    await _database.collection(_categoryCollection).doc(categoryId).delete();
 
     final snapshot = await _database
         .collection(_todoCollection)
-        .where('categoryId', isEqualTo: catId)
+        .where('categoryId', isEqualTo: categoryId)
         .get();
 
     for (var i = 0; i < snapshot.docs.length; i++) {

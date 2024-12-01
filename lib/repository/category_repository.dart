@@ -4,11 +4,11 @@ import 'package:crud_todo_app/service/category_service.dart';
 abstract interface class ICategoryRepository {
   Stream<List<Category>> getCategories();
 
-  Future<Category> getCategoryById(String categoryId);
+  Future<Category> getCategoryById({required String categoryId});
 
-  Future<void> saveCategory(Category category);
+  Future<void> saveCategory({required Category category});
 
-  Future<void> deleteCategory(String catId);
+  Future<void> deleteCategory({required String categoryId});
 }
 
 class CategoryRepository implements ICategoryRepository {
@@ -20,14 +20,14 @@ class CategoryRepository implements ICategoryRepository {
   Stream<List<Category>> getCategories() => _categoryService.getCategories();
 
   @override
-  Future<Category> getCategoryById(String categoryId) =>
-      _categoryService.getCategoryById(categoryId);
+  Future<Category> getCategoryById({required String categoryId}) =>
+      _categoryService.getCategoryById(categoryId: categoryId);
 
   @override
-  Future<void> saveCategory(Category category) async =>
-      _categoryService.saveCategory(category);
+  Future<void> saveCategory({required Category category}) async =>
+      _categoryService.saveCategory(category: category);
 
   @override
-  Future<void> deleteCategory(String catId) async =>
-      _categoryService.deleteCategory(catId);
+  Future<void> deleteCategory({required String categoryId}) async =>
+      _categoryService.deleteCategory(categoryId: categoryId);
 }

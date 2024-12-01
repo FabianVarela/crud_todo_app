@@ -10,7 +10,7 @@ class TodoService {
   static const String _categoryCollection = 'categories';
   static const String _todoCollection = 'todos';
 
-  Stream<List<Todo>> getTodosByCategory(String categoryId) {
+  Stream<List<Todo>> getTodosByCategory({required String categoryId}) {
     final querySnapshot = _database
         .collection(_todoCollection)
         .where('categoryId', isEqualTo: categoryId)
@@ -21,7 +21,10 @@ class TodoService {
     );
   }
 
-  Future<Todo> getTodoById(String categoryId, String todoId) async {
+  Future<Todo> getTodoById({
+    required String categoryId,
+    required String todoId,
+  }) async {
     final todoCollection = _database.collection(_todoCollection);
     final todoDocument = await todoCollection.doc(todoId).get();
 
@@ -33,7 +36,7 @@ class TodoService {
     throw Exception('Oops!!! Todo not found');
   }
 
-  Future<void> saveTodo(Todo todo) async {
+  Future<void> saveTodo({required Todo todo}) async {
     if (todo.id != null) {
       await _database
           .collection(_todoCollection)
@@ -41,16 +44,22 @@ class TodoService {
           .update(todo.toJson());
     } else {
       await _database.collection(_todoCollection).add(todo.toJson());
-      await _updateCategorySize(todo.categoryId, 1);
+      await _updateCategorySize(categoryId: todo.categoryId, size: 1);
     }
   }
 
-  Future<void> deleteTodo(String todoId, String categoryId) async {
+  Future<void> deleteTodo({
+    required String todoId,
+    required String categoryId,
+  }) async {
     await _database.collection(_todoCollection).doc(todoId).delete();
-    await _updateCategorySize(categoryId, -1);
+    await _updateCategorySize(categoryId: categoryId, size: -1);
   }
 
-  Future<void> _updateCategorySize(String categoryId, int size) async {
+  Future<void> _updateCategorySize({
+    required String categoryId,
+    required int size,
+  }) async {
     await _database
         .collection(_categoryCollection)
         .doc(categoryId)
