@@ -9,12 +9,15 @@ class CategoryViewModel extends StateNotifier<CategoryState> {
 
   late final ICategoryRepository _repository;
 
-  Future<void> saveCategory(String name, String emoji) async {
+  Future<void> saveCategory({
+    required String name,
+    required String emoji,
+  }) async {
     try {
       state = const CategoryState.loading();
 
       await _repository.saveCategory(
-        Category(
+        category: Category(
           name: name,
           emoji: EmojiParser().getEmoji(emoji),
         ),
@@ -26,10 +29,10 @@ class CategoryViewModel extends StateNotifier<CategoryState> {
     }
   }
 
-  Future<void> deleteCategory(String id) async {
+  Future<void> deleteCategory({required String categoryId}) async {
     try {
       state = const CategoryState.loading();
-      await _repository.deleteCategory(id);
+      await _repository.deleteCategory(categoryId: categoryId);
       state = const CategoryState.success(CategoryAction.remove);
     } on Exception catch (e) {
       state = CategoryState.error(e.toString());

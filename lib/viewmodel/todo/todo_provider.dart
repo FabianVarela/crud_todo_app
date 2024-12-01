@@ -3,17 +3,23 @@ import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final todoListProvider = StreamProvider.family.autoDispose((ref, String catId) {
-  return ref.watch(todoRepositoryProvider).getTodosByCategory(catId);
-});
+final todoListProvider = StreamProvider.family.autoDispose(
+  (ref, String categoryId) {
+    return ref
+        .watch(todoRepositoryProvider)
+        .getTodosByCategory(categoryId: categoryId);
+  },
+);
 
 final todoDetailProvider = FutureProvider.family.autoDispose(
-  (ref, ({String catId, String todoId}) param) async {
-    final catId = param.catId;
+  (ref, ({String categoryId, String todoId}) param) async {
+    final categoryId = param.categoryId;
     final todoId = param.todoId;
 
-    return catId.trim().isNotEmpty && todoId.trim().isNotEmpty
-        ? ref.watch(todoRepositoryProvider).getTodoById(catId, todoId)
+    return categoryId.trim().isNotEmpty && todoId.trim().isNotEmpty
+        ? ref
+            .watch(todoRepositoryProvider)
+            .getTodoById(categoryId: categoryId, todoId: todoId)
         : null;
   },
 );

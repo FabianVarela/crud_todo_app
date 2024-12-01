@@ -8,7 +8,11 @@ final categoryListProvider = StreamProvider.autoDispose(
 );
 
 final categoryDetailProvider = FutureProvider.family.autoDispose(
-  (ref, String id) => ref.watch(categoryRepositoryProvider).getCategoryById(id),
+  (ref, String categoryId) {
+    return ref
+        .watch(categoryRepositoryProvider)
+        .getCategoryById(categoryId: categoryId);
+  },
 );
 
 final nameCategoryProvider = StateProvider.autoDispose(

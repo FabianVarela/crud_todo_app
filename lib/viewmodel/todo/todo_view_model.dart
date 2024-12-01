@@ -8,17 +8,22 @@ class TodoViewModel extends StateNotifier<TodoState> {
 
   late final ITodoRepository _repository;
 
-  Future<void> saveTodo(
-    String catId,
-    String subject,
-    DateTime date, {
+  Future<void> saveTodo({
+    required String categoryId,
+    required String subject,
+    required DateTime date,
     String? todoId,
   }) async {
     try {
       state = const TodoState.loading();
 
       await _repository.saveTodo(
-        Todo(id: todoId, subject: subject, finalDate: date, categoryId: catId),
+        todo: Todo(
+          id: todoId,
+          subject: subject,
+          finalDate: date,
+          categoryId: categoryId,
+        ),
       );
 
       state = todoId == null
@@ -29,21 +34,24 @@ class TodoViewModel extends StateNotifier<TodoState> {
     }
   }
 
-  Future<void> deleteTodo(String todoId, String catId) async {
+  Future<void> deleteTodo({
+    required String todoId,
+    required String categoryId,
+  }) async {
     try {
       state = const TodoState.loading();
-      await _repository.deleteTodo(todoId, catId);
+      await _repository.deleteTodo(todoId: todoId, categoryId: categoryId);
       state = const TodoState.success(TodoAction.remove);
     } catch (e) {
       state = TodoState.error(e.toString());
     }
   }
 
-  Future<void> checkTodo(Todo todo, {bool isChecked = false}) async {
+  Future<void> checkTodo({required Todo todo, bool isChecked = false}) async {
     try {
       state = const TodoState.loading();
       await _repository.saveTodo(
-        todo.copyWith(isCompleted: isChecked),
+        todo: todo.copyWith(isCompleted: isChecked),
       );
       state = const TodoState.success(TodoAction.check);
     } catch (e) {
