@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-void showCustomMessage(BuildContext context, String message) {
+void showCustomMessage(BuildContext context, {required String message}) {
   if (desktopSegments.contains(currentDevice)) {
     showDialog<void>(
       context: context,
