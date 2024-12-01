@@ -42,10 +42,10 @@ class TodoListView extends HookConsumerWidget {
             TodoAction.remove => 'Todo removed successfully',
             TodoAction.check => 'Todo finished successfully',
           };
-          showCustomMessage(context, message);
+          showCustomMessage(context, message: message);
         },
         error: (error) {
-          if (error != null) showCustomMessage(context, error);
+          if (error != null) showCustomMessage(context, message: error);
         },
       );
     });
@@ -65,7 +65,7 @@ class TodoListView extends HookConsumerWidget {
                   onPressed: () {
                     ref
                         .read(categoryViewModelProvider.notifier)
-                        .deleteCategory(categoryId);
+                        .deleteCategory(categoryId: categoryId);
                     Navigator.pop(context);
                   },
                 ),
@@ -215,8 +215,6 @@ class TodoList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final viewModel = ref.watch(todoViewModelProvider.notifier);
-
     return ListView(
       children: <Widget>[
         for (final item in todoList)
@@ -224,17 +222,29 @@ class TodoList extends ConsumerWidget {
             TodoItem.contextual(
               todo: item,
               onEdit: () => onEditItem(item),
-              onRemove: () => viewModel.deleteTodo(item.id!, item.categoryId),
-              onCheck: (value) => viewModel.checkTodo(item, isChecked: value),
+              onRemove: () => _deleteTodo(ref, todo: item),
+              onCheck: (value) => _checkTodo(ref, todo: item, isChecked: value),
             )
           else
             TodoItem(
               todo: item,
               onEdit: () => onEditItem(item),
-              onRemove: () => viewModel.deleteTodo(item.id!, item.categoryId),
-              onCheck: (value) => viewModel.checkTodo(item, isChecked: value),
+              onRemove: () => _deleteTodo(ref, todo: item),
+              onCheck: (value) => _checkTodo(ref, todo: item, isChecked: value),
             ),
       ],
     );
+  }
+
+  void _deleteTodo(WidgetRef ref, {required Todo todo}) {
+    ref
+        .read(todoViewModelProvider.notifier)
+        .deleteTodo(todoId: todo.id!, categoryId: todo.categoryId);
+  }
+
+  void _checkTodo(WidgetRef ref, {required Todo todo, bool isChecked = false}) {
+    ref
+        .read(todoViewModelProvider.notifier)
+        .checkTodo(todo: todo, isChecked: isChecked);
   }
 }

@@ -146,6 +146,8 @@ class SubmitCategory extends ConsumerWidget {
     final name = ref.read(nameCategoryProvider.notifier).state.text!;
     final emoji = ref.read(emojiCategoryProvider.notifier).state.text!;
 
-    ref.read(categoryViewModelProvider.notifier).saveCategory(name, emoji);
+    ref
+        .read(categoryViewModelProvider.notifier)
+        .saveCategory(name: name, emoji: emoji);
   }
 }

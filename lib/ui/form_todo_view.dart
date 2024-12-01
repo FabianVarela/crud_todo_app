@@ -21,7 +21,7 @@ class FormTodoView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final categoryData = ref.watch(categoryDetailProvider(categoryId));
     final todoData = ref.watch(
-      todoDetailProvider((catId: categoryId, todoId: todoId ?? '')),
+      todoDetailProvider((categoryId: categoryId, todoId: todoId ?? '')),
     );
 
     ref.listen(todoViewModelProvider, (_, state) {
@@ -242,8 +242,11 @@ class SubmitTodo extends HookConsumerWidget {
     final subject = ref.read(subjectTodoProvider.notifier).state.text!;
     final date = ref.read(dateTodoProvider.notifier).state;
 
-    ref
-        .read(todoViewModelProvider.notifier)
-        .saveTodo(categoryId, subject, date, todoId: todoId);
+    ref.read(todoViewModelProvider.notifier).saveTodo(
+          categoryId: categoryId,
+          subject: subject,
+          date: date,
+          todoId: todoId,
+        );
   }
 }

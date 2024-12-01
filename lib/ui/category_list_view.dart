@@ -42,10 +42,10 @@ class CategoryListView extends HookConsumerWidget {
             CategoryAction.add => 'Category created successfully',
             CategoryAction.remove => 'Category removed successfully',
           };
-          showCustomMessage(context, message);
+          showCustomMessage(context, message: message);
         },
         error: (error) {
-          if (error != null) showCustomMessage(context, error);
+          if (error != null) showCustomMessage(context, message: error);
         },
       );
     });
