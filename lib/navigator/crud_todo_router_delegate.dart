@@ -122,11 +122,11 @@ class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
     } else if (isShowingCategoryForm) {
       return const CrudTodoConfigAddCategory();
     } else if (categoryId != null) {
-      return CrudTodoConfigTodoList(categoryId!);
+      return CrudTodoConfigTodoList(categoryId: categoryId!);
     } else if (categoryId != null && isTodoSelected) {
-      return CrudTodoConfigAddTodo(categoryId!);
+      return CrudTodoConfigAddTodo(categoryId: categoryId!);
     } else if (categoryId != null && todoId != null) {
-      return CrudTodoConfigUpdateTodo(categoryId!, todoId!);
+      return CrudTodoConfigUpdateTodo(categoryId: categoryId!, todoId: todoId!);
     } else if (is404) {
       return const CrudTodoConfigUnknown();
     }

@@ -8,14 +8,16 @@ sealed class CrudTodoConfig with _$CrudTodoConfig {
 
   const factory CrudTodoConfig.addCategory() = CrudTodoConfigAddCategory;
 
-  const factory CrudTodoConfig.todoList(String categoryId) =
+  const factory CrudTodoConfig.todoList({required String categoryId}) =
       CrudTodoConfigTodoList;
 
-  const factory CrudTodoConfig.addTodo(String categoryId) =
+  const factory CrudTodoConfig.addTodo({required String categoryId}) =
       CrudTodoConfigAddTodo;
 
-  const factory CrudTodoConfig.updateTodo(String categoryId, String todoId) =
-      CrudTodoConfigUpdateTodo;
+  const factory CrudTodoConfig.updateTodo({
+    required String categoryId,
+    required String todoId,
+  }) = CrudTodoConfigUpdateTodo;
 
   const factory CrudTodoConfig.unknown() = CrudTodoConfigUnknown;
 }

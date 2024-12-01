@@ -392,7 +392,7 @@ class __$$CrudTodoConfigTodoListImplCopyWithImpl<$Res>
     Object? categoryId = null,
   }) {
     return _then(_$CrudTodoConfigTodoListImpl(
-      null == categoryId
+      categoryId: null == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as String,
@@ -403,7 +403,7 @@ class __$$CrudTodoConfigTodoListImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CrudTodoConfigTodoListImpl implements CrudTodoConfigTodoList {
-  const _$CrudTodoConfigTodoListImpl(this.categoryId);
+  const _$CrudTodoConfigTodoListImpl({required this.categoryId});
 
   @override
   final String categoryId;
@@ -522,7 +522,7 @@ class _$CrudTodoConfigTodoListImpl implements CrudTodoConfigTodoList {
 }
 
 abstract class CrudTodoConfigTodoList implements CrudTodoConfig {
-  const factory CrudTodoConfigTodoList(final String categoryId) =
+  const factory CrudTodoConfigTodoList({required final String categoryId}) =
       _$CrudTodoConfigTodoListImpl;
 
   String get categoryId;
@@ -560,7 +560,7 @@ class __$$CrudTodoConfigAddTodoImplCopyWithImpl<$Res>
     Object? categoryId = null,
   }) {
     return _then(_$CrudTodoConfigAddTodoImpl(
-      null == categoryId
+      categoryId: null == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as String,
@@ -571,7 +571,7 @@ class __$$CrudTodoConfigAddTodoImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CrudTodoConfigAddTodoImpl implements CrudTodoConfigAddTodo {
-  const _$CrudTodoConfigAddTodoImpl(this.categoryId);
+  const _$CrudTodoConfigAddTodoImpl({required this.categoryId});
 
   @override
   final String categoryId;
@@ -690,7 +690,7 @@ class _$CrudTodoConfigAddTodoImpl implements CrudTodoConfigAddTodo {
 }
 
 abstract class CrudTodoConfigAddTodo implements CrudTodoConfig {
-  const factory CrudTodoConfigAddTodo(final String categoryId) =
+  const factory CrudTodoConfigAddTodo({required final String categoryId}) =
       _$CrudTodoConfigAddTodoImpl;
 
   String get categoryId;
@@ -730,11 +730,11 @@ class __$$CrudTodoConfigUpdateTodoImplCopyWithImpl<$Res>
     Object? todoId = null,
   }) {
     return _then(_$CrudTodoConfigUpdateTodoImpl(
-      null == categoryId
+      categoryId: null == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as String,
-      null == todoId
+      todoId: null == todoId
           ? _value.todoId
           : todoId // ignore: cast_nullable_to_non_nullable
               as String,
@@ -745,7 +745,8 @@ class __$$CrudTodoConfigUpdateTodoImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CrudTodoConfigUpdateTodoImpl implements CrudTodoConfigUpdateTodo {
-  const _$CrudTodoConfigUpdateTodoImpl(this.categoryId, this.todoId);
+  const _$CrudTodoConfigUpdateTodoImpl(
+      {required this.categoryId, required this.todoId});
 
   @override
   final String categoryId;
@@ -868,8 +869,8 @@ class _$CrudTodoConfigUpdateTodoImpl implements CrudTodoConfigUpdateTodo {
 
 abstract class CrudTodoConfigUpdateTodo implements CrudTodoConfig {
   const factory CrudTodoConfigUpdateTodo(
-          final String categoryId, final String todoId) =
-      _$CrudTodoConfigUpdateTodoImpl;
+      {required final String categoryId,
+      required final String todoId}) = _$CrudTodoConfigUpdateTodoImpl;
 
   String get categoryId;
   String get todoId;
