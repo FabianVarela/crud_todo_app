@@ -13,18 +13,9 @@ Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
       todoSize: (json['todoSize'] as num?)?.toInt() ?? 0,
     );
 
-Map<String, dynamic> _$CategoryToJson(Category instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', instance.id);
-  val['name'] = instance.name;
-  val['emoji'] = Category._emojiToJson(instance.emoji);
-  val['todoSize'] = instance.todoSize;
-  return val;
-}
+Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
+      if (instance.id case final value?) 'id': value,
+      'name': instance.name,
+      'emoji': Category._emojiToJson(instance.emoji),
+      'todoSize': instance.todoSize,
+    };

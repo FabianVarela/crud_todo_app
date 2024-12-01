@@ -14,19 +14,10 @@ Todo _$TodoFromJson(Map<String, dynamic> json) => Todo(
       isCompleted: json['isCompleted'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$TodoToJson(Todo instance) {
-  final val = <String, dynamic>{};
-
-  void writeNotNull(String key, dynamic value) {
-    if (value != null) {
-      val[key] = value;
-    }
-  }
-
-  writeNotNull('id', instance.id);
-  val['subject'] = instance.subject;
-  val['finalDate'] = Todo._intToJson(instance.finalDate);
-  val['categoryId'] = instance.categoryId;
-  val['isCompleted'] = instance.isCompleted;
-  return val;
-}
+Map<String, dynamic> _$TodoToJson(Todo instance) => <String, dynamic>{
+      if (instance.id case final value?) 'id': value,
+      'subject': instance.subject,
+      'finalDate': Todo._intToJson(instance.finalDate),
+      'categoryId': instance.categoryId,
+      'isCompleted': instance.isCompleted,
+    };
