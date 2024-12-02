@@ -144,9 +144,11 @@ void main() {
     testWidgets(
       'Add $Category data from $FormCategoryView form fields',
       (tester) async {
-        when(() => mockCategoryService.saveCategory(any())).thenAnswer(
-          (_) => Future<void>.delayed(const Duration(seconds: 1)),
-        );
+        when(
+          () => mockCategoryService.saveCategory(
+            category: any(named: 'category'),
+          ),
+        ).thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
         await initScreensAndRedirect(tester);
 
@@ -162,7 +164,11 @@ void main() {
         await tester.pumpAndSettle();
         await tester.tap(submitButton);
 
-        verify(() => mockCategoryService.saveCategory(any())).called(1);
+        verify(
+          () => mockCategoryService.saveCategory(
+            category: any(named: 'category'),
+          ),
+        ).called(1);
 
         expect(viewModel.state.isLoading, true);
         await tester.pump(const Duration(milliseconds: 500));
@@ -179,9 +185,11 @@ void main() {
     testWidgets(
       'When try to add a $Category data set an $Exception',
       (tester) async {
-        when(() => mockCategoryService.saveCategory(any())).thenThrow(
-          Exception('Error'),
-        );
+        when(
+          () => mockCategoryService.saveCategory(
+            category: any(named: 'category'),
+          ),
+        ).thenThrow(Exception('Error'));
 
         await initScreensAndRedirect(tester);
 
@@ -191,7 +199,11 @@ void main() {
         await tester.pumpAndSettle();
         await tester.tap(find.byType(SubmitCategory));
 
-        verify(() => mockCategoryService.saveCategory(any())).called(1);
+        verify(
+          () => mockCategoryService.saveCategory(
+            category: any(named: 'category'),
+          ),
+        ).called(1);
         expect(viewModel.state.isError, true);
       },
       variant: TargetPlatformVariant.all(),

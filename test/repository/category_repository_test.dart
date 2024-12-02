@@ -49,45 +49,68 @@ void main() {
         'when getCategoryById is called', () async {
       // arrange
       final future = Future.value(category);
-      when(() => mockCategoryService.getCategoryById(any()))
-          .thenAnswer((_) => future);
+      when(
+        () => mockCategoryService.getCategoryById(
+          categoryId: any(named: 'categoryId'),
+        ),
+      ).thenAnswer((_) => future);
 
       // act
-      final result = categoryRepository.getCategoryById(category.id!);
+      final result = categoryRepository.getCategoryById(
+        categoryId: category.id!,
+      );
 
       // assert
       expect(result, isA<Future<Category>>());
       expect(result, equals(future));
 
-      verify(() => mockCategoryService.getCategoryById(any()));
+      verify(
+        () => mockCategoryService.getCategoryById(
+          categoryId: any(named: 'categoryId'),
+        ),
+      );
       verifyNoMoreInteractions(mockCategoryService);
     });
 
     test('should save new category when saveCategory is called', () {
       // arrange
-      when(() => mockCategoryService.saveCategory(any()))
-          .thenAnswer((_) => Future.value());
+      when(
+        () => mockCategoryService.saveCategory(
+          category: any(named: 'category'),
+        ),
+      ).thenAnswer((_) => Future.value());
 
       // act
-      final result = categoryRepository.saveCategory(initialCategory);
+      final result = categoryRepository.saveCategory(category: initialCategory);
 
       // assert
       expect(result, isA<Future<void>>());
-      verify(() => mockCategoryService.saveCategory(any()));
+      verify(
+        () => mockCategoryService.saveCategory(
+          category: any(named: 'category'),
+        ),
+      );
       verifyNoMoreInteractions(mockCategoryService);
     });
 
     test('should delete when deleteCategory is called', () {
       // arrange
-      when(() => mockCategoryService.deleteCategory(any()))
-          .thenAnswer((_) => Future.value());
+      when(
+        () => mockCategoryService.deleteCategory(
+          categoryId: any(named: 'categoryId'),
+        ),
+      ).thenAnswer((_) => Future.value());
 
       // act
-      final result = categoryRepository.deleteCategory('catId');
+      final result = categoryRepository.deleteCategory(categoryId: 'catId');
 
       // assert
       expect(result, isA<Future<void>>());
-      verify(() => mockCategoryService.deleteCategory(any()));
+      verify(
+        () => mockCategoryService.deleteCategory(
+          categoryId: any(named: 'categoryId'),
+        ),
+      );
       verifyNoMoreInteractions(mockCategoryService);
     });
   });

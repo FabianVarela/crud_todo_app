@@ -87,7 +87,7 @@ void main() {
       when(() => mockDocumentSnapshot.toMap).thenReturn(category.toJson());
 
       // act
-      final result = categoryService.getCategoryById(category.id!);
+      final result = categoryService.getCategoryById(categoryId: category.id!);
       final finalResult = await result;
 
       // assert
@@ -122,7 +122,7 @@ void main() {
       );
 
       // act
-      final result = categoryService.getCategoryById(category.id!);
+      final result = categoryService.getCategoryById(categoryId: category.id!);
 
       // assert
       await expectLater(result, throwsA(isA<Exception>()));
@@ -144,7 +144,7 @@ void main() {
       ).thenAnswer((_) async => mockDocumentReference);
 
       // act
-      final result = categoryService.saveCategory(initialCategory);
+      final result = categoryService.saveCategory(category: initialCategory);
 
       // assert
       expect(result, isA<Future<void>>());
@@ -171,7 +171,7 @@ void main() {
       ).thenAnswer((_) => Future.value());
 
       // act
-      final result = categoryService.saveCategory(category);
+      final result = categoryService.saveCategory(category: category);
 
       // assert
       expect(result, isA<Future<void>>());
@@ -217,7 +217,7 @@ void main() {
       ).thenAnswer((_) => Future.value());
 
       // act
-      final result = categoryService.deleteCategory(category.id!);
+      final result = categoryService.deleteCategory(categoryId: category.id!);
 
       // assert
       expect(result, isA<Future<void>>());

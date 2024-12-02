@@ -30,18 +30,24 @@ void main() {
         'when getTodosByCategory is called', () async {
       // arrange
       final stream = Stream.value([existingTodo]);
-      when(() => mockTodoService.getTodosByCategory(any())).thenAnswer(
-        (_) => stream,
-      );
+      when(
+        () => mockTodoService.getTodosByCategory(
+          categoryId: any(named: 'categoryId'),
+        ),
+      ).thenAnswer((_) => stream);
 
       // act
-      final result = todoRepository.getTodosByCategory('catId');
+      final result = todoRepository.getTodosByCategory(categoryId: 'catId');
 
       // assert
       expect(result, isA<Stream<List<Todo>>>());
       expect(result, stream);
 
-      verify(() => mockTodoService.getTodosByCategory(any()));
+      verify(
+        () => mockTodoService.getTodosByCategory(
+          categoryId: any(named: 'categoryId'),
+        ),
+      );
       verifyNoMoreInteractions(mockTodoService);
     });
 
@@ -50,49 +56,72 @@ void main() {
         'when getTodoById is called', () async {
       // arrange
       final future = Future.value(existingTodo);
-      when(() => mockTodoService.getTodoById(any(), any()))
-          .thenAnswer((_) => future);
+      when(
+        () => mockTodoService.getTodoById(
+          categoryId: any(named: 'categoryId'),
+          todoId: any(named: 'todoId'),
+        ),
+      ).thenAnswer((_) => future);
 
       // act
-      final result = todoRepository.getTodoById(categoryId, existingTodo.id!);
+      final result = todoRepository.getTodoById(
+        categoryId: categoryId,
+        todoId: existingTodo.id!,
+      );
 
       // assert
       expect(result, isA<Future<Todo>>());
       expect(result, future);
 
-      verify(() => mockTodoService.getTodoById(any(), any()));
+      verify(
+        () => mockTodoService.getTodoById(
+          categoryId: any(named: 'categoryId'),
+          todoId: any(named: 'todoId'),
+        ),
+      );
       verifyNoMoreInteractions(mockTodoService);
     });
 
     test('should save todo when saveTodo is called', () {
       // arrange
-      when(() => mockTodoService.saveTodo(any())).thenAnswer(
-        (_) => Future.value(),
-      );
+      when(
+        () => mockTodoService.saveTodo(todo: any(named: 'todo')),
+      ).thenAnswer((_) => Future.value());
 
       // act
-      final result = todoRepository.saveTodo(existingTodo);
+      final result = todoRepository.saveTodo(todo: existingTodo);
 
       // assert
       expect(result, isA<Future<void>>());
 
-      verify(() => mockTodoService.saveTodo(any()));
+      verify(() => mockTodoService.saveTodo(todo: any(named: 'todo')));
       verifyNoMoreInteractions(mockTodoService);
     });
 
     test('should delete todo when deleteTodo is called', () {
       // arrange
-      when(() => mockTodoService.deleteTodo(any(), any())).thenAnswer(
-        (_) => Future.value(),
-      );
+      when(
+        () => mockTodoService.deleteTodo(
+          todoId: any(named: 'todoId'),
+          categoryId: any(named: 'categoryId'),
+        ),
+      ).thenAnswer((_) => Future.value());
 
       // act
-      final result = todoRepository.deleteTodo(todoId, categoryId);
+      final result = todoRepository.deleteTodo(
+        todoId: todoId,
+        categoryId: categoryId,
+      );
 
       // assert
       expect(result, isA<Future<void>>());
 
-      verify(() => mockTodoService.deleteTodo(any(), any()));
+      verify(
+        () => mockTodoService.deleteTodo(
+          todoId: any(named: 'todoId'),
+          categoryId: any(named: 'categoryId'),
+        ),
+      );
       verifyNoMoreInteractions(mockTodoService);
     });
   });

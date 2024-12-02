@@ -87,12 +87,16 @@ void main() {
       when(categoryRepository.getCategories).thenAnswer(
         (_) => Stream.value([category]),
       );
-      when(() => mockCategoryService.getCategoryById(any())).thenAnswer(
-        (_) => Future.value(category),
-      );
-      when(() => mockTodoService.getTodosByCategory(any())).thenAnswer(
-        (_) => Stream.value([existingTodo]),
-      );
+      when(
+        () => mockCategoryService.getCategoryById(
+          categoryId: any(named: 'categoryId'),
+        ),
+      ).thenAnswer((_) => Future.value(category));
+      when(
+        () => mockTodoService.getTodosByCategory(
+          categoryId: any(named: 'categoryId'),
+        ),
+      ).thenAnswer((_) => Stream.value([existingTodo]));
 
       await pumpMainScreen(tester);
       await tester.pump(const Duration(seconds: 1));
@@ -155,9 +159,12 @@ void main() {
     testWidgets(
       'Show $FormTodoView screen',
       (tester) async {
-        when(() => mockTodoService.getTodoById(any(), any())).thenAnswer(
-          (_) => Future.value(existingTodo),
-        );
+        when(
+          () => mockTodoService.getTodoById(
+            todoId: any(named: 'todoId'),
+            categoryId: any(named: 'categoryId'),
+          ),
+        ).thenAnswer((_) => Future.value(existingTodo));
 
         await initScreensAndRedirect(tester);
 
@@ -187,9 +194,12 @@ void main() {
     testWidgets(
       'Show $Exception when get $Todo detail',
       (tester) async {
-        when(() => mockTodoService.getTodoById(any(), any())).thenThrow(
-          Exception('Todo not found'),
-        );
+        when(
+          () => mockTodoService.getTodoById(
+            todoId: any(named: 'todoId'),
+            categoryId: any(named: 'categoryId'),
+          ),
+        ).thenThrow(Exception('Todo not found'));
 
         await initScreensAndRedirect(tester);
 
@@ -209,9 +219,12 @@ void main() {
     testWidgets(
       'Show $DatePickerDialog when tap $DateTodo',
       (tester) async {
-        when(() => mockTodoService.getTodoById(any(), any())).thenAnswer(
-          (_) => Future.value(existingTodo),
-        );
+        when(
+          () => mockTodoService.getTodoById(
+            todoId: any(named: 'todoId'),
+            categoryId: any(named: 'categoryId'),
+          ),
+        ).thenAnswer((_) => Future.value(existingTodo));
 
         await initScreensAndRedirect(tester);
 
@@ -228,9 +241,12 @@ void main() {
     testWidgets(
       'Show $SubmitTodo disabled when $SubjectTodo or $DateTodo are empty',
       (tester) async {
-        when(() => mockTodoService.getTodoById(any(), any())).thenAnswer(
-          (_) => Future.value(existingTodo),
-        );
+        when(
+          () => mockTodoService.getTodoById(
+            todoId: any(named: 'todoId'),
+            categoryId: any(named: 'categoryId'),
+          ),
+        ).thenAnswer((_) => Future.value(existingTodo));
 
         await initScreensAndRedirect(tester);
 
@@ -252,9 +268,12 @@ void main() {
     testWidgets(
       'Show $SubmitTodo enabled when $SubjectTodo or $DateTodo are not empty',
       (tester) async {
-        when(() => mockTodoService.getTodoById(any(), any())).thenAnswer(
-          (_) => Future.value(existingTodo),
-        );
+        when(
+          () => mockTodoService.getTodoById(
+            todoId: any(named: 'todoId'),
+            categoryId: any(named: 'categoryId'),
+          ),
+        ).thenAnswer((_) => Future.value(existingTodo));
 
         await initScreensAndRedirect(tester);
 
@@ -276,7 +295,9 @@ void main() {
     testWidgets(
       'Add a $Todo model from $FormTodoView',
       (tester) async {
-        when(() => mockTodoService.saveTodo(any())).thenAnswer(
+        when(
+          () => mockTodoService.saveTodo(todo: any(named: 'todo')),
+        ).thenAnswer(
           (_) => Future<void>.delayed(const Duration(seconds: 1)),
         );
 
@@ -328,7 +349,9 @@ void main() {
         );
 
         await tester.tap(submitButton);
-        verify(() => mockTodoService.saveTodo(any())).called(1);
+        verify(
+          () => mockTodoService.saveTodo(todo: any(named: 'todo')),
+        ).called(1);
 
         await tester.pump();
         expect(todoViewModel.state.isLoading, isTrue);
@@ -348,9 +371,12 @@ void main() {
     testWidgets(
       'Show $CupertinoDatePicker in $FormTodoView',
       (tester) async {
-        when(() => mockTodoService.getTodoById(any(), any())).thenAnswer(
-          (_) => Future.value(existingTodo),
-        );
+        when(
+          () => mockTodoService.getTodoById(
+            todoId: any(named: 'todoId'),
+            categoryId: any(named: 'categoryId'),
+          ),
+        ).thenAnswer((_) => Future.value(existingTodo));
 
         await initScreensAndRedirect(tester);
 
@@ -383,10 +409,15 @@ void main() {
     testWidgets(
       'Update a $Todo model from $FormTodoView',
       (tester) async {
-        when(() => mockTodoService.getTodoById(any(), any())).thenAnswer(
-          (_) => Future.value(existingTodo),
-        );
-        when(() => mockTodoService.saveTodo(any())).thenAnswer(
+        when(
+          () => mockTodoService.getTodoById(
+            todoId: any(named: 'todoId'),
+            categoryId: any(named: 'categoryId'),
+          ),
+        ).thenAnswer((_) => Future.value(existingTodo));
+        when(
+          () => mockTodoService.saveTodo(todo: any(named: 'todo')),
+        ).thenAnswer(
           (_) => Future<void>.delayed(const Duration(seconds: 1)),
         );
 
@@ -396,7 +427,9 @@ void main() {
         await tester.pumpAndSettle();
 
         await tester.tap(find.byType(SubmitTodo));
-        verify(() => mockTodoService.saveTodo(any())).called(1);
+        verify(
+          () => mockTodoService.saveTodo(todo: any(named: 'todo')),
+        ).called(1);
 
         await tester.pump();
         expect(todoViewModel.state.isLoading, isTrue);
@@ -416,12 +449,15 @@ void main() {
     testWidgets(
       'When add or update a $Todo model set an $Exception',
       (tester) async {
-        when(() => mockTodoService.getTodoById(any(), any())).thenAnswer(
-          (_) => Future.value(existingTodo),
-        );
-        when(() => mockTodoService.saveTodo(any())).thenThrow(
-          Exception('Error'),
-        );
+        when(
+          () => mockTodoService.getTodoById(
+            todoId: any(named: 'todoId'),
+            categoryId: any(named: 'categoryId'),
+          ),
+        ).thenAnswer((_) => Future.value(existingTodo));
+        when(
+          () => mockTodoService.saveTodo(todo: any(named: 'todo')),
+        ).thenThrow(Exception('Error'));
 
         await initScreensAndRedirect(tester);
 
@@ -430,7 +466,9 @@ void main() {
 
         await tester.tap(find.byType(SubmitTodo));
 
-        verify(() => mockTodoService.saveTodo(any())).called(1);
+        verify(
+          () => mockTodoService.saveTodo(todo: any(named: 'todo')),
+        ).called(1);
         expect(todoViewModel.state.isError, isTrue);
 
         expect(find.byType(TodoListView), findsNothing);

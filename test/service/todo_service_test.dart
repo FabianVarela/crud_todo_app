@@ -78,7 +78,9 @@ void main() {
           .thenReturn(existingTodo.toJson());
 
       // act
-      final result = todoService.getTodosByCategory(existingTodo.categoryId);
+      final result = todoService.getTodosByCategory(
+        categoryId: existingTodo.categoryId,
+      );
       final finalResult = await result.first;
 
       // assert
@@ -111,7 +113,10 @@ void main() {
       when(() => mockDocumentSnapshot.toMap).thenReturn(existingTodo.toJson());
 
       // act
-      final result = todoService.getTodoById(categoryId, existingTodo.id!);
+      final result = todoService.getTodoById(
+        categoryId: categoryId,
+        todoId: existingTodo.id!,
+      );
       final finalResult = await result;
 
       // assert
@@ -144,7 +149,10 @@ void main() {
       );
 
       // act
-      final result = todoService.getTodoById(categoryId, existingTodo.id!);
+      final result = todoService.getTodoById(
+        categoryId: categoryId,
+        todoId: existingTodo.id!,
+      );
 
       // assert
       await expectLater(result, throwsA(isA<Exception>()));
@@ -166,7 +174,7 @@ void main() {
       ).thenAnswer((_) async => mockDocumentReference);
 
       // act
-      final result = todoService.saveTodo(initialTodo);
+      final result = todoService.saveTodo(todo: initialTodo);
 
       // assert
       expect(result, isA<Future<void>>());
@@ -196,7 +204,7 @@ void main() {
       ).thenAnswer((_) => Future.value());
 
       // act
-      final result = todoService.saveTodo(existingTodo.copyWith());
+      final result = todoService.saveTodo(todo: existingTodo.copyWith());
 
       // assert
       expect(result, isA<Future<void>>());
@@ -223,8 +231,8 @@ void main() {
 
       // act
       final result = todoService.deleteTodo(
-        existingTodo.id!,
-        existingTodo.categoryId,
+        todoId: existingTodo.id!,
+        categoryId: existingTodo.categoryId,
       );
 
       // assert
