@@ -33,9 +33,9 @@ extension AdaptiveLayoutContext on BuildContext {
 
   ScreenType get formFactor {
     return switch (MediaQuery.sizeOf(this).shortestSide) {
-      > 900 => ScreenType.desktop,
-      > 600 => ScreenType.tablet,
-      > 300 => ScreenType.handset,
+      >= 840 => ScreenType.desktop,
+      >= 600 => ScreenType.tablet,
+      >= 300 => ScreenType.handset,
       _ => ScreenType.watch
     };
   }
