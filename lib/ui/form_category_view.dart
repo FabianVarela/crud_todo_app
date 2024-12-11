@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class FormCategoryView extends ConsumerWidget {
+final class FormCategoryView extends ConsumerWidget {
   const FormCategoryView({super.key});
 
   @override
@@ -78,7 +78,7 @@ class FormCategoryView extends ConsumerWidget {
   }
 }
 
-class NameCategory extends HookConsumerWidget {
+final class NameCategory extends HookConsumerWidget {
   const NameCategory({super.key});
 
   @override
@@ -99,7 +99,7 @@ class NameCategory extends HookConsumerWidget {
   }
 }
 
-class EmojiCategory extends HookConsumerWidget {
+final class EmojiCategory extends HookConsumerWidget {
   const EmojiCategory({super.key});
 
   @override
@@ -120,7 +120,7 @@ class EmojiCategory extends HookConsumerWidget {
   }
 }
 
-class SubmitCategory extends ConsumerWidget {
+final class SubmitCategory extends ConsumerWidget {
   const SubmitCategory({super.key});
 
   @override

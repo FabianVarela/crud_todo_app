@@ -11,7 +11,7 @@ abstract interface class ICategoryRepository {
   Future<void> deleteCategory({required String categoryId});
 }
 
-class CategoryRepository implements ICategoryRepository {
+final class CategoryRepository implements ICategoryRepository {
   CategoryRepository(this._categoryService);
 
   final CategoryService _categoryService;

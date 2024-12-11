@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart' as cupertino;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class CustomDatePicker extends StatelessWidget {
+final class CustomDatePicker extends StatelessWidget {
   const CustomDatePicker({
     required this.initialDate,
     required this.firstDate,

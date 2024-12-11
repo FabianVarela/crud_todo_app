@@ -2,7 +2,7 @@ import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:flutter/material.dart';
 
-class CategoryItem extends StatelessWidget {
+final class CategoryItem extends StatelessWidget {
   const CategoryItem({required this.item, this.onClick, super.key});
 
   final Category item;

@@ -2,7 +2,7 @@ import 'package:crud_todo_app/navigator/config/crud_todo_config.dart';
 import 'package:crud_todo_app/navigator/crud_todo_pages.dart';
 import 'package:flutter/material.dart';
 
-class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
+final class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<CrudTodoConfig> {
   CrudTodoRouterDelegate() : _navigatorKey = GlobalKey<NavigatorState>();
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CustomCheckbox extends StatelessWidget {
+final class CustomCheckbox extends StatelessWidget {
   const CustomCheckbox({
     required this.onChanged,
     this.value = false,

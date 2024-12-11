@@ -4,7 +4,7 @@ import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:dart_emoji/dart_emoji.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class CategoryViewModel extends StateNotifier<CategoryState> {
+final class CategoryViewModel extends StateNotifier<CategoryState> {
   CategoryViewModel(this._repository) : super(const CategoryState.initial());
 
   late final ICategoryRepository _repository;

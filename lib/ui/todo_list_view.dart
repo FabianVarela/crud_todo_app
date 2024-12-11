@@ -14,7 +14,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 typedef NavigatorToTodo = void Function(String, String?);
 
-class TodoListView extends HookConsumerWidget {
+final class TodoListView extends HookConsumerWidget {
   const TodoListView({
     required this.categoryId,
     required this.onGoToTodo,
@@ -110,7 +110,7 @@ class TodoListView extends HookConsumerWidget {
   }
 }
 
-class CategorySection extends ConsumerWidget {
+final class CategorySection extends ConsumerWidget {
   const CategorySection({
     required this.category,
     required this.todos,
@@ -207,7 +207,7 @@ class CategorySection extends ConsumerWidget {
   }
 }
 
-class TodoList extends ConsumerWidget {
+final class TodoList extends ConsumerWidget {
   const TodoList({required this.todoList, required this.onEditItem, super.key});
 
   final List<Todo> todoList;

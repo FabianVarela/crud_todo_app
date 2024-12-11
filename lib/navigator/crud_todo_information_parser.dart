@@ -12,7 +12,8 @@ enum TodoPath {
   final String name;
 }
 
-class CrudTodoInformationParser extends RouteInformationParser<CrudTodoConfig> {
+final class CrudTodoInformationParser
+    extends RouteInformationParser<CrudTodoConfig> {
   @override
   Future<CrudTodoConfig> parseRouteInformation(
     RouteInformation routeInformation,

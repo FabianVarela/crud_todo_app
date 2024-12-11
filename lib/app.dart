@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:window_size/window_size.dart';
 
-class TodoApp extends ConsumerWidget {
+final class TodoApp extends ConsumerWidget {
   const TodoApp({required this.title, super.key});
 
   final String title;

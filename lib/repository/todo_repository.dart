@@ -14,7 +14,7 @@ abstract interface class ITodoRepository {
   Future<void> deleteTodo({required String todoId, required String categoryId});
 }
 
-class TodoRepository implements ITodoRepository {
+final class TodoRepository implements ITodoRepository {
   TodoRepository(this._todoService);
 
   final TodoService _todoService;

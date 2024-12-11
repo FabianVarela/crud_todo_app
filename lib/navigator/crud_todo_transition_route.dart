@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class SimpleRoute<T> extends PageRouteBuilder<T> {
+final class SimpleRoute<T> extends PageRouteBuilder<T> {
   SimpleRoute({required RouteSettings super.settings, required this.child})
       : super(pageBuilder: (_, __, ___) => child);
 
   final Widget child;
 }
 
-class ScaleTransitionRoute<T> extends PageRouteBuilder<T> {
+final class ScaleTransitionRoute<T> extends PageRouteBuilder<T> {
   ScaleTransitionRoute({
     required RouteSettings super.settings,
     required this.child,
@@ -21,7 +21,7 @@ class ScaleTransitionRoute<T> extends PageRouteBuilder<T> {
   final Widget child;
 }
 
-class FadeTransitionRoute<T> extends PageRouteBuilder<T> {
+final class FadeTransitionRoute<T> extends PageRouteBuilder<T> {
   FadeTransitionRoute({
     required RouteSettings super.settings,
     required this.child,
@@ -37,7 +37,7 @@ class FadeTransitionRoute<T> extends PageRouteBuilder<T> {
   final Widget child;
 }
 
-class SlideTransitionRoute<T> extends PageRouteBuilder<T> {
+final class SlideTransitionRoute<T> extends PageRouteBuilder<T> {
   SlideTransitionRoute({
     required RouteSettings super.settings,
     required this.child,
@@ -55,7 +55,7 @@ class SlideTransitionRoute<T> extends PageRouteBuilder<T> {
   final Widget child;
 }
 
-class DialogFadeTransitionRoute<T> extends RawDialogRoute<T> {
+final class DialogFadeTransitionRoute<T> extends RawDialogRoute<T> {
   DialogFadeTransitionRoute({
     required RouteSettings super.settings,
     required this.child,

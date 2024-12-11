@@ -10,19 +10,19 @@ import 'package:mocktail/mocktail.dart';
 
 /// Routes
 
-class MockNavigator extends Mock implements NavigatorObserver {}
+final class MockNavigator extends Mock implements NavigatorObserver {}
 
 /// Firestore
 
-class MockFirestore extends Mock implements FirebaseFirestore {}
+final class MockFirestore extends Mock implements FirebaseFirestore {}
 
-class MockCollectionReference extends Mock
+final class MockCollectionReference extends Mock
     implements CollectionReference<Map<String, dynamic>> {}
 
-class MockQuerySnapshot extends Mock
+final class MockQuerySnapshot extends Mock
     implements QuerySnapshot<Map<String, dynamic>> {}
 
-class MockQueryDocumentSnapshot extends Mock
+final class MockQueryDocumentSnapshot extends Mock
     implements QueryDocumentSnapshot<Map<String, dynamic>> {
   MockQueryDocumentSnapshot(this.id);
 
@@ -30,10 +30,10 @@ class MockQueryDocumentSnapshot extends Mock
   final String id;
 }
 
-class MockDocumentReference extends Mock
+final class MockDocumentReference extends Mock
     implements DocumentReference<Map<String, dynamic>> {}
 
-class MockDocumentSnapshot extends Mock
+final class MockDocumentSnapshot extends Mock
     implements DocumentSnapshot<Map<String, dynamic>> {
   MockDocumentSnapshot(this.id);
 
@@ -41,16 +41,16 @@ class MockDocumentSnapshot extends Mock
   final String id;
 }
 
-class MockQuery extends Mock implements Query<Map<String, dynamic>> {}
+final class MockQuery extends Mock implements Query<Map<String, dynamic>> {}
 
 /// Services
 
-class MockCategoryService extends Mock implements CategoryService {}
+final class MockCategoryService extends Mock implements CategoryService {}
 
-class MockTodoService extends Mock implements TodoService {}
+final class MockTodoService extends Mock implements TodoService {}
 
 /// Models
 
-class MyCategoryFake extends Fake implements Category {}
+final class MyCategoryFake extends Fake implements Category {}
 
-class MyTodoFake extends Fake implements Todo {}
+final class MyTodoFake extends Fake implements Todo {}

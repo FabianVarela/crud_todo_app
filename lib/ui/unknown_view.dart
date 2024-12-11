@@ -2,7 +2,7 @@ import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:flutter/material.dart';
 
-class UnknownView extends StatelessWidget {
+final class UnknownView extends StatelessWidget {
   const UnknownView({super.key});
 
   @override

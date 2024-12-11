@@ -12,15 +12,15 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class CreateCategoryIntent extends Intent {
+final class CreateCategoryIntent extends Intent {
   const CreateCategoryIntent();
 }
 
-class RefreshListIntent extends Intent {
+final class RefreshListIntent extends Intent {
   const RefreshListIntent();
 }
 
-class CategoryListView extends HookConsumerWidget {
+final class CategoryListView extends HookConsumerWidget {
   const CategoryListView({
     required this.onAddCategory,
     required this.onGoToDetail,

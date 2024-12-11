@@ -5,7 +5,7 @@ import 'package:crud_todo_app/ui/widgets/todo_item_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-class TodoItem extends StatelessWidget {
+final class TodoItem extends StatelessWidget {
   const TodoItem({
     required this.todo,
     this.onEdit,

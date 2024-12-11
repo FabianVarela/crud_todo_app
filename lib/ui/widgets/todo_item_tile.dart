@@ -2,7 +2,7 @@ import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/ui/widgets/custom_checkbox.dart';
 import 'package:flutter/material.dart';
 
-class TodoItemTile extends StatelessWidget {
+final class TodoItemTile extends StatelessWidget {
   const TodoItemTile({
     required this.title,
     required this.subTitle,
