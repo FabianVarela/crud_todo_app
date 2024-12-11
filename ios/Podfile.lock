@@ -1,5 +1,5 @@
 PODS:
-  - cloud_firestore (5.5.0):
+  - cloud_firestore (5.5.1):
     - Firebase/Firestore (= 11.4.0)
     - firebase_core
     - Flutter
@@ -8,7 +8,7 @@ PODS:
   - Firebase/Firestore (11.4.0):
     - Firebase/CoreOnly
     - FirebaseFirestore (~> 11.4.0)
-  - firebase_core (3.8.0):
+  - firebase_core (3.8.1):
     - Firebase/CoreOnly (= 11.4.0)
     - Flutter
   - FirebaseCore (11.4.0):
@@ -113,9 +113,9 @@ CHECKOUT OPTIONS:
     :tag: 11.4.0
 
 SPEC CHECKSUMS:
-  cloud_firestore: 8794ea2885e367f0a2096338964ddfd49739b2c7
+  cloud_firestore: 3fafe78d755b01fe1fd267a87bb52e80b7dacacc
   Firebase: cf1b19f21410b029b6786a54e9764a0cacad3c99
-  firebase_core: 9efc3ecf689cdbc90f13f4dc58108c83ea46b266
+  firebase_core: 418aed674e9a0b8b6088aec16cde82a811f6261f
   FirebaseCore: e0510f1523bc0eb21653cac00792e1e2bd6f1771
   FirebaseCoreExtension: 4445e4cd877e0790c4af33bedca61eaef27b7513
   FirebaseCoreInternal: f47dd28ae7782e6a4738aad3106071a8fe0af604
