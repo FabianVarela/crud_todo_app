@@ -44,7 +44,7 @@ dev_dependencies:
   json_serializable: ^6.9.0
   mocktail: ^1.0.4
   remove_from_coverage: ^2.0.0
-  very_good_analysis: ^6.0.0
+  very_good_analysis: ^7.0.0
 
 flutter:
   uses-material-design: true
