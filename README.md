@@ -16,12 +16,12 @@ mobile phones, tablets, computers, notebooks, etc.
 
 ### Flavors
 
-This app has been enabled with Android, iOS, Web, and macOS flavors with the below environments (develop and
-production). For Windows (coming soon).
+This app has been enabled with Android, iOS, Web, macOS, and Windows. Also, enable flavors with the below environments
+(develop and production).
 
 ### Navigator 2.0
 
-Actually the project has been implemented with **Navigator 2.0** or **Route API** from scratch (It doesn't use any
+Currently, the project has been implemented with **Navigator 2.0** or **Route API** from scratch (It doesn't use any
 packages).
 
 #### Deep linking
@@ -80,18 +80,17 @@ Run deep links in **Android**, use the command below:
 * If you want to rename the bundles for each platform, you must do the steps below.
     * For Android, you must rename the bundle id on ```app/build.gradle```.
     * For iOS and macOS in XCode IDE, you select ```Runner``` and change the 'Bundle Identifier' text.
-    * You must run the ```FlutterFire CLI``` command to configure your Firebase project. The project has 2
-      environments `dev` and `production`.
-        * If the project is `production`, you must run this command. Automatically, it creates a file with the
-          name `lib/firebase_options.dart`
+    * You must run the ```flutterfire_config.sh``` file, to configure your Firebase project. But before you must follow
+      these steps.
+        * In the ```flutterfire_config.sh``` file, you must set the project id, replacing the text
+          ```<YOUR_PROJECT_ID>``` with the correct id.
+        * Also, you must rename the bundle-id (for iOS and macOS) and package name (for Android) with yours.
+    * The project has 2 environments `development` and `production`.
+        * You must run this command. Automatically, it creates a file with the required files.
           ```bash
-          flutterfire configure --project=<YOUR_PROJECT_ID>
+          bash flutterfire_config.sh <environment>
           ```
-        * If the project is `dev`, you must run this command. However, you must set the out file in this
-          case `lib/firebase_options_dev.dart`
-          ```bash
-          flutterfire configure --project=<YOUR_PROJECT_ID> --out=lib/firebase_options_dev.dart
-          ```
+      Replace `<environment>` with `prod` if the project is `production`, and with `dev` if it is `development`.
 * Run project and enjoy :smile:
 
 ------
