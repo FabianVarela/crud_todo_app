@@ -93,6 +93,54 @@ Run deep links in **Android**, use the command below:
       Replace `<environment>` with `prod` if the project is `production`, and with `dev` if it is `development`.
 * Run project and enjoy :smile:
 
+### Unit testing and coverage
+
+To execute the unit testing and show the coverage, you must run the `test_coverage` file by console.
+
+#### Mac and Linux
+
+Before to run the script, you must have installed the `lcov` package.
+
+For macOS, via `brew` (you must have the home brew already installed).
+
+```bash
+brew install lcov
+```
+
+For Linux use the command below.
+
+```bash
+sudo apt -y install lcov
+```
+
+After, you must run the `test_coverage.sh`.
+
+```bash
+bash test_coverage.sh
+```
+
+#### Windows
+
+Before to run the script, you must have installed the `lcov` package via `chocolatey` (you must have the chocolatey
+already installed).
+
+```powershell
+choco install lcov
+```
+
+After, you must run the `test_coverage.ps1`. If running the `ps1` file you have an error, you must run as administrator
+the `PowerShell` and type the command below.
+
+```powershell
+Set-ExecutionPolicy RemoteSigned
+```
+
+And finally, run the `ps1` script.
+
+```powershell
+.\test_coverage.ps1
+```
+
 ------
 
 ### Screenshots
