@@ -13,17 +13,25 @@ if ($env -eq "") {
 switch ($env) {
     "dev" {
         flutterfire config `
-            --project=<YOUR_PROJECT_ID> `
-            --out=lib/firebase_options_dev.dart `
-            --android-package-name=com.developer.fabian.crud_todo_app.dev `
-            --android-out=android/app/src/develop/google-services.json
+              --project=<YOUR_PROJECT_ID> `
+              --out=lib/firebase_options_dev.dart `
+              --ios-bundle-id=com.developer.fabian.crudTodoApp.dev `
+              --ios-out=ios/config/develop/GoogleService-Info.plist `
+              --android-package-name=com.developer.fabian.crud_todo_app.dev `
+              --android-out=android/app/src/develop/google-services.json `
+              --macos-bundle-id=com.developer.fabian.crudTodoApp.dev `
+              --macos-out=macos/config/develop/GoogleService-Info.plist
     }
     "prod" {
         flutterfire config `
               --project=<YOUR_PROJECT_ID> `
               --out=lib/firebase_options.dart `
+              --ios-bundle-id=com.developer.fabian.crudTodoApp `
+              --ios-out=ios/config/production/GoogleService-Info.plist `
               --android-package-name=com.developer.fabian.crud_todo_app `
-              --android-out=android/app/src/production/google-services.json
+              --android-out=android/app/src/production/google-services.json `
+              --macos-bundle-id=com.developer.fabian.crudTodoApp `
+              --macos-out=macos/config/production/GoogleService-Info.plist
     }
     default {
         Write-Error "Error: Invalid environment specified. Use 'dev', or 'prod'."
