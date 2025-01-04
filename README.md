@@ -86,11 +86,16 @@ Run deep links in **Android**, use the command below:
           ```<YOUR_PROJECT_ID>``` with the correct id.
         * Also, you must rename the bundle-id (for iOS and macOS) and package name (for Android) with yours.
     * The project has 2 environments `development` and `production`.
-        * You must run this command. Automatically, it creates a file with the required files.
+        * You must run this command for macOS.
           ```bash
           bash flutterfire_config.sh <environment>
           ```
+        * You must run this command for Windows.
+          ```powershell
+           .\flutterfire_config.ps1 <environment>
+           ```
       Replace `<environment>` with `prod` if the project is `production`, and with `dev` if it is `development`.
+      Automatically, it creates a file with the required files.
 * Run project and enjoy :smile:
 
 ### Unit testing and coverage
