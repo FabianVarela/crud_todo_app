@@ -1,17 +1,16 @@
 # Script to generate Firebase configuration files for different environments/flavors
 # Feel free to reuse and adapt this script for your own projects
 
-if ($args.Count -eq 0) {
-    Write-Error "Error: No environment specified. Use 'dev', or 'prod'."
+param(
+    [string]$env = ""
+)
+
+if ($env -eq "") {
+    Write-Host "Error: No environment specified. Use 'dev', or 'prod'."
     exit 1
 }
 
-param(
-    [Parameter(Mandatory=$true)]
-    [string]$Environment
-)
-
-switch ($Environment) {
+switch ($env) {
     "dev" {
         flutterfire config `
             --project=<YOUR_PROJECT_ID> `
