@@ -21,11 +21,12 @@ Future<void> bootstrap(
   await runZonedGuarded(
     () async {
       usePathUrlStrategy();
-
       WidgetsFlutterBinding.ensureInitialized();
+
+      final isWindows = defaultTargetPlatform != TargetPlatform.windows;
       await Firebase.initializeApp(
         options: options,
-        name: !kIsWeb ? appName : null,
+        name: (!kIsWeb && isWindows) ? appName : null,
       );
 
       if (currentDevice == DeviceSegment.desktop) {
