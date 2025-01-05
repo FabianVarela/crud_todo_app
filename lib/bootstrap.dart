@@ -23,10 +23,10 @@ Future<void> bootstrap(
       usePathUrlStrategy();
       WidgetsFlutterBinding.ensureInitialized();
 
-      final isWindows = defaultTargetPlatform != TargetPlatform.windows;
+      final isWindows = defaultTargetPlatform == TargetPlatform.windows;
       await Firebase.initializeApp(
         options: options,
-        name: (!kIsWeb && isWindows) ? appName : null,
+        name: (!kIsWeb && !isWindows) ? appName : null,
       );
 
       if (currentDevice == DeviceSegment.desktop) {
