@@ -24,7 +24,7 @@ final class CategoryViewModel extends StateNotifier<CategoryState> {
       );
 
       state = const CategoryState.success(CategoryAction.add);
-    } catch (_) {
+    } on Exception catch (_) {
       state = const CategoryState.error();
     }
   }

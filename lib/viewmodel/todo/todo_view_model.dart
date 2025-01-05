@@ -29,7 +29,7 @@ final class TodoViewModel extends StateNotifier<TodoState> {
       state = todoId == null
           ? const TodoState.success(TodoAction.add)
           : const TodoState.success(TodoAction.update);
-    } catch (e) {
+    } on Exception catch (e) {
       state = TodoState.error(e.toString());
     }
   }
@@ -42,7 +42,7 @@ final class TodoViewModel extends StateNotifier<TodoState> {
       state = const TodoState.loading();
       await _repository.deleteTodo(todoId: todoId, categoryId: categoryId);
       state = const TodoState.success(TodoAction.remove);
-    } catch (e) {
+    } on Exception catch (e) {
       state = TodoState.error(e.toString());
     }
   }
@@ -54,7 +54,7 @@ final class TodoViewModel extends StateNotifier<TodoState> {
         todo: todo.copyWith(isCompleted: isChecked),
       );
       state = const TodoState.success(TodoAction.check);
-    } catch (e) {
+    } on Exception catch (e) {
       state = TodoState.error(e.toString());
     }
   }

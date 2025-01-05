@@ -1,3 +1,4 @@
+// It is necessary to implement mocks
 // ignore_for_file: subtype_of_sealed_class
 
 import 'package:cloud_firestore/cloud_firestore.dart';
