@@ -38,10 +38,10 @@ dev_dependencies:
     sdk: flutter
   flutter_test:
     sdk: flutter
-  freezed: ^2.5.7
+  freezed: ^2.5.8
   integration_test:
     sdk: flutter
-  json_serializable: ^6.9.0
+  json_serializable: ^6.9.2
   mocktail: ^1.0.4
   remove_from_coverage: ^2.0.0
   very_good_analysis: ^7.0.0
