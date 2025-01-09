@@ -156,4 +156,4 @@ And finally, run the `ps1` script.
 | iOS      | ![ios.gif](./assets/github_resources/ios.gif)         |
 | macOS    | ![macos.gif](./assets/github_resources/macos.gif)     |
 | Web      | ![web.gif](./assets/github_resources/web.gif)         |
-| Windows  | Coming soon                                           |
+| Windows  | ![windows.gif](./assets/github_resources/windows.gif) |
