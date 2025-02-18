@@ -13,10 +13,10 @@ packages:
     dependency: transitive
     description:
       name: _flutterfire_internals
-      sha256: e051259913915ea5bc8fe18664596bea08592fd123930605d562969cd7315fcd
+      sha256: "401dd18096f5eaa140404ccbbbf346f83c850e6f27049698a7ee75a3488ddb32"
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.51"
+    version: "1.3.52"
   analyzer:
     dependency: transitive
     description:
@@ -157,26 +157,26 @@ packages:
     dependency: "direct main"
     description:
       name: cloud_firestore
-      sha256: d7204f3263ba3236c037972f1ea2821569bd7b896fa348c3d557e3b76b6dc143
+      sha256: "8dfe49146560af035314477995bdfb4a7104f33cb7f881748572fbda38ecfa55"
       url: "https://pub.dev"
     source: hosted
-    version: "5.6.3"
+    version: "5.6.4"
   cloud_firestore_platform_interface:
     dependency: transitive
     description:
       name: cloud_firestore_platform_interface
-      sha256: "10a8519164a0e38fce52f78d540bce1170fc210d07989fe49597723400fcd0f1"
+      sha256: dc0bcc3239a4feaa4b7b184dc4b689bc97e6cea1a8320ee0d7ee64b3607858ea
       url: "https://pub.dev"
     source: hosted
-    version: "6.6.3"
+    version: "6.6.4"
   cloud_firestore_web:
     dependency: transitive
     description:
       name: cloud_firestore_web
-      sha256: "4b9e34f53c32dc9891aea247d82bfb21fe7779c0064d84baea1a4f18210146de"
+      sha256: "5091ed6771c886c9a93b1ec1ffa61770056210f1a3312095a73a5a4bab0c6a9f"
       url: "https://pub.dev"
     source: hosted
-    version: "4.4.3"
+    version: "4.4.4"
   code_builder:
     dependency: transitive
     description:
