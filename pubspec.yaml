@@ -14,14 +14,14 @@ dependencies:
   context_menus: ^2.0.0+1
   dart_emoji: ^0.2.0+2
   equatable: ^2.0.7
-  firebase_core: ^3.12.0
+  firebase_core: ^3.12.1
   flutter:
     sdk: flutter
   flutter_hooks: ^0.21.2
   flutter_slidable: ^4.0.0
   flutter_web_plugins:
     sdk: flutter
-  freezed_annotation: ^2.4.4
+  freezed_annotation: ^3.0.0
   google_fonts: ^6.2.1
   hooks_riverpod: ^2.6.1
   intl: ^0.20.2
@@ -39,7 +39,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.3
   flutter_test:
     sdk: flutter
-  freezed: ^2.5.8
+  freezed: ^3.0.0-0.0.dev
   integration_test:
     sdk: flutter
   json_serializable: ^6.9.4
