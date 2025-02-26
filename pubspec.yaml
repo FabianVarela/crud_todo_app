@@ -21,7 +21,7 @@ dependencies:
   flutter_slidable: ^4.0.0
   flutter_web_plugins:
     sdk: flutter
-  freezed_annotation: ^2.4.4
+  freezed_annotation: ^3.0.0
   google_fonts: ^6.2.1
   hooks_riverpod: ^2.6.1
   intl: ^0.20.2
@@ -39,7 +39,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.3
   flutter_test:
     sdk: flutter
-  freezed: ^2.5.8
+  freezed: ^3.0.0-0.0.dev
   integration_test:
     sdk: flutter
   json_serializable: ^6.9.4
