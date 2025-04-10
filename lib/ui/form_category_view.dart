@@ -15,9 +15,10 @@ final class FormCategoryView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final categoryState = ref.watch(categoryViewModelProvider);
 
-    final isDesktopOrTablet = [ScreenType.desktop, ScreenType.tablet].contains(
-      context.formFactor,
-    );
+    final isDesktopOrTablet = [
+      ScreenType.desktop,
+      ScreenType.tablet,
+    ].contains(context.formFactor);
 
     final desktopWidth = isDesktopOrTablet ? 600.0 : null;
     final mobileWidth = !context.isPortrait ? 400.0 : null;
@@ -73,8 +74,9 @@ final class FormCategoryView extends ConsumerWidget {
   }
 
   void _onChangeState(BuildContext context, CategoryState state) {
-    final action = state.maybeWhen(success: (a) => a, orElse: () => null);
-    if (action == CategoryAction.add) Navigator.pop(context);
+    if (state case CategoryStateSuccess(:final action)) {
+      if (action == CategoryAction.add) Navigator.pop(context);
+    }
   }
 }
 

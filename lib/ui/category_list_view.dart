@@ -36,18 +36,15 @@ final class CategoryListView extends HookConsumerWidget {
     final categoriesData = ref.watch(categoryListProvider);
 
     ref.listen<CategoryState>(categoryViewModelProvider, (_, state) {
-      state.whenOrNull(
-        success: (action) {
-          final message = switch (action) {
-            CategoryAction.add => 'Category created successfully',
-            CategoryAction.remove => 'Category removed successfully',
-          };
-          showCustomMessage(context, message: message);
-        },
-        error: (error) {
-          if (error != null) showCustomMessage(context, message: error);
-        },
-      );
+      if (state case CategoryStateSuccess(:final action)) {
+        final message = switch (action) {
+          CategoryAction.add => 'Category created successfully',
+          CategoryAction.remove => 'Category removed successfully',
+        };
+        showCustomMessage(context, message: message);
+      } else if (state case CategoryStateError(:final message)) {
+        if (message != null) showCustomMessage(context, message: message);
+      }
     });
 
     return Scaffold(
@@ -114,16 +111,18 @@ final class CategoryListView extends HookConsumerWidget {
                         ),
                       );
                     },
-                    loading: () => const Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                    error: (e, _) => Center(
-                      child: Text(
-                        e.toString(),
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 20),
-                      ),
-                    ).paddingSymmetric(h: 16),
+                    loading: () {
+                      return const Center(child: CircularProgressIndicator());
+                    },
+                    error: (e, _) {
+                      return Center(
+                        child: Text(
+                          e.toString(),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      ).paddingSymmetric(h: 16);
+                    },
                   ),
                 ),
               ],
@@ -145,16 +144,16 @@ final class CategoryListView extends HookConsumerWidget {
   Map<ShortcutActivator, Intent> get _shortcutsByOS {
     return defaultTargetPlatform == TargetPlatform.macOS
         ? <ShortcutActivator, Intent>{
-            LogicalKeySet(LogicalKeyboardKey.meta, LogicalKeyboardKey.keyN):
-                const CreateCategoryIntent(),
-            LogicalKeySet(LogicalKeyboardKey.meta, LogicalKeyboardKey.keyR):
-                const RefreshListIntent(),
-          }
+          LogicalKeySet(LogicalKeyboardKey.meta, LogicalKeyboardKey.keyN):
+              const CreateCategoryIntent(),
+          LogicalKeySet(LogicalKeyboardKey.meta, LogicalKeyboardKey.keyR):
+              const RefreshListIntent(),
+        }
         : <ShortcutActivator, Intent>{
-            const SingleActivator(LogicalKeyboardKey.keyN, control: true):
-                const CreateCategoryIntent(),
-            const SingleActivator(LogicalKeyboardKey.keyR, control: true):
-                const RefreshListIntent(),
-          };
+          const SingleActivator(LogicalKeyboardKey.keyN, control: true):
+              const CreateCategoryIntent(),
+          const SingleActivator(LogicalKeyboardKey.keyR, control: true):
+              const RefreshListIntent(),
+        };
   }
 }

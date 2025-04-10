@@ -34,20 +34,17 @@ final class TodoListView extends HookConsumerWidget {
     );
 
     ref.listen(todoViewModelProvider, (_, state) {
-      state.whenOrNull(
-        success: (action) {
-          final message = switch (action) {
-            TodoAction.add => 'Todo created successfully',
-            TodoAction.update => 'Todo updated successfully',
-            TodoAction.remove => 'Todo removed successfully',
-            TodoAction.check => 'Todo finished successfully',
-          };
-          showCustomMessage(context, message: message);
-        },
-        error: (error) {
-          if (error != null) showCustomMessage(context, message: error);
-        },
-      );
+      if (state case TodoStateSuccess(:final action)) {
+        final message = switch (action) {
+          TodoAction.add => 'Todo created successfully',
+          TodoAction.update => 'Todo updated successfully',
+          TodoAction.remove => 'Todo removed successfully',
+          TodoAction.check => 'Todo finished successfully',
+        };
+        showCustomMessage(context, message: message);
+      } else if (state case TodoStateError(:final message)) {
+        if (message != null) showCustomMessage(context, message: message);
+      }
     });
 
     return ContextMenuOverlay(
@@ -73,38 +70,49 @@ final class TodoListView extends HookConsumerWidget {
           ],
         ),
         body: categoryData.when(
-          data: (category) => todoData.whenOrNull(
-            data: (todos) => CategorySection(
-              category: category,
-              todos: todos,
-              onEdit: (todoId) => onGoToTodo(categoryId, todoId),
-            ),
-            error: (e, _) => Center(
+          data: (category) {
+            return todoData.whenOrNull(
+              data: (todos) {
+                return CategorySection(
+                  category: category,
+                  todos: todos,
+                  onEdit: (todoId) => onGoToTodo(categoryId, todoId),
+                );
+              },
+              error: (e, _) {
+                return Center(
+                  child: Text(
+                    e.toString(),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 20, color: Colors.white),
+                  ),
+                );
+              },
+            );
+          },
+          loading: () {
+            return const Center(
+              child: CircularProgressIndicator(color: Colors.white),
+            );
+          },
+          error: (e, _) {
+            return Center(
               child: Text(
                 e.toString(),
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 20, color: Colors.white),
               ),
-            ),
-          ),
-          loading: () => const Center(
-            child: CircularProgressIndicator(color: Colors.white),
-          ),
-          error: (e, s) => Center(
-            child: Text(
-              e.toString(),
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 20, color: Colors.white),
-            ),
-          ),
+            );
+          },
         ),
-        floatingActionButton: existsCategory
-            ? FloatingActionButton(
-                backgroundColor: const Color(0xFF4A78FA),
-                onPressed: () => onGoToTodo(categoryId, null),
-                child: const Icon(Icons.add),
-              )
-            : null,
+        floatingActionButton:
+            existsCategory
+                ? FloatingActionButton(
+                  backgroundColor: const Color(0xFF4A78FA),
+                  onPressed: () => onGoToTodo(categoryId, null),
+                  child: const Icon(Icons.add),
+                )
+                : null,
       ),
     );
   }
@@ -189,17 +197,18 @@ final class CategorySection extends ConsumerWidget {
                 topRight: Radius.circular(30),
               ),
             ),
-            child: todos.isNotEmpty
-                ? TodoList(
-                    todoList: todos,
-                    onEditItem: (todo) => onEdit(todo.id),
-                  ).paddingSymmetric(h: 24, v: 20)
-                : const Center(
-                    child: Text(
-                      'Empty data, add a task',
-                      style: TextStyle(fontSize: 25),
+            child:
+                todos.isNotEmpty
+                    ? TodoList(
+                      todoList: todos,
+                      onEditItem: (todo) => onEdit(todo.id),
+                    ).paddingSymmetric(h: 24, v: 20)
+                    : const Center(
+                      child: Text(
+                        'Empty data, add a task',
+                        style: TextStyle(fontSize: 25),
+                      ),
                     ),
-                  ),
           ),
         ),
       ],

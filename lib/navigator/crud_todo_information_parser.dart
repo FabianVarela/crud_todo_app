@@ -18,10 +18,13 @@ final class CrudTodoInformationParser
   Future<CrudTodoConfig> parseRouteInformation(
     RouteInformation routeInformation,
   ) async {
-    final newPaths = routeInformation.uri.pathSegments.map((pathSegment) {
-      final path = TodoPath.values.where((value) => value.name == pathSegment);
-      return path.isEmpty ? pathSegment : pathSegment.toLowerCase();
-    }).toList();
+    final newPaths =
+        routeInformation.uri.pathSegments.map((pathSegment) {
+          final path = TodoPath.values.where(
+            (value) => value.name == pathSegment,
+          );
+          return path.isEmpty ? pathSegment : pathSegment.toLowerCase();
+        }).toList();
 
     if (newPaths.isEmpty) return const CrudTodoConfigCategoryList();
 
@@ -60,29 +63,30 @@ final class CrudTodoInformationParser
 
   @override
   RouteInformation? restoreRouteInformation(CrudTodoConfig configuration) {
-    return configuration.when(
-      categoryList: () => RouteInformation(
+    return switch (configuration) {
+      CrudTodoConfigCategoryList() => RouteInformation(
         uri: Uri.parse('/${TodoPath.category.name}'),
       ),
-      addCategory: () => RouteInformation(
+      CrudTodoConfigAddCategory() => RouteInformation(
         uri: Uri.parse(
           '/${TodoPath.category.name}/${TodoPath.addCategory.name}',
         ),
       ),
-      todoList: (id) => RouteInformation(
-        uri: Uri.parse('/${TodoPath.category.name}/$id'),
+      CrudTodoConfigTodoList(:final categoryId) => RouteInformation(
+        uri: Uri.parse('/${TodoPath.category.name}/$categoryId'),
       ),
-      addTodo: (id) => RouteInformation(
-        uri: Uri.parse('/${TodoPath.category.name}/$id/${TodoPath.todo.name}/'),
-      ),
-      updateTodo: (id, todoId) => RouteInformation(
+      CrudTodoConfigAddTodo(:final categoryId) => RouteInformation(
         uri: Uri.parse(
-          '/${TodoPath.category.name}/$id/${TodoPath.todo.name}/$todoId',
+          '/${TodoPath.category.name}/$categoryId/${TodoPath.todo.name}/',
         ),
       ),
-      unknown: () => RouteInformation(
-        uri: Uri.parse('/${TodoPath.unknown.name}'),
-      ),
-    );
+      CrudTodoConfigUpdateTodo(:final categoryId, :final todoId) =>
+        RouteInformation(
+          uri: Uri.parse(
+            '/${TodoPath.category.name}/$categoryId/${TodoPath.todo.name}/$todoId',
+          ),
+        ),
+      _ => RouteInformation(uri: Uri.parse('/${TodoPath.unknown.name}')),
+    };
   }
 }

@@ -136,36 +136,31 @@ final class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
 
   @override
   Future<void> setNewRoutePath(CrudTodoConfig configuration) async {
-    configuration.when(
-      categoryList: () {
-        categoryId = null;
-        isShowingCategoryForm = false;
-        setTodo(null, isSelected: false);
-        is404 = false;
-      },
-      addCategory: () {
-        isShowingCategoryForm = true;
-        categoryId = null;
-        setTodo(null, isSelected: false);
-        is404 = false;
-      },
-      todoList: (id) {
-        categoryId = id;
-        isShowingCategoryForm = false;
-        setTodo(null, isSelected: false);
-        is404 = false;
-      },
-      addTodo: (_) {
-        setTodo(null, isSelected: true);
-        isShowingCategoryForm = false;
-        is404 = false;
-      },
-      updateTodo: (_, todoId) {
-        setTodo(todoId, isSelected: true);
-        isShowingCategoryForm = false;
-        is404 = false;
-      },
-      unknown: () => is404 = true,
-    );
+    if (configuration case CrudTodoConfigCategoryList()) {
+      categoryId = null;
+      isShowingCategoryForm = false;
+      setTodo(null, isSelected: false);
+      is404 = false;
+    } else if (configuration case CrudTodoConfigAddCategory()) {
+      isShowingCategoryForm = true;
+      categoryId = null;
+      setTodo(null, isSelected: false);
+      is404 = false;
+    } else if (configuration case CrudTodoConfigTodoList(:final categoryId)) {
+      this.categoryId = categoryId;
+      isShowingCategoryForm = false;
+      setTodo(null, isSelected: false);
+      is404 = false;
+    } else if (configuration case CrudTodoConfigAddTodo()) {
+      setTodo(null, isSelected: true);
+      isShowingCategoryForm = false;
+      is404 = false;
+    } else if (configuration case CrudTodoConfigUpdateTodo(:final todoId)) {
+      setTodo(todoId, isSelected: true);
+      isShowingCategoryForm = false;
+      is404 = false;
+    } else {
+      is404 = true;
+    }
   }
 }

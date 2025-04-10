@@ -25,13 +25,11 @@ final class FormTodoView extends HookConsumerWidget {
     );
 
     ref.listen(todoViewModelProvider, (_, state) {
-      state.whenOrNull(
-        success: (action) {
-          if (action == TodoAction.add || action == TodoAction.update) {
-            Navigator.pop(context);
-          }
-        },
-      );
+      if (state case TodoStateSuccess(:final action)) {
+        if (action == TodoAction.add || action == TodoAction.update) {
+          Navigator.pop(context);
+        }
+      }
     });
 
     return Scaffold(
@@ -57,29 +55,37 @@ final class FormTodoView extends HookConsumerWidget {
         ],
       ),
       body: categoryData.maybeWhen(
-        data: (category) => todoData.whenOrNull(
-          data: (todo) => SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Column(
-              children: <Widget>[
-                SubjectTodo(todo: todo).paddingSymmetric(h: 30, v: 30),
-                DateTodo(todo: todo).paddingSymmetric(h: 30, v: 20),
-                CategoryTodo(category: category).paddingSymmetric(h: 30, v: 20),
-                SubmitTodo(
-                  categoryId: categoryId,
-                  todoId: todo?.id,
-                ).paddingSymmetric(h: 16),
-              ],
-            ),
-          ),
-          error: (e, _) => Center(
-            child: Text(
-              e.toString(),
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 20),
-            ),
-          ),
-        ),
+        data: (category) {
+          return todoData.whenOrNull(
+            data: (todo) {
+              return SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Column(
+                  children: <Widget>[
+                    SubjectTodo(todo: todo).paddingSymmetric(h: 30, v: 30),
+                    DateTodo(todo: todo).paddingSymmetric(h: 30, v: 20),
+                    CategoryTodo(
+                      category: category,
+                    ).paddingSymmetric(h: 30, v: 20),
+                    SubmitTodo(
+                      categoryId: categoryId,
+                      todoId: todo?.id,
+                    ).paddingSymmetric(h: 16),
+                  ],
+                ),
+              );
+            },
+            error: (e, _) {
+              return Center(
+                child: Text(
+                  e.toString(),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 20),
+                ),
+              );
+            },
+          );
+        },
         loading: () => const Center(child: CircularProgressIndicator()),
         orElse: Offstage.new,
       ),
@@ -97,20 +103,17 @@ final class SubjectTodo extends HookConsumerWidget {
     final subject = ref.watch(subjectTodoProvider.notifier);
     final subjectTextController = useTextEditingController();
 
-    useEffect(
-      () {
-        if (todo != null) {
-          Future.microtask(() {
-            ref.read(subjectTodoProvider.notifier).update((_) {
-              return ValidationText(text: todo!.subject);
-            });
-            subjectTextController.text = todo!.subject;
+    useEffect(() {
+      if (todo != null) {
+        Future.microtask(() {
+          ref.read(subjectTodoProvider.notifier).update((_) {
+            return ValidationText(text: todo!.subject);
           });
-        }
-        return null;
-      },
-      const [],
-    );
+          subjectTextController.text = todo!.subject;
+        });
+      }
+      return null;
+    }, const []);
 
     return TextField(
       controller: subjectTextController,
@@ -137,28 +140,28 @@ final class DateTodo extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final finalDate = ref.watch(dateTodoProvider);
 
-    useEffect(
-      () {
-        if (todo != null) {
-          Future.microtask(
-            () => ref.read(dateTodoProvider.notifier).state = todo!.finalDate,
-          );
-        }
-        return null;
-      },
-      const [],
-    );
+    useEffect(() {
+      if (todo != null) {
+        Future.microtask(
+          () => ref.read(dateTodoProvider.notifier).state = todo!.finalDate,
+        );
+      }
+      return null;
+    }, const []);
 
     return InkWell(
-      onTap: () => CustomDatePicker.show(
-        context,
-        initialDate: finalDate.isDurationNegative
-            ? DateTime.now().add(const Duration(minutes: 2))
-            : finalDate.add(const Duration(minutes: 2)),
-        firstDate: DateTime.now(),
-        lastDate: DateTime.now().add(const Duration(days: 365)),
-        onChangeDate: (d) => ref.read(dateTodoProvider.notifier).state = d,
-      ),
+      onTap: () {
+        CustomDatePicker.show(
+          context,
+          initialDate:
+              finalDate.isDurationNegative
+                  ? DateTime.now().add(const Duration(minutes: 2))
+                  : finalDate.add(const Duration(minutes: 2)),
+          firstDate: DateTime.now(),
+          lastDate: DateTime.now().add(const Duration(days: 365)),
+          onChangeDate: (d) => ref.read(dateTodoProvider.notifier).state = d,
+        );
+      },
       child: Row(
         children: <Widget>[
           const Icon(
@@ -211,11 +214,7 @@ final class CategoryTodo extends StatelessWidget {
 }
 
 final class SubmitTodo extends HookConsumerWidget {
-  const SubmitTodo({
-    required this.categoryId,
-    this.todoId,
-    super.key,
-  });
+  const SubmitTodo({required this.categoryId, this.todoId, super.key});
 
   final String categoryId;
   final String? todoId;
@@ -242,7 +241,9 @@ final class SubmitTodo extends HookConsumerWidget {
     final subject = ref.read(subjectTodoProvider.notifier).state.text!;
     final date = ref.read(dateTodoProvider.notifier).state;
 
-    ref.read(todoViewModelProvider.notifier).saveTodo(
+    ref
+        .read(todoViewModelProvider.notifier)
+        .saveTodo(
           categoryId: categoryId,
           subject: subject,
           date: date,
