@@ -6,19 +6,19 @@ enum TodoAction { add, update, remove, check }
 
 @freezed
 sealed class TodoState with _$TodoState {
-  const factory TodoState.initial() = _TodoStateInitial;
+  const factory TodoState.initial() = TodoStateInitial;
 
-  const factory TodoState.loading() = _TodoStateLoading;
+  const factory TodoState.loading() = TodoStateLoading;
 
-  const factory TodoState.success(TodoAction action) = _TodoStateSuccess;
+  const factory TodoState.success(TodoAction action) = TodoStateSuccess;
 
-  const factory TodoState.error([String? message]) = _TodoStateError;
+  const factory TodoState.error([String? message]) = TodoStateError;
 }
 
 extension TodoStateX on TodoState {
-  bool get isLoading => this is _TodoStateLoading;
+  bool get isLoading => this is TodoStateLoading;
 
-  bool get isSuccess => this is _TodoStateSuccess;
+  bool get isSuccess => this is TodoStateSuccess;
 
-  bool get isError => this is _TodoStateError;
+  bool get isError => this is TodoStateError;
 }

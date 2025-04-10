@@ -6,20 +6,20 @@ enum CategoryAction { add, remove }
 
 @freezed
 sealed class CategoryState with _$CategoryState {
-  const factory CategoryState.initial() = _CategoryStateInitial;
+  const factory CategoryState.initial() = CategoryStateInitial;
 
-  const factory CategoryState.loading() = _CategoryStateLoading;
+  const factory CategoryState.loading() = CategoryStateLoading;
 
   const factory CategoryState.success(CategoryAction action) =
-      _CategoryStateSuccess;
+      CategoryStateSuccess;
 
-  const factory CategoryState.error([String? message]) = _CategoryStateError;
+  const factory CategoryState.error([String? message]) = CategoryStateError;
 }
 
 extension CategoryStateX on CategoryState {
-  bool get isLoading => this is _CategoryStateLoading;
+  bool get isLoading => this is CategoryStateLoading;
 
-  bool get isSuccess => this is _CategoryStateSuccess;
+  bool get isSuccess => this is CategoryStateSuccess;
 
-  bool get isError => this is _CategoryStateError;
+  bool get isError => this is CategoryStateError;
 }
