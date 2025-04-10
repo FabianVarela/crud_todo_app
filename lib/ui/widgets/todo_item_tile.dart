@@ -23,24 +23,19 @@ final class TodoItemTile extends StatelessWidget {
     return ListTile(
       title: Text(
         title,
-        style: isSuccess
-            ? const TextStyle(
-                fontSize: 22,
-                color: Color(0xFF6474A9),
-                decoration: TextDecoration.lineThrough,
-              )
-            : const TextStyle(fontSize: 22),
+        style: TextStyle(
+          fontSize: 22,
+          color: isSuccess ? const Color(0xFF6474A9) : null,
+          decoration: isSuccess ? TextDecoration.lineThrough : null,
+        ),
       ),
       subtitle: Text(
         subTitle,
-        style: isSuccess
-            ? const TextStyle(
-                fontSize: 16,
-                decoration: TextDecoration.lineThrough,
-              )
-            : isNegative
-                ? const TextStyle(fontSize: 16, color: Colors.red)
-                : const TextStyle(fontSize: 16),
+        style: TextStyle(
+          fontSize: 16,
+          color: isNegative ? Colors.red : null,
+          decoration: isSuccess ? TextDecoration.lineThrough : null,
+        ),
       ).paddingSymmetric(v: 4),
       trailing: CustomCheckbox(
         value: isSuccess,

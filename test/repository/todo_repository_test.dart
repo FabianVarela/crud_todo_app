@@ -26,34 +26,33 @@ void main() {
 
   group('$TodoRepository', () {
     test(
-        'should return $List of $Todo '
-        'when getTodosByCategory is called', () async {
-      // arrange
-      final stream = Stream.value([existingTodo]);
-      when(
-        () => mockTodoService.getTodosByCategory(
-          categoryId: any(named: 'categoryId'),
-        ),
-      ).thenAnswer((_) => stream);
+      'should return $List of $Todo when getTodosByCategory is called',
+      () async {
+        // arrange
+        final stream = Stream.value([existingTodo]);
+        when(
+          () => mockTodoService.getTodosByCategory(
+            categoryId: any(named: 'categoryId'),
+          ),
+        ).thenAnswer((_) => stream);
 
-      // act
-      final result = todoRepository.getTodosByCategory(categoryId: 'catId');
+        // act
+        final result = todoRepository.getTodosByCategory(categoryId: 'catId');
 
-      // assert
-      expect(result, isA<Stream<List<Todo>>>());
-      expect(result, stream);
+        // assert
+        expect(result, isA<Stream<List<Todo>>>());
+        expect(result, stream);
 
-      verify(
-        () => mockTodoService.getTodosByCategory(
-          categoryId: any(named: 'categoryId'),
-        ),
-      );
-      verifyNoMoreInteractions(mockTodoService);
-    });
+        verify(
+          () => mockTodoService.getTodosByCategory(
+            categoryId: any(named: 'categoryId'),
+          ),
+        );
+        verifyNoMoreInteractions(mockTodoService);
+      },
+    );
 
-    test(
-        'should return $Category '
-        'when getTodoById is called', () async {
+    test('should return $Category when getTodoById is called', () async {
       // arrange
       final future = Future.value(existingTodo);
       when(

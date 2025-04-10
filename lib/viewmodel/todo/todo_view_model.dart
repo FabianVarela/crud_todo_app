@@ -26,9 +26,9 @@ final class TodoViewModel extends StateNotifier<TodoState> {
         ),
       );
 
-      state = todoId == null
-          ? const TodoState.success(TodoAction.add)
-          : const TodoState.success(TodoAction.update);
+      state = TodoState.success(
+        todoId == null ? TodoAction.add : TodoAction.update,
+      );
     } on Exception catch (e) {
       state = TodoState.error(e.toString());
     }
@@ -50,9 +50,7 @@ final class TodoViewModel extends StateNotifier<TodoState> {
   Future<void> checkTodo({required Todo todo, bool isChecked = false}) async {
     try {
       state = const TodoState.loading();
-      await _repository.saveTodo(
-        todo: todo.copyWith(isCompleted: isChecked),
-      );
+      await _repository.saveTodo(todo: todo.copyWith(isCompleted: isChecked));
       state = const TodoState.success(TodoAction.check);
     } on Exception catch (e) {
       state = TodoState.error(e.toString());

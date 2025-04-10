@@ -35,14 +35,13 @@ class Todo extends Equatable {
     DateTime? finalDate,
     String? categoryId,
     bool? isCompleted,
-  }) =>
-      Todo(
-        id: id ?? this.id,
-        subject: subject ?? this.subject,
-        finalDate: finalDate ?? this.finalDate,
-        categoryId: categoryId ?? this.categoryId,
-        isCompleted: isCompleted ?? this.isCompleted,
-      );
+  }) => Todo(
+    id: id ?? this.id,
+    subject: subject ?? this.subject,
+    finalDate: finalDate ?? this.finalDate,
+    categoryId: categoryId ?? this.categoryId,
+    isCompleted: isCompleted ?? this.isCompleted,
+  );
 
   @override
   List<Object?> get props => [id, subject, finalDate, categoryId, isCompleted];

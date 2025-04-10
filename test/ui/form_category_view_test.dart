@@ -52,12 +52,14 @@ void main() {
             routerDelegate: todoRouterDelegate,
             routeInformationParser: todoInfoParser,
             backButtonDispatcher: RootBackButtonDispatcher(),
-            builder: (_, child) => Consumer(
-              builder: (_, ref, __) {
-                viewModel = ref.read(categoryViewModelProvider.notifier);
-                return child!;
-              },
-            ),
+            builder: (_, child) {
+              return Consumer(
+                builder: (_, ref, __) {
+                  viewModel = ref.read(categoryViewModelProvider.notifier);
+                  return child!;
+                },
+              );
+            },
           ),
         ),
       );

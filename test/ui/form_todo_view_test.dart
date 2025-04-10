@@ -69,12 +69,14 @@ void main() {
             routerDelegate: todoRouterDelegate,
             routeInformationParser: todoInfoParser,
             backButtonDispatcher: RootBackButtonDispatcher(),
-            builder: (_, child) => Consumer(
-              builder: (_, ref, __) {
-                todoViewModel = ref.read(todoViewModelProvider.notifier);
-                return child!;
-              },
-            ),
+            builder: (_, child) {
+              return Consumer(
+                builder: (_, ref, __) {
+                  todoViewModel = ref.read(todoViewModelProvider.notifier);
+                  return child!;
+                },
+              );
+            },
           ),
         ),
       );
@@ -84,9 +86,9 @@ void main() {
       WidgetTester tester, {
       bool isNew = false,
     }) async {
-      when(categoryRepository.getCategories).thenAnswer(
-        (_) => Stream.value([category]),
-      );
+      when(
+        categoryRepository.getCategories,
+      ).thenAnswer((_) => Stream.value([category]));
       when(
         () => mockCategoryService.getCategoryById(
           categoryId: any(named: 'categoryId'),
@@ -156,27 +158,23 @@ void main() {
       expect(find.byType(FormTodoView), findsOneWidget);
     }
 
-    testWidgets(
-      'Show $FormTodoView screen',
-      (tester) async {
-        when(
-          () => mockTodoService.getTodoById(
-            todoId: any(named: 'todoId'),
-            categoryId: any(named: 'categoryId'),
-          ),
-        ).thenAnswer((_) => Future.value(existingTodo));
+    testWidgets('Show $FormTodoView screen', (tester) async {
+      when(
+        () => mockTodoService.getTodoById(
+          todoId: any(named: 'todoId'),
+          categoryId: any(named: 'categoryId'),
+        ),
+      ).thenAnswer((_) => Future.value(existingTodo));
 
-        await initScreensAndRedirect(tester);
+      await initScreensAndRedirect(tester);
 
-        expect(find.text('Update Task'), findsOneWidget);
-        expect(find.byIcon(Icons.close), findsOneWidget);
-        expect(find.byType(SubjectTodo), findsOneWidget);
-        expect(find.byType(DateTodo), findsOneWidget);
-        expect(find.byType(CategoryTodo), findsOneWidget);
-        expect(find.byType(SubmitTodo), findsOneWidget);
-      },
-      variant: TargetPlatformVariant.all(),
-    );
+      expect(find.text('Update Task'), findsOneWidget);
+      expect(find.byIcon(Icons.close), findsOneWidget);
+      expect(find.byType(SubjectTodo), findsOneWidget);
+      expect(find.byType(DateTodo), findsOneWidget);
+      expect(find.byType(CategoryTodo), findsOneWidget);
+      expect(find.byType(SubmitTodo), findsOneWidget);
+    }, variant: TargetPlatformVariant.all());
 
     testWidgets(
       'Check close button in $FormTodoView screen and return',
@@ -297,9 +295,7 @@ void main() {
       (tester) async {
         when(
           () => mockTodoService.saveTodo(todo: any(named: 'todo')),
-        ).thenAnswer(
-          (_) => Future<void>.delayed(const Duration(seconds: 1)),
-        );
+        ).thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
         await initScreensAndRedirect(tester, isNew: true);
 
@@ -363,9 +359,10 @@ void main() {
         expect(find.byType(TodoListView), findsOneWidget);
       },
       // TODO(FV): Review linux and windows
-      variant: const TargetPlatformVariant(
-        {TargetPlatform.android, TargetPlatform.fuchsia},
-      ),
+      variant: const TargetPlatformVariant({
+        TargetPlatform.android,
+        TargetPlatform.fuchsia,
+      }),
     );
 
     testWidgets(
@@ -401,9 +398,10 @@ void main() {
         await tester.pumpAndSettle();
         expect(findDatePicker, findsNothing);
       },
-      variant: const TargetPlatformVariant(
-        {TargetPlatform.iOS, TargetPlatform.macOS},
-      ),
+      variant: const TargetPlatformVariant({
+        TargetPlatform.iOS,
+        TargetPlatform.macOS,
+      }),
     );
 
     testWidgets(
@@ -417,9 +415,7 @@ void main() {
         ).thenAnswer((_) => Future.value(existingTodo));
         when(
           () => mockTodoService.saveTodo(todo: any(named: 'todo')),
-        ).thenAnswer(
-          (_) => Future<void>.delayed(const Duration(seconds: 1)),
-        );
+        ).thenAnswer((_) => Future<void>.delayed(const Duration(seconds: 1)));
 
         await initScreensAndRedirect(tester);
 
@@ -441,9 +437,11 @@ void main() {
         expect(find.byType(TodoListView), findsOneWidget);
       },
       // TODO(FV): Review linux and windows
-      variant: const TargetPlatformVariant(
-        {TargetPlatform.android, TargetPlatform.iOS, TargetPlatform.fuchsia},
-      ),
+      variant: const TargetPlatformVariant({
+        TargetPlatform.android,
+        TargetPlatform.iOS,
+        TargetPlatform.fuchsia,
+      }),
     );
 
     testWidgets(

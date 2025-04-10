@@ -76,14 +76,16 @@ void main() {
             routerDelegate: todoRouterDelegate,
             routeInformationParser: todoInfoParser,
             backButtonDispatcher: RootBackButtonDispatcher(),
-            builder: (_, child) => Consumer(
-              builder: (_, ref, __) {
-                viewModel = ref.read(categoryViewModelProvider.notifier);
-                todoViewModel = ref.read(todoViewModelProvider.notifier);
+            builder: (_, child) {
+              return Consumer(
+                builder: (_, ref, __) {
+                  viewModel = ref.read(categoryViewModelProvider.notifier);
+                  todoViewModel = ref.read(todoViewModelProvider.notifier);
 
-                return child!;
-              },
-            ),
+                  return child!;
+                },
+              );
+            },
           ),
         ),
       );
@@ -93,9 +95,9 @@ void main() {
       WidgetTester tester, {
       bool hasException = false,
     }) async {
-      when(categoryRepository.getCategories).thenAnswer(
-        (_) => Stream.value([category]),
-      );
+      when(
+        categoryRepository.getCategories,
+      ).thenAnswer((_) => Stream.value([category]));
 
       if (hasException) {
         when(
@@ -512,9 +514,7 @@ void main() {
           () => mockTodoService.getTodosByCategory(
             categoryId: any(named: 'categoryId'),
           ),
-        ).thenAnswer(
-          (_) => Stream.value([existingTodo]),
-        );
+        ).thenAnswer((_) => Stream.value([existingTodo]));
         when(
           () => mockTodoService.deleteTodo(
             todoId: any(named: 'todoId'),

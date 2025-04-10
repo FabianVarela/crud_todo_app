@@ -6,10 +6,8 @@ final class ValidationText extends Equatable {
   final String? text;
   final String? message;
 
-  ValidationText copyWith({String? text, String? message}) => ValidationText(
-        text: text ?? this.text,
-        message: message ?? this.message,
-      );
+  ValidationText copyWith({String? text, String? message}) =>
+      ValidationText(text: text ?? this.text, message: message ?? this.message);
 
   @override
   List<Object?> get props => [text, message];

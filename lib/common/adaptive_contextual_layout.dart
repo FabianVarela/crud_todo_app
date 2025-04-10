@@ -17,12 +17,9 @@ List<DeviceSegment> webSegments = [
 
 DeviceSegment get currentDevice {
   return switch (defaultTargetPlatform) {
-    TargetPlatform.android ||
-    TargetPlatform.iOS =>
+    TargetPlatform.android || TargetPlatform.iOS =>
       kIsWeb ? DeviceSegment.mobileWeb : DeviceSegment.mobile,
-    TargetPlatform.windows ||
-    TargetPlatform.linux ||
-    TargetPlatform.macOS =>
+    TargetPlatform.windows || TargetPlatform.linux || TargetPlatform.macOS =>
       kIsWeb ? DeviceSegment.desktopWeb : DeviceSegment.desktop,
     _ => DeviceSegment.other,
   };
@@ -36,7 +33,7 @@ extension AdaptiveLayoutContext on BuildContext {
       >= 840 => ScreenType.desktop,
       >= 600 => ScreenType.tablet,
       >= 300 => ScreenType.handset,
-      _ => ScreenType.watch
+      _ => ScreenType.watch,
     };
   }
 }

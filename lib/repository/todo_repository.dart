@@ -27,8 +27,7 @@ final class TodoRepository implements ITodoRepository {
   Future<Todo> getTodoById({
     required String categoryId,
     required String todoId,
-  }) =>
-      _todoService.getTodoById(categoryId: categoryId, todoId: todoId);
+  }) => _todoService.getTodoById(categoryId: categoryId, todoId: todoId);
 
   @override
   Future<void> saveTodo({required Todo todo}) async =>
@@ -38,6 +37,5 @@ final class TodoRepository implements ITodoRepository {
   Future<void> deleteTodo({
     required String todoId,
     required String categoryId,
-  }) async =>
-      _todoService.deleteTodo(todoId: todoId, categoryId: categoryId);
+  }) async => _todoService.deleteTodo(todoId: todoId, categoryId: categoryId);
 }

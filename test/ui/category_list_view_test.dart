@@ -64,17 +64,13 @@ void main() {
       );
     }
 
-    testWidgets(
-      'Show $CategoryListView screen',
-      (tester) async {
-        await pumpMainScreen(tester);
+    testWidgets('Show $CategoryListView screen', (tester) async {
+      await pumpMainScreen(tester);
 
-        expect(find.byIcon(Icons.menu_rounded), findsOneWidget);
-        expect(find.text('Lists'), findsOneWidget);
-        expect(find.byType(FloatingActionButton), findsOneWidget);
-      },
-      variant: TargetPlatformVariant.all(),
-    );
+      expect(find.byIcon(Icons.menu_rounded), findsOneWidget);
+      expect(find.text('Lists'), findsOneWidget);
+      expect(find.byType(FloatingActionButton), findsOneWidget);
+    }, variant: TargetPlatformVariant.all());
 
     testWidgets(
       'Show $FormCategoryView in when set tap in $FloatingActionButton',
@@ -97,9 +93,9 @@ void main() {
     testWidgets(
       'Show empty data in $CategoryListView screen',
       (tester) async {
-        when(mockCategoryService.getCategories).thenAnswer(
-          (_) => Stream.value([]),
-        );
+        when(
+          mockCategoryService.getCategories,
+        ).thenAnswer((_) => Stream.value([]));
 
         await pumpMainScreen(tester);
 
@@ -115,9 +111,9 @@ void main() {
     testWidgets(
       'Show data in $CategoryListView screen',
       (tester) async {
-        when(categoryRepository.getCategories).thenAnswer(
-          (_) => Stream.value([category]),
-        );
+        when(
+          categoryRepository.getCategories,
+        ).thenAnswer((_) => Stream.value([category]));
 
         await pumpMainScreen(tester);
 
@@ -141,9 +137,9 @@ void main() {
     testWidgets(
       'Show $Exception in $CategoryListView screen',
       (tester) async {
-        when(categoryRepository.getCategories).thenThrow(
-          Exception('Category not found'),
-        );
+        when(
+          categoryRepository.getCategories,
+        ).thenThrow(Exception('Category not found'));
 
         await pumpMainScreen(tester);
 
@@ -157,9 +153,9 @@ void main() {
     testWidgets(
       'Show tooltip in $CategoryItem using the $CustomMouseRegion widget',
       (tester) async {
-        when(categoryRepository.getCategories).thenAnswer(
-          (_) => Stream.value([category]),
-        );
+        when(
+          categoryRepository.getCategories,
+        ).thenAnswer((_) => Stream.value([category]));
 
         await pumpMainScreen(tester);
 
@@ -201,9 +197,9 @@ void main() {
     testWidgets(
       'In $CategoryListView, refresh with the command keys',
       (tester) async {
-        when(categoryRepository.getCategories).thenAnswer(
-          (_) => Stream.value([category]),
-        );
+        when(
+          categoryRepository.getCategories,
+        ).thenAnswer((_) => Stream.value([category]));
 
         await pumpMainScreen(tester);
 
@@ -224,9 +220,9 @@ void main() {
     testWidgets(
       'In $CategoryListView, open dialog with the command keys',
       (tester) async {
-        when(categoryRepository.getCategories).thenAnswer(
-          (_) => Stream.value([category]),
-        );
+        when(
+          categoryRepository.getCategories,
+        ).thenAnswer((_) => Stream.value([category]));
 
         await pumpMainScreen(tester);
 

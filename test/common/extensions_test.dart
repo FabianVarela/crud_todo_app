@@ -12,10 +12,7 @@ void main() {
       final textValidation = textEmpty.validateEmpty;
 
       // assert
-      expect(
-        textValidation,
-        const ValidationText(message: 'Field is empty'),
-      );
+      expect(textValidation, const ValidationText(message: 'Field is empty'));
       expect(textValidation, isA<ValidationText>());
     });
 
@@ -27,10 +24,7 @@ void main() {
       final textValidation = textEmpty.validateEmpty;
 
       // assert
-      expect(
-        textValidation,
-        const ValidationText(text: textEmpty),
-      );
+      expect(textValidation, const ValidationText(text: textEmpty));
       expect(textValidation, isA<ValidationText>());
     });
 
@@ -42,10 +36,7 @@ void main() {
       final textValidation = textEmoji.validateEmoji;
 
       // assert
-      expect(
-        textValidation,
-        const ValidationText(message: 'Invalid emoji'),
-      );
+      expect(textValidation, const ValidationText(message: 'Invalid emoji'));
       expect(textValidation, isA<ValidationText>());
     });
 
@@ -57,10 +48,7 @@ void main() {
       final textValidation = textEmoji.validateEmoji;
 
       // assert
-      expect(
-        textValidation,
-        const ValidationText(text: textEmoji),
-      );
+      expect(textValidation, const ValidationText(text: textEmoji));
       expect(textValidation, isA<ValidationText>());
     });
 
@@ -72,10 +60,7 @@ void main() {
       final textValidation = textEmoji.validateEmoji;
 
       // assert
-      expect(
-        textValidation,
-        const ValidationText(message: 'Invalid emoji'),
-      );
+      expect(textValidation, const ValidationText(message: 'Invalid emoji'));
       expect(textValidation, isA<ValidationText>());
     });
 

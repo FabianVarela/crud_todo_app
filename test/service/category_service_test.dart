@@ -47,9 +47,9 @@ void main() {
         () => mockCollectionReference.snapshots(),
       ).thenAnswer((_) => Stream.value(mockQuerySnapshot));
 
-      when(() => mockQuerySnapshot.docs).thenReturn(
-        [mockQueryDocumentSnapshot],
-      );
+      when(
+        () => mockQuerySnapshot.docs,
+      ).thenReturn([mockQueryDocumentSnapshot]);
 
       when(() => mockQueryDocumentSnapshot.toMap).thenReturn(category.toJson());
 
@@ -117,9 +117,9 @@ void main() {
       ).thenAnswer((_) => Future.value(mockDocumentSnapshot));
 
       when(() => mockDocumentSnapshot.exists).thenReturn(false);
-      when(() => mockDocumentSnapshot.toMap).thenThrow(
-        Exception('Oops!!! Category not found'),
-      );
+      when(
+        () => mockDocumentSnapshot.toMap,
+      ).thenThrow(Exception('Oops!!! Category not found'));
 
       // act
       final result = categoryService.getCategoryById(categoryId: category.id!);
@@ -206,11 +206,13 @@ void main() {
 
       when(() => mockQuery.get()).thenAnswer((_) async => mockQuerySnapshot);
 
-      when(() => mockQuerySnapshot.docs)
-          .thenReturn([mockQueryDocumentSnapshot]);
+      when(
+        () => mockQuerySnapshot.docs,
+      ).thenReturn([mockQueryDocumentSnapshot]);
 
-      when(() => mockQueryDocumentSnapshot.reference)
-          .thenReturn(mockDocumentReference);
+      when(
+        () => mockQueryDocumentSnapshot.reference,
+      ).thenReturn(mockDocumentReference);
 
       when(
         () => mockDocumentReference.delete(),

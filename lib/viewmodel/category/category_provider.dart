@@ -7,13 +7,14 @@ final categoryListProvider = StreamProvider.autoDispose(
   (ref) => ref.watch(categoryRepositoryProvider).getCategories(),
 );
 
-final categoryDetailProvider = FutureProvider.family.autoDispose(
-  (ref, String categoryId) {
-    return ref
-        .watch(categoryRepositoryProvider)
-        .getCategoryById(categoryId: categoryId);
-  },
-);
+final categoryDetailProvider = FutureProvider.family.autoDispose((
+  ref,
+  String categoryId,
+) {
+  return ref
+      .watch(categoryRepositoryProvider)
+      .getCategoryById(categoryId: categoryId);
+});
 
 final nameCategoryProvider = StateProvider.autoDispose(
   (_) => const ValidationText(),

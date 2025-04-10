@@ -13,9 +13,7 @@ class CategoryService {
   Stream<List<Category>> getCategories() {
     final querySnapshot = _database.collection(_categoryCollection).snapshots();
     return querySnapshot.map(
-      (query) => [
-        for (final item in query.docs) Category.fromJson(item.toMap),
-      ],
+      (query) => [for (final item in query.docs) Category.fromJson(item.toMap)],
     );
   }
 
@@ -44,10 +42,11 @@ class CategoryService {
   Future<void> deleteCategory({required String categoryId}) async {
     await _database.collection(_categoryCollection).doc(categoryId).delete();
 
-    final snapshot = await _database
-        .collection(_todoCollection)
-        .where('categoryId', isEqualTo: categoryId)
-        .get();
+    final snapshot =
+        await _database
+            .collection(_todoCollection)
+            .where('categoryId', isEqualTo: categoryId)
+            .get();
 
     for (var i = 0; i < snapshot.docs.length; i++) {
       await snapshot.docs[i].reference.delete();

@@ -27,69 +27,73 @@ void main() {
 
   group('$CategoryRepository', () {
     test(
-        'should get a stream with a $List of $Category '
-        'when getCategories is called', () async {
-      // arrange
-      final stream = Stream.value([category]);
-      when(() => mockCategoryService.getCategories()).thenAnswer((_) => stream);
+      'should get a stream with a $List of $Category when get is called',
+      () async {
+        // arrange
+        final stream = Stream.value([category]);
+        when(
+          () => mockCategoryService.getCategories(),
+        ).thenAnswer((_) => stream);
 
-      // act
-      final result = categoryRepository.getCategories();
+        // act
+        final result = categoryRepository.getCategories();
 
-      // assert
-      expect(result, isA<Stream<List<Category>>>());
-      expect(result, equals(stream));
+        // assert
+        expect(result, isA<Stream<List<Category>>>());
+        expect(result, equals(stream));
 
-      verify(() => mockCategoryService.getCategories());
-      verifyNoMoreInteractions(mockCategoryService);
-    });
+        verify(() => mockCategoryService.getCategories());
+        verifyNoMoreInteractions(mockCategoryService);
+      },
+    );
 
     test(
-        'should get a future with a $Category '
-        'when getCategoryById is called', () async {
-      // arrange
-      final future = Future.value(category);
-      when(
-        () => mockCategoryService.getCategoryById(
-          categoryId: any(named: 'categoryId'),
-        ),
-      ).thenAnswer((_) => future);
+      'should get a future with a $Category when getCategoryById is called',
+      () async {
+        // arrange
+        final future = Future.value(category);
+        when(
+          () => mockCategoryService.getCategoryById(
+            categoryId: any(named: 'categoryId'),
+          ),
+        ).thenAnswer((_) => future);
 
-      // act
-      final result = categoryRepository.getCategoryById(
-        categoryId: category.id!,
-      );
+        // act
+        final result = categoryRepository.getCategoryById(
+          categoryId: category.id!,
+        );
 
-      // assert
-      expect(result, isA<Future<Category>>());
-      expect(result, equals(future));
+        // assert
+        expect(result, isA<Future<Category>>());
+        expect(result, equals(future));
 
-      verify(
-        () => mockCategoryService.getCategoryById(
-          categoryId: any(named: 'categoryId'),
-        ),
-      );
-      verifyNoMoreInteractions(mockCategoryService);
-    });
+        verify(
+          () => mockCategoryService.getCategoryById(
+            categoryId: any(named: 'categoryId'),
+          ),
+        );
+        verifyNoMoreInteractions(mockCategoryService);
+      },
+    );
 
     test('should save new category when saveCategory is called', () {
       // arrange
-      when(
-        () => mockCategoryService.saveCategory(
+      when(() {
+        return mockCategoryService.saveCategory(
           category: any(named: 'category'),
-        ),
-      ).thenAnswer((_) => Future.value());
+        );
+      }).thenAnswer((_) => Future.value());
 
       // act
       final result = categoryRepository.saveCategory(category: initialCategory);
 
       // assert
       expect(result, isA<Future<void>>());
-      verify(
-        () => mockCategoryService.saveCategory(
+      verify(() {
+        return mockCategoryService.saveCategory(
           category: any(named: 'category'),
-        ),
-      );
+        );
+      });
       verifyNoMoreInteractions(mockCategoryService);
     });
 

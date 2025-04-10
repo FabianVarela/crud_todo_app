@@ -17,10 +17,7 @@ final class CategoryViewModel extends StateNotifier<CategoryState> {
       state = const CategoryState.loading();
 
       await _repository.saveCategory(
-        category: Category(
-          name: name,
-          emoji: EmojiParser().getEmoji(emoji),
-        ),
+        category: Category(name: name, emoji: EmojiParser().getEmoji(emoji)),
       );
 
       state = const CategoryState.success(CategoryAction.add);

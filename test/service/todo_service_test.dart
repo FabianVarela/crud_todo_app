@@ -46,9 +46,9 @@ void main() {
     when(
       () => categoryCollectionRef.doc(categoryId),
     ).thenAnswer((_) => categoryDocumentRef);
-    when(() => categoryDocumentRef.update(any())).thenAnswer(
-      (_) => Future.value(),
-    );
+    when(
+      () => categoryDocumentRef.update(any()),
+    ).thenAnswer((_) => Future.value());
   }
 
   group('$TodoService', () {
@@ -71,11 +71,13 @@ void main() {
         () => mockQuery.snapshots(),
       ).thenAnswer((_) => Stream.value(mockQuerySnapshot));
 
-      when(() => mockQuerySnapshot.docs)
-          .thenReturn([mockQueryDocumentSnapshot]);
+      when(
+        () => mockQuerySnapshot.docs,
+      ).thenReturn([mockQueryDocumentSnapshot]);
 
-      when(() => mockQueryDocumentSnapshot.toMap)
-          .thenReturn(existingTodo.toJson());
+      when(
+        () => mockQueryDocumentSnapshot.toMap,
+      ).thenReturn(existingTodo.toJson());
 
       // act
       final result = todoService.getTodosByCategory(
@@ -144,9 +146,9 @@ void main() {
       ).thenAnswer((_) => Future.value(mockDocumentSnapshot));
 
       when(() => mockDocumentSnapshot.exists).thenReturn(false);
-      when(() => mockDocumentSnapshot.toMap).thenThrow(
-        Exception('Oops!!! Todo not found'),
-      );
+      when(
+        () => mockDocumentSnapshot.toMap,
+      ).thenThrow(Exception('Oops!!! Todo not found'));
 
       // act
       final result = todoService.getTodoById(
@@ -238,12 +240,12 @@ void main() {
       // assert
       expect(result, isA<Future<void>>());
 
-      verify(
-        () => mockFirestoreInstance
+      verify(() {
+        return mockFirestoreInstance
             .collection(todoCollection)
             .doc(existingTodo.id)
-            .delete(),
-      ).called(1);
+            .delete();
+      }).called(1);
     });
   });
 }

@@ -9,16 +9,11 @@ const categoryId = 'ABC123';
 const categoryName = 'Test Category';
 final categoryEmoji = EmojiParser().get('😀');
 
-Category get initialCategory => Category(
-      name: categoryName,
-      emoji: categoryEmoji,
-    );
+Category get initialCategory =>
+    Category(name: categoryName, emoji: categoryEmoji);
 
-Category get category => Category(
-      id: categoryId,
-      name: categoryName,
-      emoji: categoryEmoji,
-    );
+Category get category =>
+    Category(id: categoryId, name: categoryName, emoji: categoryEmoji);
 
 const todoId = 'TODO-456';
 const todoSubject = 'Test TODO';
@@ -41,34 +36,32 @@ final todoExpiredDate = todoInitialDate.add(const Duration(days: -1));
 final todoTodayDate = todoInitialDate.add(const Duration(minutes: 30));
 
 Todo get initialTodo => Todo(
-      subject: todoSubject,
-      finalDate: todoInitialDate,
-      categoryId: categoryId,
-    );
+  subject: todoSubject,
+  finalDate: todoInitialDate,
+  categoryId: categoryId,
+);
 
 Todo get existingTodo => Todo(
-      id: todoId,
-      subject: todoSubject,
-      finalDate: todoFinalDate,
-      categoryId: categoryId,
-    );
+  id: todoId,
+  subject: todoSubject,
+  finalDate: todoFinalDate,
+  categoryId: categoryId,
+);
 
 Todo get expiredTodo => Todo(
-      id: todoId,
-      subject: todoSubject,
-      finalDate: todoExpiredDate,
-      categoryId: categoryId,
-    );
+  id: todoId,
+  subject: todoSubject,
+  finalDate: todoExpiredDate,
+  categoryId: categoryId,
+);
 
 Todo get todayTodo => Todo(
-      id: todoId,
-      subject: todoSubject,
-      finalDate: todoTodayDate,
-      categoryId: categoryId,
-    );
+  id: todoId,
+  subject: todoSubject,
+  finalDate: todoTodayDate,
+  categoryId: categoryId,
+);
 
 Map<String, dynamic> updateCategorySchema(int value) {
-  return <String, dynamic>{
-    'todoSize': value,
-  };
+  return <String, dynamic>{'todoSize': value};
 }

@@ -38,8 +38,8 @@ final todoRepositoryProvider = Provider<ITodoRepository>(
 //region ViewModel layer
 final categoryViewModelProvider =
     StateNotifierProvider<CategoryViewModel, CategoryState>(
-  (ref) => CategoryViewModel(ref.watch(categoryRepositoryProvider)),
-);
+      (ref) => CategoryViewModel(ref.watch(categoryRepositoryProvider)),
+    );
 
 final todoViewModelProvider = StateNotifierProvider<TodoViewModel, TodoState>(
   (ref) => TodoViewModel(ref.watch(todoRepositoryProvider)),

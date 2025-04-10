@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 final class CategoryPage<T> extends Page<T> {
   const CategoryPage({required this.onAddCategory, required this.onGoToDetail})
-      : super(key: const ValueKey('CategoryPage'));
+    : super(key: const ValueKey('CategoryPage'));
 
   final VoidCallback onAddCategory;
   final ValueSetter<String> onGoToDetail;
@@ -39,7 +39,7 @@ final class AddCategoryPage<T> extends Page<T> {
 
 final class TodoPage<T> extends Page<T> {
   TodoPage({required this.categoryId, required this.onGoToTodo})
-      : super(key: ValueKey('TodoPage_$categoryId'));
+    : super(key: ValueKey('TodoPage_$categoryId'));
 
   final String categoryId;
   final NavigatorToTodo onGoToTodo;
@@ -55,7 +55,7 @@ final class TodoPage<T> extends Page<T> {
 
 final class FormTodoPage<T> extends Page<T> {
   FormTodoPage({required this.categoryId, this.todoId})
-      : super(key: ValueKey('FormTodoPage_${categoryId}_${todoId ?? 'none'}'));
+    : super(key: ValueKey('FormTodoPage_${categoryId}_${todoId ?? 'none'}'));
 
   final String categoryId;
   final String? todoId;
@@ -74,9 +74,6 @@ final class UnknownPage<T> extends Page<T> {
 
   @override
   Route<T> createRoute(BuildContext context) {
-    return ScaleTransitionRoute<T>(
-      settings: this,
-      child: const UnknownView(),
-    );
+    return ScaleTransitionRoute<T>(settings: this, child: const UnknownView());
   }
 }

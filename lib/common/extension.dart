@@ -27,29 +27,28 @@ extension StringUtilsX on String {
     for (final s in EmojiParser().unemojify(this).split(' ')) {
       return s.startsWith(':') || s.endsWith(':');
     }
-
     return false;
   }
 
-  ValidationText get validateEmpty => isNotEmpty
-      ? ValidationText(text: this)
-      : const ValidationText(message: 'Field is empty');
+  ValidationText get validateEmpty =>
+      isNotEmpty
+          ? ValidationText(text: this)
+          : const ValidationText(message: 'Field is empty');
 
-  ValidationText get validateEmoji => (length == 1 || length == 2) && isEmoji
-      ? ValidationText(text: this)
-      : const ValidationText(message: 'Invalid emoji');
+  ValidationText get validateEmoji =>
+      (length == 1 || length == 2) && isEmoji
+          ? ValidationText(text: this)
+          : const ValidationText(message: 'Invalid emoji');
 }
 
 extension WidgetUtilsX on Widget {
-  Widget paddingAll(double padding) => Padding(
-        padding: EdgeInsets.all(padding),
-        child: this,
-      );
+  Widget paddingAll(double padding) =>
+      Padding(padding: EdgeInsets.all(padding), child: this);
 
   Widget paddingSymmetric({double h = 0.0, double v = 0.0}) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: h, vertical: v),
-        child: this,
-      );
+    padding: EdgeInsets.symmetric(horizontal: h, vertical: v),
+    child: this,
+  );
 
   Widget paddingOnly({double l = 0, double t = 0, double r = 0, double b = 0}) {
     return Padding(
@@ -62,9 +61,6 @@ extension WidgetUtilsX on Widget {
 extension ToMapX on DocumentSnapshot {
   Map<String, dynamic> get toMap {
     final map = data() as Map<String, dynamic>?;
-    return <String, dynamic>{
-      'id': id,
-      if (map != null) ...map,
-    };
+    return <String, dynamic>{'id': id, if (map != null) ...map};
   }
 }

@@ -51,21 +51,17 @@ void main() {
   }
 
   group('$UnknownView UI screen', () {
-    testWidgets(
-      'Show $UnknownView screen',
-      (tester) async {
-        await pumpMainScreen(tester);
+    testWidgets('Show $UnknownView screen', (tester) async {
+      await pumpMainScreen(tester);
 
-        todoRouterDelegate.is404 = true;
-        await tester.pumpAndSettle();
+      todoRouterDelegate.is404 = true;
+      await tester.pumpAndSettle();
 
-        expect(find.byType(UnknownView), findsOneWidget);
+      expect(find.byType(UnknownView), findsOneWidget);
 
-        expect(find.text('Not found'), findsOneWidget);
-        expect(find.byType(Image), findsOneWidget);
-        expect(find.textContaining('Screen not found'), findsOneWidget);
-      },
-      variant: TargetPlatformVariant.all(),
-    );
+      expect(find.text('Not found'), findsOneWidget);
+      expect(find.byType(Image), findsOneWidget);
+      expect(find.textContaining('Screen not found'), findsOneWidget);
+    }, variant: TargetPlatformVariant.all());
   });
 }

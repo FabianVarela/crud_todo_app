@@ -54,12 +54,14 @@ final class CustomDatePicker extends StatelessWidget {
     if (!kIsWeb && (isIOS || isMacOS)) {
       await showModalBottomSheet<void>(
         context: context,
-        builder: (_) => CustomDatePicker(
-          initialDate: initialDate,
-          firstDate: firstDate,
-          lastDate: lastDate,
-          onChangeDate: onChangeDate,
-        ),
+        builder: (_) {
+          return CustomDatePicker(
+            initialDate: initialDate,
+            firstDate: firstDate,
+            lastDate: lastDate,
+            onChangeDate: onChangeDate,
+          );
+        },
       );
     } else {
       final pickedDate = await showDatePicker(
@@ -70,6 +72,8 @@ final class CustomDatePicker extends StatelessWidget {
       );
 
       if (pickedDate != null) {
+        if (!context.mounted) return;
+
         final pickedTime = await showTimePicker(
           context: context,
           initialTime: TimeOfDay.fromDateTime(initialDate),

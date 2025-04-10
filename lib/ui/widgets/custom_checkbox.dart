@@ -22,9 +22,13 @@ final class CustomCheckbox extends StatelessWidget {
         decoration: BoxDecoration(
           color: value ? const Color(0xFF4A78FA) : Colors.transparent,
           borderRadius: BorderRadius.circular(5),
-          border: value
-              ? null
-              : Border.all(color: Colors.grey.withValues(alpha: .6), width: 2),
+          border:
+              value
+                  ? null
+                  : Border.all(
+                    color: Colors.grey.withValues(alpha: .6),
+                    width: 2,
+                  ),
         ),
         width: 25,
         height: 25,

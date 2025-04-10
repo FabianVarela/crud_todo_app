@@ -32,9 +32,10 @@ final class TodoItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final itemTile = TodoItemTile(
       title: todo.subject,
-      subTitle: todo.finalDate.isDurationNegative
-          ? todo.finalDate.timeDateToFormattedString
-          : todo.finalDate.isToday
+      subTitle:
+          todo.finalDate.isDurationNegative
+              ? todo.finalDate.timeDateToFormattedString
+              : todo.finalDate.isToday
               ? todo.finalDate.timeFormattedString
               : todo.finalDate.dateTimeToFormattedString,
       isNegative: todo.finalDate.isDurationNegative,
@@ -44,23 +45,24 @@ final class TodoItem extends StatelessWidget {
 
     return isSlidable
         ? Slidable(
-            enabled: !todo.isCompleted,
-            startActionPane:
-                onEdit != null && !todo.finalDate.isDurationNegative
-                    ? ActionPane(
-                        motion: const DrawerMotion(),
-                        children: <Widget>[
-                          SlidableAction(
-                            label: 'Edit',
-                            backgroundColor: const Color(0xFF4D4E50),
-                            icon: Icons.edit,
-                            onPressed: (_) => onEdit?.call(),
-                          ),
-                        ],
-                      )
-                    : null,
-            endActionPane: onRemove != null
-                ? ActionPane(
+          enabled: !todo.isCompleted,
+          startActionPane:
+              onEdit != null && !todo.finalDate.isDurationNegative
+                  ? ActionPane(
+                    motion: const DrawerMotion(),
+                    children: <Widget>[
+                      SlidableAction(
+                        label: 'Edit',
+                        backgroundColor: const Color(0xFF4D4E50),
+                        icon: Icons.edit,
+                        onPressed: (_) => onEdit?.call(),
+                      ),
+                    ],
+                  )
+                  : null,
+          endActionPane:
+              onRemove != null
+                  ? ActionPane(
                     motion: const DrawerMotion(),
                     children: <Widget>[
                       SlidableAction(
@@ -71,35 +73,35 @@ final class TodoItem extends StatelessWidget {
                       ),
                     ],
                   )
-                : null,
-            child: itemTile,
-          )
+                  : null,
+          child: itemTile,
+        )
         : ContextMenuRegion(
-            isEnabled: !todo.isCompleted,
-            contextMenu: GenericContextMenu(
-              buttonConfigs: <ContextMenuButtonConfig>[
-                ContextMenuButtonConfig(
-                  'Edit',
-                  icon: const Icon(Icons.edit, color: Color(0xFF4D4E50)),
-                  onPressed:
-                      onEdit != null && !todo.finalDate.isDurationNegative
-                          ? () {
-                              onEdit?.call();
-                              context.contextMenuOverlay.hide();
-                            }
-                          : null,
-                ),
-                ContextMenuButtonConfig(
-                  'Remove',
-                  icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () {
-                    onRemove?.call();
-                    context.contextMenuOverlay.hide();
-                  },
-                ),
-              ],
-            ),
-            child: itemTile,
-          );
+          isEnabled: !todo.isCompleted,
+          contextMenu: GenericContextMenu(
+            buttonConfigs: <ContextMenuButtonConfig>[
+              ContextMenuButtonConfig(
+                'Edit',
+                icon: const Icon(Icons.edit, color: Color(0xFF4D4E50)),
+                onPressed:
+                    onEdit != null && !todo.finalDate.isDurationNegative
+                        ? () {
+                          onEdit?.call();
+                          context.contextMenuOverlay.hide();
+                        }
+                        : null,
+              ),
+              ContextMenuButtonConfig(
+                'Remove',
+                icon: const Icon(Icons.delete, color: Colors.red),
+                onPressed: () {
+                  onRemove?.call();
+                  context.contextMenuOverlay.hide();
+                },
+              ),
+            ],
+          ),
+          child: itemTile,
+        );
   }
 }

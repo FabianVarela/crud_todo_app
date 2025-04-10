@@ -18,24 +18,21 @@ Future<void> bootstrap(
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
-  await runZonedGuarded(
-    () async {
-      usePathUrlStrategy();
-      WidgetsFlutterBinding.ensureInitialized();
+  await runZonedGuarded(() async {
+    usePathUrlStrategy();
+    WidgetsFlutterBinding.ensureInitialized();
 
-      final isWindows = defaultTargetPlatform == TargetPlatform.windows;
-      await Firebase.initializeApp(
-        options: options,
-        name: (!kIsWeb && !isWindows) ? appName : null,
-      );
+    final isWindows = defaultTargetPlatform == TargetPlatform.windows;
+    await Firebase.initializeApp(
+      options: options,
+      name: (!kIsWeb && !isWindows) ? appName : null,
+    );
 
-      if (currentDevice == DeviceSegment.desktop) {
-        setWindowMinSize(const Size(300, 500));
-        setWindowMaxSize(const Size(1500, 900));
-      }
+    if (currentDevice == DeviceSegment.desktop) {
+      setWindowMinSize(const Size(300, 500));
+      setWindowMaxSize(const Size(1500, 900));
+    }
 
-      runApp(ProviderScope(child: await builder()));
-    },
-    (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
-  );
+    runApp(ProviderScope(child: await builder()));
+  }, (error, stackTrace) => log(error.toString(), stackTrace: stackTrace));
 }

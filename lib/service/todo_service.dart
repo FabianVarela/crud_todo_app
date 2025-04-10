@@ -11,10 +11,11 @@ class TodoService {
   static const String _todoCollection = 'todos';
 
   Stream<List<Todo>> getTodosByCategory({required String categoryId}) {
-    final querySnapshot = _database
-        .collection(_todoCollection)
-        .where('categoryId', isEqualTo: categoryId)
-        .snapshots();
+    final querySnapshot =
+        _database
+            .collection(_todoCollection)
+            .where('categoryId', isEqualTo: categoryId)
+            .snapshots();
 
     return querySnapshot.map(
       (query) => [for (final item in query.docs) Todo.fromJson(item.toMap)],
@@ -60,9 +61,8 @@ class TodoService {
     required String categoryId,
     required int size,
   }) async {
-    await _database
-        .collection(_categoryCollection)
-        .doc(categoryId)
-        .update({'todoSize': FieldValue.increment(size)});
+    await _database.collection(_categoryCollection).doc(categoryId).update({
+      'todoSize': FieldValue.increment(size),
+    });
   }
 }

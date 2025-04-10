@@ -21,8 +21,8 @@ void showCustomMessage(BuildContext context, {required String message}) {
       },
     );
   } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 }
