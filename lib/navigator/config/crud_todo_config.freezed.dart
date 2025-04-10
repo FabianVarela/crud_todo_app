@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,1006 +10,332 @@ part of 'crud_todo_config.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$CrudTodoConfig {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() categoryList,
-    required TResult Function() addCategory,
-    required TResult Function(String categoryId) todoList,
-    required TResult Function(String categoryId) addTodo,
-    required TResult Function(String categoryId, String todoId) updateTodo,
-    required TResult Function() unknown,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? categoryList,
-    TResult? Function()? addCategory,
-    TResult? Function(String categoryId)? todoList,
-    TResult? Function(String categoryId)? addTodo,
-    TResult? Function(String categoryId, String todoId)? updateTodo,
-    TResult? Function()? unknown,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? categoryList,
-    TResult Function()? addCategory,
-    TResult Function(String categoryId)? todoList,
-    TResult Function(String categoryId)? addTodo,
-    TResult Function(String categoryId, String todoId)? updateTodo,
-    TResult Function()? unknown,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(CrudTodoConfigCategoryList value) categoryList,
-    required TResult Function(CrudTodoConfigAddCategory value) addCategory,
-    required TResult Function(CrudTodoConfigTodoList value) todoList,
-    required TResult Function(CrudTodoConfigAddTodo value) addTodo,
-    required TResult Function(CrudTodoConfigUpdateTodo value) updateTodo,
-    required TResult Function(CrudTodoConfigUnknown value) unknown,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(CrudTodoConfigCategoryList value)? categoryList,
-    TResult? Function(CrudTodoConfigAddCategory value)? addCategory,
-    TResult? Function(CrudTodoConfigTodoList value)? todoList,
-    TResult? Function(CrudTodoConfigAddTodo value)? addTodo,
-    TResult? Function(CrudTodoConfigUpdateTodo value)? updateTodo,
-    TResult? Function(CrudTodoConfigUnknown value)? unknown,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(CrudTodoConfigCategoryList value)? categoryList,
-    TResult Function(CrudTodoConfigAddCategory value)? addCategory,
-    TResult Function(CrudTodoConfigTodoList value)? todoList,
-    TResult Function(CrudTodoConfigAddTodo value)? addTodo,
-    TResult Function(CrudTodoConfigUpdateTodo value)? updateTodo,
-    TResult Function(CrudTodoConfigUnknown value)? unknown,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfig);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'CrudTodoConfig()';
+}
+
+
 }
 
 /// @nodoc
-abstract class $CrudTodoConfigCopyWith<$Res> {
-  factory $CrudTodoConfigCopyWith(
-          CrudTodoConfig value, $Res Function(CrudTodoConfig) then) =
-      _$CrudTodoConfigCopyWithImpl<$Res, CrudTodoConfig>;
+class $CrudTodoConfigCopyWith<$Res>  {
+$CrudTodoConfigCopyWith(CrudTodoConfig _, $Res Function(CrudTodoConfig) __);
 }
 
-/// @nodoc
-class _$CrudTodoConfigCopyWithImpl<$Res, $Val extends CrudTodoConfig>
-    implements $CrudTodoConfigCopyWith<$Res> {
-  _$CrudTodoConfigCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of CrudTodoConfig
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-abstract class _$$CrudTodoConfigCategoryListImplCopyWith<$Res> {
-  factory _$$CrudTodoConfigCategoryListImplCopyWith(
-          _$CrudTodoConfigCategoryListImpl value,
-          $Res Function(_$CrudTodoConfigCategoryListImpl) then) =
-      __$$CrudTodoConfigCategoryListImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$CrudTodoConfigCategoryListImplCopyWithImpl<$Res>
-    extends _$CrudTodoConfigCopyWithImpl<$Res, _$CrudTodoConfigCategoryListImpl>
-    implements _$$CrudTodoConfigCategoryListImplCopyWith<$Res> {
-  __$$CrudTodoConfigCategoryListImplCopyWithImpl(
-      _$CrudTodoConfigCategoryListImpl _value,
-      $Res Function(_$CrudTodoConfigCategoryListImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of CrudTodoConfig
-  /// with the given fields replaced by the non-null parameter values.
-}
 
 /// @nodoc
 
-class _$CrudTodoConfigCategoryListImpl implements CrudTodoConfigCategoryList {
-  const _$CrudTodoConfigCategoryListImpl();
 
-  @override
-  String toString() {
-    return 'CrudTodoConfig.categoryList()';
-  }
+class CrudTodoConfigCategoryList implements CrudTodoConfig {
+  const CrudTodoConfigCategoryList();
+  
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$CrudTodoConfigCategoryListImpl);
-  }
 
-  @override
-  int get hashCode => runtimeType.hashCode;
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() categoryList,
-    required TResult Function() addCategory,
-    required TResult Function(String categoryId) todoList,
-    required TResult Function(String categoryId) addTodo,
-    required TResult Function(String categoryId, String todoId) updateTodo,
-    required TResult Function() unknown,
-  }) {
-    return categoryList();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? categoryList,
-    TResult? Function()? addCategory,
-    TResult? Function(String categoryId)? todoList,
-    TResult? Function(String categoryId)? addTodo,
-    TResult? Function(String categoryId, String todoId)? updateTodo,
-    TResult? Function()? unknown,
-  }) {
-    return categoryList?.call();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? categoryList,
-    TResult Function()? addCategory,
-    TResult Function(String categoryId)? todoList,
-    TResult Function(String categoryId)? addTodo,
-    TResult Function(String categoryId, String todoId)? updateTodo,
-    TResult Function()? unknown,
-    required TResult orElse(),
-  }) {
-    if (categoryList != null) {
-      return categoryList();
-    }
-    return orElse();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(CrudTodoConfigCategoryList value) categoryList,
-    required TResult Function(CrudTodoConfigAddCategory value) addCategory,
-    required TResult Function(CrudTodoConfigTodoList value) todoList,
-    required TResult Function(CrudTodoConfigAddTodo value) addTodo,
-    required TResult Function(CrudTodoConfigUpdateTodo value) updateTodo,
-    required TResult Function(CrudTodoConfigUnknown value) unknown,
-  }) {
-    return categoryList(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(CrudTodoConfigCategoryList value)? categoryList,
-    TResult? Function(CrudTodoConfigAddCategory value)? addCategory,
-    TResult? Function(CrudTodoConfigTodoList value)? todoList,
-    TResult? Function(CrudTodoConfigAddTodo value)? addTodo,
-    TResult? Function(CrudTodoConfigUpdateTodo value)? updateTodo,
-    TResult? Function(CrudTodoConfigUnknown value)? unknown,
-  }) {
-    return categoryList?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(CrudTodoConfigCategoryList value)? categoryList,
-    TResult Function(CrudTodoConfigAddCategory value)? addCategory,
-    TResult Function(CrudTodoConfigTodoList value)? todoList,
-    TResult Function(CrudTodoConfigAddTodo value)? addTodo,
-    TResult Function(CrudTodoConfigUpdateTodo value)? updateTodo,
-    TResult Function(CrudTodoConfigUnknown value)? unknown,
-    required TResult orElse(),
-  }) {
-    if (categoryList != null) {
-      return categoryList(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfigCategoryList);
 }
 
-abstract class CrudTodoConfigCategoryList implements CrudTodoConfig {
-  const factory CrudTodoConfigCategoryList() = _$CrudTodoConfigCategoryListImpl;
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'CrudTodoConfig.categoryList()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class CrudTodoConfigAddCategory implements CrudTodoConfig {
+  const CrudTodoConfigAddCategory();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfigAddCategory);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'CrudTodoConfig.addCategory()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class CrudTodoConfigTodoList implements CrudTodoConfig {
+  const CrudTodoConfigTodoList({required this.categoryId});
+  
+
+ final  String categoryId;
+
+/// Create a copy of CrudTodoConfig
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$CrudTodoConfigTodoListCopyWith<CrudTodoConfigTodoList> get copyWith => _$CrudTodoConfigTodoListCopyWithImpl<CrudTodoConfigTodoList>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfigTodoList&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,categoryId);
+
+@override
+String toString() {
+  return 'CrudTodoConfig.todoList(categoryId: $categoryId)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$CrudTodoConfigAddCategoryImplCopyWith<$Res> {
-  factory _$$CrudTodoConfigAddCategoryImplCopyWith(
-          _$CrudTodoConfigAddCategoryImpl value,
-          $Res Function(_$CrudTodoConfigAddCategoryImpl) then) =
-      __$$CrudTodoConfigAddCategoryImplCopyWithImpl<$Res>;
+abstract mixin class $CrudTodoConfigTodoListCopyWith<$Res> implements $CrudTodoConfigCopyWith<$Res> {
+  factory $CrudTodoConfigTodoListCopyWith(CrudTodoConfigTodoList value, $Res Function(CrudTodoConfigTodoList) _then) = _$CrudTodoConfigTodoListCopyWithImpl;
+@useResult
+$Res call({
+ String categoryId
+});
+
+
+
+
+}
+/// @nodoc
+class _$CrudTodoConfigTodoListCopyWithImpl<$Res>
+    implements $CrudTodoConfigTodoListCopyWith<$Res> {
+  _$CrudTodoConfigTodoListCopyWithImpl(this._self, this._then);
+
+  final CrudTodoConfigTodoList _self;
+  final $Res Function(CrudTodoConfigTodoList) _then;
+
+/// Create a copy of CrudTodoConfig
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? categoryId = null,}) {
+  return _then(CrudTodoConfigTodoList(
+categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
 }
 
-/// @nodoc
-class __$$CrudTodoConfigAddCategoryImplCopyWithImpl<$Res>
-    extends _$CrudTodoConfigCopyWithImpl<$Res, _$CrudTodoConfigAddCategoryImpl>
-    implements _$$CrudTodoConfigAddCategoryImplCopyWith<$Res> {
-  __$$CrudTodoConfigAddCategoryImplCopyWithImpl(
-      _$CrudTodoConfigAddCategoryImpl _value,
-      $Res Function(_$CrudTodoConfigAddCategoryImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of CrudTodoConfig
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
 
-class _$CrudTodoConfigAddCategoryImpl implements CrudTodoConfigAddCategory {
-  const _$CrudTodoConfigAddCategoryImpl();
 
-  @override
-  String toString() {
-    return 'CrudTodoConfig.addCategory()';
-  }
+class CrudTodoConfigAddTodo implements CrudTodoConfig {
+  const CrudTodoConfigAddTodo({required this.categoryId});
+  
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$CrudTodoConfigAddCategoryImpl);
-  }
+ final  String categoryId;
 
-  @override
-  int get hashCode => runtimeType.hashCode;
+/// Create a copy of CrudTodoConfig
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$CrudTodoConfigAddTodoCopyWith<CrudTodoConfigAddTodo> get copyWith => _$CrudTodoConfigAddTodoCopyWithImpl<CrudTodoConfigAddTodo>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() categoryList,
-    required TResult Function() addCategory,
-    required TResult Function(String categoryId) todoList,
-    required TResult Function(String categoryId) addTodo,
-    required TResult Function(String categoryId, String todoId) updateTodo,
-    required TResult Function() unknown,
-  }) {
-    return addCategory();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? categoryList,
-    TResult? Function()? addCategory,
-    TResult? Function(String categoryId)? todoList,
-    TResult? Function(String categoryId)? addTodo,
-    TResult? Function(String categoryId, String todoId)? updateTodo,
-    TResult? Function()? unknown,
-  }) {
-    return addCategory?.call();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? categoryList,
-    TResult Function()? addCategory,
-    TResult Function(String categoryId)? todoList,
-    TResult Function(String categoryId)? addTodo,
-    TResult Function(String categoryId, String todoId)? updateTodo,
-    TResult Function()? unknown,
-    required TResult orElse(),
-  }) {
-    if (addCategory != null) {
-      return addCategory();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(CrudTodoConfigCategoryList value) categoryList,
-    required TResult Function(CrudTodoConfigAddCategory value) addCategory,
-    required TResult Function(CrudTodoConfigTodoList value) todoList,
-    required TResult Function(CrudTodoConfigAddTodo value) addTodo,
-    required TResult Function(CrudTodoConfigUpdateTodo value) updateTodo,
-    required TResult Function(CrudTodoConfigUnknown value) unknown,
-  }) {
-    return addCategory(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(CrudTodoConfigCategoryList value)? categoryList,
-    TResult? Function(CrudTodoConfigAddCategory value)? addCategory,
-    TResult? Function(CrudTodoConfigTodoList value)? todoList,
-    TResult? Function(CrudTodoConfigAddTodo value)? addTodo,
-    TResult? Function(CrudTodoConfigUpdateTodo value)? updateTodo,
-    TResult? Function(CrudTodoConfigUnknown value)? unknown,
-  }) {
-    return addCategory?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(CrudTodoConfigCategoryList value)? categoryList,
-    TResult Function(CrudTodoConfigAddCategory value)? addCategory,
-    TResult Function(CrudTodoConfigTodoList value)? todoList,
-    TResult Function(CrudTodoConfigAddTodo value)? addTodo,
-    TResult Function(CrudTodoConfigUpdateTodo value)? updateTodo,
-    TResult Function(CrudTodoConfigUnknown value)? unknown,
-    required TResult orElse(),
-  }) {
-    if (addCategory != null) {
-      return addCategory(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfigAddTodo&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId));
 }
 
-abstract class CrudTodoConfigAddCategory implements CrudTodoConfig {
-  const factory CrudTodoConfigAddCategory() = _$CrudTodoConfigAddCategoryImpl;
+
+@override
+int get hashCode => Object.hash(runtimeType,categoryId);
+
+@override
+String toString() {
+  return 'CrudTodoConfig.addTodo(categoryId: $categoryId)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$CrudTodoConfigTodoListImplCopyWith<$Res> {
-  factory _$$CrudTodoConfigTodoListImplCopyWith(
-          _$CrudTodoConfigTodoListImpl value,
-          $Res Function(_$CrudTodoConfigTodoListImpl) then) =
-      __$$CrudTodoConfigTodoListImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String categoryId});
+abstract mixin class $CrudTodoConfigAddTodoCopyWith<$Res> implements $CrudTodoConfigCopyWith<$Res> {
+  factory $CrudTodoConfigAddTodoCopyWith(CrudTodoConfigAddTodo value, $Res Function(CrudTodoConfigAddTodo) _then) = _$CrudTodoConfigAddTodoCopyWithImpl;
+@useResult
+$Res call({
+ String categoryId
+});
+
+
+
+
+}
+/// @nodoc
+class _$CrudTodoConfigAddTodoCopyWithImpl<$Res>
+    implements $CrudTodoConfigAddTodoCopyWith<$Res> {
+  _$CrudTodoConfigAddTodoCopyWithImpl(this._self, this._then);
+
+  final CrudTodoConfigAddTodo _self;
+  final $Res Function(CrudTodoConfigAddTodo) _then;
+
+/// Create a copy of CrudTodoConfig
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? categoryId = null,}) {
+  return _then(CrudTodoConfigAddTodo(
+categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
 }
 
-/// @nodoc
-class __$$CrudTodoConfigTodoListImplCopyWithImpl<$Res>
-    extends _$CrudTodoConfigCopyWithImpl<$Res, _$CrudTodoConfigTodoListImpl>
-    implements _$$CrudTodoConfigTodoListImplCopyWith<$Res> {
-  __$$CrudTodoConfigTodoListImplCopyWithImpl(
-      _$CrudTodoConfigTodoListImpl _value,
-      $Res Function(_$CrudTodoConfigTodoListImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of CrudTodoConfig
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? categoryId = null,
-  }) {
-    return _then(_$CrudTodoConfigTodoListImpl(
-      categoryId: null == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$CrudTodoConfigTodoListImpl implements CrudTodoConfigTodoList {
-  const _$CrudTodoConfigTodoListImpl({required this.categoryId});
 
-  @override
-  final String categoryId;
+class CrudTodoConfigUpdateTodo implements CrudTodoConfig {
+  const CrudTodoConfigUpdateTodo({required this.categoryId, required this.todoId});
+  
 
-  @override
-  String toString() {
-    return 'CrudTodoConfig.todoList(categoryId: $categoryId)';
-  }
+ final  String categoryId;
+ final  String todoId;
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$CrudTodoConfigTodoListImpl &&
-            (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId));
-  }
+/// Create a copy of CrudTodoConfig
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$CrudTodoConfigUpdateTodoCopyWith<CrudTodoConfigUpdateTodo> get copyWith => _$CrudTodoConfigUpdateTodoCopyWithImpl<CrudTodoConfigUpdateTodo>(this, _$identity);
 
-  @override
-  int get hashCode => Object.hash(runtimeType, categoryId);
 
-  /// Create a copy of CrudTodoConfig
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$CrudTodoConfigTodoListImplCopyWith<_$CrudTodoConfigTodoListImpl>
-      get copyWith => __$$CrudTodoConfigTodoListImplCopyWithImpl<
-          _$CrudTodoConfigTodoListImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() categoryList,
-    required TResult Function() addCategory,
-    required TResult Function(String categoryId) todoList,
-    required TResult Function(String categoryId) addTodo,
-    required TResult Function(String categoryId, String todoId) updateTodo,
-    required TResult Function() unknown,
-  }) {
-    return todoList(categoryId);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? categoryList,
-    TResult? Function()? addCategory,
-    TResult? Function(String categoryId)? todoList,
-    TResult? Function(String categoryId)? addTodo,
-    TResult? Function(String categoryId, String todoId)? updateTodo,
-    TResult? Function()? unknown,
-  }) {
-    return todoList?.call(categoryId);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? categoryList,
-    TResult Function()? addCategory,
-    TResult Function(String categoryId)? todoList,
-    TResult Function(String categoryId)? addTodo,
-    TResult Function(String categoryId, String todoId)? updateTodo,
-    TResult Function()? unknown,
-    required TResult orElse(),
-  }) {
-    if (todoList != null) {
-      return todoList(categoryId);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(CrudTodoConfigCategoryList value) categoryList,
-    required TResult Function(CrudTodoConfigAddCategory value) addCategory,
-    required TResult Function(CrudTodoConfigTodoList value) todoList,
-    required TResult Function(CrudTodoConfigAddTodo value) addTodo,
-    required TResult Function(CrudTodoConfigUpdateTodo value) updateTodo,
-    required TResult Function(CrudTodoConfigUnknown value) unknown,
-  }) {
-    return todoList(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(CrudTodoConfigCategoryList value)? categoryList,
-    TResult? Function(CrudTodoConfigAddCategory value)? addCategory,
-    TResult? Function(CrudTodoConfigTodoList value)? todoList,
-    TResult? Function(CrudTodoConfigAddTodo value)? addTodo,
-    TResult? Function(CrudTodoConfigUpdateTodo value)? updateTodo,
-    TResult? Function(CrudTodoConfigUnknown value)? unknown,
-  }) {
-    return todoList?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(CrudTodoConfigCategoryList value)? categoryList,
-    TResult Function(CrudTodoConfigAddCategory value)? addCategory,
-    TResult Function(CrudTodoConfigTodoList value)? todoList,
-    TResult Function(CrudTodoConfigAddTodo value)? addTodo,
-    TResult Function(CrudTodoConfigUpdateTodo value)? updateTodo,
-    TResult Function(CrudTodoConfigUnknown value)? unknown,
-    required TResult orElse(),
-  }) {
-    if (todoList != null) {
-      return todoList(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfigUpdateTodo&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.todoId, todoId) || other.todoId == todoId));
 }
 
-abstract class CrudTodoConfigTodoList implements CrudTodoConfig {
-  const factory CrudTodoConfigTodoList({required final String categoryId}) =
-      _$CrudTodoConfigTodoListImpl;
 
-  String get categoryId;
+@override
+int get hashCode => Object.hash(runtimeType,categoryId,todoId);
 
-  /// Create a copy of CrudTodoConfig
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CrudTodoConfigTodoListImplCopyWith<_$CrudTodoConfigTodoListImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'CrudTodoConfig.updateTodo(categoryId: $categoryId, todoId: $todoId)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$CrudTodoConfigAddTodoImplCopyWith<$Res> {
-  factory _$$CrudTodoConfigAddTodoImplCopyWith(
-          _$CrudTodoConfigAddTodoImpl value,
-          $Res Function(_$CrudTodoConfigAddTodoImpl) then) =
-      __$$CrudTodoConfigAddTodoImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String categoryId});
+abstract mixin class $CrudTodoConfigUpdateTodoCopyWith<$Res> implements $CrudTodoConfigCopyWith<$Res> {
+  factory $CrudTodoConfigUpdateTodoCopyWith(CrudTodoConfigUpdateTodo value, $Res Function(CrudTodoConfigUpdateTodo) _then) = _$CrudTodoConfigUpdateTodoCopyWithImpl;
+@useResult
+$Res call({
+ String categoryId, String todoId
+});
+
+
+
+
+}
+/// @nodoc
+class _$CrudTodoConfigUpdateTodoCopyWithImpl<$Res>
+    implements $CrudTodoConfigUpdateTodoCopyWith<$Res> {
+  _$CrudTodoConfigUpdateTodoCopyWithImpl(this._self, this._then);
+
+  final CrudTodoConfigUpdateTodo _self;
+  final $Res Function(CrudTodoConfigUpdateTodo) _then;
+
+/// Create a copy of CrudTodoConfig
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? categoryId = null,Object? todoId = null,}) {
+  return _then(CrudTodoConfigUpdateTodo(
+categoryId: null == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as String,todoId: null == todoId ? _self.todoId : todoId // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
 }
 
-/// @nodoc
-class __$$CrudTodoConfigAddTodoImplCopyWithImpl<$Res>
-    extends _$CrudTodoConfigCopyWithImpl<$Res, _$CrudTodoConfigAddTodoImpl>
-    implements _$$CrudTodoConfigAddTodoImplCopyWith<$Res> {
-  __$$CrudTodoConfigAddTodoImplCopyWithImpl(_$CrudTodoConfigAddTodoImpl _value,
-      $Res Function(_$CrudTodoConfigAddTodoImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of CrudTodoConfig
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? categoryId = null,
-  }) {
-    return _then(_$CrudTodoConfigAddTodoImpl(
-      categoryId: null == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
 }
 
 /// @nodoc
 
-class _$CrudTodoConfigAddTodoImpl implements CrudTodoConfigAddTodo {
-  const _$CrudTodoConfigAddTodoImpl({required this.categoryId});
 
-  @override
-  final String categoryId;
+class CrudTodoConfigUnknown implements CrudTodoConfig {
+  const CrudTodoConfigUnknown();
+  
 
-  @override
-  String toString() {
-    return 'CrudTodoConfig.addTodo(categoryId: $categoryId)';
-  }
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$CrudTodoConfigAddTodoImpl &&
-            (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId));
-  }
 
-  @override
-  int get hashCode => Object.hash(runtimeType, categoryId);
 
-  /// Create a copy of CrudTodoConfig
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$CrudTodoConfigAddTodoImplCopyWith<_$CrudTodoConfigAddTodoImpl>
-      get copyWith => __$$CrudTodoConfigAddTodoImplCopyWithImpl<
-          _$CrudTodoConfigAddTodoImpl>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() categoryList,
-    required TResult Function() addCategory,
-    required TResult Function(String categoryId) todoList,
-    required TResult Function(String categoryId) addTodo,
-    required TResult Function(String categoryId, String todoId) updateTodo,
-    required TResult Function() unknown,
-  }) {
-    return addTodo(categoryId);
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? categoryList,
-    TResult? Function()? addCategory,
-    TResult? Function(String categoryId)? todoList,
-    TResult? Function(String categoryId)? addTodo,
-    TResult? Function(String categoryId, String todoId)? updateTodo,
-    TResult? Function()? unknown,
-  }) {
-    return addTodo?.call(categoryId);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? categoryList,
-    TResult Function()? addCategory,
-    TResult Function(String categoryId)? todoList,
-    TResult Function(String categoryId)? addTodo,
-    TResult Function(String categoryId, String todoId)? updateTodo,
-    TResult Function()? unknown,
-    required TResult orElse(),
-  }) {
-    if (addTodo != null) {
-      return addTodo(categoryId);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(CrudTodoConfigCategoryList value) categoryList,
-    required TResult Function(CrudTodoConfigAddCategory value) addCategory,
-    required TResult Function(CrudTodoConfigTodoList value) todoList,
-    required TResult Function(CrudTodoConfigAddTodo value) addTodo,
-    required TResult Function(CrudTodoConfigUpdateTodo value) updateTodo,
-    required TResult Function(CrudTodoConfigUnknown value) unknown,
-  }) {
-    return addTodo(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(CrudTodoConfigCategoryList value)? categoryList,
-    TResult? Function(CrudTodoConfigAddCategory value)? addCategory,
-    TResult? Function(CrudTodoConfigTodoList value)? todoList,
-    TResult? Function(CrudTodoConfigAddTodo value)? addTodo,
-    TResult? Function(CrudTodoConfigUpdateTodo value)? updateTodo,
-    TResult? Function(CrudTodoConfigUnknown value)? unknown,
-  }) {
-    return addTodo?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(CrudTodoConfigCategoryList value)? categoryList,
-    TResult Function(CrudTodoConfigAddCategory value)? addCategory,
-    TResult Function(CrudTodoConfigTodoList value)? todoList,
-    TResult Function(CrudTodoConfigAddTodo value)? addTodo,
-    TResult Function(CrudTodoConfigUpdateTodo value)? updateTodo,
-    TResult Function(CrudTodoConfigUnknown value)? unknown,
-    required TResult orElse(),
-  }) {
-    if (addTodo != null) {
-      return addTodo(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfigUnknown);
 }
 
-abstract class CrudTodoConfigAddTodo implements CrudTodoConfig {
-  const factory CrudTodoConfigAddTodo({required final String categoryId}) =
-      _$CrudTodoConfigAddTodoImpl;
 
-  String get categoryId;
+@override
+int get hashCode => runtimeType.hashCode;
 
-  /// Create a copy of CrudTodoConfig
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CrudTodoConfigAddTodoImplCopyWith<_$CrudTodoConfigAddTodoImpl>
-      get copyWith => throw _privateConstructorUsedError;
+@override
+String toString() {
+  return 'CrudTodoConfig.unknown()';
 }
 
-/// @nodoc
-abstract class _$$CrudTodoConfigUpdateTodoImplCopyWith<$Res> {
-  factory _$$CrudTodoConfigUpdateTodoImplCopyWith(
-          _$CrudTodoConfigUpdateTodoImpl value,
-          $Res Function(_$CrudTodoConfigUpdateTodoImpl) then) =
-      __$$CrudTodoConfigUpdateTodoImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String categoryId, String todoId});
+
 }
 
-/// @nodoc
-class __$$CrudTodoConfigUpdateTodoImplCopyWithImpl<$Res>
-    extends _$CrudTodoConfigCopyWithImpl<$Res, _$CrudTodoConfigUpdateTodoImpl>
-    implements _$$CrudTodoConfigUpdateTodoImplCopyWith<$Res> {
-  __$$CrudTodoConfigUpdateTodoImplCopyWithImpl(
-      _$CrudTodoConfigUpdateTodoImpl _value,
-      $Res Function(_$CrudTodoConfigUpdateTodoImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of CrudTodoConfig
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? categoryId = null,
-    Object? todoId = null,
-  }) {
-    return _then(_$CrudTodoConfigUpdateTodoImpl(
-      categoryId: null == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as String,
-      todoId: null == todoId
-          ? _value.todoId
-          : todoId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
 
-/// @nodoc
 
-class _$CrudTodoConfigUpdateTodoImpl implements CrudTodoConfigUpdateTodo {
-  const _$CrudTodoConfigUpdateTodoImpl(
-      {required this.categoryId, required this.todoId});
-
-  @override
-  final String categoryId;
-  @override
-  final String todoId;
-
-  @override
-  String toString() {
-    return 'CrudTodoConfig.updateTodo(categoryId: $categoryId, todoId: $todoId)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$CrudTodoConfigUpdateTodoImpl &&
-            (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId) &&
-            (identical(other.todoId, todoId) || other.todoId == todoId));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, categoryId, todoId);
-
-  /// Create a copy of CrudTodoConfig
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$CrudTodoConfigUpdateTodoImplCopyWith<_$CrudTodoConfigUpdateTodoImpl>
-      get copyWith => __$$CrudTodoConfigUpdateTodoImplCopyWithImpl<
-          _$CrudTodoConfigUpdateTodoImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() categoryList,
-    required TResult Function() addCategory,
-    required TResult Function(String categoryId) todoList,
-    required TResult Function(String categoryId) addTodo,
-    required TResult Function(String categoryId, String todoId) updateTodo,
-    required TResult Function() unknown,
-  }) {
-    return updateTodo(categoryId, todoId);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? categoryList,
-    TResult? Function()? addCategory,
-    TResult? Function(String categoryId)? todoList,
-    TResult? Function(String categoryId)? addTodo,
-    TResult? Function(String categoryId, String todoId)? updateTodo,
-    TResult? Function()? unknown,
-  }) {
-    return updateTodo?.call(categoryId, todoId);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? categoryList,
-    TResult Function()? addCategory,
-    TResult Function(String categoryId)? todoList,
-    TResult Function(String categoryId)? addTodo,
-    TResult Function(String categoryId, String todoId)? updateTodo,
-    TResult Function()? unknown,
-    required TResult orElse(),
-  }) {
-    if (updateTodo != null) {
-      return updateTodo(categoryId, todoId);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(CrudTodoConfigCategoryList value) categoryList,
-    required TResult Function(CrudTodoConfigAddCategory value) addCategory,
-    required TResult Function(CrudTodoConfigTodoList value) todoList,
-    required TResult Function(CrudTodoConfigAddTodo value) addTodo,
-    required TResult Function(CrudTodoConfigUpdateTodo value) updateTodo,
-    required TResult Function(CrudTodoConfigUnknown value) unknown,
-  }) {
-    return updateTodo(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(CrudTodoConfigCategoryList value)? categoryList,
-    TResult? Function(CrudTodoConfigAddCategory value)? addCategory,
-    TResult? Function(CrudTodoConfigTodoList value)? todoList,
-    TResult? Function(CrudTodoConfigAddTodo value)? addTodo,
-    TResult? Function(CrudTodoConfigUpdateTodo value)? updateTodo,
-    TResult? Function(CrudTodoConfigUnknown value)? unknown,
-  }) {
-    return updateTodo?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(CrudTodoConfigCategoryList value)? categoryList,
-    TResult Function(CrudTodoConfigAddCategory value)? addCategory,
-    TResult Function(CrudTodoConfigTodoList value)? todoList,
-    TResult Function(CrudTodoConfigAddTodo value)? addTodo,
-    TResult Function(CrudTodoConfigUpdateTodo value)? updateTodo,
-    TResult Function(CrudTodoConfigUnknown value)? unknown,
-    required TResult orElse(),
-  }) {
-    if (updateTodo != null) {
-      return updateTodo(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class CrudTodoConfigUpdateTodo implements CrudTodoConfig {
-  const factory CrudTodoConfigUpdateTodo(
-      {required final String categoryId,
-      required final String todoId}) = _$CrudTodoConfigUpdateTodoImpl;
-
-  String get categoryId;
-  String get todoId;
-
-  /// Create a copy of CrudTodoConfig
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CrudTodoConfigUpdateTodoImplCopyWith<_$CrudTodoConfigUpdateTodoImpl>
-      get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$CrudTodoConfigUnknownImplCopyWith<$Res> {
-  factory _$$CrudTodoConfigUnknownImplCopyWith(
-          _$CrudTodoConfigUnknownImpl value,
-          $Res Function(_$CrudTodoConfigUnknownImpl) then) =
-      __$$CrudTodoConfigUnknownImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$CrudTodoConfigUnknownImplCopyWithImpl<$Res>
-    extends _$CrudTodoConfigCopyWithImpl<$Res, _$CrudTodoConfigUnknownImpl>
-    implements _$$CrudTodoConfigUnknownImplCopyWith<$Res> {
-  __$$CrudTodoConfigUnknownImplCopyWithImpl(_$CrudTodoConfigUnknownImpl _value,
-      $Res Function(_$CrudTodoConfigUnknownImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of CrudTodoConfig
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$CrudTodoConfigUnknownImpl implements CrudTodoConfigUnknown {
-  const _$CrudTodoConfigUnknownImpl();
-
-  @override
-  String toString() {
-    return 'CrudTodoConfig.unknown()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$CrudTodoConfigUnknownImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() categoryList,
-    required TResult Function() addCategory,
-    required TResult Function(String categoryId) todoList,
-    required TResult Function(String categoryId) addTodo,
-    required TResult Function(String categoryId, String todoId) updateTodo,
-    required TResult Function() unknown,
-  }) {
-    return unknown();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? categoryList,
-    TResult? Function()? addCategory,
-    TResult? Function(String categoryId)? todoList,
-    TResult? Function(String categoryId)? addTodo,
-    TResult? Function(String categoryId, String todoId)? updateTodo,
-    TResult? Function()? unknown,
-  }) {
-    return unknown?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? categoryList,
-    TResult Function()? addCategory,
-    TResult Function(String categoryId)? todoList,
-    TResult Function(String categoryId)? addTodo,
-    TResult Function(String categoryId, String todoId)? updateTodo,
-    TResult Function()? unknown,
-    required TResult orElse(),
-  }) {
-    if (unknown != null) {
-      return unknown();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(CrudTodoConfigCategoryList value) categoryList,
-    required TResult Function(CrudTodoConfigAddCategory value) addCategory,
-    required TResult Function(CrudTodoConfigTodoList value) todoList,
-    required TResult Function(CrudTodoConfigAddTodo value) addTodo,
-    required TResult Function(CrudTodoConfigUpdateTodo value) updateTodo,
-    required TResult Function(CrudTodoConfigUnknown value) unknown,
-  }) {
-    return unknown(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(CrudTodoConfigCategoryList value)? categoryList,
-    TResult? Function(CrudTodoConfigAddCategory value)? addCategory,
-    TResult? Function(CrudTodoConfigTodoList value)? todoList,
-    TResult? Function(CrudTodoConfigAddTodo value)? addTodo,
-    TResult? Function(CrudTodoConfigUpdateTodo value)? updateTodo,
-    TResult? Function(CrudTodoConfigUnknown value)? unknown,
-  }) {
-    return unknown?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(CrudTodoConfigCategoryList value)? categoryList,
-    TResult Function(CrudTodoConfigAddCategory value)? addCategory,
-    TResult Function(CrudTodoConfigTodoList value)? todoList,
-    TResult Function(CrudTodoConfigAddTodo value)? addTodo,
-    TResult Function(CrudTodoConfigUpdateTodo value)? updateTodo,
-    TResult Function(CrudTodoConfigUnknown value)? unknown,
-    required TResult orElse(),
-  }) {
-    if (unknown != null) {
-      return unknown(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class CrudTodoConfigUnknown implements CrudTodoConfig {
-  const factory CrudTodoConfigUnknown() = _$CrudTodoConfigUnknownImpl;
-}
+// dart format on

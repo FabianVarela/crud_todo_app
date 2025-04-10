@@ -7,17 +7,17 @@ part of 'todo_model.dart';
 // **************************************************************************
 
 Todo _$TodoFromJson(Map<String, dynamic> json) => Todo(
-      subject: json['subject'] as String,
-      finalDate: Todo._intFromJson((json['finalDate'] as num).toInt()),
-      categoryId: json['categoryId'] as String,
-      id: json['id'] as String?,
-      isCompleted: json['isCompleted'] as bool? ?? false,
-    );
+  subject: json['subject'] as String,
+  finalDate: Todo._intFromJson((json['finalDate'] as num).toInt()),
+  categoryId: json['categoryId'] as String,
+  id: json['id'] as String?,
+  isCompleted: json['isCompleted'] as bool? ?? false,
+);
 
 Map<String, dynamic> _$TodoToJson(Todo instance) => <String, dynamic>{
-      if (instance.id case final value?) 'id': value,
-      'subject': instance.subject,
-      'finalDate': Todo._intToJson(instance.finalDate),
-      'categoryId': instance.categoryId,
-      'isCompleted': instance.isCompleted,
-    };
+  if (instance.id case final value?) 'id': value,
+  'subject': instance.subject,
+  'finalDate': Todo._intToJson(instance.finalDate),
+  'categoryId': instance.categoryId,
+  'isCompleted': instance.isCompleted,
+};

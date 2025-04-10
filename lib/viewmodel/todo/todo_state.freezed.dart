@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
@@ -9,622 +10,232 @@ part of 'todo_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
 /// @nodoc
 mixin _$TodoState {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(TodoAction action) success,
-    required TResult Function(String? message) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(TodoAction action)? success,
-    TResult? Function(String? message)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(TodoAction action)? success,
-    TResult Function(String? message)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_TodoStateInitial value) initial,
-    required TResult Function(_TodoStateLoading value) loading,
-    required TResult Function(_TodoStateSuccess value) success,
-    required TResult Function(_TodoStateError value) error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_TodoStateInitial value)? initial,
-    TResult? Function(_TodoStateLoading value)? loading,
-    TResult? Function(_TodoStateSuccess value)? success,
-    TResult? Function(_TodoStateError value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_TodoStateInitial value)? initial,
-    TResult Function(_TodoStateLoading value)? loading,
-    TResult Function(_TodoStateSuccess value)? success,
-    TResult Function(_TodoStateError value)? error,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TodoState);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'TodoState()';
+}
+
+
 }
 
 /// @nodoc
-abstract class $TodoStateCopyWith<$Res> {
-  factory $TodoStateCopyWith(TodoState value, $Res Function(TodoState) then) =
-      _$TodoStateCopyWithImpl<$Res, TodoState>;
+class $TodoStateCopyWith<$Res>  {
+$TodoStateCopyWith(TodoState _, $Res Function(TodoState) __);
 }
 
-/// @nodoc
-class _$TodoStateCopyWithImpl<$Res, $Val extends TodoState>
-    implements $TodoStateCopyWith<$Res> {
-  _$TodoStateCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of TodoState
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-abstract class _$$TodoStateInitialImplCopyWith<$Res> {
-  factory _$$TodoStateInitialImplCopyWith(_$TodoStateInitialImpl value,
-          $Res Function(_$TodoStateInitialImpl) then) =
-      __$$TodoStateInitialImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$TodoStateInitialImplCopyWithImpl<$Res>
-    extends _$TodoStateCopyWithImpl<$Res, _$TodoStateInitialImpl>
-    implements _$$TodoStateInitialImplCopyWith<$Res> {
-  __$$TodoStateInitialImplCopyWithImpl(_$TodoStateInitialImpl _value,
-      $Res Function(_$TodoStateInitialImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of TodoState
-  /// with the given fields replaced by the non-null parameter values.
-}
 
 /// @nodoc
 
-class _$TodoStateInitialImpl implements _TodoStateInitial {
-  const _$TodoStateInitialImpl();
 
-  @override
-  String toString() {
-    return 'TodoState.initial()';
-  }
+class TodoStateInitial implements TodoState {
+  const TodoStateInitial();
+  
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$TodoStateInitialImpl);
-  }
 
-  @override
-  int get hashCode => runtimeType.hashCode;
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(TodoAction action) success,
-    required TResult Function(String? message) error,
-  }) {
-    return initial();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(TodoAction action)? success,
-    TResult? Function(String? message)? error,
-  }) {
-    return initial?.call();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(TodoAction action)? success,
-    TResult Function(String? message)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial();
-    }
-    return orElse();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_TodoStateInitial value) initial,
-    required TResult Function(_TodoStateLoading value) loading,
-    required TResult Function(_TodoStateSuccess value) success,
-    required TResult Function(_TodoStateError value) error,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_TodoStateInitial value)? initial,
-    TResult? Function(_TodoStateLoading value)? loading,
-    TResult? Function(_TodoStateSuccess value)? success,
-    TResult? Function(_TodoStateError value)? error,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_TodoStateInitial value)? initial,
-    TResult Function(_TodoStateLoading value)? loading,
-    TResult Function(_TodoStateSuccess value)? success,
-    TResult Function(_TodoStateError value)? error,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TodoStateInitial);
 }
 
-abstract class _TodoStateInitial implements TodoState {
-  const factory _TodoStateInitial() = _$TodoStateInitialImpl;
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'TodoState.initial()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class TodoStateLoading implements TodoState {
+  const TodoStateLoading();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TodoStateLoading);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'TodoState.loading()';
+}
+
+
+}
+
+
+
+
+/// @nodoc
+
+
+class TodoStateSuccess implements TodoState {
+  const TodoStateSuccess(this.action);
+  
+
+ final  TodoAction action;
+
+/// Create a copy of TodoState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$TodoStateSuccessCopyWith<TodoStateSuccess> get copyWith => _$TodoStateSuccessCopyWithImpl<TodoStateSuccess>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TodoStateSuccess&&(identical(other.action, action) || other.action == action));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,action);
+
+@override
+String toString() {
+  return 'TodoState.success(action: $action)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$TodoStateLoadingImplCopyWith<$Res> {
-  factory _$$TodoStateLoadingImplCopyWith(_$TodoStateLoadingImpl value,
-          $Res Function(_$TodoStateLoadingImpl) then) =
-      __$$TodoStateLoadingImplCopyWithImpl<$Res>;
+abstract mixin class $TodoStateSuccessCopyWith<$Res> implements $TodoStateCopyWith<$Res> {
+  factory $TodoStateSuccessCopyWith(TodoStateSuccess value, $Res Function(TodoStateSuccess) _then) = _$TodoStateSuccessCopyWithImpl;
+@useResult
+$Res call({
+ TodoAction action
+});
+
+
+
+
+}
+/// @nodoc
+class _$TodoStateSuccessCopyWithImpl<$Res>
+    implements $TodoStateSuccessCopyWith<$Res> {
+  _$TodoStateSuccessCopyWithImpl(this._self, this._then);
+
+  final TodoStateSuccess _self;
+  final $Res Function(TodoStateSuccess) _then;
+
+/// Create a copy of TodoState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? action = null,}) {
+  return _then(TodoStateSuccess(
+null == action ? _self.action : action // ignore: cast_nullable_to_non_nullable
+as TodoAction,
+  ));
 }
 
-/// @nodoc
-class __$$TodoStateLoadingImplCopyWithImpl<$Res>
-    extends _$TodoStateCopyWithImpl<$Res, _$TodoStateLoadingImpl>
-    implements _$$TodoStateLoadingImplCopyWith<$Res> {
-  __$$TodoStateLoadingImplCopyWithImpl(_$TodoStateLoadingImpl _value,
-      $Res Function(_$TodoStateLoadingImpl) _then)
-      : super(_value, _then);
 
-  /// Create a copy of TodoState
-  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
 
-class _$TodoStateLoadingImpl implements _TodoStateLoading {
-  const _$TodoStateLoadingImpl();
 
-  @override
-  String toString() {
-    return 'TodoState.loading()';
-  }
+class TodoStateError implements TodoState {
+  const TodoStateError([this.message]);
+  
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$TodoStateLoadingImpl);
-  }
+ final  String? message;
 
-  @override
-  int get hashCode => runtimeType.hashCode;
+/// Create a copy of TodoState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$TodoStateErrorCopyWith<TodoStateError> get copyWith => _$TodoStateErrorCopyWithImpl<TodoStateError>(this, _$identity);
 
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(TodoAction action) success,
-    required TResult Function(String? message) error,
-  }) {
-    return loading();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(TodoAction action)? success,
-    TResult? Function(String? message)? error,
-  }) {
-    return loading?.call();
-  }
 
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(TodoAction action)? success,
-    TResult Function(String? message)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_TodoStateInitial value) initial,
-    required TResult Function(_TodoStateLoading value) loading,
-    required TResult Function(_TodoStateSuccess value) success,
-    required TResult Function(_TodoStateError value) error,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_TodoStateInitial value)? initial,
-    TResult? Function(_TodoStateLoading value)? loading,
-    TResult? Function(_TodoStateSuccess value)? success,
-    TResult? Function(_TodoStateError value)? error,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_TodoStateInitial value)? initial,
-    TResult Function(_TodoStateLoading value)? loading,
-    TResult Function(_TodoStateSuccess value)? success,
-    TResult Function(_TodoStateError value)? error,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TodoStateError&&(identical(other.message, message) || other.message == message));
 }
 
-abstract class _TodoStateLoading implements TodoState {
-  const factory _TodoStateLoading() = _$TodoStateLoadingImpl;
+
+@override
+int get hashCode => Object.hash(runtimeType,message);
+
+@override
+String toString() {
+  return 'TodoState.error(message: $message)';
+}
+
+
 }
 
 /// @nodoc
-abstract class _$$TodoStateSuccessImplCopyWith<$Res> {
-  factory _$$TodoStateSuccessImplCopyWith(_$TodoStateSuccessImpl value,
-          $Res Function(_$TodoStateSuccessImpl) then) =
-      __$$TodoStateSuccessImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({TodoAction action});
-}
+abstract mixin class $TodoStateErrorCopyWith<$Res> implements $TodoStateCopyWith<$Res> {
+  factory $TodoStateErrorCopyWith(TodoStateError value, $Res Function(TodoStateError) _then) = _$TodoStateErrorCopyWithImpl;
+@useResult
+$Res call({
+ String? message
+});
 
+
+
+
+}
 /// @nodoc
-class __$$TodoStateSuccessImplCopyWithImpl<$Res>
-    extends _$TodoStateCopyWithImpl<$Res, _$TodoStateSuccessImpl>
-    implements _$$TodoStateSuccessImplCopyWith<$Res> {
-  __$$TodoStateSuccessImplCopyWithImpl(_$TodoStateSuccessImpl _value,
-      $Res Function(_$TodoStateSuccessImpl) _then)
-      : super(_value, _then);
+class _$TodoStateErrorCopyWithImpl<$Res>
+    implements $TodoStateErrorCopyWith<$Res> {
+  _$TodoStateErrorCopyWithImpl(this._self, this._then);
 
-  /// Create a copy of TodoState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? action = null,
-  }) {
-    return _then(_$TodoStateSuccessImpl(
-      null == action
-          ? _value.action
-          : action // ignore: cast_nullable_to_non_nullable
-              as TodoAction,
-    ));
-  }
+  final TodoStateError _self;
+  final $Res Function(TodoStateError) _then;
+
+/// Create a copy of TodoState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? message = freezed,}) {
+  return _then(TodoStateError(
+freezed == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String?,
+  ));
 }
 
-/// @nodoc
 
-class _$TodoStateSuccessImpl implements _TodoStateSuccess {
-  const _$TodoStateSuccessImpl(this.action);
-
-  @override
-  final TodoAction action;
-
-  @override
-  String toString() {
-    return 'TodoState.success(action: $action)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$TodoStateSuccessImpl &&
-            (identical(other.action, action) || other.action == action));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, action);
-
-  /// Create a copy of TodoState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$TodoStateSuccessImplCopyWith<_$TodoStateSuccessImpl> get copyWith =>
-      __$$TodoStateSuccessImplCopyWithImpl<_$TodoStateSuccessImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(TodoAction action) success,
-    required TResult Function(String? message) error,
-  }) {
-    return success(action);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(TodoAction action)? success,
-    TResult? Function(String? message)? error,
-  }) {
-    return success?.call(action);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(TodoAction action)? success,
-    TResult Function(String? message)? error,
-    required TResult orElse(),
-  }) {
-    if (success != null) {
-      return success(action);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_TodoStateInitial value) initial,
-    required TResult Function(_TodoStateLoading value) loading,
-    required TResult Function(_TodoStateSuccess value) success,
-    required TResult Function(_TodoStateError value) error,
-  }) {
-    return success(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_TodoStateInitial value)? initial,
-    TResult? Function(_TodoStateLoading value)? loading,
-    TResult? Function(_TodoStateSuccess value)? success,
-    TResult? Function(_TodoStateError value)? error,
-  }) {
-    return success?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_TodoStateInitial value)? initial,
-    TResult Function(_TodoStateLoading value)? loading,
-    TResult Function(_TodoStateSuccess value)? success,
-    TResult Function(_TodoStateError value)? error,
-    required TResult orElse(),
-  }) {
-    if (success != null) {
-      return success(this);
-    }
-    return orElse();
-  }
 }
 
-abstract class _TodoStateSuccess implements TodoState {
-  const factory _TodoStateSuccess(final TodoAction action) =
-      _$TodoStateSuccessImpl;
-
-  TodoAction get action;
-
-  /// Create a copy of TodoState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$TodoStateSuccessImplCopyWith<_$TodoStateSuccessImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$TodoStateErrorImplCopyWith<$Res> {
-  factory _$$TodoStateErrorImplCopyWith(_$TodoStateErrorImpl value,
-          $Res Function(_$TodoStateErrorImpl) then) =
-      __$$TodoStateErrorImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({String? message});
-}
-
-/// @nodoc
-class __$$TodoStateErrorImplCopyWithImpl<$Res>
-    extends _$TodoStateCopyWithImpl<$Res, _$TodoStateErrorImpl>
-    implements _$$TodoStateErrorImplCopyWith<$Res> {
-  __$$TodoStateErrorImplCopyWithImpl(
-      _$TodoStateErrorImpl _value, $Res Function(_$TodoStateErrorImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of TodoState
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? message = freezed,
-  }) {
-    return _then(_$TodoStateErrorImpl(
-      freezed == message
-          ? _value.message
-          : message // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$TodoStateErrorImpl implements _TodoStateError {
-  const _$TodoStateErrorImpl([this.message]);
-
-  @override
-  final String? message;
-
-  @override
-  String toString() {
-    return 'TodoState.error(message: $message)';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$TodoStateErrorImpl &&
-            (identical(other.message, message) || other.message == message));
-  }
-
-  @override
-  int get hashCode => Object.hash(runtimeType, message);
-
-  /// Create a copy of TodoState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$TodoStateErrorImplCopyWith<_$TodoStateErrorImpl> get copyWith =>
-      __$$TodoStateErrorImplCopyWithImpl<_$TodoStateErrorImpl>(
-          this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initial,
-    required TResult Function() loading,
-    required TResult Function(TodoAction action) success,
-    required TResult Function(String? message) error,
-  }) {
-    return error(message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initial,
-    TResult? Function()? loading,
-    TResult? Function(TodoAction action)? success,
-    TResult? Function(String? message)? error,
-  }) {
-    return error?.call(message);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function(TodoAction action)? success,
-    TResult Function(String? message)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(message);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_TodoStateInitial value) initial,
-    required TResult Function(_TodoStateLoading value) loading,
-    required TResult Function(_TodoStateSuccess value) success,
-    required TResult Function(_TodoStateError value) error,
-  }) {
-    return error(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_TodoStateInitial value)? initial,
-    TResult? Function(_TodoStateLoading value)? loading,
-    TResult? Function(_TodoStateSuccess value)? success,
-    TResult? Function(_TodoStateError value)? error,
-  }) {
-    return error?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_TodoStateInitial value)? initial,
-    TResult Function(_TodoStateLoading value)? loading,
-    TResult Function(_TodoStateSuccess value)? success,
-    TResult Function(_TodoStateError value)? error,
-    required TResult orElse(),
-  }) {
-    if (error != null) {
-      return error(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _TodoStateError implements TodoState {
-  const factory _TodoStateError([final String? message]) = _$TodoStateErrorImpl;
-
-  String? get message;
-
-  /// Create a copy of TodoState
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$TodoStateErrorImplCopyWith<_$TodoStateErrorImpl> get copyWith =>
-      throw _privateConstructorUsedError;
-}
+// dart format on
