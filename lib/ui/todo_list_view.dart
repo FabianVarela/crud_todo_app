@@ -105,14 +105,13 @@ final class TodoListView extends HookConsumerWidget {
             );
           },
         ),
-        floatingActionButton:
-            existsCategory
-                ? FloatingActionButton(
-                  backgroundColor: const Color(0xFF4A78FA),
-                  onPressed: () => onGoToTodo(categoryId, null),
-                  child: const Icon(Icons.add),
-                )
-                : null,
+        floatingActionButton: existsCategory
+            ? FloatingActionButton(
+                backgroundColor: const Color(0xFF4A78FA),
+                onPressed: () => onGoToTodo(categoryId, null),
+                child: const Icon(Icons.add),
+              )
+            : null,
       ),
     );
   }
@@ -197,18 +196,17 @@ final class CategorySection extends ConsumerWidget {
                 topRight: Radius.circular(30),
               ),
             ),
-            child:
-                todos.isNotEmpty
-                    ? TodoList(
-                      todoList: todos,
-                      onEditItem: (todo) => onEdit(todo.id),
-                    ).paddingSymmetric(h: 24, v: 20)
-                    : const Center(
-                      child: Text(
-                        'Empty data, add a task',
-                        style: TextStyle(fontSize: 25),
-                      ),
+            child: todos.isNotEmpty
+                ? TodoList(
+                    todoList: todos,
+                    onEditItem: (todo) => onEdit(todo.id),
+                  ).paddingSymmetric(h: 24, v: 20)
+                : const Center(
+                    child: Text(
+                      'Empty data, add a task',
+                      style: TextStyle(fontSize: 25),
                     ),
+                  ),
           ),
         ),
       ],

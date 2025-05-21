@@ -18,13 +18,10 @@ final class CrudTodoInformationParser
   Future<CrudTodoConfig> parseRouteInformation(
     RouteInformation routeInformation,
   ) async {
-    final newPaths =
-        routeInformation.uri.pathSegments.map((pathSegment) {
-          final path = TodoPath.values.where(
-            (value) => value.name == pathSegment,
-          );
-          return path.isEmpty ? pathSegment : pathSegment.toLowerCase();
-        }).toList();
+    final newPaths = routeInformation.uri.pathSegments.map((pathSegment) {
+      final path = TodoPath.values.where((value) => value.name == pathSegment);
+      return path.isEmpty ? pathSegment : pathSegment.toLowerCase();
+    }).toList();
 
     if (newPaths.isEmpty) return const CrudTodoConfigCategoryList();
 

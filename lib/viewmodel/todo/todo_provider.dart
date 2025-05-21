@@ -21,8 +21,8 @@ final todoDetailProvider = FutureProvider.family.autoDispose((
 
   return categoryId.trim().isNotEmpty && todoId.trim().isNotEmpty
       ? ref
-          .watch(todoRepositoryProvider)
-          .getTodoById(categoryId: categoryId, todoId: todoId)
+            .watch(todoRepositoryProvider)
+            .getTodoById(categoryId: categoryId, todoId: todoId)
       : null;
 });
 

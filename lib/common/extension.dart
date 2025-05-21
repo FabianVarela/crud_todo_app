@@ -30,15 +30,13 @@ extension StringUtilsX on String {
     return false;
   }
 
-  ValidationText get validateEmpty =>
-      isNotEmpty
-          ? ValidationText(text: this)
-          : const ValidationText(message: 'Field is empty');
+  ValidationText get validateEmpty => isNotEmpty
+      ? ValidationText(text: this)
+      : const ValidationText(message: 'Field is empty');
 
-  ValidationText get validateEmoji =>
-      (length == 1 || length == 2) && isEmoji
-          ? ValidationText(text: this)
-          : const ValidationText(message: 'Invalid emoji');
+  ValidationText get validateEmoji => (length == 1 || length == 2) && isEmoji
+      ? ValidationText(text: this)
+      : const ValidationText(message: 'Invalid emoji');
 }
 
 extension WidgetUtilsX on Widget {

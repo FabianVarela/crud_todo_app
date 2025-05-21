@@ -153,10 +153,9 @@ final class DateTodo extends HookConsumerWidget {
       onTap: () {
         CustomDatePicker.show(
           context,
-          initialDate:
-              finalDate.isDurationNegative
-                  ? DateTime.now().add(const Duration(minutes: 2))
-                  : finalDate.add(const Duration(minutes: 2)),
+          initialDate: finalDate.isDurationNegative
+              ? DateTime.now().add(const Duration(minutes: 2))
+              : finalDate.add(const Duration(minutes: 2)),
           firstDate: DateTime.now(),
           lastDate: DateTime.now().add(const Duration(days: 365)),
           onChangeDate: (d) => ref.read(dateTodoProvider.notifier).state = d,

@@ -144,16 +144,16 @@ final class CategoryListView extends HookConsumerWidget {
   Map<ShortcutActivator, Intent> get _shortcutsByOS {
     return defaultTargetPlatform == TargetPlatform.macOS
         ? <ShortcutActivator, Intent>{
-          LogicalKeySet(LogicalKeyboardKey.meta, LogicalKeyboardKey.keyN):
-              const CreateCategoryIntent(),
-          LogicalKeySet(LogicalKeyboardKey.meta, LogicalKeyboardKey.keyR):
-              const RefreshListIntent(),
-        }
+            LogicalKeySet(LogicalKeyboardKey.meta, LogicalKeyboardKey.keyN):
+                const CreateCategoryIntent(),
+            LogicalKeySet(LogicalKeyboardKey.meta, LogicalKeyboardKey.keyR):
+                const RefreshListIntent(),
+          }
         : <ShortcutActivator, Intent>{
-          const SingleActivator(LogicalKeyboardKey.keyN, control: true):
-              const CreateCategoryIntent(),
-          const SingleActivator(LogicalKeyboardKey.keyR, control: true):
-              const RefreshListIntent(),
-        };
+            const SingleActivator(LogicalKeyboardKey.keyN, control: true):
+                const CreateCategoryIntent(),
+            const SingleActivator(LogicalKeyboardKey.keyR, control: true):
+                const RefreshListIntent(),
+          };
   }
 }

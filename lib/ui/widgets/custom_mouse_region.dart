@@ -18,12 +18,11 @@ final class CustomMouseRegion extends StatelessWidget {
   Widget build(BuildContext context) {
     return isForDesktop
         ? MouseRegion(
-          cursor: cursor,
-          child:
-              tooltipMessage != null
-                  ? Tooltip(message: tooltipMessage, child: child)
-                  : child,
-        )
+            cursor: cursor,
+            child: tooltipMessage != null
+                ? Tooltip(message: tooltipMessage, child: child)
+                : child,
+          )
         : child;
   }
 }

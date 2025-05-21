@@ -31,22 +31,21 @@ class CategoryService {
   Future<void> saveCategory({required Category category}) async {
     category.id != null
         ? await _database
-            .collection(_categoryCollection)
-            .doc(category.id)
-            .update(category.toJson())
+              .collection(_categoryCollection)
+              .doc(category.id)
+              .update(category.toJson())
         : await _database
-            .collection(_categoryCollection)
-            .add(category.toJson());
+              .collection(_categoryCollection)
+              .add(category.toJson());
   }
 
   Future<void> deleteCategory({required String categoryId}) async {
     await _database.collection(_categoryCollection).doc(categoryId).delete();
 
-    final snapshot =
-        await _database
-            .collection(_todoCollection)
-            .where('categoryId', isEqualTo: categoryId)
-            .get();
+    final snapshot = await _database
+        .collection(_todoCollection)
+        .where('categoryId', isEqualTo: categoryId)
+        .get();
 
     for (var i = 0; i < snapshot.docs.length; i++) {
       await snapshot.docs[i].reference.delete();
