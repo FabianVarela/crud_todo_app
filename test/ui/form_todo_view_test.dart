@@ -71,7 +71,7 @@ void main() {
             backButtonDispatcher: RootBackButtonDispatcher(),
             builder: (_, child) {
               return Consumer(
-                builder: (_, ref, __) {
+                builder: (_, ref, _) {
                   todoViewModel = ref.read(todoViewModelProvider.notifier);
                   return child!;
                 },

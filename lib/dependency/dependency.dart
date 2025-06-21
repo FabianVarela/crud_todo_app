@@ -5,9 +5,7 @@ import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
 import 'package:crud_todo_app/service/category_service.dart';
 import 'package:crud_todo_app/service/todo_service.dart';
-import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
-import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -16,11 +14,11 @@ final firebaseProvider = Provider((_) => FirebaseFirestore.instance);
 //endregion
 
 //region Service layer
-final categoryServiceProvider = Provider<CategoryService>((ref) {
+final categoryServiceProvider = Provider((ref) {
   return CategoryService(ref.read(firebaseProvider));
 });
 
-final todoServiceProvider = Provider<TodoService>((ref) {
+final todoServiceProvider = Provider((ref) {
   return TodoService(ref.read(firebaseProvider));
 });
 //endregion
@@ -36,12 +34,11 @@ final todoRepositoryProvider = Provider<ITodoRepository>(
 //endregion
 
 //region ViewModel layer
-final categoryViewModelProvider =
-    StateNotifierProvider<CategoryViewModel, CategoryState>(
-      (ref) => CategoryViewModel(ref.watch(categoryRepositoryProvider)),
-    );
+final categoryViewModelProvider = StateNotifierProvider(
+  (ref) => CategoryViewModel(ref.watch(categoryRepositoryProvider)),
+);
 
-final todoViewModelProvider = StateNotifierProvider<TodoViewModel, TodoState>(
+final todoViewModelProvider = StateNotifierProvider(
   (ref) => TodoViewModel(ref.watch(todoRepositoryProvider)),
 );
 //endregion

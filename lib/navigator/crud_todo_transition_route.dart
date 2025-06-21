@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 final class SimpleRoute<T> extends PageRouteBuilder<T> {
   SimpleRoute({required RouteSettings super.settings, required this.child})
-    : super(pageBuilder: (_, __, ___) => child);
+    : super(pageBuilder: (_, _, _) => child);
 
   final Widget child;
 }
@@ -12,7 +12,7 @@ final class ScaleTransitionRoute<T> extends PageRouteBuilder<T> {
     required RouteSettings super.settings,
     required this.child,
   }) : super(
-         pageBuilder: (_, anim, __) {
+         pageBuilder: (_, anim, _) {
            return ScaleTransition(scale: anim, child: child);
          },
        );
@@ -27,7 +27,7 @@ final class FadeTransitionRoute<T> extends PageRouteBuilder<T> {
   }) : super(
          reverseTransitionDuration: const Duration(milliseconds: 1000),
          transitionDuration: const Duration(milliseconds: 1000),
-         pageBuilder: (_, anim, __) {
+         pageBuilder: (_, anim, _) {
            return FadeTransition(opacity: anim, child: child);
          },
        );
@@ -42,7 +42,7 @@ final class SlideTransitionRoute<T> extends PageRouteBuilder<T> {
   }) : super(
          reverseTransitionDuration: const Duration(milliseconds: 1000),
          transitionDuration: const Duration(milliseconds: 1000),
-         pageBuilder: (_, anim, __) {
+         pageBuilder: (_, anim, _) {
            return SlideTransition(
              position: anim
                  .drive(CurveTween(curve: Curves.easeInOut))
@@ -62,7 +62,7 @@ final class DialogFadeTransitionRoute<T> extends RawDialogRoute<T> {
   }) : super(
          barrierDismissible: false,
          transitionDuration: const Duration(milliseconds: 1000),
-         pageBuilder: (_, anim, __) {
+         pageBuilder: (_, anim, _) {
            return FadeTransition(opacity: anim, child: child);
          },
        );

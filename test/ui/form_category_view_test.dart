@@ -54,7 +54,7 @@ void main() {
             backButtonDispatcher: RootBackButtonDispatcher(),
             builder: (_, child) {
               return Consumer(
-                builder: (_, ref, __) {
+                builder: (_, ref, _) {
                   viewModel = ref.read(categoryViewModelProvider.notifier);
                   return child!;
                 },
