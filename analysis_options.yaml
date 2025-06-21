@@ -12,5 +12,7 @@ linter:
     no_default_cases: false
     one_member_abstracts: false
     public_member_api_docs: false
-    require_trailing_commas: false
     specify_nonobvious_property_types: false
+
+formatter:
+  trailing_commas: preserve
