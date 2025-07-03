@@ -21,7 +21,7 @@ dependencies:
   flutter_slidable: ^4.0.0
   flutter_web_plugins:
     sdk: flutter
-  freezed_annotation: ^3.0.0
+  freezed_annotation: ^3.1.0
   google_fonts: ^6.2.1
   hooks_riverpod: ^2.6.1
   intl: ^0.20.2
