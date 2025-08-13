@@ -311,10 +311,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_hooks
-      sha256: b772e710d16d7a20c0740c4f855095026b31c7eb5ba3ab67d2bd52021cd9461d
+      sha256: c3df76c62bb3a9f9bee75c57cdab40abab6123b734c1cd7e9b26a5dbd436eceb
       url: "https://pub.dev"
     source: hosted
-    version: "0.21.2"
+    version: "0.21.3"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:

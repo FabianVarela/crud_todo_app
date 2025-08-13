@@ -17,7 +17,7 @@ dependencies:
   firebase_core: ^4.0.0
   flutter:
     sdk: flutter
-  flutter_hooks: ^0.21.2
+  flutter_hooks: ^0.21.3
   flutter_slidable: ^4.0.0
   flutter_web_plugins:
     sdk: flutter
