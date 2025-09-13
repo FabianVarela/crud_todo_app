@@ -12,7 +12,6 @@ import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:crud_todo_app/ui/widgets/custom_checkbox.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
-import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
@@ -295,7 +294,7 @@ void main() {
         await tester.pump(const Duration(seconds: 1));
         await tester.pumpAndSettle();
 
-        expect(viewModel.state.isSuccess, isTrue);
+        expect(viewModel.state.hasValue, isTrue);
         await tester.pumpAndSettle();
 
         expect(find.byType(CategoryListView), findsOneWidget);
@@ -333,7 +332,7 @@ void main() {
           ),
         ).called(1);
 
-        expect(viewModel.state.isError, isTrue);
+        expect(viewModel.state.hasError, isTrue);
         expect(find.byType(CategoryListView), findsNothing);
       },
       variant: TargetPlatformVariant.all(),

@@ -1,7 +1,7 @@
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/repository/todo_repository.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:hooks_riverpod/legacy.dart';
 
 final class TodoViewModel extends StateNotifier<TodoState> {
   TodoViewModel(this._repository) : super(const TodoState.initial());
