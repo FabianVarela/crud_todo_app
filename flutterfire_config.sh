@@ -2,15 +2,27 @@
 # Script to generate Firebase configuration files for different environments/flavors
 # Feel free to reuse and adapt this script for your own projects
 
-if [[ $# -eq 0 ]]; then
-  echo "Error: No environment specified. Use 'dev', or 'prod'."
+if [ $# -eq 0 ]; then
+  echo "Error: Must specified an environment and the Firebase's project Id."
+  exit 1
+fi
+
+if [ "$1" != "dev" ] && [ "$1" != "prod" ]; then
+  echo "Error: Invalid environment specified. You must use 'dev', or 'prod'."
+  exit 1
+fi
+
+echo "Project id: $2"
+
+if [ "$2" == "" ]; then
+  echo "Error: You must set the Firebase's project id."
   exit 1
 fi
 
 case $1 in
   dev)
     flutterfire config \
-      --project=<YOUR_PROJECT_ID> \
+      --project="$2" \
       --out=lib/firebase_options_dev.dart \
       --ios-bundle-id=com.developer.fabian.crudTodoApp.dev \
       --ios-out=ios/config/develop/GoogleService-Info.plist \
@@ -21,7 +33,7 @@ case $1 in
     ;;
   prod)
     flutterfire config \
-      --project=<YOUR_PROJECT_ID> \
+      --project="$2" \
       --out=lib/firebase_options.dart \
       --ios-bundle-id=com.developer.fabian.crudTodoApp \
       --ios-out=ios/config/production/GoogleService-Info.plist \
@@ -31,7 +43,7 @@ case $1 in
       --macos-out=macos/config/production/GoogleService-Info.plist
     ;;
   *)
-    echo "Error: Invalid environment specified. Use 'dev', or 'prod'."
+    echo "Error: Invalid environment specified. You must use 'dev', or 'prod'."
     exit 1
     ;;
 esac

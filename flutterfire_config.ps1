@@ -2,18 +2,27 @@
 # Feel free to reuse and adapt this script for your own projects
 
 param(
-    [string]$env = ""
+    [string]$env = "",
+    [string]$projectId = ""
 )
 
-if ($env -eq "") {
-    Write-Host "Error: No environment specified. Use 'dev', or 'prod'."
+if ($env -eq "")
+{
+    Write-Host "Error: Invalid environment specified. You must use 'dev', or 'prod'."
     exit 1
 }
 
-switch ($env) {
+if ($projectId -eq "")
+{
+    Write-Host "Error: You must set the Firebase's project id."
+    exit 1
+}
+
+switch ($env)
+{
     "dev" {
         flutterfire config `
-              --project=<YOUR_PROJECT_ID> `
+              --project=$projectId `
               --out=lib/firebase_options_dev.dart `
               --ios-bundle-id=com.developer.fabian.crudTodoApp.dev `
               --ios-out=ios/config/develop/GoogleService-Info.plist `
@@ -24,7 +33,7 @@ switch ($env) {
     }
     "prod" {
         flutterfire config `
-              --project=<YOUR_PROJECT_ID> `
+              --project=$projectId `
               --out=lib/firebase_options.dart `
               --ios-bundle-id=com.developer.fabian.crudTodoApp `
               --ios-out=ios/config/production/GoogleService-Info.plist `
@@ -34,7 +43,7 @@ switch ($env) {
               --macos-out=macos/config/production/GoogleService-Info.plist
     }
     default {
-        Write-Error "Error: Invalid environment specified. Use 'dev', or 'prod'."
+        Write-Error "Error: Invalid environment specified. You must use 'dev', or 'prod'."
         exit 1
     }
 }
