@@ -5,7 +5,7 @@ import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:crud_todo_app/ui/widgets/custom_message.dart';
 import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
-import 'package:crud_todo_app/viewmodel/category/category_state.dart';
+import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,16 +35,18 @@ final class CategoryListView extends HookConsumerWidget {
     final scrollController = useScrollController();
     final categoriesData = ref.watch(categoryListProvider);
 
-    ref.listen<CategoryState>(categoryViewModelProvider, (_, state) {
-      if (state case CategoryStateSuccess(:final action)) {
-        final message = switch (action) {
-          CategoryAction.add => 'Category created successfully',
-          CategoryAction.remove => 'Category removed successfully',
-        };
-        showCustomMessage(context, message: message);
-      } else if (state case CategoryStateError(:final message)) {
-        if (message != null) showCustomMessage(context, message: message);
-      }
+    ref.listen(categoryViewModelProvider, (_, state) {
+      state.whenOrNull(
+        data: (data) {
+          final message = switch (data) {
+            CategoryAction.add => 'Category created successfully',
+            CategoryAction.remove => 'Category removed successfully',
+            _ => null,
+          };
+          if (message != null) showCustomMessage(context, message: message);
+        },
+        error: (e, _) => showCustomMessage(context, message: e.toString()),
+      );
     });
 
     return Scaffold(

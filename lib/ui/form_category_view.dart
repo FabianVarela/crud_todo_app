@@ -3,7 +3,7 @@ import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
-import 'package:crud_todo_app/viewmodel/category/category_state.dart';
+import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -24,7 +24,11 @@ final class FormCategoryView extends ConsumerWidget {
     final mobileWidth = !context.isPortrait ? 400.0 : null;
 
     ref.listen(categoryViewModelProvider, (_, state) {
-      _onChangeState(context, state);
+      state.whenOrNull(
+        data: (data) {
+          if (data == CategoryAction.add) Navigator.pop(context);
+        },
+      );
     });
 
     return Dialog(
@@ -72,12 +76,6 @@ final class FormCategoryView extends ConsumerWidget {
       ),
     );
   }
-
-  void _onChangeState(BuildContext context, CategoryState state) {
-    if (state case CategoryStateSuccess(:final action)) {
-      if (action == CategoryAction.add) Navigator.pop(context);
-    }
-  }
 }
 
 final class NameCategory extends HookConsumerWidget {
@@ -85,7 +83,7 @@ final class NameCategory extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final nameText = ref.watch(nameCategoryProvider.notifier);
+    final nameText = ref.watch(nameCategoryProvider);
     final textController = useTextEditingController();
 
     return TextField(
@@ -93,10 +91,12 @@ final class NameCategory extends HookConsumerWidget {
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
         hintText: 'Name',
-        errorText: nameText.state.message,
+        errorText: nameText.message,
       ),
       onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
-      onChanged: (value) => nameText.update((_) => value.validateEmpty),
+      onChanged: (value) {
+        ref.read(nameCategoryProvider.notifier).onChangeValue(value);
+      },
     );
   }
 }
@@ -106,7 +106,7 @@ final class EmojiCategory extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final emoji = ref.watch(emojiCategoryProvider.notifier);
+    final emoji = ref.watch(emojiCategoryProvider);
     final textController = useTextEditingController();
 
     return TextField(
@@ -114,10 +114,12 @@ final class EmojiCategory extends HookConsumerWidget {
       textInputAction: TextInputAction.done,
       decoration: InputDecoration(
         hintText: 'Emoji',
-        errorText: emoji.state.message,
+        errorText: emoji.message,
       ),
       onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
-      onChanged: (value) => emoji.update((_) => value.validateEmoji),
+      onChanged: (value) {
+        ref.read(emojiCategoryProvider.notifier).onChangeValue(value);
+      },
     );
   }
 }
@@ -144,8 +146,8 @@ final class SubmitCategory extends ConsumerWidget {
   }
 
   void _saveCategory(WidgetRef ref) {
-    final name = ref.read(nameCategoryProvider.notifier).state.text!;
-    final emoji = ref.read(emojiCategoryProvider.notifier).state.text!;
+    final name = ref.read(nameCategoryProvider).text!;
+    final emoji = ref.read(emojiCategoryProvider).text!;
 
     ref
         .read(categoryViewModelProvider.notifier)

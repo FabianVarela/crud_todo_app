@@ -5,7 +5,6 @@ import 'package:crud_todo_app/navigator/crud_todo_router_delegate.dart';
 import 'package:crud_todo_app/repository/category_repository.dart';
 import 'package:crud_todo_app/ui/form_category_view.dart';
 import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';
-import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -178,7 +177,7 @@ void main() {
         expect(find.byType(CircularProgressIndicator), findsOneWidget);
         await tester.pumpAndSettle();
 
-        expect(viewModel.state.isSuccess, true);
+        expect(viewModel.state.hasValue, isTrue);
         expect(find.byType(CircularProgressIndicator), findsNothing);
       },
       variant: TargetPlatformVariant.all(),
@@ -206,7 +205,7 @@ void main() {
             category: any(named: 'category'),
           ),
         ).called(1);
-        expect(viewModel.state.isError, true);
+        expect(viewModel.state.hasError, isTrue);
       },
       variant: TargetPlatformVariant.all(),
     );
