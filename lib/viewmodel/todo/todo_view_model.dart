@@ -1,12 +1,14 @@
+import 'dart:async';
+
+import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
-import 'package:crud_todo_app/repository/todo_repository.dart';
-import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
-import 'package:hooks_riverpod/legacy.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final class TodoViewModel extends StateNotifier<TodoState> {
-  TodoViewModel(this._repository) : super(const TodoState.initial());
+enum TodoAction { add, update, remove, check, none }
 
-  late final ITodoRepository _repository;
+final class TodoViewModel extends AsyncNotifier<TodoAction> {
+  @override
+  FutureOr<TodoAction> build() => TodoAction.none;
 
   Future<void> saveTodo({
     required String categoryId,
@@ -14,10 +16,10 @@ final class TodoViewModel extends StateNotifier<TodoState> {
     required DateTime date,
     String? todoId,
   }) async {
-    try {
-      state = const TodoState.loading();
-
-      await _repository.saveTodo(
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      final repository = ref.read(todoRepositoryProvider);
+      await repository.saveTodo(
         todo: Todo(
           id: todoId,
           subject: subject,
@@ -25,35 +27,30 @@ final class TodoViewModel extends StateNotifier<TodoState> {
           categoryId: categoryId,
         ),
       );
-
-      state = TodoState.success(
-        todoId == null ? TodoAction.add : TodoAction.update,
-      );
-    } on Exception catch (e) {
-      state = TodoState.error(e.toString());
-    }
+      return todoId == null ? TodoAction.add : TodoAction.update;
+    });
   }
 
   Future<void> deleteTodo({
     required String todoId,
     required String categoryId,
   }) async {
-    try {
-      state = const TodoState.loading();
-      await _repository.deleteTodo(todoId: todoId, categoryId: categoryId);
-      state = const TodoState.success(TodoAction.remove);
-    } on Exception catch (e) {
-      state = TodoState.error(e.toString());
-    }
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      final repository = ref.read(todoRepositoryProvider);
+      await repository.deleteTodo(todoId: todoId, categoryId: categoryId);
+
+      return TodoAction.remove;
+    });
   }
 
   Future<void> checkTodo({required Todo todo, bool isChecked = false}) async {
-    try {
-      state = const TodoState.loading();
-      await _repository.saveTodo(todo: todo.copyWith(isCompleted: isChecked));
-      state = const TodoState.success(TodoAction.check);
-    } on Exception catch (e) {
-      state = TodoState.error(e.toString());
-    }
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      final repository = ref.read(todoRepositoryProvider);
+      await repository.saveTodo(todo: todo.copyWith(isCompleted: isChecked));
+
+      return TodoAction.check;
+    });
   }
 }

@@ -13,7 +13,6 @@ import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:crud_todo_app/ui/widgets/custom_checkbox.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
 import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
-import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' as foundation;
@@ -376,7 +375,7 @@ void main() {
         expect(todoViewModel.state.isLoading, isTrue);
 
         await tester.pumpAndSettle();
-        expect(todoViewModel.state.isSuccess, isTrue);
+        expect(todoViewModel.state.hasValue, isTrue);
       },
       variant: TargetPlatformVariant.all(),
     );
@@ -414,7 +413,7 @@ void main() {
         ).called(1);
 
         await tester.pumpAndSettle();
-        expect(todoViewModel.state.isError, isTrue);
+        expect(todoViewModel.state.hasError, isTrue);
       },
       variant: TargetPlatformVariant.all(),
     );
@@ -501,7 +500,7 @@ void main() {
         expect(todoViewModel.state.isLoading, isTrue);
         await tester.pumpAndSettle();
 
-        expect(todoViewModel.state.isSuccess, isTrue);
+        expect(todoViewModel.state.hasValue, isTrue);
       },
       variant: TargetPlatformVariant.mobile(),
     );
@@ -544,7 +543,7 @@ void main() {
           ),
         ).called(1);
 
-        expect(todoViewModel.state.isError, isTrue);
+        expect(todoViewModel.state.hasError, isTrue);
       },
       variant: TargetPlatformVariant.mobile(),
     );
@@ -631,7 +630,7 @@ void main() {
         expect(todoViewModel.state.isLoading, isTrue);
         await tester.pumpAndSettle();
 
-        expect(todoViewModel.state.isSuccess, isTrue);
+        expect(todoViewModel.state.hasValue, isTrue);
         expect(foundRemoveOption, findsNothing);
       },
       variant: TargetPlatformVariant.desktop(),

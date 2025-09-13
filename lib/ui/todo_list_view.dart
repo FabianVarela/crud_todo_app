@@ -8,7 +8,7 @@ import 'package:crud_todo_app/ui/widgets/custom_message.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
-import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
+import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -34,17 +34,19 @@ final class TodoListView extends HookConsumerWidget {
     );
 
     ref.listen(todoViewModelProvider, (_, state) {
-      if (state case TodoStateSuccess(:final action)) {
-        final message = switch (action) {
-          TodoAction.add => 'Todo created successfully',
-          TodoAction.update => 'Todo updated successfully',
-          TodoAction.remove => 'Todo removed successfully',
-          TodoAction.check => 'Todo finished successfully',
-        };
-        showCustomMessage(context, message: message);
-      } else if (state case TodoStateError(:final message)) {
-        if (message != null) showCustomMessage(context, message: message);
-      }
+      state.whenOrNull(
+        data: (data) {
+          final message = switch (data) {
+            TodoAction.add => 'Todo created successfully',
+            TodoAction.update => 'Todo updated successfully',
+            TodoAction.remove => 'Todo removed successfully',
+            TodoAction.check => 'Todo finished successfully',
+            _ => null,
+          };
+          if (message != null) showCustomMessage(context, message: message);
+        },
+        error: (e, _) => showCustomMessage(context, message: e.toString()),
+      );
     });
 
     return ContextMenuOverlay(

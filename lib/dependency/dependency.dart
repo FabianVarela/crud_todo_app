@@ -37,9 +37,7 @@ final todoRepositoryProvider = Provider<ITodoRepository>(
 //region ViewModel layer
 final categoryViewModelProvider = AsyncNotifierProvider(CategoryViewModel.new);
 
-final todoViewModelProvider = StateNotifierProvider(
-  (ref) => TodoViewModel(ref.watch(todoRepositoryProvider)),
-);
+final todoViewModelProvider = AsyncNotifierProvider(TodoViewModel.new);
 //endregion
 
 //region Navigator 2.0

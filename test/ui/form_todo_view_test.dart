@@ -8,7 +8,6 @@ import 'package:crud_todo_app/ui/form_todo_view.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
-import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' as foundation;
@@ -353,7 +352,7 @@ void main() {
         expect(todoViewModel.state.isLoading, isTrue);
 
         await tester.pumpAndSettle(const Duration(seconds: 1));
-        expect(todoViewModel.state.isSuccess, isTrue);
+        expect(todoViewModel.state.hasValue, isTrue);
 
         await tester.pump();
         expect(find.byType(TodoListView), findsOneWidget);
@@ -431,7 +430,7 @@ void main() {
         expect(todoViewModel.state.isLoading, isTrue);
 
         await tester.pumpAndSettle(const Duration(seconds: 1));
-        expect(todoViewModel.state.isSuccess, isTrue);
+        expect(todoViewModel.state.hasValue, isTrue);
 
         await tester.pump();
         expect(find.byType(TodoListView), findsOneWidget);
@@ -467,7 +466,7 @@ void main() {
         verify(
           () => mockTodoService.saveTodo(todo: any(named: 'todo')),
         ).called(1);
-        expect(todoViewModel.state.isError, isTrue);
+        expect(todoViewModel.state.hasError, isTrue);
 
         expect(find.byType(TodoListView), findsNothing);
       },
