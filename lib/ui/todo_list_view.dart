@@ -27,10 +27,8 @@ final class TodoListView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final categoryData = ref.watch(categoryDetailProvider(categoryId));
-    final todoData = ref.watch(todoListProvider(categoryId));
-
     final existsCategory = ref.watch(
-      categoryDetailProvider(categoryId).select((value) => value.hasValue),
+      categoryDetailProvider(categoryId).select((state) => state.value != null),
     );
 
     ref.listen(todoViewModelProvider, (_, state) {
@@ -72,40 +70,39 @@ final class TodoListView extends HookConsumerWidget {
           ],
         ),
         body: categoryData.when(
-          data: (category) {
-            return todoData.whenOrNull(
-              data: (todos) {
-                return CategorySection(
+          data: (category) => Consumer(
+            builder: (_, ref, _) {
+              final todoData = ref.watch(todoListProvider(category.id!));
+              return todoData.maybeWhen(
+                data: (todos) => CategorySection(
                   category: category,
                   todos: todos,
                   onEdit: (todoId) => onGoToTodo(categoryId, todoId),
-                );
-              },
-              error: (e, _) {
-                return Center(
+                ),
+                error: (e, _) => Center(
                   child: Text(
                     e.toString(),
                     textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 20, color: Colors.white),
+                    style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
                   ),
-                );
-              },
-            );
-          },
-          loading: () {
-            return const Center(
-              child: CircularProgressIndicator(color: Colors.white),
-            );
-          },
-          error: (e, _) {
-            return Center(
-              child: Text(
-                e.toString(),
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 20, color: Colors.white),
-              ),
-            );
-          },
+                ),
+                orElse: Offstage.new,
+              );
+            },
+          ),
+          loading: () => const Center(
+            child: CircularProgressIndicator(color: Colors.white),
+          ),
+          error: (e, _) => Center(
+            child: Text(
+              e.toString(),
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 20, color: Colors.white),
+            ),
+          ),
         ),
         floatingActionButton: existsCategory
             ? FloatingActionButton(

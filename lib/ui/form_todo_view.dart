@@ -19,9 +19,6 @@ final class FormTodoView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final categoryData = ref.watch(categoryDetailProvider(categoryId));
-    final todoData = ref.watch(
-      todoDetailProvider((categoryId: categoryId, todoId: todoId ?? '')),
-    );
 
     ref.listen(todoViewModelProvider, (_, state) {
       state.whenOrNull(
@@ -56,30 +53,38 @@ final class FormTodoView extends HookConsumerWidget {
         ],
       ),
       body: categoryData.maybeWhen(
-        data: (category) => todoData.whenOrNull(
-          data: (todo) => SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: Column(
-              children: <Widget>[
-                SubjectTodo(todo: todo).paddingSymmetric(h: 30, v: 30),
-                DateTodo(todo: todo).paddingSymmetric(h: 30, v: 20),
-                CategoryTodo(
-                  category: category,
-                ).paddingSymmetric(h: 30, v: 20),
-                SubmitTodo(
-                  categoryId: categoryId,
-                  todoId: todo?.id,
-                ).paddingSymmetric(h: 16),
-              ],
-            ),
-          ),
-          error: (e, _) => Center(
-            child: Text(
-              e.toString(),
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 20),
-            ),
-          ),
+        data: (category) => Consumer(
+          builder: (_, ref, _) {
+            final param = (categoryId: category.id!, todoId: todoId ?? '');
+            final todoData = ref.watch(todoDetailProvider(param));
+
+            return todoData.maybeWhen(
+              data: (todo) => SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Column(
+                  children: <Widget>[
+                    SubjectTodo(todo: todo).paddingSymmetric(h: 30, v: 30),
+                    DateTodo(todo: todo).paddingSymmetric(h: 30, v: 20),
+                    CategoryTodo(
+                      category: category,
+                    ).paddingSymmetric(h: 30, v: 20),
+                    SubmitTodo(
+                      categoryId: categoryId,
+                      todoId: todo?.id,
+                    ).paddingSymmetric(h: 16),
+                  ],
+                ),
+              ),
+              error: (e, _) => Center(
+                child: Text(
+                  e.toString(),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ),
+              orElse: Offstage.new,
+            );
+          },
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
         orElse: Offstage.new,
