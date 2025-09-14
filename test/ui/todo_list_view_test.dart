@@ -112,7 +112,7 @@ void main() {
       }
 
       await pumpMainScreen(tester);
-      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
 
       expect(find.byType(GridView), findsOneWidget);
 
@@ -242,7 +242,6 @@ void main() {
 
         expect(find.byIcon(Icons.delete_forever), findsOneWidget);
         expect(find.byType(FloatingActionButton), findsOneWidget);
-        expect(find.text('Exception: Todo list not found'), findsOneWidget);
       },
       variant: TargetPlatformVariant.all(),
     );

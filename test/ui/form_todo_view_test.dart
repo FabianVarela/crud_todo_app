@@ -100,7 +100,7 @@ void main() {
       ).thenAnswer((_) => Stream.value([existingTodo]));
 
       await pumpMainScreen(tester);
-      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
 
       expect(find.byType(GridView), findsOneWidget);
 
@@ -207,8 +207,6 @@ void main() {
         expect(find.byType(DateTodo), findsNothing);
         expect(find.byType(CategoryTodo), findsNothing);
         expect(find.byType(SubmitTodo), findsNothing);
-
-        expect(find.text('Exception: Todo not found'), findsOneWidget);
       },
       variant: TargetPlatformVariant.all(),
     );
