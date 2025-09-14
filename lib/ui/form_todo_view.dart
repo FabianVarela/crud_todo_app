@@ -2,11 +2,10 @@ import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
-import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:crud_todo_app/ui/widgets/custom_date_picker.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
-import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
+import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -20,16 +19,15 @@ final class FormTodoView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final categoryData = ref.watch(categoryDetailProvider(categoryId));
-    final todoData = ref.watch(
-      todoDetailProvider((categoryId: categoryId, todoId: todoId ?? '')),
-    );
 
     ref.listen(todoViewModelProvider, (_, state) {
-      if (state case TodoStateSuccess(:final action)) {
-        if (action == TodoAction.add || action == TodoAction.update) {
-          Navigator.pop(context);
-        }
-      }
+      state.whenOrNull(
+        data: (data) {
+          if (data == TodoAction.add || data == TodoAction.update) {
+            Navigator.pop(context);
+          }
+        },
+      );
     });
 
     return Scaffold(
@@ -55,10 +53,13 @@ final class FormTodoView extends HookConsumerWidget {
         ],
       ),
       body: categoryData.maybeWhen(
-        data: (category) {
-          return todoData.whenOrNull(
-            data: (todo) {
-              return SingleChildScrollView(
+        data: (category) => Consumer(
+          builder: (_, ref, _) {
+            final param = (categoryId: category.id!, todoId: todoId ?? '');
+            final todoData = ref.watch(todoDetailProvider(param));
+
+            return todoData.maybeWhen(
+              data: (todo) => SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Column(
                   children: <Widget>[
@@ -73,19 +74,18 @@ final class FormTodoView extends HookConsumerWidget {
                     ).paddingSymmetric(h: 16),
                   ],
                 ),
-              );
-            },
-            error: (e, _) {
-              return Center(
+              ),
+              error: (e, _) => Center(
                 child: Text(
                   e.toString(),
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 20),
                 ),
-              );
-            },
-          );
-        },
+              ),
+              orElse: Offstage.new,
+            );
+          },
+        ),
         loading: () => const Center(child: CircularProgressIndicator()),
         orElse: Offstage.new,
       ),
@@ -100,15 +100,13 @@ final class SubjectTodo extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final subject = ref.watch(subjectTodoProvider.notifier);
+    final subject = ref.watch(subjectTodoProvider);
     final subjectTextController = useTextEditingController();
 
     useEffect(() {
       if (todo != null) {
         Future.microtask(() {
-          ref.read(subjectTodoProvider.notifier).update((_) {
-            return ValidationText(text: todo!.subject);
-          });
+          ref.read(subjectTodoProvider.notifier).init(todo!.subject);
           subjectTextController.text = todo!.subject;
         });
       }
@@ -122,11 +120,13 @@ final class SubjectTodo extends HookConsumerWidget {
       decoration: InputDecoration(
         hintText: 'What are you planning?',
         hintStyle: const TextStyle(color: Colors.grey),
-        errorText: subject.state.message,
+        errorText: subject.message,
       ),
       style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
       onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
-      onChanged: (value) => subject.update((_) => value.validateEmpty),
+      onChanged: (value) {
+        ref.read(subjectTodoProvider.notifier).onChangeSubject(value);
+      },
     );
   }
 }
@@ -143,7 +143,7 @@ final class DateTodo extends HookConsumerWidget {
     useEffect(() {
       if (todo != null) {
         Future.microtask(
-          () => ref.read(dateTodoProvider.notifier).state = todo!.finalDate,
+          () => ref.read(dateTodoProvider.notifier).init(todo!.finalDate),
         );
       }
       return null;
@@ -158,7 +158,9 @@ final class DateTodo extends HookConsumerWidget {
               : finalDate.add(const Duration(minutes: 2)),
           firstDate: DateTime.now(),
           lastDate: DateTime.now().add(const Duration(days: 365)),
-          onChangeDate: (d) => ref.read(dateTodoProvider.notifier).state = d,
+          onChangeDate: (value) {
+            ref.read(dateTodoProvider.notifier).onChangeDate(value);
+          },
         );
       },
       child: Row(
@@ -237,15 +239,12 @@ final class SubmitTodo extends HookConsumerWidget {
   }
 
   void _saveTodo(WidgetRef ref) {
-    final subject = ref.read(subjectTodoProvider.notifier).state.text!;
-    final date = ref.read(dateTodoProvider.notifier).state;
-
     ref
         .read(todoViewModelProvider.notifier)
         .saveTodo(
           categoryId: categoryId,
-          subject: subject,
-          date: date,
+          subject: ref.read(subjectTodoProvider).text!,
+          date: ref.read(dateTodoProvider),
           todoId: todoId,
         );
   }

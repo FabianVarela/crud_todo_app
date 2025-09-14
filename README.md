@@ -82,17 +82,15 @@ Run deep links in **Android**, use the command below:
     * For iOS and macOS in XCode IDE, you select ```Runner``` and change the 'Bundle Identifier' text.
     * You must run the ```flutterfire_config.sh``` file, to configure your Firebase project. But before you must follow
       these steps.
-        * In the ```flutterfire_config.sh``` and/or ```flutterfire_config.ps1``` files, you must set the project id,
-          replacing the text ```<YOUR_PROJECT_ID>``` with the correct id.
         * Also, you must rename the bundle-id (for iOS and macOS) and package name (for Android) with yours.
     * The project has 2 environments `development` and `production`.
         * You must run this command for macOS.
           ```bash
-          bash flutterfire_config.sh <environment>
+          bash flutterfire_config.sh <environment> <firebase-project-id>
           ```
         * You must run this command for Windows.
           ```powershell
-           .\flutterfire_config.ps1 <environment>
+           .\flutterfire_config.ps1 <environment> <firebase-project-id>
            ```
       Replace `<environment>` with `prod` if the project is `production`, and with `dev` if it is `development`.
       Automatically, it creates a file with the required files.

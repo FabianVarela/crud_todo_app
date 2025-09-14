@@ -143,7 +143,7 @@ void main() {
 
         await pumpMainScreen(tester);
 
-        expect(find.byType(CircularProgressIndicator), findsNothing);
+        expect(find.byType(CircularProgressIndicator), findsOneWidget);
         await tester.pumpAndSettle();
         expect(find.text('Exception: Category not found'), findsOneWidget);
       },

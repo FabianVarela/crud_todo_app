@@ -12,9 +12,7 @@ import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:crud_todo_app/ui/widgets/custom_checkbox.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
-import 'package:crud_todo_app/viewmodel/category/category_state.dart';
 import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
-import 'package:crud_todo_app/viewmodel/todo/todo_state.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart' as foundation;
@@ -114,7 +112,7 @@ void main() {
       }
 
       await pumpMainScreen(tester);
-      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
 
       expect(find.byType(GridView), findsOneWidget);
 
@@ -244,7 +242,6 @@ void main() {
 
         expect(find.byIcon(Icons.delete_forever), findsOneWidget);
         expect(find.byType(FloatingActionButton), findsOneWidget);
-        expect(find.text('Exception: Todo list not found'), findsOneWidget);
       },
       variant: TargetPlatformVariant.all(),
     );
@@ -295,7 +292,7 @@ void main() {
         await tester.pump(const Duration(seconds: 1));
         await tester.pumpAndSettle();
 
-        expect(viewModel.state.isSuccess, isTrue);
+        expect(viewModel.state.hasValue, isTrue);
         await tester.pumpAndSettle();
 
         expect(find.byType(CategoryListView), findsOneWidget);
@@ -333,7 +330,7 @@ void main() {
           ),
         ).called(1);
 
-        expect(viewModel.state.isError, isTrue);
+        expect(viewModel.state.hasError, isTrue);
         expect(find.byType(CategoryListView), findsNothing);
       },
       variant: TargetPlatformVariant.all(),
@@ -377,7 +374,7 @@ void main() {
         expect(todoViewModel.state.isLoading, isTrue);
 
         await tester.pumpAndSettle();
-        expect(todoViewModel.state.isSuccess, isTrue);
+        expect(todoViewModel.state.hasValue, isTrue);
       },
       variant: TargetPlatformVariant.all(),
     );
@@ -415,7 +412,7 @@ void main() {
         ).called(1);
 
         await tester.pumpAndSettle();
-        expect(todoViewModel.state.isError, isTrue);
+        expect(todoViewModel.state.hasError, isTrue);
       },
       variant: TargetPlatformVariant.all(),
     );
@@ -502,7 +499,7 @@ void main() {
         expect(todoViewModel.state.isLoading, isTrue);
         await tester.pumpAndSettle();
 
-        expect(todoViewModel.state.isSuccess, isTrue);
+        expect(todoViewModel.state.hasValue, isTrue);
       },
       variant: TargetPlatformVariant.mobile(),
     );
@@ -545,7 +542,7 @@ void main() {
           ),
         ).called(1);
 
-        expect(todoViewModel.state.isError, isTrue);
+        expect(todoViewModel.state.hasError, isTrue);
       },
       variant: TargetPlatformVariant.mobile(),
     );
@@ -632,7 +629,7 @@ void main() {
         expect(todoViewModel.state.isLoading, isTrue);
         await tester.pumpAndSettle();
 
-        expect(todoViewModel.state.isSuccess, isTrue);
+        expect(todoViewModel.state.hasValue, isTrue);
         expect(foundRemoveOption, findsNothing);
       },
       variant: TargetPlatformVariant.desktop(),

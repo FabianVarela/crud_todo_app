@@ -7,26 +7,43 @@ final categoryListProvider = StreamProvider.autoDispose(
   (ref) => ref.watch(categoryRepositoryProvider).getCategories(),
 );
 
-final categoryDetailProvider = FutureProvider.family.autoDispose((
-  ref,
-  String categoryId,
-) {
-  return ref
-      .watch(categoryRepositoryProvider)
-      .getCategoryById(categoryId: categoryId);
-});
-
-final nameCategoryProvider = StateProvider.autoDispose(
-  (_) => const ValidationText(),
-);
-final emojiCategoryProvider = StateProvider.autoDispose(
-  (_) => const ValidationText(),
+final categoryDetailProvider = FutureProvider.family.autoDispose(
+  (ref, String categoryId) {
+    return ref
+        .watch(categoryRepositoryProvider)
+        .getCategoryById(categoryId: categoryId);
+  },
 );
 
-final validationCategoryProvider = StateProvider.autoDispose((ref) {
-  final name = ref.watch(nameCategoryProvider).text;
-  final emoji = ref.watch(emojiCategoryProvider).text;
+class NameCategory extends Notifier<ValidationText> {
+  @override
+  ValidationText build() => const ValidationText();
 
-  final isValidEmoji = (emoji ?? '').isNotEmpty && (emoji ?? '').isEmoji;
-  return (name ?? '').isNotEmpty && isValidEmoji;
-});
+  void onChangeValue(String value) => state = value.validateEmpty;
+}
+
+final nameCategoryProvider = NotifierProvider.autoDispose(NameCategory.new);
+
+class EmojiCategory extends Notifier<ValidationText> {
+  @override
+  ValidationText build() => const ValidationText();
+
+  void onChangeValue(String value) => state = value.validateEmoji;
+}
+
+final emojiCategoryProvider = NotifierProvider.autoDispose(EmojiCategory.new);
+
+class ValidationCategory extends Notifier<bool> {
+  @override
+  bool build() {
+    final name = ref.watch(nameCategoryProvider).text;
+    final emoji = ref.watch(emojiCategoryProvider).text;
+
+    final isValidEmoji = (emoji ?? '').isNotEmpty && (emoji ?? '').isEmoji;
+    return (name ?? '').isNotEmpty && isValidEmoji;
+  }
+}
+
+final validationCategoryProvider = NotifierProvider.autoDispose(
+  ValidationCategory.new,
+);

@@ -8,6 +8,7 @@ import 'package:crud_todo_app/service/todo_service.dart';
 import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:hooks_riverpod/legacy.dart';
 
 //region Firebase
 final firebaseProvider = Provider((_) => FirebaseFirestore.instance);
@@ -34,13 +35,9 @@ final todoRepositoryProvider = Provider<ITodoRepository>(
 //endregion
 
 //region ViewModel layer
-final categoryViewModelProvider = StateNotifierProvider(
-  (ref) => CategoryViewModel(ref.watch(categoryRepositoryProvider)),
-);
+final categoryViewModelProvider = AsyncNotifierProvider(CategoryViewModel.new);
 
-final todoViewModelProvider = StateNotifierProvider(
-  (ref) => TodoViewModel(ref.watch(todoRepositoryProvider)),
-);
+final todoViewModelProvider = AsyncNotifierProvider(TodoViewModel.new);
 //endregion
 
 //region Navigator 2.0
