@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/model/category_model.dart';
@@ -105,10 +107,12 @@ final class SubjectTodo extends HookConsumerWidget {
 
     useEffect(() {
       if (todo != null) {
-        Future.microtask(() {
-          ref.read(subjectTodoProvider.notifier).init(todo!.subject);
-          subjectTextController.text = todo!.subject;
-        });
+        unawaited(
+          Future.microtask(() {
+            ref.read(subjectTodoProvider.notifier).init(todo!.subject);
+            subjectTextController.text = todo!.subject;
+          }),
+        );
       }
       return null;
     }, const []);
@@ -142,27 +146,17 @@ final class DateTodo extends HookConsumerWidget {
 
     useEffect(() {
       if (todo != null) {
-        Future.microtask(
-          () => ref.read(dateTodoProvider.notifier).init(todo!.finalDate),
+        unawaited(
+          Future.microtask(
+            () => ref.read(dateTodoProvider.notifier).init(todo!.finalDate),
+          ),
         );
       }
       return null;
     }, const []);
 
     return InkWell(
-      onTap: () {
-        CustomDatePicker.show(
-          context,
-          initialDate: finalDate.isDurationNegative
-              ? DateTime.now().add(const Duration(minutes: 2))
-              : finalDate.add(const Duration(minutes: 2)),
-          firstDate: DateTime.now(),
-          lastDate: DateTime.now().add(const Duration(days: 365)),
-          onChangeDate: (value) {
-            ref.read(dateTodoProvider.notifier).onChangeDate(value);
-          },
-        );
-      },
+      onTap: () => unawaited(_showPicker(context, ref, finalDate)),
       child: Row(
         children: <Widget>[
           const Icon(
@@ -175,6 +169,24 @@ final class DateTodo extends HookConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Future<void> _showPicker(
+    BuildContext context,
+    WidgetRef ref,
+    DateTime finalDate,
+  ) async {
+    await CustomDatePicker.show(
+      context,
+      initialDate: finalDate.isDurationNegative
+          ? DateTime.now().add(const Duration(minutes: 2))
+          : finalDate.add(const Duration(minutes: 2)),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+      onChangeDate: (value) {
+        ref.read(dateTodoProvider.notifier).onChangeDate(value);
+      },
     );
   }
 }
@@ -238,8 +250,8 @@ final class SubmitTodo extends HookConsumerWidget {
     );
   }
 
-  void _saveTodo(WidgetRef ref) {
-    ref
+  Future<void> _saveTodo(WidgetRef ref) async {
+    await ref
         .read(todoViewModelProvider.notifier)
         .saveTodo(
           categoryId: categoryId,

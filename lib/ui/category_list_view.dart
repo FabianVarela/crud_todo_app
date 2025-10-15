@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
@@ -35,15 +37,17 @@ final class CategoryListView extends HookConsumerWidget {
     final scrollController = useScrollController();
     final categoriesData = ref.watch(categoryListProvider);
 
-    ref.listen(categoryViewModelProvider, (_, state) {
-      state.whenOrNull(
+    ref.listen(categoryViewModelProvider, (_, state) async {
+      await state.whenOrNull(
         data: (data) {
           final message = switch (data) {
             CategoryAction.add => 'Category created successfully',
             CategoryAction.remove => 'Category removed successfully',
             _ => null,
           };
-          if (message != null) showCustomMessage(context, message: message);
+          if (message != null) {
+            unawaited(showCustomMessage(context, message: message));
+          }
         },
         error: (e, _) => showCustomMessage(context, message: e.toString()),
       );

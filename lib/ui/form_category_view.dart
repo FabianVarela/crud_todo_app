@@ -145,11 +145,11 @@ final class SubmitCategory extends ConsumerWidget {
     );
   }
 
-  void _saveCategory(WidgetRef ref) {
+  Future<void> _saveCategory(WidgetRef ref) async {
     final name = ref.read(nameCategoryProvider).text!;
     final emoji = ref.read(emojiCategoryProvider).text!;
 
-    ref
+    await ref
         .read(categoryViewModelProvider.notifier)
         .saveCategory(name: name, emoji: emoji);
   }

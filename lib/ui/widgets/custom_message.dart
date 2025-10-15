@@ -3,9 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-void showCustomMessage(BuildContext context, {required String message}) {
+Future<void> showCustomMessage(
+  BuildContext context, {
+  required String message,
+}) async {
   if (desktopSegments.contains(currentDevice)) {
-    showDialog<void>(
+    await showDialog<void>(
       context: context,
       builder: (dialogContext) {
         final actions = <Widget>[

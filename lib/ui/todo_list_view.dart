@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:context_menus/context_menus.dart';
 import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
 import 'package:crud_todo_app/common/extension.dart';
@@ -31,8 +33,8 @@ final class TodoListView extends HookConsumerWidget {
       categoryDetailProvider(categoryId).select((state) => state.value != null),
     );
 
-    ref.listen(todoViewModelProvider, (_, state) {
-      state.whenOrNull(
+    ref.listen(todoViewModelProvider, (_, state) async {
+      await state.whenOrNull(
         data: (data) {
           final message = switch (data) {
             TodoAction.add => 'Todo created successfully',
@@ -41,7 +43,9 @@ final class TodoListView extends HookConsumerWidget {
             TodoAction.check => 'Todo finished successfully',
             _ => null,
           };
-          if (message != null) showCustomMessage(context, message: message);
+          if (message != null) {
+            unawaited(showCustomMessage(context, message: message));
+          }
         },
         error: (e, _) => showCustomMessage(context, message: e.toString()),
       );
@@ -60,9 +64,11 @@ final class TodoListView extends HookConsumerWidget {
                 child: IconButton(
                   icon: const Icon(Icons.delete_forever),
                   onPressed: () {
-                    ref
-                        .read(categoryViewModelProvider.notifier)
-                        .deleteCategory(categoryId: categoryId);
+                    unawaited(
+                      ref
+                          .read(categoryViewModelProvider.notifier)
+                          .deleteCategory(categoryId: categoryId),
+                    );
                     Navigator.pop(context);
                   },
                 ),
@@ -229,28 +235,35 @@ final class TodoList extends ConsumerWidget {
               todo: item,
               onEdit: () => onEditItem(item),
               onRemove: () => _deleteTodo(ref, todo: item),
-              onCheck: (value) => _checkTodo(ref, todo: item, isChecked: value),
+              onCheck: (value) => unawaited(
+                _checkTodo(ref, args: (todo: item, isChecked: value)),
+              ),
             )
           else
             TodoItem(
               todo: item,
               onEdit: () => onEditItem(item),
               onRemove: () => _deleteTodo(ref, todo: item),
-              onCheck: (value) => _checkTodo(ref, todo: item, isChecked: value),
+              onCheck: (value) => unawaited(
+                _checkTodo(ref, args: (todo: item, isChecked: value)),
+              ),
             ),
       ],
     );
   }
 
-  void _deleteTodo(WidgetRef ref, {required Todo todo}) {
-    ref
+  Future<void> _deleteTodo(WidgetRef ref, {required Todo todo}) async {
+    await ref
         .read(todoViewModelProvider.notifier)
         .deleteTodo(todoId: todo.id!, categoryId: todo.categoryId);
   }
 
-  void _checkTodo(WidgetRef ref, {required Todo todo, bool isChecked = false}) {
-    ref
+  Future<void> _checkTodo(
+    WidgetRef ref, {
+    required ({Todo todo, bool isChecked}) args,
+  }) async {
+    await ref
         .read(todoViewModelProvider.notifier)
-        .checkTodo(todo: todo, isChecked: isChecked);
+        .checkTodo(todo: args.todo, isChecked: args.isChecked);
   }
 }

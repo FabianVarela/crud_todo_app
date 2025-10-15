@@ -1,7 +1,7 @@
 import 'package:crud_todo_app/main.dart' as app;
 import 'package:flutter_driver/driver_extension.dart';
 
-void main() {
+Future<void> main() async {
   enableFlutterDriverExtension();
-  app.main();
+  await app.main();
 }
