@@ -26,7 +26,7 @@ dependencies:
   hooks_riverpod: ^3.0.3
   intl: ^0.20.2
   json_annotation: ^4.9.0
-  uuid: ^4.5.1
+  uuid: ^4.5.2
   window_size:
     git:
       url: https://github.com/google/flutter-desktop-embedding.git
