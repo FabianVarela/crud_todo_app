@@ -20,19 +20,21 @@ final class CustomDatePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
-    return Container(
-      height: size.height / 3,
-      width: size.width,
-      color: Colors.white,
-      child: cupertino.SizedBox(
-        height: size.height / 4.5,
-        child: cupertino.DefaultTextStyle(
-          style: const TextStyle(fontSize: 22),
-          child: cupertino.CupertinoDatePicker(
-            initialDateTime: initialDate,
-            minimumDate: firstDate,
-            maximumDate: lastDate,
-            onDateTimeChanged: onChangeDate,
+
+    return SizedBox.fromSize(
+      size: Size(size.width, size.height / 3),
+      child: ColoredBox(
+        color: Colors.white,
+        child: cupertino.SizedBox(
+          height: size.height / 4.5,
+          child: cupertino.DefaultTextStyle(
+            style: const TextStyle(fontSize: 22),
+            child: cupertino.CupertinoDatePicker(
+              initialDateTime: initialDate,
+              minimumDate: firstDate,
+              maximumDate: lastDate,
+              onDateTimeChanged: onChangeDate,
+            ),
           ),
         ),
       ),
@@ -46,22 +48,18 @@ final class CustomDatePicker extends StatelessWidget {
     required DateTime lastDate,
     required ValueSetter<DateTime> onChangeDate,
   }) async {
-    final platform = defaultTargetPlatform;
-
-    final isIOS = platform == TargetPlatform.iOS;
-    final isMacOS = platform == TargetPlatform.macOS;
+    final isIOS = defaultTargetPlatform == .iOS;
+    final isMacOS = defaultTargetPlatform == .macOS;
 
     if (!kIsWeb && (isIOS || isMacOS)) {
       await showModalBottomSheet<void>(
         context: context,
-        builder: (_) {
-          return CustomDatePicker(
-            initialDate: initialDate,
-            firstDate: firstDate,
-            lastDate: lastDate,
-            onChangeDate: onChangeDate,
-          );
-        },
+        builder: (_) => CustomDatePicker(
+          initialDate: initialDate,
+          firstDate: firstDate,
+          lastDate: lastDate,
+          onChangeDate: onChangeDate,
+        ),
       );
     } else {
       final pickedDate = await showDatePicker(

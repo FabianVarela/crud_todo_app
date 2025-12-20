@@ -7,7 +7,6 @@ import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/ui/widgets/custom_date_picker.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
-import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -25,9 +24,7 @@ final class FormTodoView extends HookConsumerWidget {
     ref.listen(todoViewModelProvider, (_, state) {
       state.whenOrNull(
         data: (data) {
-          if (data == TodoAction.add || data == TodoAction.update) {
-            Navigator.pop(context);
-          }
+          if (data == .add || data == .update) Navigator.pop(context);
         },
       );
     });
@@ -43,7 +40,7 @@ final class FormTodoView extends HookConsumerWidget {
           todoId == null ? 'New Task' : 'Update Task',
           style: const TextStyle(
             fontSize: 20,
-            fontWeight: FontWeight.w400,
+            fontWeight: .w400,
             color: Colors.black,
           ),
         ),
@@ -62,7 +59,7 @@ final class FormTodoView extends HookConsumerWidget {
 
             return todoData.maybeWhen(
               data: (todo) => SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(vertical: 20),
+                padding: const .symmetric(vertical: 20),
                 child: Column(
                   children: <Widget>[
                     SubjectTodo(todo: todo).paddingSymmetric(h: 30, v: 30),
@@ -120,13 +117,13 @@ final class SubjectTodo extends HookConsumerWidget {
     return TextField(
       controller: subjectTextController,
       maxLines: 5,
-      textInputAction: TextInputAction.done,
+      textInputAction: .done,
       decoration: InputDecoration(
         hintText: 'What are you planning?',
         hintStyle: const TextStyle(color: Colors.grey),
         errorText: subject.message,
       ),
-      style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w300),
+      style: const TextStyle(fontSize: 25, fontWeight: .w300),
       onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
       onChanged: (value) {
         ref.read(subjectTodoProvider.notifier).onChangeSubject(value);
@@ -165,7 +162,7 @@ final class DateTodo extends HookConsumerWidget {
           ).paddingOnly(r: 12),
           Text(
             finalDate.dateTimeToFormattedString,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            style: const TextStyle(fontSize: 16, fontWeight: .w600),
           ),
         ],
       ),
@@ -213,10 +210,7 @@ final class CategoryTodo extends StatelessWidget {
               ).paddingOnly(b: 5, r: 5),
               Text(
                 category.name,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                ),
+                style: const TextStyle(fontSize: 16, fontWeight: .w400),
               ),
             ],
           ),
@@ -240,8 +234,8 @@ final class SubmitTodo extends HookConsumerWidget {
       style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF4A78FA)),
       onPressed: isValidForm ? () => _saveTodo(ref) : null,
       child: Container(
-        width: double.infinity,
-        alignment: Alignment.center,
+        width: .infinity,
+        alignment: .center,
         child: Text(
           todoId == null ? 'Create' : 'Update',
           style: const TextStyle(fontSize: 16, color: Colors.white),

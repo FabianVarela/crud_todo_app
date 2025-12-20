@@ -15,11 +15,11 @@ final class CategoryItem extends StatelessWidget {
       child: Card(
         elevation: 5,
         surfaceTintColor: Colors.white,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        clipBehavior: Clip.antiAliasWithSaveLayer,
+        shape: RoundedRectangleBorder(borderRadius: .circular(10)),
+        clipBehavior: .antiAliasWithSaveLayer,
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: .start,
+          mainAxisAlignment: .spaceEvenly,
           children: <Widget>[
             Hero(
               tag: '${item.id}_${item.emoji.name}',
@@ -32,15 +32,12 @@ final class CategoryItem extends StatelessWidget {
               ),
             ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: <Widget>[
                 FittedBox(
                   child: Text(
                     item.name,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: const TextStyle(fontSize: 20, fontWeight: .w600),
                   ).paddingOnly(b: 3),
                 ),
                 FittedBox(
@@ -48,7 +45,7 @@ final class CategoryItem extends StatelessWidget {
                     '${item.todoSize} Tasks',
                     style: const TextStyle(
                       fontSize: 14,
-                      fontWeight: FontWeight.w400,
+                      fontWeight: .w400,
                       color: Colors.black38,
                     ),
                   ),

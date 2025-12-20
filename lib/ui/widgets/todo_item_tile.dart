@@ -26,7 +26,7 @@ final class TodoItemTile extends StatelessWidget {
         style: TextStyle(
           fontSize: 22,
           color: isSuccess ? const Color(0xFF6474A9) : null,
-          decoration: isSuccess ? TextDecoration.lineThrough : null,
+          decoration: isSuccess ? .lineThrough : null,
         ),
       ),
       subtitle: Text(
@@ -34,7 +34,7 @@ final class TodoItemTile extends StatelessWidget {
         style: TextStyle(
           fontSize: 16,
           color: isNegative ? Colors.red : null,
-          decoration: isSuccess ? TextDecoration.lineThrough : null,
+          decoration: isSuccess ? .lineThrough : null,
         ),
       ).paddingSymmetric(v: 4),
       trailing: CustomCheckbox(

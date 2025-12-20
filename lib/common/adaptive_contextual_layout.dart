@@ -5,35 +5,27 @@ enum ScreenType { desktop, tablet, handset, watch }
 
 enum DeviceSegment { mobile, desktop, mobileWeb, desktopWeb, other }
 
-List<DeviceSegment> desktopSegments = [
-  DeviceSegment.desktop,
-  DeviceSegment.desktopWeb,
-];
+List<DeviceSegment> desktopSegments = [.desktop, .desktopWeb];
 
-List<DeviceSegment> webSegments = [
-  DeviceSegment.mobileWeb,
-  DeviceSegment.desktopWeb,
-];
+List<DeviceSegment> webSegments = [.mobileWeb, .desktopWeb];
 
 DeviceSegment get currentDevice {
   return switch (defaultTargetPlatform) {
-    TargetPlatform.android || TargetPlatform.iOS =>
-      kIsWeb ? DeviceSegment.mobileWeb : DeviceSegment.mobile,
-    TargetPlatform.windows || TargetPlatform.linux || TargetPlatform.macOS =>
-      kIsWeb ? DeviceSegment.desktopWeb : DeviceSegment.desktop,
-    _ => DeviceSegment.other,
+    .android || .iOS => kIsWeb ? .mobileWeb : .mobile,
+    .windows || .linux || .macOS => kIsWeb ? .desktopWeb : .desktop,
+    _ => .other,
   };
 }
 
 extension AdaptiveLayoutContext on BuildContext {
-  bool get isPortrait => MediaQuery.orientationOf(this) == Orientation.portrait;
+  bool get isPortrait => MediaQuery.orientationOf(this) == .portrait;
 
   ScreenType get formFactor {
     return switch (MediaQuery.sizeOf(this).shortestSide) {
-      >= 840 => ScreenType.desktop,
-      >= 600 => ScreenType.tablet,
-      >= 300 => ScreenType.handset,
-      _ => ScreenType.watch,
+      >= 840 => .desktop,
+      >= 600 => .tablet,
+      >= 300 => .handset,
+      _ => .watch,
     };
   }
 }

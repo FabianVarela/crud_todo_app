@@ -19,7 +19,7 @@ extension DateTimeUtilsX on DateTime {
 }
 
 extension IntUtilsX on int {
-  DateTime get millisecondsToDate => DateTime.fromMillisecondsSinceEpoch(this);
+  DateTime get millisecondsToDate => .fromMillisecondsSinceEpoch(this);
 }
 
 extension StringUtilsX on String {
@@ -41,10 +41,10 @@ extension StringUtilsX on String {
 
 extension WidgetUtilsX on Widget {
   Widget paddingAll(double padding) =>
-      Padding(padding: EdgeInsets.all(padding), child: this);
+      Padding(padding: .all(padding), child: this);
 
   Widget paddingSymmetric({double h = 0.0, double v = 0.0}) => Padding(
-    padding: EdgeInsets.symmetric(horizontal: h, vertical: v),
+    padding: .symmetric(horizontal: h, vertical: v),
     child: this,
   );
 

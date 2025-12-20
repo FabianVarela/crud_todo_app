@@ -10,7 +10,6 @@ import 'package:crud_todo_app/ui/widgets/custom_message.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
-import 'package:crud_todo_app/viewmodel/todo/todo_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -37,10 +36,10 @@ final class TodoListView extends HookConsumerWidget {
       await state.whenOrNull(
         data: (data) {
           final message = switch (data) {
-            TodoAction.add => 'Todo created successfully',
-            TodoAction.update => 'Todo updated successfully',
-            TodoAction.remove => 'Todo removed successfully',
-            TodoAction.check => 'Todo finished successfully',
+            .add => 'Todo created successfully',
+            .update => 'Todo updated successfully',
+            .remove => 'Todo removed successfully',
+            .check => 'Todo finished successfully',
             _ => null,
           };
           if (message != null) {
@@ -88,11 +87,8 @@ final class TodoListView extends HookConsumerWidget {
                 error: (e, _) => Center(
                   child: Text(
                     e.toString(),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
+                    textAlign: .center,
+                    style: const TextStyle(fontSize: 20, color: Colors.white),
                   ),
                 ),
                 orElse: Offstage.new,
@@ -105,7 +101,7 @@ final class TodoListView extends HookConsumerWidget {
           error: (e, _) => Center(
             child: Text(
               e.toString(),
-              textAlign: TextAlign.center,
+              textAlign: .center,
               style: const TextStyle(fontSize: 20, color: Colors.white),
             ),
           ),
@@ -137,43 +133,45 @@ final class CategorySection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: <Widget>[
         Expanded(
           flex: context.isPortrait ? 1 : 2,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: .start,
+            mainAxisAlignment: .spaceEvenly,
             children: <Widget>[
-              Container(
-                height: 60,
-                width: 60,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Hero(
-                  tag: '${category.id}_${category.emoji.name}',
-                  child: Material(
-                    color: Colors.transparent,
-                    child: Text(
-                      category.emoji.code,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 30),
+              SizedBox.square(
+                dimension: 60,
+                child: Center(
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: .circular(30),
+                    ),
+                    child: Hero(
+                      tag: '${category.id}_${category.emoji.name}',
+                      child: Material(
+                        color: Colors.transparent,
+                        child: Text(
+                          category.emoji.code,
+                          textAlign: .center,
+                          style: const TextStyle(fontSize: 30),
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: .start,
                 children: <Widget>[
                   FittedBox(
                     child: Text(
                       category.name,
                       style: const TextStyle(
                         fontSize: 36,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: .w700,
                         color: Colors.white,
                       ),
                     ).paddingOnly(b: 5),
@@ -182,7 +180,7 @@ final class CategorySection extends ConsumerWidget {
                     '${category.todoSize} Tasks',
                     style: const TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight.w300,
+                      fontWeight: .w300,
                       color: Colors.white,
                     ),
                   ),
@@ -197,8 +195,8 @@ final class CategorySection extends ConsumerWidget {
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
+                topLeft: .circular(30),
+                topRight: .circular(30),
               ),
             ),
             child: todos.isNotEmpty

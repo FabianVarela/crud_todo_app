@@ -18,7 +18,7 @@ Future<void> showCustomMessage(
           ),
         ];
 
-        return defaultTargetPlatform == TargetPlatform.macOS
+        return defaultTargetPlatform == .macOS
             ? CupertinoAlertDialog(title: Text(message), actions: actions)
             : AlertDialog(title: Text(message), actions: actions);
       },

@@ -3,7 +3,6 @@ import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
-import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -26,7 +25,7 @@ final class FormCategoryView extends ConsumerWidget {
     ref.listen(categoryViewModelProvider, (_, state) {
       state.whenOrNull(
         data: (data) {
-          if (data == CategoryAction.add) Navigator.pop(context);
+          if (data == .add) Navigator.pop(context);
         },
       );
     });
@@ -36,8 +35,8 @@ final class FormCategoryView extends ConsumerWidget {
       child: SizedBox(
         width: desktopWidth ?? mobileWidth,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisSize: .min,
+          crossAxisAlignment: .end,
           children: <Widget>[
             CustomMouseRegion(
               cursor: SystemMouseCursors.click,
@@ -50,13 +49,13 @@ final class FormCategoryView extends ConsumerWidget {
             DecoratedBox(
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: .circular(12),
               ),
               child: Column(
                 children: <Widget>[
                   const Text(
                     'Add category',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    style: TextStyle(fontSize: 20, fontWeight: .w600),
                   ).paddingOnly(b: 15),
                   Column(
                     children: <Widget>[
@@ -88,7 +87,7 @@ final class NameCategory extends HookConsumerWidget {
 
     return TextField(
       controller: textController,
-      textInputAction: TextInputAction.next,
+      textInputAction: .next,
       decoration: InputDecoration(
         hintText: 'Name',
         errorText: nameText.message,
@@ -111,7 +110,7 @@ final class EmojiCategory extends HookConsumerWidget {
 
     return TextField(
       controller: textController,
-      textInputAction: TextInputAction.done,
+      textInputAction: .done,
       decoration: InputDecoration(
         hintText: 'Emoji',
         errorText: emoji.message,
@@ -135,8 +134,8 @@ final class SubmitCategory extends ConsumerWidget {
       style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF4A78FA)),
       onPressed: isValidForm ? () => _saveCategory(ref) : null,
       child: Container(
-        width: double.infinity,
-        alignment: Alignment.center,
+        width: .infinity,
+        alignment: .center,
         child: const Text(
           'Create',
           style: TextStyle(fontSize: 16, color: Colors.white),

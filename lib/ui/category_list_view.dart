@@ -7,7 +7,6 @@ import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:crud_todo_app/ui/widgets/custom_message.dart';
 import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
-import 'package:crud_todo_app/viewmodel/category/category_view_model.dart';
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,8 +40,8 @@ final class CategoryListView extends HookConsumerWidget {
       await state.whenOrNull(
         data: (data) {
           final message = switch (data) {
-            CategoryAction.add => 'Category created successfully',
-            CategoryAction.remove => 'Category removed successfully',
+            .add => 'Category created successfully',
+            .remove => 'Category removed successfully',
             _ => null,
           };
           if (message != null) {
@@ -76,11 +75,11 @@ final class CategoryListView extends HookConsumerWidget {
           child: Focus(
             autofocus: true,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: <Widget>[
                 const Text(
                   'Lists',
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 30, fontWeight: .w600),
                 ).paddingSymmetric(h: 12, v: 20),
                 Expanded(
                   child: categoriesData.when(
@@ -96,7 +95,7 @@ final class CategoryListView extends HookConsumerWidget {
 
                       return Scrollbar(
                         controller: scrollController,
-                        thumbVisibility: currentDevice == DeviceSegment.desktop,
+                        thumbVisibility: currentDevice == .desktop,
                         child: GridView.count(
                           controller: scrollController,
                           crossAxisCount: context.isPortrait ? 2 : 3,
@@ -117,18 +116,16 @@ final class CategoryListView extends HookConsumerWidget {
                         ),
                       );
                     },
-                    loading: () {
-                      return const Center(child: CircularProgressIndicator());
-                    },
-                    error: (e, _) {
-                      return Center(
-                        child: Text(
-                          e.toString(),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 20),
-                        ),
-                      ).paddingSymmetric(h: 16);
-                    },
+                    loading: () => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    error: (e, _) => Center(
+                      child: Text(
+                        e.toString(),
+                        textAlign: .center,
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                    ).paddingSymmetric(h: 16),
                   ),
                 ),
               ],
@@ -148,11 +145,11 @@ final class CategoryListView extends HookConsumerWidget {
   }
 
   Map<ShortcutActivator, Intent> get _shortcutsByOS {
-    return defaultTargetPlatform == TargetPlatform.macOS
+    return defaultTargetPlatform == .macOS
         ? <ShortcutActivator, Intent>{
-            LogicalKeySet(LogicalKeyboardKey.meta, LogicalKeyboardKey.keyN):
+            LogicalKeySet(LogicalKeyboardKey.meta, .keyN):
                 const CreateCategoryIntent(),
-            LogicalKeySet(LogicalKeyboardKey.meta, LogicalKeyboardKey.keyR):
+            LogicalKeySet(LogicalKeyboardKey.meta, .keyR):
                 const RefreshListIntent(),
           }
         : <ShortcutActivator, Intent>{

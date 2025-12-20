@@ -46,7 +46,7 @@ final class SlideTransitionRoute<T> extends PageRouteBuilder<T> {
            return SlideTransition(
              position: anim
                  .drive(CurveTween(curve: Curves.easeInOut))
-                 .drive(Tween(begin: const Offset(0, 1), end: Offset.zero)),
+                 .drive(Tween(begin: const Offset(0, 1), end: .zero)),
              child: child,
            );
          },

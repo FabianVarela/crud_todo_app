@@ -17,7 +17,7 @@ final class UnknownView extends StatelessWidget {
           'Not found',
           style: TextStyle(
             fontSize: 20,
-            fontWeight: FontWeight.w400,
+            fontWeight: .w400,
             color: Colors.black,
           ),
         ),
@@ -25,11 +25,11 @@ final class UnknownView extends StatelessWidget {
       body: SizedBox(
         width: size.width,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: .center,
           children: <Widget>[
             Image.asset(
               'assets/images/image 404.png',
-              fit: BoxFit.contain,
+              fit: .contain,
               height: size.height * .4,
               width: size.width * .4,
             ),
