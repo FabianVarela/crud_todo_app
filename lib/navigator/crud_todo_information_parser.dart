@@ -5,7 +5,8 @@ enum TodoPath {
   category('categories'),
   addCategory('add-category'),
   todo('todo'),
-  unknown('404');
+  unknown('404')
+  ;
 
   const TodoPath(this.name);
 
