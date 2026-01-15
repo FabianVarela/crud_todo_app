@@ -90,6 +90,7 @@ lib/generated_plugin_registrant.dart
 **/macos/Flutter/GeneratedPluginRegistrant.swift
 **/macos/Flutter/ephemeral
 **/xcuserdata/
+**/macos/**.lock
 
 # Windows
 **/windows/flutter/ephemeral/
