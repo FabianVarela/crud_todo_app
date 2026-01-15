@@ -1,6 +1,5 @@
-// dart format width=80
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -41,6 +40,160 @@ class $CrudTodoConfigCopyWith<$Res>  {
 $CrudTodoConfigCopyWith(CrudTodoConfig _, $Res Function(CrudTodoConfig) __);
 }
 
+
+/// Adds pattern-matching-related methods to [CrudTodoConfig].
+extension CrudTodoConfigPatterns on CrudTodoConfig {
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( CrudTodoConfigCategoryList value)?  categoryList,TResult Function( CrudTodoConfigAddCategory value)?  addCategory,TResult Function( CrudTodoConfigTodoList value)?  todoList,TResult Function( CrudTodoConfigAddTodo value)?  addTodo,TResult Function( CrudTodoConfigUpdateTodo value)?  updateTodo,TResult Function( CrudTodoConfigUnknown value)?  unknown,required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case CrudTodoConfigCategoryList() when categoryList != null:
+return categoryList(_that);case CrudTodoConfigAddCategory() when addCategory != null:
+return addCategory(_that);case CrudTodoConfigTodoList() when todoList != null:
+return todoList(_that);case CrudTodoConfigAddTodo() when addTodo != null:
+return addTodo(_that);case CrudTodoConfigUpdateTodo() when updateTodo != null:
+return updateTodo(_that);case CrudTodoConfigUnknown() when unknown != null:
+return unknown(_that);case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( CrudTodoConfigCategoryList value)  categoryList,required TResult Function( CrudTodoConfigAddCategory value)  addCategory,required TResult Function( CrudTodoConfigTodoList value)  todoList,required TResult Function( CrudTodoConfigAddTodo value)  addTodo,required TResult Function( CrudTodoConfigUpdateTodo value)  updateTodo,required TResult Function( CrudTodoConfigUnknown value)  unknown,}){
+final _that = this;
+switch (_that) {
+case CrudTodoConfigCategoryList():
+return categoryList(_that);case CrudTodoConfigAddCategory():
+return addCategory(_that);case CrudTodoConfigTodoList():
+return todoList(_that);case CrudTodoConfigAddTodo():
+return addTodo(_that);case CrudTodoConfigUpdateTodo():
+return updateTodo(_that);case CrudTodoConfigUnknown():
+return unknown(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( CrudTodoConfigCategoryList value)?  categoryList,TResult? Function( CrudTodoConfigAddCategory value)?  addCategory,TResult? Function( CrudTodoConfigTodoList value)?  todoList,TResult? Function( CrudTodoConfigAddTodo value)?  addTodo,TResult? Function( CrudTodoConfigUpdateTodo value)?  updateTodo,TResult? Function( CrudTodoConfigUnknown value)?  unknown,}){
+final _that = this;
+switch (_that) {
+case CrudTodoConfigCategoryList() when categoryList != null:
+return categoryList(_that);case CrudTodoConfigAddCategory() when addCategory != null:
+return addCategory(_that);case CrudTodoConfigTodoList() when todoList != null:
+return todoList(_that);case CrudTodoConfigAddTodo() when addTodo != null:
+return addTodo(_that);case CrudTodoConfigUpdateTodo() when updateTodo != null:
+return updateTodo(_that);case CrudTodoConfigUnknown() when unknown != null:
+return unknown(_that);case _:
+  return null;
+
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
+
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  categoryList,TResult Function()?  addCategory,TResult Function( String categoryId)?  todoList,TResult Function( String categoryId)?  addTodo,TResult Function( String categoryId,  String todoId)?  updateTodo,TResult Function()?  unknown,required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case CrudTodoConfigCategoryList() when categoryList != null:
+return categoryList();case CrudTodoConfigAddCategory() when addCategory != null:
+return addCategory();case CrudTodoConfigTodoList() when todoList != null:
+return todoList(_that.categoryId);case CrudTodoConfigAddTodo() when addTodo != null:
+return addTodo(_that.categoryId);case CrudTodoConfigUpdateTodo() when updateTodo != null:
+return updateTodo(_that.categoryId,_that.todoId);case CrudTodoConfigUnknown() when unknown != null:
+return unknown();case _:
+  return orElse();
+
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
+
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  categoryList,required TResult Function()  addCategory,required TResult Function( String categoryId)  todoList,required TResult Function( String categoryId)  addTodo,required TResult Function( String categoryId,  String todoId)  updateTodo,required TResult Function()  unknown,}) {final _that = this;
+switch (_that) {
+case CrudTodoConfigCategoryList():
+return categoryList();case CrudTodoConfigAddCategory():
+return addCategory();case CrudTodoConfigTodoList():
+return todoList(_that.categoryId);case CrudTodoConfigAddTodo():
+return addTodo(_that.categoryId);case CrudTodoConfigUpdateTodo():
+return updateTodo(_that.categoryId,_that.todoId);case CrudTodoConfigUnknown():
+return unknown();}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
+
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  categoryList,TResult? Function()?  addCategory,TResult? Function( String categoryId)?  todoList,TResult? Function( String categoryId)?  addTodo,TResult? Function( String categoryId,  String todoId)?  updateTodo,TResult? Function()?  unknown,}) {final _that = this;
+switch (_that) {
+case CrudTodoConfigCategoryList() when categoryList != null:
+return categoryList();case CrudTodoConfigAddCategory() when addCategory != null:
+return addCategory();case CrudTodoConfigTodoList() when todoList != null:
+return todoList(_that.categoryId);case CrudTodoConfigAddTodo() when addTodo != null:
+return addTodo(_that.categoryId);case CrudTodoConfigUpdateTodo() when updateTodo != null:
+return updateTodo(_that.categoryId,_that.todoId);case CrudTodoConfigUnknown() when unknown != null:
+return unknown();case _:
+  return null;
+
+}
+}
+
+}
 
 /// @nodoc
 

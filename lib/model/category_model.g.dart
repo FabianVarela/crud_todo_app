@@ -14,7 +14,7 @@ Category _$CategoryFromJson(Map<String, dynamic> json) => Category(
 );
 
 Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
-  if (instance.id case final value?) 'id': value,
+  'id': ?instance.id,
   'name': instance.name,
   'emoji': Category._emojiToJson(instance.emoji),
   'todoSize': instance.todoSize,

@@ -15,7 +15,7 @@ Todo _$TodoFromJson(Map<String, dynamic> json) => Todo(
 );
 
 Map<String, dynamic> _$TodoToJson(Todo instance) => <String, dynamic>{
-  if (instance.id case final value?) 'id': value,
+  'id': ?instance.id,
   'subject': instance.subject,
   'finalDate': Todo._intToJson(instance.finalDate),
   'categoryId': instance.categoryId,
