@@ -21,7 +21,7 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
   freezed_annotation: ^3.1.0
-  google_fonts: ^7.1.0
+  google_fonts: ^8.0.0
   hooks_riverpod: ^3.2.0
   intl: ^0.20.2
   json_annotation: ^4.9.0
