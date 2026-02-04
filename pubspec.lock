@@ -335,10 +335,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_riverpod
-      sha256: a3cd0547353c1990bf5ad64f73143e5ce7a780409639559ad83a743ff3b945e4
+      sha256: e2026c72738a925a60db30258ff1f29974e40716749f3c9850aabf34ffc1a14c
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.0"
+    version: "3.2.1"
   flutter_slidable:
     dependency: "direct main"
     description:
@@ -422,10 +422,10 @@ packages:
     dependency: "direct main"
     description:
       name: hooks_riverpod
-      sha256: a1d8edb761d954242e8c8fb76568506b2d4c57eb5e99b9733255be11c9afa17e
+      sha256: "402a0969af107ebb42d0300dd68aa48df136671dacb70593d164f04b30af43f4"
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.0"
+    version: "3.2.1"
   http:
     dependency: transitive
     description:
@@ -739,10 +739,10 @@ packages:
     dependency: transitive
     description:
       name: riverpod
-      sha256: "9026676260f31bb5279cc5e59ca292145d8bab4aabede9aa2555c2a626ec66f1"
+      sha256: "8c22216be8ad3ef2b44af3a329693558c98eca7b8bd4ef495c92db0bba279f83"
       url: "https://pub.dev"
     source: hosted
-    version: "3.2.0"
+    version: "3.2.1"
   shelf:
     dependency: transitive
     description:
