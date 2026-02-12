@@ -38,7 +38,7 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.4
   flutter_test:
     sdk: flutter
-  freezed: ^3.2.3
+  freezed: ^3.2.5
   integration_test:
     sdk: flutter
   json_serializable: ^6.11.2
