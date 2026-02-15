@@ -1,5 +1,6 @@
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
+import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -7,13 +8,12 @@ final categoryListProvider = StreamProvider.autoDispose(
   (ref) => ref.watch(categoryRepositoryProvider).getCategories(),
 );
 
-final categoryDetailProvider = FutureProvider.family.autoDispose(
-  (ref, String categoryId) {
-    return ref
-        .watch(categoryRepositoryProvider)
-        .getCategoryById(categoryId: categoryId);
-  },
-);
+final categoryDetailProvider = FutureProvider.family
+    .autoDispose<Category, String>((ref, categoryId) {
+      return ref
+          .watch(categoryRepositoryProvider)
+          .getCategoryById(categoryId: categoryId);
+    });
 
 class NameCategory extends Notifier<ValidationText> {
   @override

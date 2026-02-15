@@ -3,11 +3,12 @@
 
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
+import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/model/validation_text_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final todoListProvider = StreamProvider.family.autoDispose(
-  (ref, String categoryId) {
+final todoListProvider = StreamProvider.family.autoDispose<List<Todo>, String>(
+  (ref, categoryId) {
     return ref
         .watch(todoRepositoryProvider)
         .getTodosByCategory(categoryId: categoryId);
