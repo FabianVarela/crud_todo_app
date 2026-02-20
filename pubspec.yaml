@@ -25,7 +25,7 @@ dependencies:
   google_fonts: ^8.0.2
   hooks_riverpod: ^3.2.1
   intl: ^0.20.2
-  json_annotation: ^4.10.0
+  json_annotation: ^4.11.0
   uuid: ^4.5.2
   window_size:
     git:
