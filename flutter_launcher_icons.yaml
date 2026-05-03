@@ -4,6 +4,7 @@ flutter_launcher_icons:
   image_path_android: "assets/launcher_icon/icon-512x512.png"
   adaptive_icon_background: "#FFFFFF"
   adaptive_icon_foreground: "assets/launcher_icon/icon-foreground-432x432.png"
+  adaptive_icon_monochrome: "assets/launcher_icon/icon-grayscale-432x432.png"
   image_path_ios: "assets/launcher_icon/icon-1024x1024.png"
   image_path_ios_dark_transparent: "assets/launcher_icon/icon-dark-1024x1024.png"
   image_path_ios_tinted_grayscale: "assets/launcher_icon/icon-grayscale-1024x1024.png"
