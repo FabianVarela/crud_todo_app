@@ -59,6 +59,6 @@ extension WidgetUtilsX on Widget {
 extension ToMapX on DocumentSnapshot {
   Map<String, dynamic> get toMap {
     final map = data() as Map<String, dynamic>?;
-    return <String, dynamic>{'id': id, if (map != null) ...map};
+    return <String, dynamic>{'id': id, ...?map};
   }
 }

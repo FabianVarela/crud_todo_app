@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:window_size/window_size.dart';
+import 'package:window_manager/window_manager.dart';
 
 Future<void> bootstrap(
   FutureOr<Widget> Function() builder,
@@ -22,15 +22,19 @@ Future<void> bootstrap(
     usePathUrlStrategy();
     WidgetsFlutterBinding.ensureInitialized();
 
+    if (!kIsWeb && currentDevice == .desktop) {
+      await windowManager.ensureInitialized();
+    }
+
     final isWindows = defaultTargetPlatform == TargetPlatform.windows;
     await Firebase.initializeApp(
       options: options,
       name: (!kIsWeb && !isWindows) ? appName : null,
     );
 
-    if (currentDevice == DeviceSegment.desktop) {
-      setWindowMinSize(const Size(300, 500));
-      setWindowMaxSize(const Size(1500, 900));
+    if (!kIsWeb && currentDevice == .desktop) {
+      await windowManager.setMinimumSize(const Size(300, 500));
+      await windowManager.setMaximumSize(const Size(1500, 900));
     }
 
     runApp(ProviderScope(child: await builder()));

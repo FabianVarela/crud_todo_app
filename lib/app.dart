@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:window_size/window_size.dart';
+import 'package:window_manager/window_manager.dart';
 
 final class TodoApp extends ConsumerWidget {
   const TodoApp({required this.title, super.key});
@@ -21,7 +24,9 @@ final class TodoApp extends ConsumerWidget {
         textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
       ),
       onGenerateTitle: (_) {
-        if (currentDevice == DeviceSegment.desktop) setWindowTitle(title);
+        if (!kIsWeb && currentDevice == .desktop) {
+          unawaited(windowManager.setTitle(title));
+        }
         return title;
       },
       routerDelegate: todoRouterDelegate,
