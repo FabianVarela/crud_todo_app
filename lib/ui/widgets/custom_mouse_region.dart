@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class CustomMouseRegion extends StatelessWidget {
-  const CustomMouseRegion({
+  const new({
     required this.child,
     this.cursor = SystemMouseCursors.none,
     this.isForDesktop = false,

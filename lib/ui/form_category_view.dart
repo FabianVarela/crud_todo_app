@@ -3,12 +3,12 @@ import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class FormCategoryView extends ConsumerWidget {
-  const FormCategoryView({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -78,7 +78,7 @@ final class FormCategoryView extends ConsumerWidget {
 }
 
 final class NameCategory extends HookConsumerWidget {
-  const NameCategory({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -101,7 +101,7 @@ final class NameCategory extends HookConsumerWidget {
 }
 
 final class EmojiCategory extends HookConsumerWidget {
-  const EmojiCategory({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -124,7 +124,7 @@ final class EmojiCategory extends HookConsumerWidget {
 }
 
 final class SubmitCategory extends ConsumerWidget {
-  const SubmitCategory({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

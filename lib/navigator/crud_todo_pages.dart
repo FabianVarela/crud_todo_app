@@ -4,10 +4,10 @@ import 'package:crud_todo_app/ui/form_category_view.dart';
 import 'package:crud_todo_app/ui/form_todo_view.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
 import 'package:crud_todo_app/ui/unknown_view.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class CategoryPage<T> extends Page<T> {
-  const CategoryPage({required this.onAddCategory, required this.onGoToDetail})
+  const new({required this.onAddCategory, required this.onGoToDetail})
     : super(key: const ValueKey('CategoryPage'));
 
   final VoidCallback onAddCategory;
@@ -26,7 +26,7 @@ final class CategoryPage<T> extends Page<T> {
 }
 
 final class AddCategoryPage<T> extends Page<T> {
-  const AddCategoryPage() : super(key: const ValueKey('AddCategory'));
+  const new() : super(key: const ValueKey('AddCategory'));
 
   @override
   Route<T> createRoute(BuildContext context) {
@@ -38,7 +38,7 @@ final class AddCategoryPage<T> extends Page<T> {
 }
 
 final class TodoPage<T> extends Page<T> {
-  TodoPage({required this.categoryId, required this.onGoToTodo})
+  new({required this.categoryId, required this.onGoToTodo})
     : super(key: ValueKey('TodoPage_$categoryId'));
 
   final String categoryId;
@@ -54,7 +54,7 @@ final class TodoPage<T> extends Page<T> {
 }
 
 final class FormTodoPage<T> extends Page<T> {
-  FormTodoPage({required this.categoryId, this.todoId})
+  new({required this.categoryId, this.todoId})
     : super(key: ValueKey('FormTodoPage_${categoryId}_${todoId ?? 'none'}'));
 
   final String categoryId;
@@ -70,7 +70,7 @@ final class FormTodoPage<T> extends Page<T> {
 }
 
 final class UnknownPage<T> extends Page<T> {
-  const UnknownPage() : super(key: const ValueKey('UnknownPage'));
+  const new() : super(key: const ValueKey('UnknownPage'));
 
   @override
   Route<T> createRoute(BuildContext context) {

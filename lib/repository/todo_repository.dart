@@ -15,7 +15,7 @@ abstract interface class ITodoRepository {
 }
 
 final class TodoRepository implements ITodoRepository {
-  TodoRepository(this._todoService);
+  new(this._todoService);
 
   final TodoService _todoService;
 
@@ -31,11 +31,12 @@ final class TodoRepository implements ITodoRepository {
 
   @override
   Future<void> saveTodo({required Todo todo}) async =>
-      _todoService.saveTodo(todo: todo);
+      await _todoService.saveTodo(todo: todo);
 
   @override
   Future<void> deleteTodo({
     required String todoId,
     required String categoryId,
-  }) async => _todoService.deleteTodo(todoId: todoId, categoryId: categoryId);
+  }) async =>
+      await _todoService.deleteTodo(todoId: todoId, categoryId: categoryId);
 }

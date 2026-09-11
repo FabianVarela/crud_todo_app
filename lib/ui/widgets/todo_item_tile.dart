@@ -1,9 +1,9 @@
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/ui/widgets/custom_checkbox.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class TodoItemTile extends StatelessWidget {
-  const TodoItemTile({
+  const new({
     required this.title,
     required this.subTitle,
     required this.isNegative,

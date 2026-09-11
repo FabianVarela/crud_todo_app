@@ -6,15 +6,14 @@ part 'category_model.g.dart';
 
 @JsonSerializable()
 class Category extends Equatable {
-  const Category({
+  const new({
     required this.name,
     required this.emoji,
     this.id,
     this.todoSize = 0,
   });
 
-  factory Category.fromJson(Map<String, dynamic> json) =>
-      _$CategoryFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);
 
   @JsonKey(includeIfNull: false)
   final String? id;

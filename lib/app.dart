@@ -3,13 +3,12 @@ import 'dart:async';
 import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:window_manager/window_manager.dart';
 
 final class TodoApp extends ConsumerWidget {
-  const TodoApp({required this.title, super.key});
+  const new({required this.title, super.key});
 
   final String title;
 
@@ -21,7 +20,8 @@ final class TodoApp extends ConsumerWidget {
     return MaterialApp.router(
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
+        // TODO(FV): Wait for https://github.com/flutter/packages/pull/12489
+        // textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme),
       ),
       onGenerateTitle: (_) {
         if (!kIsWeb && currentDevice == .desktop) {

@@ -12,7 +12,7 @@ abstract interface class ICategoryRepository {
 }
 
 final class CategoryRepository implements ICategoryRepository {
-  CategoryRepository(this._categoryService);
+  new(this._categoryService);
 
   final CategoryService _categoryService;
 
@@ -25,9 +25,9 @@ final class CategoryRepository implements ICategoryRepository {
 
   @override
   Future<void> saveCategory({required Category category}) async =>
-      _categoryService.saveCategory(category: category);
+      await _categoryService.saveCategory(category: category);
 
   @override
   Future<void> deleteCategory({required String categoryId}) async =>
-      _categoryService.deleteCategory(categoryId: categoryId);
+      await _categoryService.deleteCategory(categoryId: categoryId);
 }

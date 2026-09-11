@@ -3,7 +3,7 @@ import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 
 class TodoService {
-  TodoService(this._database);
+  new(this._database);
 
   late final FirebaseFirestore _database;
 

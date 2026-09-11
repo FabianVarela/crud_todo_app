@@ -8,21 +8,21 @@ import 'package:crud_todo_app/ui/widgets/custom_message.dart';
 import 'package:crud_todo_app/ui/widgets/custom_mouse_region.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:flutter/foundation.dart' show defaultTargetPlatform;
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class CreateCategoryIntent extends Intent {
-  const CreateCategoryIntent();
+  const new();
 }
 
 final class RefreshListIntent extends Intent {
-  const RefreshListIntent();
+  const new();
 }
 
 final class CategoryListView extends HookConsumerWidget {
-  const CategoryListView({
+  const new({
     required this.onAddCategory,
     required this.onGoToDetail,
     super.key,

@@ -3,7 +3,7 @@ import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 
 class CategoryService {
-  CategoryService(this._database);
+  new(this._database);
 
   late final FirebaseFirestore _database;
 

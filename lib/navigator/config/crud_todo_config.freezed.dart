@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'crud_todo_config.dart';
@@ -9,6 +9,7 @@ part of 'crud_todo_config.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -20,7 +21,7 @@ mixin _$CrudTodoConfig {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfig);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfig);
 }
 
 
@@ -29,7 +30,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'CrudTodoConfig()';
+    return 'CrudTodoConfig()';
 }
 
 
@@ -209,7 +210,7 @@ class CrudTodoConfigCategoryList implements CrudTodoConfig {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfigCategoryList);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfigCategoryList);
 }
 
 
@@ -218,7 +219,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'CrudTodoConfig.categoryList()';
+    return 'CrudTodoConfig.categoryList()';
 }
 
 
@@ -241,7 +242,7 @@ class CrudTodoConfigAddCategory implements CrudTodoConfig {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfigAddCategory);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfigAddCategory);
 }
 
 
@@ -250,7 +251,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'CrudTodoConfig.addCategory()';
+    return 'CrudTodoConfig.addCategory()';
 }
 
 
@@ -278,16 +279,18 @@ $CrudTodoConfigTodoListCopyWith<CrudTodoConfigTodoList> get copyWith => _$CrudTo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfigTodoList&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfigTodoList&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,categoryId);
+int get hashCode {
+    return Object.hash(runtimeType,categoryId);
+}
 
 @override
 String toString() {
-  return 'CrudTodoConfig.todoList(categoryId: $categoryId)';
+    return 'CrudTodoConfig.todoList(categoryId: $categoryId)';
 }
 
 
@@ -344,16 +347,18 @@ $CrudTodoConfigAddTodoCopyWith<CrudTodoConfigAddTodo> get copyWith => _$CrudTodo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfigAddTodo&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfigAddTodo&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,categoryId);
+int get hashCode {
+    return Object.hash(runtimeType,categoryId);
+}
 
 @override
 String toString() {
-  return 'CrudTodoConfig.addTodo(categoryId: $categoryId)';
+    return 'CrudTodoConfig.addTodo(categoryId: $categoryId)';
 }
 
 
@@ -411,16 +416,18 @@ $CrudTodoConfigUpdateTodoCopyWith<CrudTodoConfigUpdateTodo> get copyWith => _$Cr
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfigUpdateTodo&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.todoId, todoId) || other.todoId == todoId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfigUpdateTodo&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.todoId, todoId) || other.todoId == todoId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,categoryId,todoId);
+int get hashCode {
+    return Object.hash(runtimeType,categoryId,todoId);
+}
 
 @override
 String toString() {
-  return 'CrudTodoConfig.updateTodo(categoryId: $categoryId, todoId: $todoId)';
+    return 'CrudTodoConfig.updateTodo(categoryId: $categoryId, todoId: $todoId)';
 }
 
 
@@ -473,7 +480,7 @@ class CrudTodoConfigUnknown implements CrudTodoConfig {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfigUnknown);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is CrudTodoConfigUnknown);
 }
 
 
@@ -482,7 +489,7 @@ int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'CrudTodoConfig.unknown()';
+    return 'CrudTodoConfig.unknown()';
 }
 
 

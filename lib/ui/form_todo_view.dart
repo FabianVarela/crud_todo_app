@@ -7,12 +7,12 @@ import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/ui/widgets/custom_date_picker.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class FormTodoView extends HookConsumerWidget {
-  const FormTodoView({required this.categoryId, this.todoId, super.key});
+  const new({required this.categoryId, this.todoId, super.key});
 
   final String categoryId;
   final String? todoId;
@@ -93,7 +93,7 @@ final class FormTodoView extends HookConsumerWidget {
 }
 
 final class SubjectTodo extends HookConsumerWidget {
-  const SubjectTodo({required this.todo, super.key});
+  const new({required this.todo, super.key});
 
   final Todo? todo;
 
@@ -133,7 +133,7 @@ final class SubjectTodo extends HookConsumerWidget {
 }
 
 final class DateTodo extends HookConsumerWidget {
-  const DateTodo({required this.todo, super.key});
+  const new({required this.todo, super.key});
 
   final Todo? todo;
 
@@ -189,7 +189,7 @@ final class DateTodo extends HookConsumerWidget {
 }
 
 final class CategoryTodo extends StatelessWidget {
-  const CategoryTodo({required this.category, super.key});
+  const new({required this.category, super.key});
 
   final Category category;
 
@@ -221,7 +221,7 @@ final class CategoryTodo extends StatelessWidget {
 }
 
 final class SubmitTodo extends HookConsumerWidget {
-  const SubmitTodo({required this.categoryId, this.todoId, super.key});
+  const new({required this.categoryId, this.todoId, super.key});
 
   final String categoryId;
   final String? todoId;

@@ -6,7 +6,7 @@ part 'todo_model.g.dart';
 
 @JsonSerializable()
 class Todo extends Equatable {
-  const Todo({
+  const new({
     required this.subject,
     required this.finalDate,
     required this.categoryId,
@@ -14,7 +14,7 @@ class Todo extends Equatable {
     this.isCompleted = false,
   });
 
-  factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
+  factory fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
 
   @JsonKey(includeIfNull: false)
   final String? id;

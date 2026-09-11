@@ -1,10 +1,10 @@
 import 'package:crud_todo_app/navigator/config/crud_todo_config.dart';
 import 'package:crud_todo_app/navigator/crud_todo_pages.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<CrudTodoConfig> {
-  CrudTodoRouterDelegate() : _navigatorKey = GlobalKey<NavigatorState>();
+  new() : _navigatorKey = GlobalKey<NavigatorState>();
 
   final _heroController = HeroController();
 

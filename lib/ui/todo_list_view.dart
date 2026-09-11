@@ -10,13 +10,13 @@ import 'package:crud_todo_app/ui/widgets/custom_message.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item.dart';
 import 'package:crud_todo_app/viewmodel/category/category_provider.dart';
 import 'package:crud_todo_app/viewmodel/todo/todo_provider.dart';
-import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 
 typedef NavigatorToTodo = void Function(String, String?);
 
 final class TodoListView extends HookConsumerWidget {
-  const TodoListView({
+  const new({
     required this.categoryId,
     required this.onGoToTodo,
     super.key,
@@ -119,7 +119,7 @@ final class TodoListView extends HookConsumerWidget {
 }
 
 final class CategorySection extends ConsumerWidget {
-  const CategorySection({
+  const new({
     required this.category,
     required this.todos,
     required this.onEdit,
@@ -218,7 +218,7 @@ final class CategorySection extends ConsumerWidget {
 }
 
 final class TodoList extends ConsumerWidget {
-  const TodoList({required this.todoList, required this.onEditItem, super.key});
+  const new({required this.todoList, required this.onEditItem, super.key});
 
   final List<Todo> todoList;
   final ValueSetter<Todo> onEditItem;

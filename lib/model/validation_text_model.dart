@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 final class ValidationText extends Equatable {
-  const ValidationText({this.text, this.message});
+  const new({this.text, this.message});
 
   final String? text;
   final String? message;

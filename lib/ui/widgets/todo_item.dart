@@ -2,11 +2,11 @@ import 'package:context_menus/context_menus.dart';
 import 'package:crud_todo_app/common/extension.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
 import 'package:crud_todo_app/ui/widgets/todo_item_tile.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class TodoItem extends StatelessWidget {
-  const TodoItem({
+  const new({
     required this.todo,
     this.onEdit,
     this.onRemove,
@@ -14,7 +14,7 @@ final class TodoItem extends StatelessWidget {
     super.key,
   }) : isSlidable = true;
 
-  const TodoItem.contextual({
+  const new contextual({
     required this.todo,
     this.onEdit,
     this.onRemove,

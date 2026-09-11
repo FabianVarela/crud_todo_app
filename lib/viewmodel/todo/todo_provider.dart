@@ -16,16 +16,12 @@ final todoListProvider = StreamProvider.family.autoDispose<List<Todo>, String>(
 );
 
 final todoDetailProvider = FutureProvider.family.autoDispose(
-  (ref, ({String categoryId, String todoId}) param) async {
-    final categoryId = param.categoryId;
-    final todoId = param.todoId;
-
-    return categoryId.trim().isNotEmpty && todoId.trim().isNotEmpty
-        ? ref
-              .watch(todoRepositoryProvider)
-              .getTodoById(categoryId: categoryId, todoId: todoId)
-        : null;
-  },
+  (ref, ({String categoryId, String todoId}) param) async =>
+      param.categoryId.trim().isNotEmpty && param.todoId.trim().isNotEmpty
+      ? await ref
+            .watch(todoRepositoryProvider)
+            .getTodoById(categoryId: param.categoryId, todoId: param.todoId)
+      : null,
 );
 
 class SubjectTodo extends Notifier<ValidationText> {

@@ -1,14 +1,13 @@
 import 'package:crud_todo_app/navigator/config/crud_todo_config.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 enum TodoPath {
   category('categories'),
   addCategory('add-category'),
   todo('todo'),
-  unknown('404')
-  ;
+  unknown('404');
 
-  const TodoPath(this.name);
+  new(this.name);
 
   final String name;
 }
