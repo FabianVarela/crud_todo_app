@@ -6,11 +6,16 @@ analyzer:
     - lib/**.g.dart
     - test/**.mocks.dart
     - lib/firebase_options**.dart
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
 
 linter:
   rules:
     no_default_cases: false
-    one_member_abstracts: false
     public_member_api_docs: false
     specify_nonobvious_property_types: false
 
