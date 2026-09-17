@@ -15,7 +15,7 @@ dependencies:
   cupertino_ui: ^1.0.2
   dart_emoji: ^0.2.0+2
   equatable: ^2.1.0
-  firebase_core: ^4.14.0
+  firebase_core: ^4.15.0
   flutter:
     sdk: flutter
   flutter_hooks: ^0.21.3+1
