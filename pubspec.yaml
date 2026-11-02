@@ -12,7 +12,7 @@ environment:
 dependencies:
   cloud_firestore: ^7.1.0
   context_menus: ^2.0.0+1
-  cupertino_ui: ^1.1.4
+  cupertino_ui: ^1.1.5
   dart_emoji: ^0.2.0+2
   equatable: ^3.0.0
   firebase_core: ^5.1.0
