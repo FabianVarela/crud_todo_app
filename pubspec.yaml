@@ -12,22 +12,22 @@ environment:
 dependencies:
   cloud_firestore: ^7.1.0
   context_menus: ^2.0.0+1
-  cupertino_ui: ^1.1.5
+  cupertino_ui: ^1.1.6
   dart_emoji: ^0.2.0+2
   equatable: ^3.0.0
   firebase_core: ^5.1.0
   flutter:
     sdk: flutter
-  flutter_hooks: ^0.21.3+1
+  flutter_hooks: ^0.21.4
   flutter_slidable: ^5.2.0
   flutter_web_plugins:
     sdk: flutter
   freezed_annotation: ^3.1.0
   google_fonts: ^9.0.0
-  hooks_riverpod: ^3.4.3
+  hooks_riverpod: ^3.5.0
   intl: ^0.20.3
   json_annotation: ^4.12.0
-  material_ui: ^1.9.0
+  material_ui: ^1.10.0
   uuid: ^4.6.0
   window_manager: ^0.6.0
 
