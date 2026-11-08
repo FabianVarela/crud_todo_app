@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:flutter/foundation.dart';
@@ -25,7 +23,7 @@ final class TodoApp extends ConsumerWidget {
       ),
       onGenerateTitle: (_) {
         if (!kIsWeb && currentDevice == .desktop) {
-          unawaited(windowManager.setTitle(title));
+          WindowManager.instance.getCurrent()!.title = title;
         }
         return title;
       },

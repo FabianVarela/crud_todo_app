@@ -23,19 +23,16 @@ Future<void> bootstrap(
     WidgetsFlutterBinding.ensureInitialized();
 
     if (!kIsWeb && currentDevice == .desktop) {
-      await windowManager.ensureInitialized();
+      WindowManager.instance.getCurrent()!
+        ..minimumSize = const Size(300, 500).toNative()
+        ..maximumSize = const Size(1500, 900).toNative();
     }
 
-    final isWindows = defaultTargetPlatform == TargetPlatform.windows;
+    final isWindows = defaultTargetPlatform == .windows;
     await Firebase.initializeApp(
       options: options,
       name: (!kIsWeb && !isWindows) ? appName : null,
     );
-
-    if (!kIsWeb && currentDevice == .desktop) {
-      await windowManager.setMinimumSize(const Size(300, 500));
-      await windowManager.setMaximumSize(const Size(1500, 900));
-    }
 
     runApp(ProviderScope(child: await builder()));
   }, (error, stackTrace) => log(error.toString(), stackTrace: stackTrace));
