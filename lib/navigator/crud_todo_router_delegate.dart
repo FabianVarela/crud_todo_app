@@ -1,5 +1,6 @@
 import 'package:crud_todo_app/navigator/config/crud_todo_config.dart';
 import 'package:crud_todo_app/navigator/crud_todo_pages.dart';
+import 'package:duo_kit/duo_kit.dart';
 import 'package:material_ui/material_ui.dart';
 
 final class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
@@ -73,25 +74,38 @@ final class CrudTodoRouterDelegate extends RouterDelegate<CrudTodoConfig>
 
   @override
   Widget build(BuildContext context) {
+    final hasFold = FoldGeometry.of(context).division != null;
+
     var pages = <Page<dynamic>>[
       if (is404)
         const UnknownPage()
-      else ...[
+      else if (isShowingCategoryForm) ...[
         CategoryPage(
           onAddCategory: () => isShowingCategoryForm = true,
           onGoToDetail: (catId) => categoryId = catId,
         ),
-        if (isShowingCategoryForm)
-          const AddCategoryPage()
+        const AddCategoryPage(),
+      ] else ...[
+        if (hasFold)
+          CategoryTodoSplitPage(
+            categoryId: categoryId,
+            onAddCategory: () => isShowingCategoryForm = true,
+            onGoToDetail: (catId) => categoryId = catId,
+            onGoToTodo: (catId, todoId) => setTodo(todoId, isSelected: true),
+          )
         else ...[
+          CategoryPage(
+            onAddCategory: () => isShowingCategoryForm = true,
+            onGoToDetail: (catId) => categoryId = catId,
+          ),
           if (categoryId != null)
             TodoPage(
               categoryId: categoryId!,
               onGoToTodo: (catId, todoId) => setTodo(todoId, isSelected: true),
             ),
-          if (categoryId != null && isTodoSelected)
-            FormTodoPage(categoryId: categoryId!, todoId: todoId),
         ],
+        if (categoryId != null && isTodoSelected)
+          FormTodoPage(categoryId: categoryId!, todoId: todoId),
       ],
     ];
 

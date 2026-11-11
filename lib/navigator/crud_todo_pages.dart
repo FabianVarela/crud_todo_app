@@ -1,5 +1,6 @@
 import 'package:crud_todo_app/navigator/crud_todo_transition_route.dart';
 import 'package:crud_todo_app/ui/category_list_view.dart';
+import 'package:crud_todo_app/ui/category_todo_split_view.dart';
 import 'package:crud_todo_app/ui/form_category_view.dart';
 import 'package:crud_todo_app/ui/form_todo_view.dart';
 import 'package:crud_todo_app/ui/todo_list_view.dart';
@@ -20,6 +21,33 @@ final class CategoryPage<T> extends Page<T> {
       child: CategoryListView(
         onAddCategory: onAddCategory,
         onGoToDetail: onGoToDetail,
+      ),
+    );
+  }
+}
+
+final class CategoryTodoSplitPage<T> extends Page<T> {
+  new({
+    required this.onAddCategory,
+    required this.onGoToDetail,
+    required this.onGoToTodo,
+    this.categoryId,
+  }) : super(key: ValueKey('CategoryTodoSplitPage_${categoryId ?? 'none'}'));
+
+  final VoidCallback onAddCategory;
+  final ValueSetter<String> onGoToDetail;
+  final NavigatorToTodo onGoToTodo;
+  final String? categoryId;
+
+  @override
+  Route<T> createRoute(BuildContext context) {
+    return SimpleRoute<T>(
+      settings: this,
+      child: CategoryTodoSplitView(
+        categoryId: categoryId,
+        onAddCategory: onAddCategory,
+        onGoToDetail: onGoToDetail,
+        onGoToTodo: onGoToTodo,
       ),
     );
   }
