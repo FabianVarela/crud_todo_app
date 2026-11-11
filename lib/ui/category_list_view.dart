@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
 import 'package:crud_todo_app/common/extension.dart';
+import 'package:crud_todo_app/common/fab_hero_tag.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/ui/widgets/category_item.dart';
 import 'package:crud_todo_app/ui/widgets/custom_message.dart';
@@ -25,11 +26,13 @@ final class CategoryListView extends HookConsumerWidget {
   const new({
     required this.onAddCategory,
     required this.onGoToDetail,
+    this.enableHeroTransition = true,
     super.key,
   });
 
   final VoidCallback onAddCategory;
   final ValueSetter<String> onGoToDetail;
+  final bool enableHeroTransition;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -136,6 +139,7 @@ final class CategoryListView extends HookConsumerWidget {
       floatingActionButton: Tooltip(
         message: 'Add category',
         child: FloatingActionButton(
+          heroTag: enableHeroTransition ? addFabHeroTag : null,
           backgroundColor: const Color(0xFF4A78FA),
           onPressed: onAddCategory,
           child: const Icon(Icons.add),

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:context_menus/context_menus.dart';
 import 'package:crud_todo_app/common/adaptive_contextual_layout.dart';
 import 'package:crud_todo_app/common/extension.dart';
+import 'package:crud_todo_app/common/fab_hero_tag.dart';
 import 'package:crud_todo_app/dependency/dependency.dart';
 import 'package:crud_todo_app/model/category_model.dart';
 import 'package:crud_todo_app/model/todo_model.dart';
@@ -19,11 +20,13 @@ final class TodoListView extends HookConsumerWidget {
   const new({
     required this.categoryId,
     required this.onGoToTodo,
+    this.enableHeroTransition = true,
     super.key,
   });
 
   final String categoryId;
   final NavigatorToTodo onGoToTodo;
+  final bool enableHeroTransition;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -83,6 +86,7 @@ final class TodoListView extends HookConsumerWidget {
                   category: category,
                   todos: todos,
                   onEdit: (todoId) => onGoToTodo(categoryId, todoId),
+                  enableHeroTransition: enableHeroTransition,
                 ),
                 error: (e, _) => Center(
                   child: Text(
@@ -108,6 +112,7 @@ final class TodoListView extends HookConsumerWidget {
         ),
         floatingActionButton: existsCategory
             ? FloatingActionButton(
+                heroTag: enableHeroTransition ? addFabHeroTag : null,
                 backgroundColor: const Color(0xFF4A78FA),
                 onPressed: () => onGoToTodo(categoryId, null),
                 child: const Icon(Icons.add),
@@ -123,12 +128,14 @@ final class CategorySection extends ConsumerWidget {
     required this.category,
     required this.todos,
     required this.onEdit,
+    this.enableHeroTransition = true,
     super.key,
   });
 
   final Category category;
   final List<Todo> todos;
   final ValueSetter<String?> onEdit;
+  final bool enableHeroTransition;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -145,19 +152,15 @@ final class CategorySection extends ConsumerWidget {
                 dimension: 60,
                 child: Center(
                   child: DecoratedBox(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
+                      shape: .circle,
                       color: Colors.white,
-                      borderRadius: .circular(30),
                     ),
-                    child: Hero(
-                      tag: '${category.id}_${category.emoji.name}',
-                      child: Material(
-                        color: Colors.transparent,
-                        child: Text(
-                          category.emoji.code,
-                          textAlign: .center,
-                          style: const TextStyle(fontSize: 30),
-                        ),
+                    child: Padding(
+                      padding: const .all(8),
+                      child: CategoryEmoji(
+                        category: category,
+                        enableHeroTransition: enableHeroTransition,
                       ),
                     ),
                   ),
@@ -214,6 +217,33 @@ final class CategorySection extends ConsumerWidget {
         ),
       ],
     );
+  }
+}
+
+final class CategoryEmoji extends StatelessWidget {
+  const new({
+    required this.category,
+    this.enableHeroTransition = true,
+    super.key,
+  });
+
+  final Category category;
+  final bool enableHeroTransition;
+
+  @override
+  Widget build(BuildContext context) {
+    final emoji = Material(
+      color: Colors.transparent,
+      child: Text(
+        category.emoji.code,
+        textAlign: .center,
+        style: const TextStyle(fontSize: 30),
+      ),
+    );
+
+    if (!enableHeroTransition) return emoji;
+
+    return Hero(tag: '${category.id}_${category.emoji.name}', child: emoji);
   }
 }
 
